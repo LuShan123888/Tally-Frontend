@@ -9,7 +9,6 @@ export default new Vuex.Store({
         userInfo: JSON.parse(sessionStorage.getItem("userInfo"))
     },
     mutations: {
-        // set
         setToken: (state, token) => {
             state.token = token
             localStorage.setItem("token", token)
@@ -19,15 +18,14 @@ export default new Vuex.Store({
             sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
         },
         clear: (state) => {
-            state.token = ''
+            state.token = null
             state.userInfo = {}
-            localStorage.setItem("token", '')
-            sessionStorage.setItem("userInfo", JSON.stringify(''))
+            localStorage.setItem("token", null)
+            sessionStorage.setItem("userInfo", null)
         }
 
     },
     getters: {
-        // get
         getUserInfo: state => {
             return state.userInfo
         },

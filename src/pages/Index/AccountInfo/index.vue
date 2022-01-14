@@ -45,7 +45,7 @@
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
-                  角色：{{ role }}
+                  角色：{{ roleIdList }}
                 </span>
               </v-list-item-content>
             </v-list-item>
@@ -101,7 +101,7 @@ export default {
       email: null,
       phoneNum: null,
       status: null,
-      role: null,
+      roleIdList: null,
       style: {
         backgroundImg: {
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
@@ -123,30 +123,28 @@ export default {
   },
   methods: {
     logout() {
-      this.axios.get(this.GLOBAL.apiBase + "/account/signOut").then(() => {
-        this.$notify({
-          title: "退出成功",
-          message: "",
-          type: "success",
-          duration: 2000,
-        });
-        this.$store.commit("clear");
-        this.$router.push("/login");
+      this.$notify({
+        title: "退出成功",
+        message: null,
+        type: "success",
+        duration: 2000,
       });
-    },
+      this.$store.commit("clear");
+      this.$router.push("/login");
+    }
   },
   mounted() {
     const userinfo = this.$store.getters.getUserInfo;
     this.username = userinfo.username;
     this.phoneNum = userinfo.phoneNum;
-    this.role = userinfo.roles;
+    this.roleIdList = userinfo.roleIdList;
     this.email = userinfo.email;
     if (userinfo.status === "NORMAL") {
       this.status = "正常";
     } else {
       this.status = "禁用";
     }
-    
+
   },
 };
 </script>

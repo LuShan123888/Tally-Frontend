@@ -25,7 +25,7 @@
                 <v-text-field
                     v-model="username"
                     :counter="16"
-                    :rules="[rules.usernameRequired]"
+                    :rules="[(value) => !!value || '请输入用户名']"
                     label="用户名"
                     clearable
                     required
@@ -35,7 +35,7 @@
                 <v-text-field
                     v-model="password"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.passwordRequired, rules.min]"
+                    :rules="[(value) => !!value || '请输入密码', (v) => (!!v && v.length >= 6) || '长度最少为6位']"
                     :type="show ? 'text' : 'password'"
                     label="密码"
                     :counter="16"
@@ -45,7 +45,7 @@
               <v-row>
                 <v-text-field
                     v-model="email"
-                    :rules="[rules.emailMatch]"
+                    :rules="[rules.isEmail]"
                     label="E-mail"
                     required
                     clearable
@@ -70,7 +70,7 @@
   </v-container>
 </template>
 <script>
-import AppBar from "../../components/AppBar";
+import AppBar from "../Index/components/AppBar";
 import DarkButton from "../../components/DarkButton";
 
 export default {
@@ -88,14 +88,11 @@ export default {
     return {
       valid: false,
       show: false,
-      username: "",
-      password: "",
-      email: "",
+      username: null,
+      password: null,
+      email: null,
       rules: {
-        usernameRequired: (value) => !!value || "请输入用户名",
-        passwordRequired: (value) => !!value || "请输入密码",
-        min: (v) => (!!v && v.length >= 6) || "长度最少为6位",
-        emailMatch: (v) => /.+@.+\..+/.test(v) || "邮箱格式有误",
+        isEmail: this.GLOBAL.rules.isEmail
       },
       class: {
         title: {
@@ -122,7 +119,7 @@ export default {
       if (this.$refs.form.validate()) {
         const _this = this;
         const params = new URLSearchParams();
-        params.append("username", this.username);
+        params.append(username, this.username);
         params.append("password", this.password);
         params.append("email", this.email);
         this.axios
@@ -130,7 +127,7 @@ export default {
             .then(() => {
               this.$notify({
                 title: "注册成功",
-                message: "",
+                message: null,
                 type: "success",
                 duration: 2000,
               });

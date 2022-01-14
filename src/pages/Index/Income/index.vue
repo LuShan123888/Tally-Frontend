@@ -16,15 +16,15 @@
         <v-form ref="form" v-model="valid">
           <v-container>
             <v-row justify="center" no-gutters class="mt-6">
-              <v-col cols="12" class="">
+              <v-col cols="12">
                 <v-row no-gutters justify="space-around">
                   <v-col cols="5">
                     <v-text-field
                         label="金额"
                         prefix="¥"
-                        :rules="[rules.amountRequired, rules.isNumber]"
+                        :rules="[(value) => !!value || '请输入金额',rules.isNumber]"
                         v-model="bill.amount"
-                        outlined
+
                         clearable
                         required
                     ></v-text-field>
@@ -33,10 +33,10 @@
                     <v-combobox
                         :items="typeList"
                         v-model="bill.type"
-                        :rules="[rules.typeRequired]"
+                        :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
                         clearable
-                        outlined
+
                         required
                     ></v-combobox>
                   </v-col>
@@ -46,7 +46,7 @@
                     <v-text-field
                         label="标签"
                         v-model="bill.remark"
-                        outlined
+
                         clearable
                     ></v-text-field
                     >
@@ -65,7 +65,7 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            outlined
+
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -94,7 +94,7 @@
                         v-model="bill.note"
                         auto-grow
                         rows="1"
-                        outlined
+
                         clearable
                         label="备注"
                     ></v-textarea
@@ -159,11 +159,7 @@ export default {
       },
       showDatePicker: false,
       rules: {
-        amountRequired: (value) => !!value || "请输入金额",
-        typeRequired: (value) => !!value || "请选择类型",
-        min: (v) => v.length >= 6 || "长度最少为6位",
-        isNumber: (v) =>
-            /^\d+$/.test(v) || /^\d+[.]?\d+$/.test(v) || "只能输入数字",
+        isNumber: this.GLOBAL.rules.isNumber
       },
       style: {
         backgroundImg: {
@@ -200,7 +196,7 @@ export default {
             .then(() => {
               this.$notify({
                 title: "提交成功",
-                message: "",
+                message: null,
                 type: "success",
                 duration: 2000,
               });

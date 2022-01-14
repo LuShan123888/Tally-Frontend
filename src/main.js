@@ -8,7 +8,7 @@ import store from './store'
 import "./style.scss"
 //Plugins
 import vuetify from './plugins/vuetify';
-import './plugins/element'
+import './plugins/element/element'
 import * as echarts from 'echarts';
 //Axios
 import "./axios"

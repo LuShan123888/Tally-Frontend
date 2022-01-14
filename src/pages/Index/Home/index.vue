@@ -16,15 +16,10 @@
         <v-row no-gutters align="center">
           <v-col class="pl-6">
             <v-row class="pa-6" align="center">
-              {{ currentMonth }}月总支出：
-              <span class="text-h6">
-                ¥&nbsp;{{ monthStatistics.out.sum }}
-              </span>
+              {{ currentMonth }}月总支出：<span class="text-h6">¥&nbsp;{{ monthStatistics.out.sum }}</span>
             </v-row>
-
             <v-row class="pa-6" align="center">
-              {{ currentMonth }}月总收入：
-              <span class="text-h6"> ¥&nbsp;{{ monthStatistics.in.sum }} </span>
+              {{ currentMonth }}月总收入：<span class="text-h6"> ¥&nbsp;{{ monthStatistics.in.sum }} </span>
             </v-row>
           </v-col>
           <v-col>
@@ -37,7 +32,7 @@
     </v-hover>
     <v-hover v-slot="{ hover }">
       <v-card
-          class="mt-9 transition-swing"
+          class="my-9 transition-swing"
           :class="[isMobile ? 'mx-auto' : 'ml-9', `elevation-${hover ? 24 : 6}`]"
           :style="{ width: isMobile ? '90%' : '50%' }"
           v-if="billList != null"
@@ -50,20 +45,14 @@
                 @click.stop="selectBill(item)"
             >
               <v-list-item-icon class="mr-5" v-if="!isMobile">
-                <v-icon x-large color="primary" v-if="item.flow === 'in'">
-                  mdi-cash-plus
-                </v-icon>
-                <v-icon x-large color="error" v-if="item.flow === 'out'">
-                  mdi-cash-minus
-                </v-icon>
+                <v-icon x-large color="primary" v-if="item.flow === 'in'"> mdi-cash-plus</v-icon>
+                <v-icon x-large color="error" v-if="item.flow === 'out'"> mdi-cash-minus</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>
                   <v-row align="center">
                     <v-col cols="7" class="text-truncate">
-                      <span class="text-no-wrap">
-                        {{ item.note }}
-                      </span>
+                      <span class="text-no-wrap" v-text="item.note"/>
                     </v-col>
                     <v-col>
                       <v-row
@@ -72,15 +61,9 @@
                           no-gutters
                           class="mr-4 text-h6"
                       >
-                        <span class="float-right" v-if="item.flow === 'in'">
-                          +
-                        </span>
-                        <span class="float-right" v-if="item.flow === 'out'">
-                          -
-                        </span>
-                        <span class="text-sublime2 float-right">
-                          {{ item.amount }}
-                        </span>
+                        <span v-if="item.flow === 'in'">+</span>
+                        <span v-if="item.flow === 'out'">-</span>
+                        <span class="text-sublime2" v-text="item.amount"/>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -94,13 +77,10 @@
                           x-small
                           class="mx-2"
                           style="max-width: 100px"
-                      >{{ item.remark }}
-                      </v-chip
-                      >
+                          v-text="item.remark"
+                      />
                     </v-col>
-                    <v-col class="text-right pr-6">
-                      {{ item.billDate }}
-                    </v-col>
+                    <v-col class="text-right pr-6" v-text="item.billDate"/>
                   </v-row>
                 </v-list-item-subtitle>
               </v-list-item-content>
@@ -114,15 +94,14 @@
         <v-form ref="form" v-model="formValid">
           <v-container>
             <v-row justify="center" no-gutters class="mt-6">
-              <v-col cols="12" class="">
+              <v-col cols="12">
                 <v-row no-gutters justify="space-around">
                   <v-col cols="5">
                     <v-text-field
                         label="金额"
                         prefix="¥"
-                        :rules="[rules.amountRequired, rules.isNumber]"
+                        :rules="[(value) => !!value || '请输入金额', rules.isNumber]"
                         v-model="selectedBill.amount"
-                        outlined
                         clearable
                         required
                     ></v-text-field>
@@ -130,15 +109,11 @@
                   <v-col cols="5">
                     <v-combobox
                         :items="
-                        selectedBill.flow === 'in'
-                          ? incomeTypeList
-                          : outcomeTypeList
-                      "
+                        selectedBill.flow === 'in' ? incomeTypeList : outcomeTypeList"
                         v-model="selectedBill.type"
-                        :rules="[rules.typeRequired]"
+                        :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
                         clearable
-                        outlined
                         required
                     ></v-combobox>
                   </v-col>
@@ -148,7 +123,7 @@
                     <v-text-field
                         label="标签"
                         v-model="selectedBill.remark"
-                        outlined
+
                         clearable
                     ></v-text-field
                     >
@@ -167,7 +142,7 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            outlined
+
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -200,7 +175,7 @@
                         v-model="selectedBill.note"
                         auto-grow
                         rows="1"
-                        outlined
+
                         clearable
                         label="备注"
                     ></v-textarea
@@ -276,19 +251,11 @@ export default {
       ],
       selectedBill: {},
       rules: {
-        amountRequired: (value) => !!value || "请输入金额",
-        typeRequired: (value) => !!value || "请选择类型",
-        min: (v) => v.length >= 6 || "长度最少为6位",
-        isNumber: (v) =>
-            /^\d+$/.test(v) || /^\d+[.]?\d+$/.test(v) || "只能输入数字",
+        isNumber: (v) => /^\d+$/.test(v) || /^\d+[.]?\d+$/.test(v) || "只能输入数字",
       },
       monthStatistics: {
-        in: {
-          sum: 0,
-        },
-        out: {
-          sum: 0,
-        },
+        in: {sum: 0,},
+        out: {sum: 0,},
       },
       currentMonth: new Date().getMonth() + 1,
       style: {
@@ -322,7 +289,7 @@ export default {
             this.showDialog = false;
             this.$notify({
               title: "删除成功",
-              message: "",
+              message: null,
               type: "success",
               duration: 2000,
             });
@@ -334,10 +301,7 @@ export default {
     },
     updateBill() {
       if (this.$refs.form.validate()) {
-        if (
-            this.selectedBill.billDate == null ||
-            this.selectedBill.billDate === ""
-        ) {
+        if (this.selectedBill.billDate == null) {
           this.selectedBill.billDate = new Date().Format("yyyy-MM-dd");
         }
         this.axios
@@ -351,7 +315,7 @@ export default {
               this.loadCountBanner();
               this.$notify({
                 title: "更新成功",
-                message: "",
+                message: null,
                 type: "success",
                 duration: 2000,
               });
@@ -380,7 +344,7 @@ export default {
               normal: {
                 label: {
                   show: true,
-                  position: "", //标签的位置
+                  position: null, //标签的位置
                   textStyle: {color: "#3c4858"},
                 },
                 labelLine: {

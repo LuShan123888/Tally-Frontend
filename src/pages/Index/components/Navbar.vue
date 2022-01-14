@@ -2,12 +2,11 @@
   <div>
     <v-navigation-drawer app width="320" touchless>
       <div class="d-flex align-center mx-auto" style="height: 100%; width: 80%">
-        <div class="justify-center" style="width: 100%">
-          <div class="justify-center mb-16">
-            <v-icon class="mr-4" x-large color="#007AE9">
+        <div style="width: 100%">
+          <div class="mb-16">
+            <v-icon class="mr-4" x-large color="primary">
               mdi-notebook-edit
-            </v-icon
-            >
+            </v-icon>
             <span class="text-subtitle-1">{{ title }}</span>
           </div>
           <v-list rounded>
@@ -16,7 +15,6 @@
                   v-for="(item, i) in menus"
                   :key="i"
                   :to="item.path"
-                  class="d-flex justify-center"
               >
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>

@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../pages/Index/Index'
-import Home from '../pages/Home/Home'
-import Outcome from '../pages/Outcome/Outcome'
-import Income from '../pages/Income/Income'
-import AccountInfo from '../pages/AccountInfo/AccountInfo'
+import Home from '../pages/Index/Home'
+import Outcome from '../pages/Index/Outcome'
+import Income from '../pages/Index/Income'
+import AccountInfo from '../pages/Index/AccountInfo'
 import Login from '../pages/Login/Login'
 import Register from '../pages/Register/Register'
-import Test from '../pages/Test/Test'
-import NotFound from '../pages/404/404'
+import Test from '../pages/Test'
+import NotFound from '../pages/404'
+import AdminIndex from '../pages/Admin'
+import AdminHome from '../pages/Admin/Home'
+import UserManagement from '../pages/Admin/UserManagement'
+import Druid from '../pages/Admin/Druid'
+import Swagger from '../pages/Admin/Swagger'
 
 Vue.use(VueRouter)
 
@@ -49,6 +54,69 @@ const routes = [
                     requireAuth: true
                 }
             }
+        ]
+    },
+    {
+        path: '/admin',
+        name: 'AdminIndex',
+        component: AdminIndex,
+        children: [
+            {
+                path: '/admin/index',
+                name: 'AdminHome',
+                component: AdminHome,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/userManagement',
+                name: 'UserManagement',
+                component: UserManagement,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/role',
+                name: 'RoleAdmin',
+                component: AdminHome,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/permission',
+                name: 'AdminPermission',
+                component: AdminHome,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/feedback',
+                name: 'AdminPermission',
+                component: AdminHome,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/druid',
+                name: 'Druid',
+                component: Druid,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/swagger',
+                name: 'Swagger',
+                component: Swagger,
+                meta: {
+                    requireAuth: true
+                }
+            },
         ]
     },
     {

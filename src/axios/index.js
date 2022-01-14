@@ -23,7 +23,7 @@ axios.interceptors.response.use(
         const code = response.data.code;
         const message = response.data.message;
         if (code !== 200) {
-            Element.Message.error(message == null || message === '' ? '服务器错误' : message, {duration: 3 * 1000})
+            Element.Message.error(message == null ? '服务器错误' : message)
         }
         return response;
     },
@@ -37,19 +37,19 @@ axios.interceptors.response.use(
             case 401:
                 store.commit("clear")
                 router.push("/login")
-                Element.Message.error(message == null || message === '' ? '未登陆' : message, {duration: 3 * 1000})
+                Element.Message.error(message == null ? '未登陆' : message)
                 return Promise.reject(error.response)
             case 403:
-                Element.Message.error(message == null || message === '' ? '无访问权限' : message, {duration: 3 * 1000})
+                Element.Message.error(message == null ? '无访问权限' : message)
                 return Promise.reject(error.response)
             case 404:
-                Element.Message.error(message == null || message === '' ? '请求资源不存在' : message, {duration: 3 * 1000})
+                Element.Message.error(message == null ? '请求资源不存在' : message)
                 return Promise.reject(error.response)
             case 500:
-                Element.Message.error(message == null || message === '' ? '服务器错误' : message, {duration: 3 * 1000})
+                Element.Message.error(message == null ? '服务器错误' : message)
                 return Promise.reject(error.response)
             default:
-                Element.Message.error(message == null || message === '' ? '未知错误' : message, {duration: 3 * 1000})
+                Element.Message.error(message == null ? '未知错误' : message)
                 return Promise.reject(error.response)
         }
     }

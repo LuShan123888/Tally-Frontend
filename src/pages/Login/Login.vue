@@ -25,7 +25,7 @@
                 <v-text-field
                     v-model="username"
                     :counter="16"
-                    :rules="[rules.usernameRequired]"
+                    :rules="[(value) => !!value || '请输入用户名']"
                     label="用户名"
                     clearable
                     required
@@ -35,7 +35,7 @@
                 <v-text-field
                     v-model="password"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.passwordRequired, rules.min]"
+                    :rules="[(value) => !!value || '请输入密码', (v) => (!!v && v.length >= 6) || '长度最少为6位']"
                     :type="show ? 'text' : 'password'"
                     label="密码"
                     :counter="16"
@@ -67,7 +67,7 @@
   </v-container>
 </template>
 <script>
-import AppBar from "../../components/AppBar";
+import AppBar from "../Index/components/AppBar";
 import DarkButton from "../../components/DarkButton";
 
 export default {
@@ -105,11 +105,6 @@ export default {
       show: false,
       username: this.$route.params.username,
       password: this.$route.params.password,
-      rules: {
-        usernameRequired: (value) => !!value || "请输入用户名",
-        passwordRequired: (value) => !!value || "请输入密码",
-        min: (v) => (!!v && v.length >= 6) || "长度最少为6位",
-      },
     };
   },
   methods: {
@@ -124,7 +119,7 @@ export default {
             .then((res) => {
               this.$notify({
                 title: "登录成功",
-                message: "",
+                message: null,
                 type: "success",
                 duration: 2000,
               });
