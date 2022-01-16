@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 module.exports = {
     // 基本路径 baseURL已经过时
     publicPath: './',
@@ -19,15 +18,15 @@ module.exports = {
         port: 8000,
         https: false,
         hotOnly: false,
-        proxy: {
-            '/api': {
-                target: 'http://47.95.124.239',
-                changeOrigin: true, // 开启跨域
-                pathRewrite: { // 重映射路径
-                    '^/api': '/api'
-                }
-            }
-        }
+        // proxy: {
+        //     '/api': {
+        //         target: 'http://47.95.124.239',
+        //         changeOrigin: true, // 开启跨域
+        //         pathRewrite: { // 重映射路径
+        //             '^/api': '/api'
+        //         }
+        //     }
+        // }
     },
     transpileDependencies: ['vuetify']
 }

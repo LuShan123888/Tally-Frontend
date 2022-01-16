@@ -100,11 +100,10 @@
                     <v-text-field
                         label="金额"
                         prefix="¥"
-                        :rules="[(value) => !!value || '请输入金额', rules.isNumber]"
+                        :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
                         v-model="selectedBill.amount"
                         clearable
-                        required
-                    ></v-text-field>
+                    />
                   </v-col>
                   <v-col cols="5">
                     <v-combobox
@@ -114,8 +113,7 @@
                         :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
                         clearable
-                        required
-                    ></v-combobox>
+                    />
                   </v-col>
                 </v-row>
                 <v-row justify="space-around" no-gutters>
@@ -123,7 +121,6 @@
                     <v-text-field
                         label="标签"
                         v-model="selectedBill.remark"
-
                         clearable
                     ></v-text-field
                     >
@@ -139,10 +136,10 @@
                         <v-text-field
                             v-model="selectedBill.billDate"
                             label="日期"
+                            :rules="[(value) => !!value || '请输入日期']"
                             readonly
                             v-bind="attrs"
                             v-on="on"
-
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -152,19 +149,17 @@
                       >
                         <v-spacer></v-spacer>
                         <v-btn
+                            color="grey darken-1"
                             text
-                            color="error"
                             @click="showDatePicker = false"
-                        >
-                          取消
-                        </v-btn>
+                            v-text="'取消'"
+                        />
                         <v-btn
                             text
                             color="primary"
                             @click="$refs.dialog.save(selectedBill.billDate)"
-                        >
-                          确认
-                        </v-btn>
+                            v-text="'确认'"
+                        />
                       </v-date-picker>
                     </v-dialog>
                   </v-col>
@@ -175,24 +170,31 @@
                         v-model="selectedBill.note"
                         auto-grow
                         rows="1"
-
                         clearable
                         label="备注"
-                    ></v-textarea
-                    >
+                    />
                   </v-col>
                 </v-row>
-                <v-row no-gutters justify="space-around" class="mb-6">
-                  <v-col cols="6" class="text-center">
-                    <v-btn x-large color="primary" @click="updateBill()"
-                    >更新
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="6" class="text-center">
-                    <v-btn x-large color="error" @click="deleteBill()"
-                    >删除
-                    </v-btn>
-                  </v-col>
+                <v-row no-gutters>
+                  <v-spacer/>
+                  <v-btn
+                      color="grey darken-1"
+                      text
+                      @click="showDialog = false"
+                      v-text="'取消'"
+                  />
+                  <v-btn
+                      text
+                      color="blue darken-1"
+                      @click="updateBill()"
+                      v-text="'更新'"
+                  />
+                  <v-btn
+                      text
+                      color="red darken-1"
+                      @click="deleteBill()"
+                      v-text="'删除'"
+                  />
                 </v-row>
               </v-col>
             </v-row>
@@ -251,11 +253,11 @@ export default {
       ],
       selectedBill: {},
       rules: {
-        isNumber: (v) => /^\d+$/.test(v) || /^\d+[.]?\d+$/.test(v) || "只能输入数字",
+        isFloat: this.GLOBAL.rules.isFloat,
       },
       monthStatistics: {
-        in: {sum: 0,},
-        out: {sum: 0,},
+        in: {sum: 0},
+        out: {sum: 0}
       },
       currentMonth: new Date().getMonth() + 1,
       style: {
@@ -283,8 +285,7 @@ export default {
       this.selectedBill = item;
     },
     deleteBill() {
-      this.axios
-          .delete(this.GLOBAL.apiBase + "/bill/deleteBill/" + this.selectedBill.id)
+      this.axios.delete(this.GLOBAL.url.api + "/bill/deleteBill/" + this.selectedBill.id)
           .then(() => {
             this.showDialog = false;
             this.$notify({
@@ -294,22 +295,14 @@ export default {
               duration: 2000,
             });
             this.loadCountBanner();
-            this.axios.get(this.GLOBAL.apiBase + "/bill/listBill").then((response) => {
+            this.axios.get(this.GLOBAL.url.api + "/bill/listBill").then((response) => {
               this.billList = response.data.data;
             });
           });
     },
     updateBill() {
       if (this.$refs.form.validate()) {
-        if (this.selectedBill.billDate == null) {
-          this.selectedBill.billDate = new Date().Format("yyyy-MM-dd");
-        }
-        this.axios
-            .put(this.GLOBAL.apiBase + "/bill/updateBill", JSON.stringify(this.selectedBill), {
-              headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-              },
-            })
+        this.axios.put(this.GLOBAL.url.api + "/bill/updateBill", JSON.stringify(this.selectedBill))
             .then(() => {
               this.showDialog = false;
               this.loadCountBanner();
@@ -339,7 +332,6 @@ export default {
               {value: _this.monthStatistics.out.sum, name: "支出"},
             ],
             color: ["#9ECA7F", "#5A6FC0"],
-
             itemStyle: {
               normal: {
                 label: {
@@ -366,10 +358,7 @@ export default {
     },
     loadCountBanner() {
       this.axios
-          .get(
-              this.GLOBAL.apiBase + "/bill/statisticsMonthBill?countMonth=" +
-              new Date().Format("yyyy-MM")
-          )
+          .get(this.GLOBAL.url.api + "/bill/statisticsMonthBill?countMonth=" + new Date().Format("yyyy-MM"))
           .then((response) => {
             let data = response.data.data;
             if (data != null) {
@@ -385,7 +374,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get(this.GLOBAL.apiBase + "/bill/listBill").then((response) => {
+    this.axios.get(this.GLOBAL.url.api + "/bill/listBill").then((response) => {
       if (response.data.data != null && response.data.data.length > 0) {
         this.billList = response.data.data;
       }

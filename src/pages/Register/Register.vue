@@ -4,13 +4,14 @@
     <dark-button id="dark-button" :style="style.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-card
-          class="mx-auto mt-16 transition-swing"
+          class="mx-auto transition-swing"
           :style="{ width: isMobile ? '80%' : '40%' }"
+          style="margin-top:20vh"
           :class="`elevation-${hover ? 24 : 6}`"
       >
         <v-row no-gutters>
           <v-col cols="12">
-            <div class="text-h4 pt-10 text-center">注册</div>
+            <div class="text-h4 pt-10 text-center" v-text="'注册'"/>
           </v-col>
         </v-row>
         <v-row>
@@ -24,30 +25,28 @@
               <v-row>
                 <v-text-field
                     v-model="username"
-                    :counter="16"
-                    :rules="[(value) => !!value || '请输入用户名']"
+                    :counter="rules.usernameMaxLength"
+                    :rules="[rules.isUsername]"
                     label="用户名"
                     clearable
-                    required
                 ></v-text-field>
               </v-row>
               <v-row>
                 <v-text-field
                     v-model="password"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[(value) => !!value || '请输入密码', (v) => (!!v && v.length >= 6) || '长度最少为6位']"
+                    :rules="[rules.isPassword]"
                     :type="show ? 'text' : 'password'"
                     label="密码"
-                    :counter="16"
+                    :counter="rules.passwordMaxLength"
                     @click:append="show = !show"
                 ></v-text-field>
               </v-row>
               <v-row>
                 <v-text-field
                     v-model="email"
-                    :rules="[rules.isEmail]"
-                    label="E-mail"
-                    required
+                    :rules="[(value)=> !!value || '请输入邮箱' ,rules.isEmail]"
+                    label="邮箱"
                     clearable
                 ></v-text-field>
               </v-row>
@@ -58,9 +57,8 @@
                     class="mx-auto my-10"
                     style="width: 40%"
                     @click="submitForm()"
-                >
-                  注册
-                </v-btn>
+                    v-text="'注册'"
+                />
               </v-row>
             </v-form>
           </v-col>
@@ -91,9 +89,7 @@ export default {
       username: null,
       password: null,
       email: null,
-      rules: {
-        isEmail: this.GLOBAL.rules.isEmail
-      },
+      rules: this.GLOBAL.rules,
       class: {
         title: {
           "text-h2": !this.$vuetify.breakpoint.mobile,
@@ -119,11 +115,10 @@ export default {
       if (this.$refs.form.validate()) {
         const _this = this;
         const params = new URLSearchParams();
-        params.append(username, this.username);
+        params.append("username", this.username);
         params.append("password", this.password);
         params.append("email", this.email);
-        this.axios
-            .post(this.GLOBAL.apiBase + "/account/signUp", params)
+        this.axios.post(this.GLOBAL.url.api + "/account/signUp", params)
             .then(() => {
               this.$notify({
                 title: "注册成功",

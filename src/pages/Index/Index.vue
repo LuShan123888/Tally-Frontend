@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     const _this = this;
-    this.axios.get(this.GLOBAL.apiBase + "/account/getUserInfo").then((response) => {
+    this.axios.get(this.GLOBAL.url.api + "/account/getUserInfo").then((response) => {
       _this.$store.commit("setUserInfo", response.data.data);
     });
   },

@@ -4,8 +4,9 @@
     <dark-button id="dark-button" :style="style.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-card
-          class="mx-auto mt-16 transition-swing"
+          class="mx-auto transition-swing"
           :style="{ width: isMobile ? '80%' : '40%' }"
+          style="margin-top:20vh"
           :class="`elevation-${hover ? 24 : 6}`"
       >
         <v-row no-gutters>
@@ -24,21 +25,20 @@
               <v-row>
                 <v-text-field
                     v-model="username"
-                    :counter="16"
-                    :rules="[(value) => !!value || '请输入用户名']"
+                    :rules="[rules.isUsername]"
                     label="用户名"
+                    :counter="rules.usernameMaxLength"
                     clearable
-                    required
                 ></v-text-field>
               </v-row>
               <v-row>
                 <v-text-field
                     v-model="password"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[(value) => !!value || '请输入密码', (v) => (!!v && v.length >= 6) || '长度最少为6位']"
+                    :rules="[rules.isPassword]"
                     :type="show ? 'text' : 'password'"
                     label="密码"
-                    :counter="16"
+                    :counter="rules.passwordMaxLength"
                     @click:append="show = !show"
                 ></v-text-field>
               </v-row>
@@ -105,6 +105,7 @@ export default {
       show: false,
       username: this.$route.params.username,
       password: this.$route.params.password,
+      rules: this.GLOBAL.rules,
     };
   },
   methods: {
@@ -115,7 +116,7 @@ export default {
         params.append("username", this.username);
         params.append("password", this.password);
         this.axios
-            .post(this.GLOBAL.apiBase + "/account/signIn", params)
+            .post(this.GLOBAL.url.api + "/account/signIn", params)
             .then((res) => {
               this.$notify({
                 title: "登录成功",

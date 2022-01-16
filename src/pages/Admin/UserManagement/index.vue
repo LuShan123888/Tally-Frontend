@@ -2,56 +2,58 @@
   <div>
     <v-row style="height:150px" no-gutters align="center">
       <v-col cols="2" no-gutters>
-        <div class="text-h4 pl-10">用户管理</div>
+        <div class="text-h4 pl-10" v-text="'用户管理'"/>
       </v-col>
       <v-col cols="9">
-        <v-row no-gutters>
-          <v-col cols="2">
-            <v-text-field
-                dense
-                clearable
-                v-model="queryUser.id"
-                label="用户ID"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="2" class="mx-3">
-            <v-text-field
-                clearable
-                dense
-                v-model="queryUser.username"
-                label="用户名"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="1">
-            <v-btn
-                small
-                fab
-                color="primary"
-                @click="loadData()"
-            >
-              <v-icon>
-                mdi-magnify
-              </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
+        <v-form style="width:100%" ref="userQueryForm">
+          <v-row no-gutters>
+            <v-col cols="2">
+              <v-text-field
+                  dense
+                  clearable
+                  v-model="table.query.user.id"
+                  :rules="[rules.isInteger]"
+                  label="用户ID"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="2" class="mx-3">
+              <v-text-field
+                  clearable
+                  dense
+                  v-model="table.query.user.username"
+                  label="用户名"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="1">
+              <v-btn
+                  small
+                  fab
+                  color="primary"
+                  @click="queryUser"
+              >
+                <v-icon>
+                  mdi-magnify
+                </v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-col>
       <v-col cols="1">
         <v-btn
             color="primary"
-            @click="handleSave()"
-        >
-          新增用户
-        </v-btn>
+            @click="loadUserSaveDialog()"
+            v-text="'新增用户'"
+        />
       </v-col>
     </v-row>
     <v-divider></v-divider>
     <el-table
-        v-loading="loading"
+        v-loading="table.loading"
         id="table"
-        :data="tableData"
+        :data="table.data"
         stripe
         highlight-current-row
         height="68vh"
@@ -84,15 +86,23 @@
           property="phoneNum"
           width="180">
       </el-table-column>
+      <el-table-column label="头像" align="center">
+        <template v-slot="scope">
+          <v-avatar size="40" v-if="scope.row.avatarUrl!=null">
+            <img :src="getAvatarPath(scope.row.avatarUrl)">
+          </v-avatar>
+          <v-icon size="40" v-else>mdi-account-circle</v-icon>
+        </template>
+      </el-table-column>
       <el-table-column
           label="角色"
           sortable
           align="center"
-          property="roleIdList"
+          property="sysRoleIdList"
           width="200">
         <template slot-scope="scope">
           <v-chip
-              v-for="item in scope.row.roleIdList"
+              v-for="item in scope.row.sysRoleIdList"
               :key="item"
               class="mx-1"
               label
@@ -111,27 +121,19 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
         <template v-slot="scope">
-          <v-btn
-              small
-              class="ma-1"
-              @click="handleEdit(scope.$index, scope.row)"
-          >
-            编辑
-          </v-btn>
           <el-popconfirm
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该用户吗？"
-              @confirm="handleDelete(scope.$index, scope.row)"
+              @confirm="deleteUser(scope.row.id)"
           >
             <v-btn
                 slot="reference"
-                small
-                color="error"
-                class="ma-1"
-            >
-              删除
-            </v-btn>
+                text
+                color="red darken-1"
+                class="mx-1"
+                v-text="'删除'"
+            />
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -144,92 +146,110 @@
               label="分页大小"
               lined
               dense
-              v-model="page.pageSize"
+              v-model="table.query.page.pageSize"
               @input="changePageSize"
           ></v-select>
         </div>
       </v-col>
       <v-col cols="3">
         <v-pagination
-            v-model="page.currentPage"
-            :length="page.pageCount"
+            v-model="table.query.page.currentPage"
+            :length="table.query.page.pageCount"
             @input="changePage"
             :total-visible="7"
         ></v-pagination>
       </v-col>
     </v-row>
     <v-dialog
-        v-model="dialog"
+        v-model="dialog.isShow"
         max-width="600px"
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5" v-text="dialogTitle"/>
+          <span class="text-h5" v-text="dialog.title"/>
         </v-card-title>
         <v-card-text class="pb-0">
-          <v-container>
-            <v-row no-gutters>
-              <v-col cols="6" class="pr-3">
-                <v-text-field
-                    v-model="tempUser.username"
-                    label="用户名"
-                    required
-                    clearable
-                ></v-text-field>
-              </v-col>
-              <v-col class="pl-3" cols="6">
-                <v-text-field
-                    v-model="tempUser.phoneNum"
-                    label="手机号码"
-                    clearable
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                    v-model="tempUser.email"
-                    label="邮箱"
-                    clearable
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" v-if="tempUser.id == null">
-                <v-text-field
-                    v-model="tempUser.password"
-                    type="password"
-                    label="密码"
-                    clearable
-                    required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="6">
-                <div class="text-subtitle-1 mt-3 mb-1">
-                  头像
-                </div>
-                <el-upload
-                    class="avatar-uploader"
-                    name="uploadFile"
-                    :action="uploadPath"
-                    :headers="uploadHeader"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :on-error="handleAvatarError"
-                    :before-upload="beforeAvatarUpload">
-                  <img v-if="tempUser.avatarUrl" :src="tempUser.avatarPath" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-              </v-col>
-              <v-col cols="6">
-                <v-row no-gutters>
-                  <v-autocomplete
-                      v-model="tempUser.status"
+          <v-form ref="userSaveForm">
+            <v-container>
+              <v-row no-gutters>
+                <v-col cols="6" class="pr-3">
+                  <v-text-field
+                      v-model="dialog.user.username"
+                      label="用户名"
+                      :counter="rules.usernameMaxLength"
+                      :rules="[rules.isUsername]"
+                      clearable
+                  ></v-text-field>
+                </v-col>
+                <v-col class="pl-3" cols="6">
+                  <v-text-field
+                      v-model="dialog.user.phoneNum"
+                      :rules="[rules.isPhoneNum]"
+                      counter="11"
+                      label="手机号码"
+                      clearable
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="dialog.user.email"
+                      :rules="[rules.isEmail]"
+                      label="邮箱"
+                      clearable
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="dialog.user.password"
+                      :rules="[rules.isPassword]"
+                      type="password"
+                      label="密码"
+                      :counter="rules.passwordMaxLength"
+                      clearable
+                  ></v-text-field>
+                  <v-text-field
+                      type="password"
+                      label="密码确认"
+                      :rules="[value=>value===dialog.user.password||'两次输入的密码不一致']"
+                      :counter="rules.passwordMaxLength"
+                      clearable
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-row align="center" class="mb-3 " no-gutters>
+                    <div class="text-subtitle-1" v-text="'头像'"/>
+                    <v-btn
+                        v-if="dialog.user.avatarUrl!=null"
+                        x-small
+                        depressed
+                        class="error"
+                        style="margin-left:72px"
+                        @click="dialog.user.avatarUrl=null;"
+                        v-text="'删除'"
+                    />
+                  </v-row>
+                  <el-upload
+                      class="avatar-uploader"
+                      name="uploadFile"
+                      :action="upload.path"
+                      :headers="upload.header"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :on-error="handleAvatarError"
+                      :before-upload="beforeAvatarUpload">
+                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)" class="avatar">
+                    <v-icon v-else>mdi-upload</v-icon>
+                  </el-upload>
+                </v-col>
+                <v-col cols="6" align-self="center">
+                  <v-select
+                      v-model="dialog.user.status"
                       class="pl-3"
                       :items="[{text:'正常',value:'NORMAL'},{text:'禁用',value:'PROHIBIT'}]"
                       label="状态"
-                      required
-                  ></v-autocomplete>
-                </v-row>
-                <v-row no-gutters>
-                  <v-autocomplete
-                      v-model="tempUser.roleIdList"
+                  />
+                  <v-select
+                      v-model="dialog.user.sysRoleIdList"
                       class="pl-3"
                       chips
                       deletable-chips
@@ -237,28 +257,26 @@
                       :items="roleMap"
                       label="角色"
                       multiple
-                  ></v-autocomplete>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-              color="blue darken-1"
+              color="grey darken-1"
               text
-              @click="dialog = false"
-          >
-            取消
-          </v-btn>
+              @click="dialog.isShow = false"
+              v-text="'取消'"
+          />
           <v-btn
               color="blue darken-1"
               text
-              @click="saveOrUpdateUser()"
-          >
-            保存
-          </v-btn>
+              @click="saveUser()"
+              v-text="'保存'"
+          />
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -276,41 +294,47 @@ export default {
     },
     isDark: function () {
       return this.$vuetify.theme.dark;
-    },
+    }
   },
   watch: {},
   created() {
   },
   data: function () {
     return {
-      loading: false,
-      tableData: null,
-      dialog: false,
-      dialogTitle: null,
-      uploadPath: this.GLOBAL.apiBase + "/file/upload",
-      uploadHeader: {
-        Authorization: this.$store.getters.getToken
+      table: {
+        loading: false,
+        data: null,
+        query: {
+          page: {
+            currentPage: 1,
+            pageSize: 10,
+            pageCount: 5
+          },
+          user: {
+            id: null,
+            username: null
+          },
+        }
       },
-      tempUser: {
-        id: null,
-        username: null,
-        phoneNum: null,
-        email: null,
-        avatarUrl: null,
-        status: null,
-        roleIdList: null,
-        avatarPath: null
+      dialog: {
+        isShow: false,
+        title: null,
+        user: {
+          id: null,
+          username: null,
+          phoneNum: null,
+          email: null,
+          avatarUrl: null,
+          status: null,
+          sysRoleIdList: null,
+        },
       },
-      queryUser: {
-        id: null,
-        username: null
+      upload: {
+        path: this.GLOBAL.url.upload,
+        header: {Authorization: this.$store.getters.getToken}
       },
       roleMap: [],
-      page: {
-        currentPage: 1,
-        pageSize: 10,
-        pageCount: 5
-      }
+      rules: this.GLOBAL.rules
     };
   },
   methods: {
@@ -322,64 +346,84 @@ export default {
       this.page.currentPage = currentPage;
       this.loadData();
     },
-    handleEdit(index, item) {
-      this.tempUser.id = item.id;
-      this.tempUser.username = item.username;
-      this.tempUser.phoneNum = item.phoneNum;
-      this.tempUser.email = item.email;
-      this.tempUser.avatarUrl = item.avatarUrl;
-      this.tempUser.status = item.status;
-      this.tempUser.roleIdList = item.roleIdList;
-      if (item.avatarUrl != null) {
-        this.tempUser.avatarPath = this.GLOBAL.fileBase + item.avatarUrl;
-      }
-      this.dialogTitle = "修改用户";
-      this.dialog = true;
-    },
-    handleDelete(index, item) {
+    loadUserDeleteDialog(index, item) {
       console.log(item);
     },
-    handleSave() {
-      this.tempUser.id = null;
-      this.tempUser.username = null;
-      this.tempUser.phoneNum = null;
-      this.tempUser.email = null;
-      this.tempUser.avatarUrl = null;
-      this.tempUser.status = null;
-      this.tempUser.roleIdList = null;
-      this.dialogTitle = "新增用户";
-      this.dialog = true;
+    loadUserSaveDialog() {
+      this.dialog.user.id = null;
+      this.dialog.user.username = null;
+      this.dialog.user.phoneNum = null;
+      this.dialog.user.email = null;
+      this.dialog.user.avatarUrl = null;
+      this.dialog.user.status = null;
+      this.dialog.user.sysRoleIdList = null;
+      this.dialog.title = "新增用户";
+      this.dialog.isShow = true;
     },
-    saveOrUpdateUser() {
-      this.dialog = false;
-      console.log(this.tempUser);
+    saveUser() {
+      if (this.$refs.userSaveForm.validate()) {
+        this.axios.post(this.GLOBAL.url.api + "/user/saveUser", JSON.stringify(this.dialog.user))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.loadData();
+            });
+      }
     },
+    deleteUser(userId) {
+      this.axios.delete(this.GLOBAL.url.api + "/user/removeUser/" + userId)
+          .then(() => {
+            this.showDialog = false;
+            this.$notify({
+              title: "删除成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.loadData();
+          });
+    },
+    queryUser() {
+      if (this.$refs.userQueryForm.validate()) {
+        this.loadData();
+      }
+    }
+    ,
     loadData() {
-      this.loading = true;
-      this.axios.post(this.GLOBAL.apiBase + "/user/listUser",
-          JSON.stringify(this.queryUser),
-          {headers: {"Content-Type": "application/json;charset=UTF-8",},}
-      ).then((response) => {
-        this.tableData = response.data.data;
-        this.loading = false;
-      });
-    },
+      this.table.loading = true;
+      this.axios.post(this.GLOBAL.url.api + "/user/listUser", JSON.stringify(this.table.query.user))
+          .then((response) => {
+            this.table.data = response.data.data;
+            this.table.loading = false;
+          });
+    }
+    ,
+    getAvatarPath(avatarUrl) {
+      if (avatarUrl != null) {
+        return this.GLOBAL.url.file + avatarUrl;
+      }
+    }
+    ,
     handleAvatarSuccess(res) {
-      console.log(res)
-      let filePath = res.data;
-      this.tempUser.avatarUrl = filePath;
-      this.tempUser.avatarPath = this.GLOBAL.fileBase + filePath;
+      this.dialog.user.avatarUrl = res.data;
       this.$notify({
         title: "图片上传成功",
         message: null,
         type: "success",
         duration: 2000,
       });
-    },
+    }
+    ,
     handleAvatarError(err) {
       console.log(err)
       this.$message.error("图像上传失败")
-    },
+    }
+    ,
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -391,33 +435,37 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
       return isJPG && isLt2M;
-    },
+    }
+    ,
     roleFormatter(roleId) {
       for (let item of this.roleMap) {
         if (item.value === roleId) {
           return item.text;
         }
       }
-    },
+    }
+    ,
     loadRoleMap() {
       let _this = this;
-      this.axios.get(this.GLOBAL.apiBase + "/role/listAllRole").then((response) => {
-        let roleMap = response.data.data;
-        roleMap.forEach(item => {
-          let tempRole = {
+      this.axios.get(this.GLOBAL.url.api + "/role/listAllRole").then((response) => {
+        response.data.data.forEach(item => {
+          let role = {
             text: item.roleName,
             value: item.id
           }
-          _this.roleMap.push(tempRole)
+          _this.roleMap.push(role)
         })
       });
     }
-  },
+  }
+  ,
   mounted() {
     this.loadData();
     this.loadRoleMap();
-  },
-};
+  }
+  ,
+}
+;
 </script>
 
 <style lang="scss">
@@ -425,47 +473,42 @@ export default {
   position: fixed;
 }
 
-#table td, #table th.is-leaf {
-  border-bottom: 0 solid #E0E0E0;
-}
+#table {
+  td, th.is-leaf {
+    border-bottom: 0 solid #E0E0E0;
+  }
 
-#table::before {
-  background-color: #E0E0E0;
+  &:before {
+    background-color: #E0E0E0;
+  }
 }
 
 .el-popconfirm__main {
   margin-bottom: 10px;
 }
 
-.avatar-uploader .el-upload {
-  border: 1px solid #E0E0E0;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 150px;
-  height: 150px;
+.avatar-uploader {
+  .el-upload {
+    border: 1px solid #949494;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+
+    &:hover {
+      border-color: #409EFF;
+    }
+  }
+
+  .avatar {
+    width: 150px;
+    height: 150px;
+    display: block;
+  }
 }
 
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 28px;
-  height: 28px;
-  line-height: 150px;
-  text-align: center;
-}
-
-.avatar {
-  width: 150px;
-  height: 150px;
-  display: block;
-}
 </style>

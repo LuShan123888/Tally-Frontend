@@ -18,7 +18,7 @@ export default {
   },
   data: function () {
     return {
-      iframeSrc: this.GLOBAL.frameBase + '/druid/index.html',
+      iframeSrc: this.GLOBAL.url.iframe + '/druid/index.html',
       height: document.documentElement.clientHeight - 64 + "px;"
     };
   },

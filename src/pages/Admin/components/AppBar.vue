@@ -22,7 +22,7 @@
           <v-avatar v-if="userInfo.avatarUrl!=null">
             <img :src="avatarPath">
           </v-avatar>
-          <v-icon x-large v-if="userInfo.avatarUrl==null">mdi-account-circle</v-icon>
+          <v-icon x-large v-else>mdi-account-circle</v-icon>
         </v-btn>
       </template>
       <v-list nav>
@@ -38,20 +38,6 @@
             </v-list-item-icon>
             <v-list-item-content class="ml-0">
               <v-list-item-title v-text="userInfo.username"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-              id="item-group"
-              dense
-              link
-              @click="changePassword()"
-              class="my-0"
-          >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-lock-reset</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content class="ml-0">
-              <v-list-item-title>修改密码</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item
@@ -95,15 +81,24 @@ export default {
       userInfo: {
         avatarUrl: null,
         username: null
-      },
-      avatarPath: null
+      }
     };
+  },
+  computed: {
+    isMobile: function () {
+      return this.$vuetify.breakpoint.mobile;
+    },
+    isDark: function () {
+      return this.$vuetify.theme.dark;
+    },
+    avatarPath: function () {
+      if (this.userInfo.avatarUrl != null) {
+        return this.GLOBAL.url.file + this.userInfo.avatarUrl;
+      }
+    }
   },
   mounted() {
     this.userInfo = this.$store.getters.getUserInfo;
-    if (this.userInfo.avatarUrl != null){
-      this.avatarPath = this.GLOBAL.fileBase + this.userInfo.avatarUrl;
-    }
   },
   methods: {
     logout() {
@@ -113,10 +108,8 @@ export default {
         type: "success",
         duration: 2000,
       });
-      this.$store.commit("clear");
+      this.$store.commit("clean");
       this.$router.push("/login");
-    },
-    changePassword() {
     }
   }
 };

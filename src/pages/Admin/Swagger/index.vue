@@ -18,7 +18,7 @@ export default {
   },
   data: function () {
     return {
-      iframeSrc: this.GLOBAL.frameBase + '/swagger-ui.html',
+      iframeSrc: this.GLOBAL.url.iframe + '/swagger-ui.html',
       height: document.documentElement.clientHeight - 64 + "px;",
     };
   },

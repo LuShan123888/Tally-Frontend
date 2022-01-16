@@ -4,9 +4,8 @@
     <div
         :class="this.class.title"
         :style="{ color: $vuetify.theme.themes.light.primary }"
-    >
-      收入
-    </div>
+        v-text="'收入'"
+    />
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
@@ -22,11 +21,9 @@
                     <v-text-field
                         label="金额"
                         prefix="¥"
-                        :rules="[(value) => !!value || '请输入金额',rules.isNumber]"
+                        :rules="[(value) => !!value || '请输入金额',rules.isFloat]"
                         v-model="bill.amount"
-
                         clearable
-                        required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="5">
@@ -36,8 +33,6 @@
                         :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
                         clearable
-
-                        required
                     ></v-combobox>
                   </v-col>
                 </v-row>
@@ -46,7 +41,6 @@
                     <v-text-field
                         label="标签"
                         v-model="bill.remark"
-
                         clearable
                     ></v-text-field
                     >
@@ -62,10 +56,10 @@
                         <v-text-field
                             v-model="bill.billDate"
                             label="日期"
+                            :rules="[(value) => !!value || '请输入日期']"
                             readonly
                             v-bind="attrs"
                             v-on="on"
-
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -159,7 +153,7 @@ export default {
       },
       showDatePicker: false,
       rules: {
-        isNumber: this.GLOBAL.rules.isNumber
+        isFloat: this.GLOBAL.rules.isFloat
       },
       style: {
         backgroundImg: {
@@ -184,15 +178,7 @@ export default {
     submitForm() {
       if (this.$refs.form.validate()) {
         this.axios
-            .post(
-                this.GLOBAL.apiBase + "/bill/insertBill",
-                JSON.stringify(this.bill),
-                {
-                  headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                  },
-                }
-            )
+            .post(this.GLOBAL.url.api + "/bill/insertBill", JSON.stringify(this.bill))
             .then(() => {
               this.$notify({
                 title: "提交成功",

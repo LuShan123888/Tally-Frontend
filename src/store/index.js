@@ -10,27 +10,26 @@ export default new Vuex.Store({
     },
     mutations: {
         setToken: (state, token) => {
-            state.token = token
-            localStorage.setItem("token", token)
+            state.token = token;
+            localStorage.setItem("token", token);
         },
         setUserInfo: (state, userInfo) => {
-            state.userInfo = userInfo
-            sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
+            state.userInfo = userInfo;
+            sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
         },
-        clear: (state) => {
-            state.token = null
-            state.userInfo = {}
-            localStorage.setItem("token", null)
-            sessionStorage.setItem("userInfo", null)
+        clean: (state) => {
+            state.token = null;
+            state.userInfo = {};
+            localStorage.setItem("token", null);
+            sessionStorage.setItem("userInfo", null);
         }
-
     },
     getters: {
         getUserInfo: state => {
-            return state.userInfo
+            return state.userInfo;
         },
         getToken: state => {
-            return state.token
+            return state.token;
         }
     },
     actions: {},
