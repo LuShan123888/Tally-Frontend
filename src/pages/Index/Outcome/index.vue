@@ -189,7 +189,7 @@ export default {
   methods: {
     submitForm() {
       if (this.$refs.form.validate()) {
-        this.axios.post(this.GLOBAL.url.api + "/bill/insertBill", JSON.stringify(this.bill))
+        this.axios.post("/bill/insertBill", JSON.stringify(this.bill))
             .then(() => {
               this.$notify({
                 title: "提交成功",

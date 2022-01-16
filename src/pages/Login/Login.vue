@@ -116,7 +116,7 @@ export default {
         params.append("username", this.username);
         params.append("password", this.password);
         this.axios
-            .post(this.GLOBAL.url.api + "/account/signIn", params)
+            .post("/account/signIn", params)
             .then((res) => {
               this.$notify({
                 title: "登录成功",

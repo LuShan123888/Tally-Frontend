@@ -285,7 +285,7 @@ export default {
       this.selectedBill = item;
     },
     deleteBill() {
-      this.axios.delete(this.GLOBAL.url.api + "/bill/deleteBill/" + this.selectedBill.id)
+      this.axios.delete("/bill/deleteBill/" + this.selectedBill.id)
           .then(() => {
             this.showDialog = false;
             this.$notify({
@@ -295,14 +295,14 @@ export default {
               duration: 2000,
             });
             this.loadCountBanner();
-            this.axios.get(this.GLOBAL.url.api + "/bill/listBill").then((response) => {
+            this.axios.get("/bill/listBill").then((response) => {
               this.billList = response.data.data;
             });
           });
     },
     updateBill() {
       if (this.$refs.form.validate()) {
-        this.axios.put(this.GLOBAL.url.api + "/bill/updateBill", JSON.stringify(this.selectedBill))
+        this.axios.put("/bill/updateBill", JSON.stringify(this.selectedBill))
             .then(() => {
               this.showDialog = false;
               this.loadCountBanner();
@@ -358,7 +358,7 @@ export default {
     },
     loadCountBanner() {
       this.axios
-          .get(this.GLOBAL.url.api + "/bill/statisticsMonthBill?countMonth=" + new Date().Format("yyyy-MM"))
+          .get("/bill/statisticsMonthBill?countMonth=" + new Date().Format("yyyy-MM"))
           .then((response) => {
             let data = response.data.data;
             if (data != null) {
@@ -374,7 +374,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get(this.GLOBAL.url.api + "/bill/listBill").then((response) => {
+    this.axios.get("/bill/listBill").then((response) => {
       if (response.data.data != null && response.data.data.length > 0) {
         this.billList = response.data.data;
       }

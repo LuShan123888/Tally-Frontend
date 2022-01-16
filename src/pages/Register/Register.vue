@@ -118,7 +118,7 @@ export default {
         params.append("username", this.username);
         params.append("password", this.password);
         params.append("email", this.email);
-        this.axios.post(this.GLOBAL.url.api + "/account/signUp", params)
+        this.axios.post("/account/signUp", params)
             .then(() => {
               this.$notify({
                 title: "注册成功",

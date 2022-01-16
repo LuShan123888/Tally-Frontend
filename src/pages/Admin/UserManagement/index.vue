@@ -98,7 +98,6 @@
           label="角色"
           sortable
           align="center"
-          property="sysRoleIdList"
           width="200">
         <template slot-scope="scope">
           <v-chip
@@ -116,11 +115,17 @@
           label="状态"
           sortable
           :formatter="(row) => row.status === 'NORMAL' ?'正常':'禁用'"
-          property="status"
       >
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
         <template v-slot="scope">
+          <v-btn
+              text
+              color="blue darken-1"
+              class="mx-1"
+              @click="loadUserUpdateDialog(scope.row)"
+              v-text="'编辑'"
+          />
           <el-popconfirm
               icon="el-icon-info"
               icon-color="red"
@@ -175,6 +180,7 @@
                 <v-col cols="6" class="pr-3">
                   <v-text-field
                       v-model="dialog.user.username"
+                      :disabled="!!dialog.user.id"
                       label="用户名"
                       :counter="rules.usernameMaxLength"
                       :rules="[rules.isUsername]"
@@ -186,6 +192,7 @@
                       v-model="dialog.user.phoneNum"
                       :rules="[rules.isPhoneNum]"
                       counter="11"
+                      :disabled="!!dialog.user.id"
                       label="手机号码"
                       clearable
                   ></v-text-field>
@@ -194,12 +201,14 @@
                   <v-text-field
                       v-model="dialog.user.email"
                       :rules="[rules.isEmail]"
+                      :disabled="!!dialog.user.id"
                       label="邮箱"
                       clearable
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
+                      v-if="!dialog.user.id"
                       v-model="dialog.user.password"
                       :rules="[rules.isPassword]"
                       type="password"
@@ -208,6 +217,7 @@
                       clearable
                   ></v-text-field>
                   <v-text-field
+                      v-if="!dialog.user.id"
                       type="password"
                       label="密码确认"
                       :rules="[value=>value===dialog.user.password||'两次输入的密码不一致']"
@@ -219,7 +229,7 @@
                   <v-row align="center" class="mb-3 " no-gutters>
                     <div class="text-subtitle-1" v-text="'头像'"/>
                     <v-btn
-                        v-if="dialog.user.avatarUrl!=null"
+                        v-if="dialog.user.avatarUrl!=null && !dialog.user.id"
                         x-small
                         depressed
                         class="error"
@@ -229,6 +239,7 @@
                     />
                   </v-row>
                   <el-upload
+                      v-if="!dialog.user.id"
                       class="avatar-uploader"
                       name="uploadFile"
                       :action="upload.path"
@@ -237,11 +248,17 @@
                       :on-success="handleAvatarSuccess"
                       :on-error="handleAvatarError"
                       :before-upload="beforeAvatarUpload">
-                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)" class="avatar">
+                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
+                         style="height: 150px;width: 150px">
                     <v-icon v-else>mdi-upload</v-icon>
                   </el-upload>
+                  <div v-else>
+                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
+                         style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">
+                    <v-icon v-else size="150px" style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">mdi-account-circle</v-icon>
+                  </div>
                 </v-col>
-                <v-col cols="6" align-self="center">
+                <v-col cols=" 6" align-self="center">
                   <v-select
                       v-model="dialog.user.status"
                       class="pl-3"
@@ -274,7 +291,7 @@
           <v-btn
               color="blue darken-1"
               text
-              @click="saveUser()"
+              @click="saveOrUpdateUser()"
               v-text="'保存'"
           />
         </v-card-actions>
@@ -346,9 +363,6 @@ export default {
       this.page.currentPage = currentPage;
       this.loadData();
     },
-    loadUserDeleteDialog(index, item) {
-      console.log(item);
-    },
     loadUserSaveDialog() {
       this.dialog.user.id = null;
       this.dialog.user.username = null;
@@ -360,9 +374,37 @@ export default {
       this.dialog.title = "新增用户";
       this.dialog.isShow = true;
     },
-    saveUser() {
-      if (this.$refs.userSaveForm.validate()) {
-        this.axios.post(this.GLOBAL.url.api + "/user/saveUser", JSON.stringify(this.dialog.user))
+    loadUserUpdateDialog(user) {
+      this.dialog.user.id = user.id;
+      this.dialog.user.username = user.username;
+      this.dialog.user.phoneNum = user.phoneNum;
+      this.dialog.user.email = user.email;
+      this.dialog.user.avatarUrl = user.avatarUrl;
+      this.dialog.user.status = user.status;
+      this.dialog.user.sysRoleIdList = user.sysRoleIdList;
+      this.dialog.user.version = user.version;
+      this.dialog.title = "修改用户";
+      this.dialog.isShow = true;
+    },
+    saveOrUpdateUser() {
+      if (!this.$refs.userSaveForm.validate()) {
+        return;
+      }
+      if(this.dialog.user.id){
+        console.log(this.dialog.user)
+        this.axios.put("/user/updateUser", JSON.stringify(this.dialog.user))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.loadData();
+            });
+      }else {
+        this.axios.post("/user/saveUser", JSON.stringify(this.dialog.user))
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -376,7 +418,7 @@ export default {
       }
     },
     deleteUser(userId) {
-      this.axios.delete(this.GLOBAL.url.api + "/user/removeUser/" + userId)
+      this.axios.delete("/user/removeUser/" + userId)
           .then(() => {
             this.showDialog = false;
             this.$notify({
@@ -396,7 +438,7 @@ export default {
     ,
     loadData() {
       this.table.loading = true;
-      this.axios.post(this.GLOBAL.url.api + "/user/listUser", JSON.stringify(this.table.query.user))
+      this.axios.post("/user/listUser", JSON.stringify(this.table.query.user))
           .then((response) => {
             this.table.data = response.data.data;
             this.table.loading = false;
@@ -447,7 +489,7 @@ export default {
     ,
     loadRoleMap() {
       let _this = this;
-      this.axios.get(this.GLOBAL.url.api + "/role/listAllRole").then((response) => {
+      this.axios.get("/role/listAllRole").then((response) => {
         response.data.data.forEach(item => {
           let role = {
             text: item.roleName,
@@ -502,12 +544,6 @@ export default {
     &:hover {
       border-color: #409EFF;
     }
-  }
-
-  .avatar {
-    width: 150px;
-    height: 150px;
-    display: block;
   }
 }
 
