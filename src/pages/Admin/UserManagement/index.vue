@@ -5,41 +5,72 @@
         <div class="text-h4 pl-10" v-text="'用户管理'"/>
       </v-col>
       <v-col cols="9">
-        <v-form style="width:100%" ref="userQueryForm">
-          <v-row no-gutters>
-            <v-col cols="2">
-              <v-text-field
-                  dense
-                  clearable
-                  v-model="table.query.user.id"
-                  :rules="[rules.isInteger]"
-                  label="用户ID"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="2" class="mx-3">
-              <v-text-field
-                  clearable
-                  dense
-                  v-model="table.query.user.username"
-                  label="用户名"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="1">
-              <v-btn
-                  small
-                  fab
-                  color="primary"
-                  @click="queryUser"
-              >
-                <v-icon>
-                  mdi-magnify
-                </v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-form>
+        <v-row no-gutters align="center">
+          <v-col cols="5">
+            <v-form style="width:100%" ref="userQueryForm">
+              <v-row no-gutters align="center">
+                <v-col cols="6">
+                  <v-text-field
+                      dense
+                      clearable
+                      class="mr-2"
+                      v-model="table.query.user.id"
+                      :rules="[rules.isInteger]"
+                      label="用户ID"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field
+                      clearable
+                      class="mr-2"
+                      dense
+                      v-model="table.query.user.username"
+                      label="用户名"
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-row no-gutters align="center">
+                <v-col cols="6">
+                  <v-select
+                      class="mt-0 pt-0 mr-2"
+                      v-model="table.query.user.status"
+                      clearable
+                      :items="[{text:'正常',value:'NORMAL'},{text:'禁用',value:'PROHIBIT'}]"
+                      label="状态"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <v-select
+                      v-model="table.query.user.sysRoleIdList"
+                      chips
+                      clearable
+                      class="mt-0 pt-0 mr-2"
+                      deletable-chips
+                      small-chips
+                      :items="roleMap"
+                      label="角色"
+                      multiple
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-col>
+          <v-col cols="1">
+            <v-btn
+                small
+                fab
+                class="ml-2"
+                color="primary"
+                @click="pageUser"
+            >
+              <v-icon>
+                mdi-magnify
+              </v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="1">
         <v-btn
@@ -96,7 +127,6 @@
       </el-table-column>
       <el-table-column
           label="角色"
-          sortable
           align="center"
           width="200">
         <template slot-scope="scope">
@@ -113,7 +143,6 @@
       </el-table-column>
       <el-table-column
           label="状态"
-          sortable
           :formatter="(row) => row.status === 'NORMAL' ?'正常':'禁用'"
       >
       </el-table-column>
@@ -147,21 +176,23 @@
       <v-col cols="9" class="d-flex justify-end">
         <div style="width:90px">
           <v-select
-              :items="[10,20,50,100]"
+              :items="[5,15,50,100]"
               label="分页大小"
               lined
               dense
-              v-model="table.query.page.pageSize"
+              v-model="table.query.page.size"
               @input="changePageSize"
           ></v-select>
         </div>
       </v-col>
       <v-col cols="3">
         <v-pagination
-            v-model="table.query.page.currentPage"
-            :length="table.query.page.pageCount"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+            v-model="table.query.page.current"
+            :length="table.query.page.count"
             @input="changePage"
-            :total-visible="7"
+            total-visible="5"
         ></v-pagination>
       </v-col>
     </v-row>
@@ -255,7 +286,10 @@
                   <div v-else>
                     <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
                          style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">
-                    <v-icon v-else size="150px" style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">mdi-account-circle</v-icon>
+                    <v-icon v-else size="150px"
+                            style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">
+                      mdi-account-circle
+                    </v-icon>
                   </div>
                 </v-col>
                 <v-col cols=" 6" align-self="center">
@@ -323,13 +357,15 @@ export default {
         data: null,
         query: {
           page: {
-            currentPage: 1,
-            pageSize: 10,
-            pageCount: 5
+            current: 1,
+            size: 15,
+            count: null
           },
           user: {
             id: null,
-            username: null
+            username: null,
+            status: null,
+            sysRoleIdList: null
           },
         }
       },
@@ -355,13 +391,67 @@ export default {
     };
   },
   methods: {
-    changePageSize(pageSize) {
-      this.page.pageSize = pageSize;
-      this.loadData();
+    changePageSize() {
+      this.table.query.page.current = 1;
+      this.pageUser();
     },
-    changePage(currentPage) {
-      this.page.currentPage = currentPage;
-      this.loadData();
+    changePage() {
+      this.pageUser();
+    },
+    pageUser() {
+      if (this.$refs.userQueryForm.validate()) {
+        this.table.loading = true;
+        this.axios.post("/user/pageUser/" + this.table.query.page.current + "/" + this.table.query.page.size, JSON.stringify(this.table.query.user))
+            .then((response) => {
+              this.table.data = response.data.data;
+              this.table.query.page.count = response.data.count;
+              this.table.loading = false;
+            });
+      }
+    },
+    saveOrUpdateUser() {
+      if (!this.$refs.userSaveForm.validate()) {
+        return;
+      }
+      if (this.dialog.user.id) {
+        console.log(this.dialog.user)
+        this.axios.put("/user/updateUser", JSON.stringify(this.dialog.user))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.pageUser();
+            });
+      } else {
+        this.axios.post("/user/saveUser", JSON.stringify(this.dialog.user))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.pageUser();
+            });
+      }
+    },
+    deleteUser(userId) {
+      this.axios.delete("/user/removeUser/" + userId)
+          .then(() => {
+            this.showDialog = false;
+            this.$notify({
+              title: "删除成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.pageUser();
+          });
     },
     loadUserSaveDialog() {
       this.dialog.user.id = null;
@@ -386,71 +476,11 @@ export default {
       this.dialog.title = "修改用户";
       this.dialog.isShow = true;
     },
-    saveOrUpdateUser() {
-      if (!this.$refs.userSaveForm.validate()) {
-        return;
-      }
-      if(this.dialog.user.id){
-        console.log(this.dialog.user)
-        this.axios.put("/user/updateUser", JSON.stringify(this.dialog.user))
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.dialog.isShow = false;
-              this.loadData();
-            });
-      }else {
-        this.axios.post("/user/saveUser", JSON.stringify(this.dialog.user))
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.dialog.isShow = false;
-              this.loadData();
-            });
-      }
-    },
-    deleteUser(userId) {
-      this.axios.delete("/user/removeUser/" + userId)
-          .then(() => {
-            this.showDialog = false;
-            this.$notify({
-              title: "删除成功",
-              message: null,
-              type: "success",
-              duration: 2000,
-            });
-            this.loadData();
-          });
-    },
-    queryUser() {
-      if (this.$refs.userQueryForm.validate()) {
-        this.loadData();
-      }
-    }
-    ,
-    loadData() {
-      this.table.loading = true;
-      this.axios.post("/user/listUser", JSON.stringify(this.table.query.user))
-          .then((response) => {
-            this.table.data = response.data.data;
-            this.table.loading = false;
-          });
-    }
-    ,
     getAvatarPath(avatarUrl) {
       if (avatarUrl != null) {
         return this.GLOBAL.url.file + avatarUrl;
       }
-    }
-    ,
+    },
     handleAvatarSuccess(res) {
       this.dialog.user.avatarUrl = res.data;
       this.$notify({
@@ -459,17 +489,14 @@ export default {
         type: "success",
         duration: 2000,
       });
-    }
-    ,
+    },
     handleAvatarError(err) {
       console.log(err)
       this.$message.error("图像上传失败")
-    }
-    ,
+    },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!');
       }
@@ -477,16 +504,14 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
       return isJPG && isLt2M;
-    }
-    ,
+    },
     roleFormatter(roleId) {
       for (let item of this.roleMap) {
         if (item.value === roleId) {
           return item.text;
         }
       }
-    }
-    ,
+    },
     loadRoleMap() {
       let _this = this;
       this.axios.get("/role/listAllRole").then((response) => {
@@ -499,15 +524,12 @@ export default {
         })
       });
     }
-  }
-  ,
+  },
   mounted() {
-    this.loadData();
+    this.pageUser();
     this.loadRoleMap();
-  }
-  ,
-}
-;
+  },
+};
 </script>
 
 <style lang="scss">
