@@ -127,7 +127,7 @@ export default {
               const jwt = res.data.data.token;
               // 把数据共享出去
               _this.$store.commit("setToken", jwt);
-              _this.$router.push("/");
+              _this.$router.push({name: "Home"});
             });
       }
     },

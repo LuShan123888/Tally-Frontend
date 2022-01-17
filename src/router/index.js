@@ -23,7 +23,7 @@ const routes = [
         component: Index,
         children: [
             {
-                path: '/',
+                path: '/home',
                 name: 'Home',
                 component: Home,
                 meta: {
@@ -62,7 +62,7 @@ const routes = [
         component: AdminIndex,
         children: [
             {
-                path: '/admin/index',
+                path: '/admin/home',
                 name: 'AdminHome',
                 component: AdminHome,
                 meta: {

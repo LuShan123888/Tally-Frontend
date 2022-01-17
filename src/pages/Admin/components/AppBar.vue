@@ -109,7 +109,7 @@ export default {
         duration: 2000,
       });
       this.$store.commit("clean");
-      this.$router.push("/login");
+      this.$router.push({name: "Login"});
     }
   }
 };

@@ -68,7 +68,7 @@ export default {
     this.menus.data = [
       {
         icon: "mdi-home",
-        path: "/admin/index",
+        path: "/admin/home",
         title: "总览",
         children: null
       },
