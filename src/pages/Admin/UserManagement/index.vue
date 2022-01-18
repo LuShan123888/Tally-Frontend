@@ -325,6 +325,8 @@
           <v-btn
               color="blue darken-1"
               text
+              :disabled="dialog.btn.loading"
+              :loading="dialog.btn.loading"
               @click="saveOrUpdateUser()"
               v-text="'保存'"
           />
@@ -381,6 +383,9 @@ export default {
           status: null,
           roleIdList: null,
         },
+        btn: {
+          loading: false
+        }
       },
       upload: {
         path: this.GLOBAL.url.upload,
@@ -413,8 +418,8 @@ export default {
       if (!this.$refs.userSaveForm.validate()) {
         return;
       }
+      this.dialog.btn.loading = true;
       if (this.dialog.user.id) {
-        console.log(this.dialog.user)
         this.axios.put("/user/updateUser", JSON.stringify(this.dialog.user))
             .then(() => {
               this.$notify({
@@ -423,6 +428,9 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+            })
+            .finally(() => {
+              this.dialog.btn.loading = false;
               this.dialog.isShow = false;
               this.pageUser();
             });
@@ -435,6 +443,9 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+            })
+            .finally(() => {
+              this.dialog.btn.loading = false;
               this.dialog.isShow = false;
               this.pageUser();
             });
