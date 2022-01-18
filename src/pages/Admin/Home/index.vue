@@ -26,7 +26,7 @@ export default {
       email: null,
       phoneNum: null,
       status: null,
-      sysRoleIdList: null,
+      roleIdList: null,
       style: {
         backgroundImg: {
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",

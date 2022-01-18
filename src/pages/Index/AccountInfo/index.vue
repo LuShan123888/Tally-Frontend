@@ -45,7 +45,7 @@
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
-                  角色：{{ sysRoleIdList }}
+                  角色：{{ roleIdList }}
                 </span>
               </v-list-item-content>
             </v-list-item>
@@ -101,7 +101,7 @@ export default {
       email: null,
       phoneNum: null,
       status: null,
-      sysRoleIdList: null,
+      roleIdList: null,
       style: {
         backgroundImg: {
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
@@ -137,7 +137,7 @@ export default {
     const userinfo = this.$store.getters.getUserInfo;
     this.username = userinfo.username;
     this.phoneNum = userinfo.phoneNum;
-    this.sysRoleIdList = userinfo.sysRoleIdList;
+    this.roleIdList = userinfo.roleIdList;
     this.email = userinfo.email;
     if (userinfo.status === "NORMAL") {
       this.status = "正常";

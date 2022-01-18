@@ -43,7 +43,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-select
-                      v-model="table.query.user.sysRoleIdList"
+                      v-model="table.query.user.roleIdList"
                       chips
                       clearable
                       class="mt-0 pt-0 mr-2"
@@ -131,7 +131,7 @@
           width="200">
         <template slot-scope="scope">
           <v-chip
-              v-for="item in scope.row.sysRoleIdList"
+              v-for="item in scope.row.roleIdList"
               :key="item"
               class="mx-1"
               label
@@ -300,7 +300,7 @@
                       label="状态"
                   />
                   <v-select
-                      v-model="dialog.user.sysRoleIdList"
+                      v-model="dialog.user.roleIdList"
                       class="pl-3"
                       chips
                       deletable-chips
@@ -365,7 +365,7 @@ export default {
             id: null,
             username: null,
             status: null,
-            sysRoleIdList: null
+            roleIdList: null
           },
         }
       },
@@ -379,7 +379,7 @@ export default {
           email: null,
           avatarUrl: null,
           status: null,
-          sysRoleIdList: null,
+          roleIdList: null,
         },
       },
       upload: {
@@ -460,7 +460,7 @@ export default {
       this.dialog.user.email = null;
       this.dialog.user.avatarUrl = null;
       this.dialog.user.status = null;
-      this.dialog.user.sysRoleIdList = null;
+      this.dialog.user.roleIdList = null;
       this.dialog.title = "新增用户";
       this.dialog.isShow = true;
     },
@@ -471,7 +471,7 @@ export default {
       this.dialog.user.email = user.email;
       this.dialog.user.avatarUrl = user.avatarUrl;
       this.dialog.user.status = user.status;
-      this.dialog.user.sysRoleIdList = user.sysRoleIdList;
+      this.dialog.user.roleIdList = user.roleIdList;
       this.dialog.user.version = user.version;
       this.dialog.title = "修改用户";
       this.dialog.isShow = true;

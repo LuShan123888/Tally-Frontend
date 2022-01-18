@@ -43,7 +43,7 @@
           <v-list-item
               dense
               link
-              to="/"
+              to="/home"
               :class="{'v-list-item--active':false,'v-item--active':false}"
               class="my-0"
           >
@@ -51,7 +51,7 @@
               <v-icon>mdi-application-outline</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>前往前台</v-list-item-title>
+              <v-list-item-title v-text="'前往前台'"/>
             </v-list-item-content>
           </v-list-item>
           <v-list-item
