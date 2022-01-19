@@ -72,6 +72,7 @@
     </v-menu>
   </v-app-bar>
 </template>
+
 <script>
 export default {
   name: "AppBar",
@@ -93,7 +94,7 @@ export default {
     },
     avatarPath: function () {
       if (this.userInfo.avatarUrl != null) {
-        return this.GLOBAL.url.file + this.userInfo.avatarUrl;
+        return this.GLOBAL.url.file + "/" + this.userInfo.avatarUrl;
       }
     }
   },
@@ -116,5 +117,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

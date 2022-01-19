@@ -6,6 +6,7 @@
     <v-app-bar-title class="subtitle-1" v-text="title"></v-app-bar-title>
   </v-app-bar>
 </template>
+
 <script>
 export default {
   name: "AppBar",

@@ -39,6 +39,9 @@ axios.interceptors.response.use(
         console.log("==========response==========")
         console.log(error)
         console.log("==========end==========")
+        if (error.response === undefined) {
+            Element.Message.error("服务器无响应");
+        }
         const status = error.response.status;
         const message = error.response.data.message;
         const data = error.response.data.data;

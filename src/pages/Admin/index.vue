@@ -8,8 +8,8 @@
       </v-container>
     </v-main>
   </div>
-
 </template>
+
 <script>
 import AppBar from "./components/AppBar";
 import Navbar from "./components/Navbar";
@@ -42,6 +42,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 </style>

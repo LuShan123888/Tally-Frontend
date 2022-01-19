@@ -67,6 +67,7 @@
     </v-hover>
   </v-container>
 </template>
+
 <script>
 import AppBar from "../Index/components/AppBar";
 import DarkButton from "../../components/DarkButton";
@@ -90,16 +91,6 @@ export default {
       password: null,
       email: null,
       rules: this.GLOBAL.rules,
-      class: {
-        title: {
-          "text-h2": !this.$vuetify.breakpoint.mobile,
-          "text-h3": this.$vuetify.breakpoint.mobile,
-          "ml-3": this.$vuetify.breakpoint.mobile,
-          "ml-9": !this.$vuetify.breakpoint.mobile,
-          "mt-3": this.$vuetify.breakpoint.mobile,
-          "mt-9": !this.$vuetify.breakpoint.mobile,
-        },
-      },
       style: {
         darkButton: {
           top: "70px",

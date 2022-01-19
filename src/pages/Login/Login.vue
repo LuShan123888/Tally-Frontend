@@ -59,13 +59,14 @@
       </v-card>
     </v-hover>
     <v-row>
-      <v-col class="text-center text-subtitle-1 mt-5" cols="12">
+      <v-col class="text-center text-subtitle-1 mt-5" cols="12" v-text="''">
         还没有账户？
-        <router-link to="/register">立即注册</router-link>
+        <router-link to="/register" v-text="'立即注册'"/>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
 <script>
 import AppBar from "../Index/components/AppBar";
 import DarkButton from "../../components/DarkButton";
@@ -83,16 +84,11 @@ export default {
   },
   data: function () {
     return {
-      class: {
-        title: {
-          "text-h2": !this.$vuetify.breakpoint.mobile,
-          "text-h3": this.$vuetify.breakpoint.mobile,
-          "ml-3": this.$vuetify.breakpoint.mobile,
-          "ml-9": !this.$vuetify.breakpoint.mobile,
-          "mt-3": this.$vuetify.breakpoint.mobile,
-          "mt-9": !this.$vuetify.breakpoint.mobile,
-        },
-      },
+      valid: false,
+      show: false,
+      username: this.$route.params.username,
+      password: this.$route.params.password,
+      rules: this.GLOBAL.rules,
       style: {
         darkButton: {
           top: "70px",
@@ -101,11 +97,6 @@ export default {
           "z-index": 100,
         },
       },
-      valid: false,
-      show: false,
-      username: this.$route.params.username,
-      password: this.$route.params.password,
-      rules: this.GLOBAL.rules,
     };
   },
   methods: {

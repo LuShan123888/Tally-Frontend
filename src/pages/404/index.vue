@@ -3,6 +3,7 @@
     404
   </div>
 </template>
+
 <script>
 export default {
   name: "404",
@@ -23,5 +24,6 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 </style>

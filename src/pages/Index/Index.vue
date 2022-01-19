@@ -10,6 +10,7 @@
     </v-main>
   </div>
 </template>
+
 <script>
 import DarkButton from "../../components/DarkButton";
 import Navbar from "./components/Navbar";
@@ -46,6 +47,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 </style>

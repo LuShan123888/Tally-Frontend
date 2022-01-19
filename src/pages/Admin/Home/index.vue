@@ -19,43 +19,13 @@ export default {
     },
   },
   data: function () {
-    return {
-      bgImg: this.GLOBAL.images.profile,
-      title: "账户信息",
-      username: null,
-      email: null,
-      phoneNum: null,
-      status: null,
-      roleIdList: null,
-      style: {
-        backgroundImg: {
-          width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
-          bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
-          right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
-        },
-      },
-      class: {
-        title: {
-          "text-h2": !this.$vuetify.breakpoint.mobile,
-          "text-h3": this.$vuetify.breakpoint.mobile,
-          "ml-3": this.$vuetify.breakpoint.mobile,
-          "ml-9": !this.$vuetify.breakpoint.mobile,
-          "mt-3": this.$vuetify.breakpoint.mobile,
-          "mt-9": !this.$vuetify.breakpoint.mobile,
-        },
-      },
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
   mounted() {
-    
   },
 };
 </script>
 
 <style lang="scss" scoped>
-#background-img {
-  position: fixed;
-}
 </style>

@@ -1,10 +1,10 @@
 <script>
 const url = {
-  api: "http://47.95.124.239/api",
-  // api: "http://127.0.0.1:8080",
-  iframe: "http://47.95.124.239:8080",
-  // iframe: "http://127.0.0.1:8080",
-  file: "http://47.95.124.239/static/",
+  // api: "http://47.95.124.239/api",
+  api: "http://127.0.0.1:8080",
+  // iframe: "http://47.95.124.239:8080",
+  iframe: "http://127.0.0.1:8080",
+  file: "http://47.95.124.239/static",
   upload: "http://47.95.124.239/api/file/upload"
 };
 const title = "一个简约的在线记账应用";

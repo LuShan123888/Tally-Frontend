@@ -337,7 +337,6 @@
 </template>
 
 <script>
-
 export default {
   name: "UserManagement",
   components: {},
@@ -489,7 +488,7 @@ export default {
     },
     getAvatarPath(avatarUrl) {
       if (avatarUrl != null) {
-        return this.GLOBAL.url.file + avatarUrl;
+        return this.GLOBAL.url.file + "/" + avatarUrl;
       }
     },
     handleAvatarSuccess(res) {
@@ -544,10 +543,6 @@ export default {
 </script>
 
 <style lang="scss">
-#background-img {
-  position: fixed;
-}
-
 #table {
   td, th.is-leaf {
     border-bottom: 0 solid #E0E0E0;
