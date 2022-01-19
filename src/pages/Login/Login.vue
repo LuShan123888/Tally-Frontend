@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <app-bar :isShow="true" :style="{ 'z-index': '101' }"/>
-    <dark-button id="dark-button" :style="style.darkButton"/>
+    <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
+    <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-card
           class="mx-auto transition-swing"
           :style="{ width: isMobile ? '80%' : '40%' }"
           style="margin-top:20vh"
-          :class="`elevation-${hover ? 24 : 6}`"
+          :class="{'elevation-24':hover,'elevation-6':!hover}"
       >
         <v-row no-gutters>
           <v-col cols="12">
@@ -89,7 +89,7 @@ export default {
       username: this.$route.params.username,
       password: this.$route.params.password,
       rules: this.GLOBAL.rules,
-      style: {
+      styles: {
         darkButton: {
           top: "70px",
           right: "10px",

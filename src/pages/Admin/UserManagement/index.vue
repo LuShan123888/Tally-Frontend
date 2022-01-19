@@ -258,7 +258,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-row align="center" class="mb-3 " no-gutters>
-                    <div class="text-subtitle-1" v-text="'头像'"/>
+                    <div :style="{color:dialog.user.id?'#9E9E9D':'inherit'}" class="text-subtitle-1" v-text="'头像'"/>
                     <v-btn
                         v-if="dialog.user.avatarUrl!=null && !dialog.user.id"
                         x-small
@@ -285,9 +285,9 @@
                   </el-upload>
                   <div v-else>
                     <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
-                         style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">
+                         style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
                     <v-icon v-else size="150px"
-                            style="height: 150px;width: 150px;border: 1px solid #949494;border-radius: 6px;">
+                            style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
                       mdi-account-circle
                     </v-icon>
                   </div>

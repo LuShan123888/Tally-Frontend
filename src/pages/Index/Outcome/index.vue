@@ -1,18 +1,15 @@
 <template>
   <div>
-    <img :src="bgImg" id="background-img" :style="style.backgroundImg"/>
+    <img id="background-img" :src="bgImg" :style="styles.backgroundImg"/>
     <div
-        :class="this.class.title"
-        :style="{ color: $vuetify.theme.themes.light.primary }"
+        :class="classes.title"
+        :style="{ color: lightPrimary }"
         v-text="'支出'"
     />
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
-          :class="[
-          isMobile ? 'mx-auto' : 'ml-9',
-          `elevation-${hover ? 24 : 6}`,
-        ]"
+          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-6':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
         <v-form ref="form" v-model="valid">
@@ -134,6 +131,9 @@ export default {
     isDark: function () {
       return this.$vuetify.theme.dark;
     },
+    lightPrimary: function () {
+      return this.$vuetify.theme.themes.light.primary;
+    }
   },
   data: function () {
     return {
@@ -167,14 +167,14 @@ export default {
       rules: {
         isFloat: this.GLOBAL.rules.isFloat,
       },
-      style: {
+      styles: {
         backgroundImg: {
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
           bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
           right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
         },
       },
-      class: {
+      classes: {
         title: {
           "text-h2": !this.$vuetify.breakpoint.mobile,
           "text-h3": this.$vuetify.breakpoint.mobile,

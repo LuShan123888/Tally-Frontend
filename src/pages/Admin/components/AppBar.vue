@@ -44,7 +44,6 @@
               dense
               link
               to="/home"
-              :class="{'v-list-item--active':false,'v-item--active':false}"
               class="my-0"
           >
             <v-list-item-icon class="mr-2">

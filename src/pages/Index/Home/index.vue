@@ -1,16 +1,16 @@
 <template>
   <div>
-    <img :src="bgImg" id="background-img" :style="style.backgroundImg"/>
+    <img id="background-img" :src="bgImg" :style="styles.backgroundImg"/>
     <div
-        :class="this.class.title"
-        :style="{ color: $vuetify.theme.themes.light.primary }"
+        :class="classes.title"
+        :style="{ color: lightPrimary }"
     >
       总览
     </div>
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
-          :class="[isMobile ? 'mx-auto' : 'ml-9', `elevation-${hover ? 24 : 6}`]"
+          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-6':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
         <v-row no-gutters align="center">
@@ -33,7 +33,7 @@
     <v-hover v-slot="{ hover }">
       <v-card
           class="my-9 transition-swing"
-          :class="[isMobile ? 'mx-auto' : 'ml-9', `elevation-${hover ? 24 : 6}`]"
+          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-6':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
           v-if="billList != null"
       >
@@ -216,6 +216,9 @@ export default {
     isDark: function () {
       return this.$vuetify.theme.dark;
     },
+    lightPrimary: function () {
+      return this.$vuetify.theme.themes.light.primary;
+    }
   },
   data: function () {
     return {
@@ -260,14 +263,14 @@ export default {
         out: {sum: 0}
       },
       currentMonth: new Date().getMonth() + 1,
-      style: {
+      styles: {
         backgroundImg: {
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
           bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
           right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
         },
       },
-      class: {
+      classes: {
         title: {
           "text-h2": !this.$vuetify.breakpoint.mobile,
           "text-h3": this.$vuetify.breakpoint.mobile,
