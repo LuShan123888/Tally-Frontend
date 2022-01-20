@@ -37,7 +37,7 @@
                       class="mt-0 pt-0 mr-2"
                       v-model="table.query.user.status"
                       clearable
-                      :items="[{text:'正常',value:'NORMAL'},{text:'禁用',value:'PROHIBIT'}]"
+                      :items="enums.userStatus"
                       label="状态"
                   />
                 </v-col>
@@ -136,14 +136,14 @@
               class="mx-1"
               label
               small
-              v-text="roleFormatter(item)"
+              v-text="roleNameFormatter(item)"
           >
           </v-chip>
         </template>
       </el-table-column>
       <el-table-column
           label="状态"
-          :formatter="(row) => row.status === 'NORMAL' ?'正常':'禁用'"
+          :formatter="userStatusFormatter"
       >
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
@@ -296,7 +296,7 @@
                   <v-select
                       v-model="dialog.user.status"
                       class="pl-3"
-                      :items="[{text:'正常',value:'NORMAL'},{text:'禁用',value:'PROHIBIT'}]"
+                      :items="enums.userStatus"
                       label="状态"
                   />
                   <v-select
@@ -392,7 +392,8 @@ export default {
         header: {Authorization: this.$store.getters.getToken}
       },
       roleMap: [],
-      rules: this.GLOBAL.rules
+      rules: this.GLOBAL.rules,
+      enums: this.GLOBAL.enums
     };
   },
   methods: {
@@ -517,9 +518,17 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    roleFormatter(roleId) {
+    roleNameFormatter(roleId) {
       for (let item of this.roleMap) {
         if (item.value === roleId) {
+          return item.text;
+        }
+      }
+    },
+    userStatusFormatter(row) {
+      console.log(row)
+      for (let item of this.enums.userStatus) {
+        if (item.value === row.status) {
           return item.text;
         }
       }

@@ -80,6 +80,19 @@ const rules = {
     }
   },
 }
+const enums = {
+  requestMethod: [
+    {text: '*', value: '*'},
+    {text: 'GET', value: 'GET'},
+    {text: 'POST', value: 'POST'},
+    {text: 'PUT', value: 'PUT'},
+    {text: 'DELETE', value: 'DELETE'}
+  ],
+  userStatus: [
+    {text: '正常', value: 'NORMAL'},
+    {text: '禁用', value: 'PROHIBIT'}
+  ],
+}
 const images = {
   avatar: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/avatar.jpg",
   profile: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/profile.svg",
@@ -93,6 +106,7 @@ export default {
   title,
   adminTitle,
   images,
-  rules
+  rules,
+  enums
 };
 </script>

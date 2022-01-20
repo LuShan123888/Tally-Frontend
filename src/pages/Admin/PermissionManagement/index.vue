@@ -119,7 +119,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-select
                       v-model="dialog.permission.requestMethod"
-                      :items="[{text:'*',value:'*'},{text:'GET',value:'GET'},{text:'POST',value:'POST'},{text:'PUT',value:'PUT'},{text:'DELETE',value:'DELETE'}]"
+                      :items="enums.requestMethod"
                       label="请求方式"
                   />
                 </v-col>
@@ -194,7 +194,8 @@ export default {
           loading: false
         }
       },
-      rules: this.GLOBAL.rules
+      rules: this.GLOBAL.rules,
+      enums: this.GLOBAL.enums
     };
   },
   methods: {
