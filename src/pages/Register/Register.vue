@@ -29,7 +29,7 @@
                     :rules="[rules.isUsername]"
                     label="用户名"
                     clearable
-                ></v-text-field>
+                />
               </v-row>
               <v-row>
                 <v-text-field
@@ -40,7 +40,7 @@
                     label="密码"
                     :counter="rules.passwordMaxLength"
                     @click:append="show = !show"
-                ></v-text-field>
+                />
               </v-row>
               <v-row>
                 <v-text-field
@@ -48,7 +48,7 @@
                     :rules="[(value)=> !!value || '请输入邮箱' ,rules.isEmail]"
                     label="邮箱"
                     clearable
-                ></v-text-field>
+                />
               </v-row>
               <v-row>
                 <v-btn

@@ -14,6 +14,7 @@ const rules = {
   passwordMinLength: 8,
   passwordMaxLength: 30,
   roleNameMaxLength: 20,
+  permissionNameMaxLength: 20,
   isEmail: (value) => !value || /.+@.+\..+/.test(value) || "邮箱格式有误",
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
   isFloat: (value) => !value || /^\d+$/.test(value) || /^\d+[.]?\d+$/.test(value) || "只能输入数字",
@@ -61,10 +62,21 @@ const rules = {
       return true;
     }
     if (!value) {
-      return '请输入角色名';
+      return '请输入角色名称';
     }
     if (value.length > 20) {
-      return '角色名不能超过20位';
+      return '角色名称不能超过20位';
+    }
+  },
+  isPermissionName: (value) => {
+    if (!!value && value.length <= 20) {
+      return true;
+    }
+    if (!value) {
+      return '请输入权限名称';
+    }
+    if (value.length > 20) {
+      return '权限名称不能超过20位';
     }
   },
 }

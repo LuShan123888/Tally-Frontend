@@ -29,7 +29,7 @@
                     label="用户名"
                     :counter="rules.usernameMaxLength"
                     clearable
-                ></v-text-field>
+                />
               </v-row>
               <v-row>
                 <v-text-field
@@ -40,7 +40,7 @@
                     label="密码"
                     :counter="rules.passwordMaxLength"
                     @click:append="show = !show"
-                ></v-text-field>
+                />
               </v-row>
               <v-row>
                 <v-btn

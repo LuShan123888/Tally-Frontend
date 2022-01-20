@@ -24,7 +24,7 @@
                         :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
                         v-model="bill.amount"
                         clearable
-                    ></v-text-field>
+                    />
                   </v-col>
                   <v-col cols="5">
                     <v-combobox
@@ -60,7 +60,7 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                        ></v-text-field>
+                        />
                       </template>
                       <v-date-picker
                           v-model="bill.billDate"

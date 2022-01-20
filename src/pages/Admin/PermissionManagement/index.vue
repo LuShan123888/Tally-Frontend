@@ -7,7 +7,7 @@
       <v-col cols="1">
         <v-btn
             color="primary"
-            @click="loadRoleSaveDialog"
+            @click="loadPermissionSaveDialog"
             v-text="'新增权限'"
         />
       </v-col>
@@ -19,8 +19,11 @@
         :data="table.data"
         height="68vh"
         highlight-current-row
-        stripe
-        style="width: 100%">
+        :expand-row-keys="['1']"
+        :tree-props="{children: 'children'}"
+        row-key="id">
+      stripe
+      style="width: 100%">
       <el-table-column
           :index="(index) => index + 1"
           align="center"
@@ -32,21 +35,23 @@
           align="center"
           label="权限ID"
           property="id"
-          sortable
-          width="90px">
+          width="120px">
+      </el-table-column>
+      <el-table-column
+          label="权重"
+          property="weight">
       </el-table-column>
       <el-table-column
           label="权限名称"
-          property="roleName">
+          property="permissionName">
       </el-table-column>
       <el-table-column
-          label="权限描述"
-          property="roleDescription">
+          label="访问路径"
+          property="requestUrl">
       </el-table-column>
       <el-table-column
-          label="创建时间"
-          property="createTime"
-      >
+          label="请求方式"
+          property="requestMethod">
       </el-table-column>
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
@@ -54,14 +59,14 @@
               class="mx-1"
               color="blue darken-1"
               text
-              @click="loadRoleUpdateDialog(scope.row)"
+              @click="loadPermissionUpdateDialog(scope.row)"
               v-text="'编辑'"
           />
           <el-popconfirm
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该权限吗？"
-              @confirm="deleteRole(scope.row.id)"
+              @confirm="deletePermission(scope.row.id)"
           >
             <v-btn
                 slot="reference"
@@ -74,30 +79,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <v-row class="mt-7" no-gutters>
-      <v-col class="d-flex justify-end" cols="9">
-        <div style="width:90px">
-          <v-select
-              v-model="table.query.page.size"
-              :items="[5,15,50,100]"
-              dense
-              label="分页大小"
-              lined
-              @input="changePageSize"
-          ></v-select>
-        </div>
-      </v-col>
-      <v-col cols="3">
-        <v-pagination
-            v-model="table.query.page.current"
-            :length="table.query.page.count"
-            next-icon="mdi-menu-right"
-            prev-icon="mdi-menu-left"
-            total-visible="5"
-            @input="changePage"
-        ></v-pagination>
-      </v-col>
-    </v-row>
     <v-dialog
         v-model="dialog.isShow"
         max-width="600px"
@@ -107,24 +88,48 @@
           <span class="text-h5" v-text="dialog.title"/>
         </v-card-title>
         <v-card-text class="pb-0">
-          <v-form ref="roleSaveOrUpdateForm">
+          <v-form ref="permissionSaveOrUpdateForm">
             <v-container>
               <v-row no-gutters>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
-                      v-model="dialog.role.roleName"
-                      :counter="rules.roleNameMaxLength"
-                      :rules="[rules.isRoleName]"
+                      v-model="dialog.permission.permissionName"
+                      :counter="rules.permissionNameMaxLength"
+                      :rules="[rules.isPermissionName]"
                       clearable
                       label="权限名称"
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
-                      v-model="dialog.role.roleDescription"
+                      v-model="dialog.permission.parentId"
+                      :rules="[(value) => !!value || '请输入父权限ID', rules.isInteger]"
                       clearable
-                      label="权限描述"
-                  ></v-text-field>
+                      label="父权限ID"
+                  />
+                </v-col>
+                <v-col class="pr-3" cols="6">
+                  <v-text-field
+                      v-model="dialog.permission.weight"
+                      :rules="[(value) => !!value || '请输入权重', rules.isInteger]"
+                      clearable
+                      label="权重"
+                  />
+                </v-col>
+                <v-col class="pr-3" cols="6">
+                  <v-select
+                      v-model="dialog.permission.requestMethod"
+                      :items="[{text:'*',value:'*'},{text:'GET',value:'GET'},{text:'POST',value:'POST'},{text:'PUT',value:'PUT'},{text:'DELETE',value:'DELETE'}]"
+                      label="请求方式"
+                  />
+                </v-col>
+                <v-col class="pr-3" cols="12">
+                  <v-text-field
+                      v-model="dialog.permission.requestUrl"
+                      :rules="[(value) => !!value || '请输入访问路径']"
+                      clearable
+                      label="访问路径"
+                  />
                 </v-col>
               </v-row>
             </v-container>
@@ -143,7 +148,7 @@
               :loading="dialog.btn.loading"
               color="blue darken-1"
               text
-              @click="saveOrUpdateRole"
+              @click="saveOrUpdatePermission"
               v-text="'保存'"
           />
         </v-card-actions>
@@ -171,29 +176,19 @@ export default {
     return {
       table: {
         loading: false,
-        data: null,
-        query: {
-          page: {
-            current: 1,
-            size: 15,
-            count: null
-          },
-          role: {
-            id: null,
-            roleName: null,
-            roleDescription: null,
-            createTime: null
-          },
-        }
+        data: null
       },
       dialog: {
         isShow: false,
         title: null,
-        role: {
+        permission: {
           id: null,
-          roleName: null,
-          roleDescription: null,
-          createTime: null
+          parentId: null,
+          weight: null,
+          permissionName: null,
+          requestUrl: null,
+          requestMethod: null,
+          version: null
         },
         btn: {
           loading: false
@@ -205,29 +200,26 @@ export default {
   methods: {
     changePageSize() {
       this.table.query.page.current = 1;
-      this.pageRole();
+      this.pagePermission();
     },
     changePage() {
-      this.pageRole();
+      this.pagePermission();
     },
-    pageRole() {
-      if (this.$refs.roleQueryForm.validate()) {
-        this.table.loading = true;
-        this.axios.post("/role/pageRole/" + this.table.query.page.current + "/" + this.table.query.page.size, JSON.stringify(this.table.query.role))
-            .then((response) => {
-              this.table.data = response.data.data;
-              this.table.query.page.count = response.data.count;
-              this.table.loading = false;
-            });
-      }
+    pagePermission() {
+      this.table.loading = true;
+      this.axios.get("/permission/listAllPermission")
+          .then((response) => {
+            this.table.data = response.data.data;
+            this.table.loading = false;
+          });
     },
-    saveOrUpdateRole() {
-      if (!this.$refs.roleSaveOrUpdateForm.validate()) {
+    saveOrUpdatePermission() {
+      if (!this.$refs.permissionSaveOrUpdateForm.validate()) {
         return;
       }
       this.dialog.btn.loading = true;
-      if (this.dialog.role.id) {
-        this.axios.put("/role/updateRole", JSON.stringify(this.dialog.role))
+      if (this.dialog.permission.id) {
+        this.axios.put("/permission/updatePermission", JSON.stringify(this.dialog.permission))
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -235,14 +227,14 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pagePermission();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageRole();
             });
       } else {
-        this.axios.post("/role/saveRole", JSON.stringify(this.dialog.role))
+        this.axios.post("/permission/savePermission", JSON.stringify(this.dialog.permission))
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -250,16 +242,16 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pagePermission();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageRole();
             });
       }
     },
-    deleteRole(roleId) {
-      this.axios.delete("/role/removeRole/" + roleId)
+    deletePermission(permissionId) {
+      this.axios.delete("/permission/removePermission/" + permissionId)
           .then(() => {
             this.showDialog = false;
             this.$notify({
@@ -268,28 +260,34 @@ export default {
               type: "success",
               duration: 2000,
             });
-            this.pageRole();
+            this.pagePermission();
           });
     },
-    loadRoleSaveDialog() {
-      this.dialog.role.id = null;
-      this.dialog.role.roleName = null;
-      this.dialog.role.roleDescription = null;
-      this.dialog.role.createTime = null;
+    loadPermissionSaveDialog() {
+      this.dialog.permission.id = null;
+      this.dialog.permission.parentId = null;
+      this.dialog.permission.weight = null;
+      this.dialog.permission.permissionName = null;
+      this.dialog.permission.requestUrl = null;
+      this.dialog.permission.requestMethod = null;
+      this.dialog.permission.version = null;
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
     },
-    loadRoleUpdateDialog(role) {
-      this.dialog.role.id = role.id;
-      this.dialog.role.roleName = role.roleName;
-      this.dialog.role.roleDescription = role.roleDescription;
-      this.dialog.role.createTime = role.createTime;
+    loadPermissionUpdateDialog(permission) {
+      this.dialog.permission.id = permission.id;
+      this.dialog.permission.parentId = permission.parentId;
+      this.dialog.permission.weight = permission.weight;
+      this.dialog.permission.permissionName = permission.permissionName;
+      this.dialog.permission.requestUrl = permission.requestUrl;
+      this.dialog.permission.requestMethod = permission.requestMethod;
+      this.dialog.permission.version = permission.version;
       this.dialog.title = "修改权限";
       this.dialog.isShow = true;
     },
   },
   mounted() {
-    this.pageRole();
+    this.pagePermission();
   },
 };
 </script>

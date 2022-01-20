@@ -216,7 +216,7 @@
                       :counter="rules.usernameMaxLength"
                       :rules="[rules.isUsername]"
                       clearable
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col class="pl-3" cols="6">
                   <v-text-field
@@ -226,7 +226,7 @@
                       :disabled="!!dialog.user.id"
                       label="手机号码"
                       clearable
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
@@ -235,7 +235,7 @@
                       :disabled="!!dialog.user.id"
                       label="邮箱"
                       clearable
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
@@ -246,7 +246,7 @@
                       label="密码"
                       :counter="rules.passwordMaxLength"
                       clearable
-                  ></v-text-field>
+                  />
                   <v-text-field
                       v-if="!dialog.user.id"
                       type="password"
@@ -254,7 +254,7 @@
                       :rules="[value=>value===dialog.user.password||'两次输入的密码不一致']"
                       :counter="rules.passwordMaxLength"
                       clearable
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col cols="6">
                   <v-row align="center" class="mb-3 " no-gutters>
@@ -381,6 +381,7 @@ export default {
           avatarUrl: null,
           status: null,
           roleIdList: null,
+          version: null,
         },
         btn: {
           loading: false

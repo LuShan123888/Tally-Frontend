@@ -171,14 +171,14 @@
                       :rules="[rules.isRoleName]"
                       clearable
                       label="角色名称"
-                  ></v-text-field>
+                  />
                 </v-col>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.role.roleDescription"
                       clearable
                       label="角色描述"
-                  ></v-text-field>
+                  />
                 </v-col>
               </v-row>
             </v-container>
@@ -247,7 +247,8 @@ export default {
           id: null,
           roleName: null,
           roleDescription: null,
-          createTime: null
+          createTime: null,
+          version: null
         },
         btn: {
           loading: false
@@ -330,6 +331,7 @@ export default {
       this.dialog.role.roleName = null;
       this.dialog.role.roleDescription = null;
       this.dialog.role.createTime = null;
+      this.dialog.role.version = null;
       this.dialog.title = "新增角色";
       this.dialog.isShow = true;
     },
@@ -338,6 +340,7 @@ export default {
       this.dialog.role.roleName = role.roleName;
       this.dialog.role.roleDescription = role.roleDescription;
       this.dialog.role.createTime = role.createTime;
+      this.dialog.role.version = role.version;
       this.dialog.title = "修改角色";
       this.dialog.isShow = true;
     },
