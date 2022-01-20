@@ -100,6 +100,7 @@ const images = {
   working: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/working.svg",
   education: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/education.svg",
   ideas: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/ideas.svg",
+  pageNotFound: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/pageNotFound.svg",
 };
 export default {
   url,
