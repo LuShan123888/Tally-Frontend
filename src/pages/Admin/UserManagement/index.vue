@@ -49,6 +49,8 @@
                       class="mt-0 pt-0 mr-2"
                       deletable-chips
                       small-chips
+                      item-text="roleName"
+                      item-value="id"
                       :items="roleMap"
                       label="角色"
                       multiple
@@ -190,7 +192,7 @@
       <v-col cols="9" class="d-flex justify-end">
         <div style="width:90px">
           <v-select
-              :items="[5,15,50,100]"
+              :items="enums.page"
               label="分页大小"
               lined
               dense
@@ -348,6 +350,8 @@
                       deletable-chips
                       small-chips
                       :items="roleMap"
+                      item-text="roleName"
+                      item-value="id"
                       label="角色"
                       multiple
                   />
@@ -562,13 +566,12 @@ export default {
     },
     roleNameFormatter(roleId) {
       for (let item of this.roleMap) {
-        if (item.value === roleId) {
-          return item.text;
+        if (item.id === roleId) {
+          return item.roleName;
         }
       }
     },
     userStatusFormatter(row) {
-      console.log(row)
       for (let item of this.enums.userStatus) {
         if (item.value === row.status) {
           return item.text;
@@ -576,14 +579,9 @@ export default {
       }
     },
     loadRoleMap() {
-      let _this = this;
       this.axios.get("/role/listAllRole").then((response) => {
-        response.data.data.forEach(item => {
-          let role = {
-            text: item.roleName,
-            value: item.id
-          }
-          _this.roleMap.push(role)
+        response.data.data.forEach(() => {
+          this.roleMap = response.data.data;
         })
       });
     }

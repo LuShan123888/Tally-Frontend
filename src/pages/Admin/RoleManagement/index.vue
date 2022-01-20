@@ -133,7 +133,7 @@
         <div style="width:90px">
           <v-select
               v-model="table.query.page.size"
-              :items="[5,15,50,100]"
+              :items="enums.page"
               dense
               label="分页大小"
               lined
@@ -181,6 +181,10 @@
                   />
                 </v-col>
               </v-row>
+              <v-treeview
+                  v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" :open="['1']" dense
+                  hoverable item-children="children" item-key="id"
+                  item-text="permissionName" selectable selected-color="primary" transition></v-treeview>
             </v-container>
           </v-form>
         </v-card-text>
@@ -248,13 +252,16 @@ export default {
           roleName: null,
           roleDescription: null,
           createTime: null,
-          version: null
+          permissionIdList: [],
+          version: null,
         },
         btn: {
           loading: false
-        }
+        },
+        permissionMap: null
       },
-      rules: this.GLOBAL.rules
+      rules: this.GLOBAL.rules,
+      enums: this.GLOBAL.enums
     };
   },
   methods: {
@@ -277,6 +284,7 @@ export default {
       }
     },
     saveOrUpdateRole() {
+      console.log(this.dialog.role.permissionIdList);
       if (!this.$refs.roleSaveOrUpdateForm.validate()) {
         return;
       }
@@ -331,6 +339,7 @@ export default {
       this.dialog.role.roleName = null;
       this.dialog.role.roleDescription = null;
       this.dialog.role.createTime = null;
+      this.dialog.role.permissionIdList = null;
       this.dialog.role.version = null;
       this.dialog.title = "新增角色";
       this.dialog.isShow = true;
@@ -340,13 +349,22 @@ export default {
       this.dialog.role.roleName = role.roleName;
       this.dialog.role.roleDescription = role.roleDescription;
       this.dialog.role.createTime = role.createTime;
+      this.dialog.role.permissionIdList = role.permissionIdList;
       this.dialog.role.version = role.version;
       this.dialog.title = "修改角色";
       this.dialog.isShow = true;
     },
+    loadPermissionMap() {
+      this.table.loading = true;
+      this.axios.get("/permission/listAllPermission")
+          .then((response) => {
+            this.dialog.permissionMap = response.data.data;
+          });
+    },
   },
   mounted() {
     this.pageRole();
+    this.loadPermissionMap();
   },
 };
 </script>

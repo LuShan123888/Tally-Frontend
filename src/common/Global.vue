@@ -92,6 +92,7 @@ const enums = {
     {text: '正常', value: 'NORMAL'},
     {text: '禁用', value: 'PROHIBIT'}
   ],
+  page: [5, 15, 50, 100]
 }
 const images = {
   avatar: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/avatar.jpg",

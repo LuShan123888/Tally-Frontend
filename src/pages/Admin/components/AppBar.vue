@@ -6,11 +6,11 @@
     <v-app-bar-title class="subtitle-1" v-text="title"></v-app-bar-title>
     <v-spacer></v-spacer>
     <v-menu
-        open-on-hover
         close-delay="300ms"
         bottom
         offset-y
         nudge-bottom="5px"
+        transition="slide-y-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn

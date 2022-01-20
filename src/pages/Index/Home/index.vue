@@ -121,8 +121,7 @@
                   </v-col>
                   <v-col cols="5">
                     <v-combobox
-                        :items="
-                        selectedBill.flow === 'in' ? incomeTypeList : outcomeTypeList"
+                        :items="selectedBill.flow === 'in' ? incomeTypeList : outcomeTypeList"
                         v-model="selectedBill.type"
                         :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
