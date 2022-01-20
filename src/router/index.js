@@ -8,7 +8,7 @@ import AccountInfo from '../pages/Index/AccountInfo'
 import Login from '../pages/Login/Login'
 import Register from '../pages/Register/Register'
 import Test from '../pages/Test'
-import NotFound from '../pages/404'
+import PageNotFound from '../pages/PageNotFound'
 import AdminIndex from '../pages/Admin'
 import AdminHome from '../pages/Admin/Home'
 import UserManagement from '../pages/Admin/UserManagement'
@@ -138,8 +138,8 @@ const routes = [
     },
     {
         path: '/*',
-        name: '404',
-        component: NotFound
+        name: 'PageNotFound',
+        component: PageNotFound
     }
 
 ]

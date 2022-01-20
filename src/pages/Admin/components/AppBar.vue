@@ -19,7 +19,7 @@
             v-on="on"
             class="mr-7"
         >
-          <v-avatar v-if="userInfo.avatarUrl!=null">
+          <v-avatar v-if="userInfo&&userInfo.avatarUrl!=null">
             <img :src="avatarPath">
           </v-avatar>
           <v-icon x-large v-else>mdi-account-circle</v-icon>
@@ -32,6 +32,7 @@
               dense
               class="my-0"
               inactive
+              v-if="userInfo"
           >
             <v-list-item-icon class="mr-2">
               <v-icon>mdi-account-box</v-icon>
