@@ -20,7 +20,21 @@
             class="mr-7"
         >
           <v-avatar v-if="userInfo&&userInfo.avatarUrl!=null">
-            <img :src="avatarPath">
+            <v-img :src="avatarPath">
+              <template v-slot:placeholder>
+                <v-row
+                    align="center"
+                    class="fill-height ma-0"
+                    justify="center"
+                >
+                  <v-progress-circular
+                      color="primary"
+                      indeterminate
+                      width="2"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
           </v-avatar>
           <v-icon x-large v-else>mdi-account-circle</v-icon>
         </v-btn>

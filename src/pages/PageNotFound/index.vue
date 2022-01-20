@@ -9,13 +9,14 @@
       >
         <template v-slot:placeholder>
           <v-row
-              align="center"
               class="fill-height ma-0"
+              align="center"
               justify="center"
           >
             <v-progress-circular
-                color="grey lighten-5"
                 indeterminate
+                color="primary"
+                width="2"
             ></v-progress-circular>
           </v-row>
         </template>

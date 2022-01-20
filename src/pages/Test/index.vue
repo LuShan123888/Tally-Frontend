@@ -32,7 +32,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#background-img {
-  position: fixed;
-}
+
 </style>

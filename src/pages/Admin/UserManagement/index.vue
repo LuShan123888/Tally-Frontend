@@ -120,7 +120,21 @@
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
           <v-avatar size="40" v-if="scope.row.avatarUrl!=null">
-            <img :src="getAvatarPath(scope.row.avatarUrl)">
+            <v-img :src="getAvatarPath(scope.row.avatarUrl)">
+              <template v-slot:placeholder>
+                <v-row
+                    align="center"
+                    class="fill-height ma-0"
+                    justify="center"
+                >
+                  <v-progress-circular
+                      color="primary"
+                      indeterminate
+                      width="2"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
           </v-avatar>
           <v-icon size="40" v-else>mdi-account-circle</v-icon>
         </template>
@@ -279,13 +293,41 @@
                       :on-success="handleAvatarSuccess"
                       :on-error="handleAvatarError"
                       :before-upload="beforeAvatarUpload">
-                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
-                         style="height: 150px;width: 150px">
+                    <v-img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
+                           contain height="150px" width="150px">
+                      <template v-slot:placeholder>
+                        <v-row
+                            align="center"
+                            class="fill-height ma-0"
+                            justify="center"
+                        >
+                          <v-progress-circular
+                              color="primary"
+                              indeterminate
+                              width="2"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                     <v-icon v-else>mdi-upload</v-icon>
                   </el-upload>
                   <div v-else>
-                    <img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
-                         style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
+                    <v-img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
+                           contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
+                      <template v-slot:placeholder>
+                        <v-row
+                            align="center"
+                            class="fill-height ma-0"
+                            justify="center"
+                        >
+                          <v-progress-circular
+                              color="primary"
+                              indeterminate
+                              width="2"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                     <v-icon v-else size="150px"
                             style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
                       mdi-account-circle
@@ -323,7 +365,7 @@
               v-text="'取消'"
           />
           <v-btn
-              color="blue darken-1"
+              color="primary"
               text
               :disabled="dialog.btn.loading"
               :loading="dialog.btn.loading"
@@ -508,15 +550,15 @@ export default {
       this.$message.error("图像上传失败")
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
+      const isImage = file.type === 'image/jpeg' || file.type === 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+      if (!isImage) {
+        this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return isJPG && isLt2M;
+      return isImage && isLt2M;
     },
     roleNameFormatter(roleId) {
       for (let item of this.roleMap) {

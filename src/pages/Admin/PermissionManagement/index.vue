@@ -146,7 +146,7 @@
           <v-btn
               :disabled="dialog.btn.loading"
               :loading="dialog.btn.loading"
-              color="blue darken-1"
+              color="primary"
               text
               @click="saveOrUpdatePermission"
               v-text="'保存'"

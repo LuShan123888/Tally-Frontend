@@ -1,6 +1,20 @@
 <template>
   <div>
-    <img id="background-img" :src="bgImg" :style="styles.backgroundImg"/>
+    <v-img :src="bgImg" :style="styles.backgroundImg" contain style="position: fixed">
+      <template v-slot:placeholder>
+        <v-row
+            align="center"
+            class="fill-height ma-0"
+            justify="center"
+        >
+          <v-progress-circular
+              color="primary"
+              indeterminate
+              width="2"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
     <div
         :class="classes.title"
         :style="{ color: lightPrimary}"
@@ -203,7 +217,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#background-img {
-  position: fixed;
-}
+
 </style>
