@@ -48,7 +48,7 @@
                     color="primary"
                     class="mx-auto my-10"
                     style="width: 40%"
-                    @click="submitForm()"
+                    @click="submitForm"
                 >
                   登录
                 </v-btn>

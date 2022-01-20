@@ -97,12 +97,12 @@
                 </v-row>
                 <v-row no-gutters justify="space-around" class="mb-6">
                   <v-col cols="6" class="text-center">
-                    <v-btn x-large color="primary" @click="submitForm()"
+                    <v-btn color="primary" x-large @click="submitForm"
                     >提交
                     </v-btn>
                   </v-col>
                   <v-col cols="6" class="text-center">
-                    <v-btn x-large color="error" @click="resetForm()"
+                    <v-btn color="error" x-large @click="resetForm"
                     >清空
                     </v-btn>
                   </v-col>

@@ -11,7 +11,9 @@ const title = "一个简约的在线记账应用";
 const adminTitle = "记账吧后台管理系统";
 const rules = {
   usernameMaxLength: 20,
+  passwordMinLength: 8,
   passwordMaxLength: 30,
+  roleNameMaxLength: 20,
   isEmail: (value) => !value || /.+@.+\..+/.test(value) || "邮箱格式有误",
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
   isFloat: (value) => !value || /^\d+$/.test(value) || /^\d+[.]?\d+$/.test(value) || "只能输入数字",
@@ -52,6 +54,17 @@ const rules = {
     }
     if (!value.length <= 11) {
       return '手机号不能超过11位';
+    }
+  },
+  isRoleName: (value) => {
+    if (!!value && value.length <= 20) {
+      return true;
+    }
+    if (!value) {
+      return '请输入角色名';
+    }
+    if (value.length > 20) {
+      return '角色名不能超过20位';
     }
   },
 }

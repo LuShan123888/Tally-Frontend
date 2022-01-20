@@ -56,7 +56,7 @@
           <v-list-item
               dense
               link
-              @click="logout()"
+              @click="logout"
               class="my-0"
           >
             <v-list-item-icon class="mr-2">

@@ -64,7 +64,7 @@
                       class="ma-auto"
                       style="width: 200px"
                       rounded
-                      @click="logout()"
+                      @click="logout"
                   >
                     退出
                   </v-btn>

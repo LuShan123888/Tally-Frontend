@@ -56,7 +56,7 @@
                     color="primary"
                     class="mx-auto my-10"
                     style="width: 40%"
-                    @click="submitForm()"
+                    @click="submitForm"
                     v-text="'注册'"
                 />
               </v-row>

@@ -12,6 +12,8 @@ import NotFound from '../pages/404'
 import AdminIndex from '../pages/Admin'
 import AdminHome from '../pages/Admin/Home'
 import UserManagement from '../pages/Admin/UserManagement'
+import RoleManagement from '../pages/Admin/RoleManagement'
+import PermissionManagement from '../pages/Admin/PermissionManagement'
 import Druid from '../pages/Admin/Druid'
 import Swagger from '../pages/Admin/Swagger'
 
@@ -79,16 +81,16 @@ const routes = [
             },
             {
                 path: '/admin/role',
-                name: 'RoleAdmin',
-                component: AdminHome,
+                name: 'RoleManagement',
+                component: RoleManagement,
                 meta: {
                     requireAuth: true
                 }
             },
             {
                 path: '/admin/permission',
-                name: 'AdminPermission',
-                component: AdminHome,
+                name: 'PermissionManagement',
+                component: PermissionManagement,
                 meta: {
                     requireAuth: true
                 }

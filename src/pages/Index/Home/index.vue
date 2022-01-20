@@ -186,13 +186,13 @@
                   <v-btn
                       text
                       color="blue darken-1"
-                      @click="updateBill()"
+                      @click="updateBill"
                       v-text="'更新'"
                   />
                   <v-btn
                       text
                       color="red darken-1"
-                      @click="deleteBill()"
+                      @click="deleteBill"
                       v-text="'删除'"
                   />
                 </v-row>

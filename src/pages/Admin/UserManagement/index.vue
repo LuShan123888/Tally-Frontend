@@ -2,7 +2,7 @@
   <div>
     <v-row style="height:150px" no-gutters align="center">
       <v-col cols="2" no-gutters>
-        <div class="text-h4 pl-10" v-text="'用户管理'"/>
+        <div class="text-h4 pl-10 blue--text text--darken-2" v-text="'用户管理'"/>
       </v-col>
       <v-col cols="9">
         <v-row no-gutters align="center">
@@ -75,7 +75,7 @@
       <v-col cols="1">
         <v-btn
             color="primary"
-            @click="loadUserSaveDialog()"
+            @click="loadUserSaveDialog"
             v-text="'新增用户'"
         />
       </v-col>
@@ -205,7 +205,7 @@
           <span class="text-h5" v-text="dialog.title"/>
         </v-card-title>
         <v-card-text class="pb-0">
-          <v-form ref="userSaveForm">
+          <v-form ref="userSaveOrUpdateForm">
             <v-container>
               <v-row no-gutters>
                 <v-col cols="6" class="pr-3">
@@ -327,7 +327,7 @@
               text
               :disabled="dialog.btn.loading"
               :loading="dialog.btn.loading"
-              @click="saveOrUpdateUser()"
+              @click="saveOrUpdateUser"
               v-text="'保存'"
           />
         </v-card-actions>
@@ -414,7 +414,7 @@ export default {
       }
     },
     saveOrUpdateUser() {
-      if (!this.$refs.userSaveForm.validate()) {
+      if (!this.$refs.userSaveOrUpdateForm.validate()) {
         return;
       }
       this.dialog.btn.loading = true;
@@ -471,6 +471,7 @@ export default {
       this.dialog.user.avatarUrl = null;
       this.dialog.user.status = null;
       this.dialog.user.roleIdList = null;
+      this.dialog.user.version = null;
       this.dialog.title = "新增用户";
       this.dialog.isShow = true;
     },
