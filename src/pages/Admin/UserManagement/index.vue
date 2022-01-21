@@ -475,11 +475,11 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pageUser();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageUser();
             });
       } else {
         this.axios.post("/user/saveUser", JSON.stringify(this.dialog.user))
@@ -490,11 +490,11 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pageUser();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageUser();
             });
       }
     },

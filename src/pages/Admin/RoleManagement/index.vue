@@ -298,11 +298,11 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pageRole();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageRole();
             });
       } else {
         this.axios.post("/role/saveRole", JSON.stringify(this.dialog.role))
@@ -313,11 +313,11 @@ export default {
                 type: "success",
                 duration: 2000,
               });
+              this.dialog.isShow = false;
+              this.pageRole();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
-              this.dialog.isShow = false;
-              this.pageRole();
             });
       }
     },

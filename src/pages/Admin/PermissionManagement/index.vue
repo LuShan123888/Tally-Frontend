@@ -21,9 +21,9 @@
         highlight-current-row
         :expand-row-keys="['1']"
         :tree-props="{children: 'children'}"
-        row-key="id">
-      stripe
-      style="width: 100%">
+        row-key="id"
+        stripe
+        style="width: 100%">
       <el-table-column
           :index="(index) => index + 1"
           align="center"
@@ -35,11 +35,12 @@
           align="center"
           label="权限ID"
           property="id"
-          width="120px">
+          width="200px">
       </el-table-column>
       <el-table-column
           label="权重"
-          property="weight">
+          property="weight"
+          width="70px">
       </el-table-column>
       <el-table-column
           label="权限名称"
@@ -266,12 +267,8 @@ export default {
     },
     loadPermissionSaveDialog() {
       this.dialog.permission.id = null;
-      this.dialog.permission.parentId = null;
-      this.dialog.permission.weight = null;
-      this.dialog.permission.permissionName = null;
-      this.dialog.permission.requestUrl = null;
-      this.dialog.permission.requestMethod = null;
       this.dialog.permission.version = null;
+      this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
     },
