@@ -2,7 +2,7 @@
   <div>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="11" no-gutters>
-        <div class="text-h4 pl-10 blue--text text--darken-2" v-text="'权限管理'"/>
+        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'权限管理'"/>
       </v-col>
       <v-col cols="1">
         <v-btn
@@ -168,6 +168,9 @@ export default {
     },
     isDark: function () {
       return this.$vuetify.theme.dark;
+    },
+    lightPrimary: function () {
+      return this.$vuetify.theme.themes.light.primary;
     }
   },
   watch: {},
@@ -177,7 +180,7 @@ export default {
     return {
       table: {
         loading: false,
-        data: null
+        data: []
       },
       dialog: {
         isShow: false,

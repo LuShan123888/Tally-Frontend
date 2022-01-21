@@ -58,7 +58,7 @@ export default {
   data: function () {
     return {
       menus: {
-        data: null,
+        data: [],
         isFold: false
       },
     };

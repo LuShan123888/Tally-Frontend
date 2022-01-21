@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-row align="center" no-gutters style="height:150px">
-      <v-col cols="2" no-gutters>
-        <div class="text-h4 pl-10 blue--text text--darken-2" v-text="'角色管理'"/>
+      <v-col cols="3" no-gutters>
+        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'角色管理'"/>
       </v-col>
-      <v-col cols="9">
+      <v-col cols="8">
         <v-row align="center" no-gutters>
           <v-col cols="7">
             <v-form ref="roleQueryForm" style="width:100%">
@@ -224,6 +224,9 @@ export default {
     },
     isDark: function () {
       return this.$vuetify.theme.dark;
+    },
+    lightPrimary: function () {
+      return this.$vuetify.theme.themes.light.primary;
     }
   },
   watch: {},
@@ -233,7 +236,7 @@ export default {
     return {
       table: {
         loading: false,
-        data: null,
+        data: [],
         query: {
           page: {
             current: 1,

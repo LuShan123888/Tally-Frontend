@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>
-      Home
-    </h1>
-  </div>
+  <v-container>
+    <v-row>
+      <span class="text--primary text-h2">服务器信息</span>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
