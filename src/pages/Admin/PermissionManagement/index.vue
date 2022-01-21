@@ -104,7 +104,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.parentId"
-                      :rules="[(value) => !!value || '请输入父权限ID', rules.isInteger]"
+                      :rules="[(value) => !!value || '请输入父权限ID',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
                       clearable
                       label="父权限ID"
                   />
@@ -266,9 +266,12 @@ export default {
           });
     },
     loadPermissionSaveDialog() {
+      if (this.dialog.permission.id) {
+        this.$refs.permissionSaveOrUpdateForm.resetValidation();
+      }
       this.dialog.permission.id = null;
-      this.dialog.permission.version = null;
       this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
+      this.dialog.permission.version = null;
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
     },
