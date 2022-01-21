@@ -180,11 +180,15 @@
                       label="角色描述"
                   />
                 </v-col>
+                <v-col cols="12">
+                  <div :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
+                  <v-treeview
+                      v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" :open="['1']" dense
+                      hoverable item-children="children" item-key="id" item-text="permissionName"
+                      selectable selected-color="primary" transition/>
+                </v-col>
               </v-row>
-              <v-treeview
-                  v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" :open="['1']" dense
-                  hoverable item-children="children" item-key="id"
-                  item-text="permissionName" selectable selected-color="primary" transition></v-treeview>
+
             </v-container>
           </v-form>
         </v-card-text>
@@ -363,8 +367,8 @@ export default {
     },
   },
   mounted() {
-    this.pageRole();
     this.loadPermissionMap();
+    this.pageRole();
   },
 };
 </script>
