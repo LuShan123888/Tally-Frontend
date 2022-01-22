@@ -4,7 +4,7 @@
     <app-bar :isShow="isMobile" :style="{ 'z-index': '101' }"/>
     <navbar/>
     <v-main>
-      <v-container fluid class="pa-0">
+      <v-container class="pa-0 ma-0" fluid>
         <router-view></router-view>
       </v-container>
     </v-main>
