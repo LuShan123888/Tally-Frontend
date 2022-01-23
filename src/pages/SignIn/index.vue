@@ -108,16 +108,15 @@ export default {
         params.append("password", this.password);
         this.axios
             .post("/account/signIn", params)
-            .then((res) => {
+            .then((response) => {
               this.$notify({
                 title: "登录成功",
-                message: null,
+                message: "上次登录时间：" + response.data.data.lastSignInDateTime,
                 type: "success",
                 duration: 2000,
               });
-              const jwt = res.data.data.token;
               // 把数据共享出去
-              _this.$store.commit("setToken", jwt);
+              _this.$store.commit("setToken", response.data.data.token);
               _this.$router.push({name: "Home"});
             });
       }

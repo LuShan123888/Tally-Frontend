@@ -543,8 +543,8 @@ export default {
         return this.GLOBAL.url.file + "/" + avatarUrl;
       }
     },
-    handleAvatarSuccess(res) {
-      this.dialog.user.avatarUrl = res.data;
+    handleAvatarSuccess(response) {
+      this.dialog.user.avatarUrl = response.data;
       this.$notify({
         title: "图片上传成功",
         message: null,
@@ -552,8 +552,8 @@ export default {
         duration: 2000,
       });
     },
-    handleAvatarError(err) {
-      console.log(err)
+    handleAvatarError(error) {
+      console.log(error)
       this.$message.error("图像上传失败")
     },
     beforeAvatarUpload(file) {
