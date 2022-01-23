@@ -195,7 +195,7 @@ export default {
     submitForm() {
       if (this.$refs.form.validate()) {
         this.axios
-            .post("/bill/insertBill", JSON.stringify(this.bill))
+            .post("/bill/saveBill", JSON.stringify(this.bill))
             .then(() => {
               this.$notify({
                 title: "提交成功",

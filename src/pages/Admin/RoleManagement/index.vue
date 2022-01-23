@@ -183,12 +183,12 @@
                 <v-col cols="12">
                   <div :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
                   <v-treeview
-                      v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" :open="['1']" dense
+                      v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" dense
+                      open-on-click selectable
                       hoverable item-children="children" item-key="id" item-text="permissionName"
-                      selectable selected-color="primary" transition/>
+                      selected-color="primary" transition/>
                 </v-col>
               </v-row>
-
             </v-container>
           </v-form>
         </v-card-text>
