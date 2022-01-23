@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Element from 'element-ui'
-import router from '../router'
-import store from '../store'
+import router from '@/router'
+import store from '@/store'
 import Global from "@/common/Global";
 
 axios.defaults.baseURL = Global.url.api;

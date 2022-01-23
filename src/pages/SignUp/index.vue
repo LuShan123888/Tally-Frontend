@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import AppBar from "../Index/components/AppBar";
-import DarkButton from "../../components/DarkButton";
+import AppBar from "@/pages/Index/components/AppBar";
+import DarkButton from "@/components/DarkButton";
 
 export default {
   name: "SignUp",

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import AppBar from "./components/AppBar";
-import Navbar from "./components/Navbar";
+import AppBar from "@/pages/Admin/components/AppBar";
+import Navbar from "@/pages/Admin/components/Navbar";
 
 export default {
   name: "AdminIndex",
