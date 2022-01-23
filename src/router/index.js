@@ -5,8 +5,8 @@ import Home from '../pages/Index/Home'
 import Outcome from '../pages/Index/Outcome'
 import Income from '../pages/Index/Income'
 import AccountInfo from '../pages/Index/AccountInfo'
-import Login from '../pages/Login/Login'
-import Register from '../pages/Register/Register'
+import SignIn from '../pages/SignIn'
+import SignUp from '../pages/SignUp'
 import Test from '../pages/Test'
 import PageNotFound from '../pages/PageNotFound'
 import AdminIndex from '../pages/Admin'
@@ -122,14 +122,14 @@ const routes = [
         ]
     },
     {
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/signIn',
+        name: 'SignIn',
+        component: SignIn
     },
     {
-        path: '/register',
-        name: 'Register',
-        component: Register
+        path: '/signUp',
+        name: 'SignUp',
+        component: SignUp
     },
     {
         path: '/test',

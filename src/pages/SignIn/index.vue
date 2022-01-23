@@ -11,7 +11,7 @@
       >
         <v-row no-gutters>
           <v-col cols="12">
-            <div class="text-h4 pt-10 text-center" v-text="'注册'"/>
+            <div class="text-h4 pt-10 text-center">登录</div>
           </v-col>
         </v-row>
         <v-row>
@@ -25,9 +25,9 @@
               <v-row>
                 <v-text-field
                     v-model="username"
-                    :counter="rules.usernameMaxLength"
                     :rules="[rules.isUsername]"
                     label="用户名"
+                    :counter="rules.usernameMaxLength"
                     clearable
                 />
               </v-row>
@@ -43,28 +43,27 @@
                 />
               </v-row>
               <v-row>
-                <v-text-field
-                    v-model="email"
-                    :rules="[(value)=> !!value || '请输入邮箱' ,rules.isEmail]"
-                    label="邮箱"
-                    clearable
-                />
-              </v-row>
-              <v-row>
                 <v-btn
                     large
                     color="primary"
                     class="mx-auto my-10"
                     style="width: 40%"
                     @click="submitForm"
-                    v-text="'注册'"
-                />
+                >
+                  登录
+                </v-btn>
               </v-row>
             </v-form>
           </v-col>
         </v-row>
       </v-card>
     </v-hover>
+    <v-row>
+      <v-col class="text-center text-subtitle-1 mt-5" cols="12" v-text="''">
+        还没有账户？
+        <router-link to="/register" v-text="'立即注册'"/>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -73,7 +72,7 @@ import AppBar from "../Index/components/AppBar";
 import DarkButton from "../../components/DarkButton";
 
 export default {
-  name: "Login",
+  name: "SignIn",
   components: {AppBar, DarkButton},
   computed: {
     isMobile: function () {
@@ -87,9 +86,8 @@ export default {
     return {
       valid: false,
       show: false,
-      username: null,
-      password: null,
-      email: null,
+      username: this.$route.params.username,
+      password: this.$route.params.password,
       rules: this.GLOBAL.rules,
       styles: {
         darkButton: {
@@ -108,22 +106,19 @@ export default {
         const params = new URLSearchParams();
         params.append("username", this.username);
         params.append("password", this.password);
-        params.append("email", this.email);
-        this.axios.post("/account/signUp", params)
-            .then(() => {
+        this.axios
+            .post("/account/signIn", params)
+            .then((res) => {
               this.$notify({
-                title: "注册成功",
+                title: "登录成功",
                 message: null,
                 type: "success",
                 duration: 2000,
               });
-              _this.$router.push({
-                name: "Login",
-                params: {
-                  username: this.username,
-                  password: this.password,
-                },
-              });
+              const jwt = res.data.data.token;
+              // 把数据共享出去
+              _this.$store.commit("setToken", jwt);
+              _this.$router.push({name: "Home"});
             });
       }
     },
@@ -132,4 +127,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
 </style>

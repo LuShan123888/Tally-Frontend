@@ -49,7 +49,7 @@ axios.interceptors.response.use(
         switch (status) {
             case 401:
                 // store.commit("clean");
-                router.push({name: "Login"});
+                router.push({name: "SignIn"});
                 return Promise.reject(error.response);
             case 403:
                 return Promise.reject(error.response);

@@ -144,7 +144,7 @@ export default {
         duration: 2000,
       });
       this.$store.commit("clean");
-      this.$router.push({name: "Login"});
+      this.$router.push({name: "SignIn"});
     }
   },
   mounted() {

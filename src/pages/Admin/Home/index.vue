@@ -31,11 +31,12 @@
               <v-row align="center" no-gutters>
                 <v-icon>mdi-cpu-64-bit</v-icon>
                 <span class="font-weight-bold" v-text="'CPU 核心数：'"/>
-                <span :style="{color:lightPrimary}" class="text-h6" v-text="instanceAttribute.cpu"/>
+                <span :style="{color:lightPrimary}" class="text-subtitle-1" v-text="instanceAttribute.cpu"/>
               </v-row>
             </v-card-subtitle>
             <v-card-text>
               <v-row
+                  :style="{height:'200px'}"
                   v-if="monitorData.cpu.hour.loading"
                   align="center"
                   class="fill-height ma-0"
@@ -51,6 +52,7 @@
                           :options="monitorData.cpu.hour.options"
                           style="height: 200px"/>
               <v-row
+                  :style="{height:'200px'}"
                   v-if="monitorData.cpu.day.loading"
                   align="center"
                   class="fill-height ma-0"
@@ -84,7 +86,7 @@
                     </v-col>
                     <v-col class="d-flex justify-end align-end" cols="10">
                       <span :style="{color:lightError}" class="text-h5 mx-3" v-text="monitorData.internet.now.TX"/>
-                      <span class="text-subtitle-1">&nbsp;KBits</span>
+                      <span class="text-subtitle-1">&nbsp;MBits</span>
                     </v-col>
                   </v-row>
                   <v-row no-gutters>
@@ -93,7 +95,7 @@
                     </v-col>
                     <v-col class="d-flex justify-end align-end" cols="10">
                       <span :style="{color:lightPrimary}" class="text-h5 mx-3" v-text="monitorData.internet.now.RX"/>
-                      <span class="text-subtitle-1">&nbsp;KBits</span>
+                      <span class="text-subtitle-1">&nbsp;MBits</span>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -109,6 +111,7 @@
             <v-card-text>
               <v-row
                   v-if="monitorData.internet.hour.loading"
+                  :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
@@ -124,6 +127,7 @@
                           style="height: 200px"/>
               <v-row
                   v-if="monitorData.internet.day.loading"
+                  :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
@@ -156,7 +160,7 @@
                     </v-col>
                     <v-col class="d-flex justify-end align-end" cols="10">
                       <span :style="{color:lightError}" class="text-h5 mx-3" v-text="monitorData.BPS.now.Read"/>
-                      <span class="text-subtitle-1">&nbsp;Byte/s</span>
+                      <span class="text-subtitle-1">&nbsp;KByte/s</span>
                     </v-col>
                   </v-row>
                   <v-row no-gutters>
@@ -165,7 +169,7 @@
                     </v-col>
                     <v-col class="d-flex justify-end align-end" cols="10">
                       <span :style="{color:lightPrimary}" class="text-h5 mx-3" v-text="monitorData.BPS.now.Write"/>
-                      <span class="text-subtitle-1">&nbsp;Byte/s</span>
+                      <span class="text-subtitle-1">&nbsp;KByte/s</span>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -174,6 +178,7 @@
             <v-card-subtitle :style="{height:'32px'}"/>
             <v-card-text>
               <v-row
+                  :style="{height:'200px'}"
                   v-if="monitorData.BPS.hour.loading"
                   align="center"
                   class="fill-height ma-0"
@@ -189,6 +194,7 @@
                           :options="monitorData.BPS.hour.options"
                           style="height: 200px"/>
               <v-row
+                  :style="{height:'200px'}"
                   v-if="monitorData.BPS.day.loading"
                   align="center"
                   class="fill-height ma-0"
@@ -338,7 +344,6 @@ export default {
                 mode: 'nearest',
                 intersect: false
               },
-              // 图例配置
               legend: {
                 display: false
               },
@@ -404,7 +409,7 @@ export default {
                     if (label) {
                       label += ': ';
                     }
-                    label += tooltipItem.yLabel + ' KBits';
+                    label += tooltipItem.yLabel + ' MBits';
                     return label;
                   }
                 }
@@ -427,7 +432,7 @@ export default {
                   display: true,
                   ticks: {
                     min: 0,
-                    stepSize: 10000
+                    stepSize: 10
                   },
                   gridLines: {
                     display: false
@@ -471,7 +476,7 @@ export default {
                     if (label) {
                       label += ': ';
                     }
-                    label += tooltipItem.yLabel + ' KBits';
+                    label += tooltipItem.yLabel + ' MBits';
                     return label;
                   }
                 }
@@ -494,7 +499,7 @@ export default {
                   display: true,
                   ticks: {
                     min: 0,
-                    stepSize: 50000
+                    stepSize: 20
                   },
                   gridLines: {
                     display: false
@@ -544,7 +549,7 @@ export default {
                     if (label) {
                       label += ': ';
                     }
-                    label += tooltipItem.yLabel + ' Byte/s';
+                    label += tooltipItem.yLabel + ' KByte/s';
                     return label;
                   }
                 }
@@ -567,7 +572,7 @@ export default {
                   display: true,
                   ticks: {
                     min: 0,
-                    stepSize: 10000,
+                    stepSize: 100,
                   },
                   gridLines: {
                     display: false
@@ -611,7 +616,7 @@ export default {
                     if (label) {
                       label += ': ';
                     }
-                    label += tooltipItem.yLabel + ' Byte/s';
+                    label += tooltipItem.yLabel + ' KByte/s';
                     return label;
                   }
                 }
@@ -634,7 +639,7 @@ export default {
                   display: true,
                   ticks: {
                     min: 0,
-                    stepSize: 30000
+                    stepSize: 100
                   },
                   gridLines: {
                     display: false
@@ -662,11 +667,11 @@ export default {
       this.axios.get("/monitor/getInstanceMonitorDataNow")
           .then((response) => {
             let responseData = response.data.data;
-            this.monitorData.cpu.now = responseData.cpu[0];
-            this.monitorData.internet.now.RX = responseData.internetRX[0];
-            this.monitorData.internet.now.TX = responseData.internetTX[0];
-            this.monitorData.BPS.now.Read = responseData.BPSRead[0];
-            this.monitorData.BPS.now.Write = responseData.BPSWrite[0];
+            this.monitorData.cpu.now = responseData.cpu;
+            this.monitorData.internet.now.RX = responseData.internetRX;
+            this.monitorData.internet.now.TX = responseData.internetTX;
+            this.monitorData.BPS.now.Read = responseData.BPSRead;
+            this.monitorData.BPS.now.Write = responseData.BPSWrite;
           });
     },
     getInstanceMonitorDataHour() {
