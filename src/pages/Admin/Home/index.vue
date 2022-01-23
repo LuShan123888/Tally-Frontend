@@ -1,19 +1,170 @@
 <template>
   <v-container class="pa-0 ma-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
-      <v-col cols="3" no-gutters>
+      <v-col cols="2" no-gutters>
         <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
+      </v-col>
+      <v-col cols="10">
+        <v-row justify="center">
+          <v-col cols="2">
+            <v-hover v-slot="{ hover }">
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+                     align="center" class="transition-swing rounded" justify="space-between">
+                <v-col cols="7">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1 pl-2" v-text="'今日新增用户'"/>
+                </v-col>
+                <v-col cols="5">
+                  <v-icon class="ml-5" size="50">mdi-account-group</v-icon>
+                </v-col>
+              </v-row>
+            </v-hover>
+          </v-col>
+          <v-col class="mx-16" cols="2">
+            <v-hover v-slot="{ hover }">
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+                     align="center" class="transition-swing rounded" justify="space-between">
+                <v-col cols="7">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1 pl-2" v-text="'今日登录用户'"/>
+                </v-col>
+                <v-col cols="5">
+                  <v-icon class="ml-5" size="50">mdi-login-variant</v-icon>
+                </v-col>
+              </v-row>
+            </v-hover>
+          </v-col>
+          <v-col class="mr-16" cols="2">
+            <v-hover v-slot="{ hover }">
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+                     align="center" class="transition-swing rounded" justify="space-between">
+                <v-col cols="7">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1 pl-2" v-text="'今日新增账单'"/>
+                </v-col>
+                <v-col cols="5">
+                  <v-icon class="ml-5" size="50">mdi-notebook-edit</v-icon>
+                </v-col>
+              </v-row>
+            </v-hover>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col class="px-12" cols="4">
+      <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
               :class="{'elevation-24':hover,'elevation-6':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
-                <v-col class="text-h5" v-text="'CPU 使用率'"/>
+                <v-col class="text-h5 font-weight-medium" v-text="'用户统计'"/>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.total"></div>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总用户数'"/>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-card-text>
+              <v-row
+                  v-if="userStatData.week.loading"
+                  :style="{height:'200px'}"
+                  align="center"
+                  class="fill-height ma-0"
+                  justify="center"
+              >
+                <v-progress-circular
+                    color="primary"
+                    indeterminate
+                    width="2"
+                ></v-progress-circular>
+              </v-row>
+              <line-chart v-if="!userStatData.week.loading" :chartData="userStatData.week.chartData"
+                          :options="userStatData.week.options"
+                          style="height: 200px"/>
+            </v-card-text>
+          </v-card>
+        </v-hover>
+      </v-col>
+      <v-col class="px-12 mt-10" cols="4">
+        <v-hover v-slot="{ hover }">
+          <v-card
+              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              class="transition-swing">
+            <v-card-title>
+              <v-row :style="{height: '100px'}" align="center" no-gutters>
+                <v-col class="text-h5 font-weight-medium" v-text="'登录统计'"/>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.total"></div>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总登录数'"/>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-card-text>
+              <v-row
+                  v-if="signInRecordStatData.week.loading"
+                  :style="{height:'200px'}"
+                  align="center"
+                  class="fill-height ma-0"
+                  justify="center"
+              >
+                <v-progress-circular
+                    color="primary"
+                    indeterminate
+                    width="2"
+                ></v-progress-circular>
+              </v-row>
+              <line-chart v-if="!signInRecordStatData.week.loading" :chartData="signInRecordStatData.week.chartData"
+                          :options="signInRecordStatData.week.options"
+                          style="height: 200px"/>
+            </v-card-text>
+          </v-card>
+        </v-hover>
+      </v-col>
+      <v-col class="px-12 mt-10" cols="4">
+        <v-hover v-slot="{ hover }">
+          <v-card
+              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              class="transition-swing">
+            <v-card-title>
+              <v-row :style="{height: '100px'}" align="center" no-gutters>
+                <v-col class="text-h5 font-weight-medium" v-text="'账单统计'"/>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.total"></div>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总账单数'"/>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-card-text>
+              <v-row
+                  v-if="billStatData.week.loading"
+                  :style="{height:'200px'}"
+                  align="center"
+                  class="fill-height ma-0"
+                  justify="center"
+              >
+                <v-progress-circular
+                    color="primary"
+                    indeterminate
+                    width="2"
+                ></v-progress-circular>
+              </v-row>
+              <line-chart v-if="!billStatData.week.loading" :chartData="billStatData.week.chartData"
+                          :options="billStatData.week.options"
+                          style="height: 200px"/>
+            </v-card-text>
+          </v-card>
+        </v-hover>
+      </v-col>
+      <v-col class="px-12 my-16" cols="4">
+        <v-hover v-slot="{ hover }">
+          <v-card
+              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              class="transition-swing">
+            <v-card-title>
+              <v-row :style="{height: '100px'}" align="center" no-gutters>
+                <v-col class="text-h5 font-weight-medium" v-text="'CPU 使用率'"/>
                 <v-col class="d-flex justify-end">
                   <v-progress-circular
                       :rotate="90"
@@ -71,14 +222,14 @@
           </v-card>
         </v-hover>
       </v-col>
-      <v-col class="px-12" cols="4">
+      <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
               :class="{'elevation-24':hover,'elevation-6':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
-                <v-col class="text-h5" v-text="'网络流量'"/>
+                <v-col class="text-h5 font-weight-medium" v-text="'网络流量'"/>
                 <v-col cols="4">
                   <v-row no-gutters>
                     <v-col class="d-flex justify-center align-center" cols="2">
@@ -145,14 +296,14 @@
           </v-card>
         </v-hover>
       </v-col>
-      <v-col class="px-12" cols="4">
+      <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
               :class="{'elevation-24':hover,'elevation-6':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
-                <v-col class="text-h5" v-text="'云盘带宽'"/>
+                <v-col class="text-h5 font-weight-medium" v-text="'云盘带宽'"/>
                 <v-col cols="4">
                   <v-row no-gutters>
                     <v-col class="d-flex justify-center align-center" cols="2">
@@ -653,7 +804,202 @@ export default {
       instanceAttribute: {
         cpu: 0,
         ipAddress: '0.0.0.0'
-      }
+      },
+      userStatData: {
+        total: 0,
+        day: 0,
+        week: {
+          loading: true,
+          chartData: {
+            labels: [],
+            datasets: [
+              {
+                label: '新增用户',
+                backgroundColor: this.$vuetify.theme.themes.light.primary,
+                fill: false,
+                data: [],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display: true,
+              text: '新增用户'
+            },
+            tooltips: {
+              mode: 'nearest',
+              intersect: false,
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += tooltipItem.yLabel + ' 人';
+                  return label;
+                }
+              }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: false
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                }
+              }],
+              yAxes: [{
+                display: true,
+                ticks: {
+                  min: 0,
+                  stepSize: 10
+                },
+                gridLines: {
+                  display: false
+                }
+              }]
+            }
+          },
+        },
+      },
+      signInRecordStatData: {
+        total: 0,
+        day: 0,
+        week: {
+          loading: true,
+          chartData: {
+            labels: [],
+            datasets: [
+              {
+                label: '登录用户',
+                backgroundColor: this.$vuetify.theme.themes.light.primary,
+                fill: false,
+                data: [],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display: true,
+              text: '登录用户'
+            },
+            tooltips: {
+              mode: 'nearest',
+              intersect: false,
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += tooltipItem.yLabel + ' 人';
+                  return label;
+                }
+              }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: false
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                }
+              }],
+              yAxes: [{
+                display: true,
+                ticks: {
+                  min: 0,
+                  stepSize: 10
+                },
+                gridLines: {
+                  display: false
+                }
+              }]
+            }
+          },
+        },
+      },
+      billStatData: {
+        total: 0,
+        day: 0,
+        week: {
+          loading: true,
+          chartData: {
+            labels: [],
+            datasets: [
+              {
+                label: '新增账单',
+                backgroundColor: this.$vuetify.theme.themes.light.primary,
+                fill: false,
+                data: [],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display: true,
+              text: '新增账单'
+            },
+            tooltips: {
+              mode: 'nearest',
+              intersect: false,
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += tooltipItem.yLabel + ' 笔';
+                  return label;
+                }
+              }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: false
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                }
+              }],
+              yAxes: [{
+                display: true,
+                ticks: {
+                  min: 0,
+                  stepSize: 10
+                },
+                gridLines: {
+                  display: false
+                }
+              }]
+            }
+          },
+        },
+      },
     };
   },
   methods: {
@@ -716,6 +1062,39 @@ export default {
             this.monitorData.internet.day.loading = false;
             this.monitorData.BPS.day.loading = false;
           });
+    },
+    getUserStatData() {
+      this.axios.get("/user/getUserStatData")
+          .then((response) => {
+            let responseData = response.data.data;
+            this.userStatData.total = responseData.total;
+            this.userStatData.day = responseData.day;
+            this.userStatData.week.chartData.labels = responseData.dateTime;
+            this.userStatData.week.chartData.datasets[0].data = responseData.week;
+            this.userStatData.week.loading = false;
+          });
+    },
+    getBillStatData() {
+      this.axios.get("/bill/getBillStatData")
+          .then((response) => {
+            let responseData = response.data.data;
+            this.billStatData.total = responseData.total;
+            this.billStatData.day = responseData.day;
+            this.billStatData.week.chartData.labels = responseData.dateTime;
+            this.billStatData.week.chartData.datasets[0].data = responseData.week;
+            this.billStatData.week.loading = false;
+          });
+    },
+    getSignInRecordStatData() {
+      this.axios.get("/account/getSignInRecordStatData")
+          .then((response) => {
+            let responseData = response.data.data;
+            this.signInRecordStatData.total = responseData.total;
+            this.signInRecordStatData.day = responseData.day;
+            this.signInRecordStatData.week.chartData.labels = responseData.dateTime;
+            this.signInRecordStatData.week.chartData.datasets[0].data = responseData.week;
+            this.signInRecordStatData.week.loading = false;
+          });
     }
   },
   mounted() {
@@ -723,6 +1102,9 @@ export default {
     this.getInstanceMonitorDataNow();
     this.getInstanceMonitorDataHour();
     this.getInstanceMonitorDataDay();
+    this.getUserStatData();
+    this.getBillStatData();
+    this.getSignInRecordStatData();
   },
 };
 </script>
