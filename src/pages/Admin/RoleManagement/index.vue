@@ -15,7 +15,6 @@
                       :rules="[rules.isInteger]"
                       class="mr-2"
                       clearable
-                      dense
                       label="角色ID"
                   >
                   </v-text-field>
@@ -25,7 +24,6 @@
                       v-model="table.query.role.roleName"
                       class="mr-2"
                       clearable
-                      dense
                       label="角色名称"
                   >
                   </v-text-field>
@@ -35,7 +33,6 @@
                       v-model="table.query.role.roleDescription"
                       class="mr-2"
                       clearable
-                      dense
                       label="角色描述"
                   >
                   </v-text-field>
@@ -66,7 +63,7 @@
         />
       </v-col>
     </v-row>
-    <v-divider></v-divider>
+    <v-divider/>
     <el-table
         id="table"
         v-loading="table.loading"

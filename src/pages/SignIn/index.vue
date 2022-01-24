@@ -61,7 +61,7 @@
     <v-row>
       <v-col class="text-center text-subtitle-1 mt-5" cols="12" v-text="''">
         还没有账户？
-        <router-link to="/register" v-text="'立即注册'"/>
+        <router-link to="/signUp" v-text="'立即注册'"/>
       </v-col>
     </v-row>
   </v-container>

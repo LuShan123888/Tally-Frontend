@@ -8,14 +8,14 @@ router.beforeEach((to, from, next) => {
 
         const token = store.getters.getToken
         if (token) { // 判断当前的token是否存在，如不存在则跳转至登录页面
-            if (to.path === '/login') {
+            if (to.path === '/signIn') {
 
             } else {
                 next()
             }
         } else {
             next({
-                path: '/login'
+                path: '/signIn'
             })
         }
     } else {

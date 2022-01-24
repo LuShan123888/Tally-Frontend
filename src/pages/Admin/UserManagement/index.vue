@@ -11,7 +11,6 @@
               <v-row no-gutters align="center">
                 <v-col cols="6">
                   <v-text-field
-                      dense
                       clearable
                       class="mr-2"
                       v-model="table.query.user.id"
@@ -24,7 +23,6 @@
                   <v-text-field
                       clearable
                       class="mr-2"
-                      dense
                       v-model="table.query.user.username"
                       label="用户名"
                   >
@@ -82,7 +80,7 @@
         />
       </v-col>
     </v-row>
-    <v-divider></v-divider>
+    <v-divider/>
     <el-table
         v-loading="table.loading"
         id="table"

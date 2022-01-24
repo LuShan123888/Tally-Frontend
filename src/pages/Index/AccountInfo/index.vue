@@ -35,7 +35,7 @@
                 </span>
               </v-list-item-content>
             </v-list-item>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
@@ -43,7 +43,7 @@
                 </span>
               </v-list-item-content>
             </v-list-item>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
@@ -52,7 +52,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-divider></v-divider>
+            <v-divider/>
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
@@ -60,7 +60,7 @@
                 </span>
               </v-list-item-content>
             </v-list-item>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
@@ -68,7 +68,7 @@
                 </span>
               </v-list-item-content>
             </v-list-item>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-list-item>
               <v-list-item-content>
                 <v-row>
