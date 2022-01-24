@@ -92,6 +92,15 @@ const enums = {
     {text: '正常', value: 'NORMAL'},
     {text: '禁用', value: 'PROHIBIT'}
   ],
+  feedbackStatus: [
+    {text: '已创建', value: 'CREATED'},
+    {text: '处理中', value: 'PROCESSING'},
+    {text: '处理完成', value: 'FINISHED'}
+  ],
+  feedbackType: [
+    {text: '问题解决', value: 'PROBLEM'},
+    {text: '网站建议', value: 'SUGGESTION'}
+  ],
   page: [5, 15, 50, 100]
 }
 const images = {

@@ -14,6 +14,7 @@ import AdminHome from '@/pages/Admin/Home'
 import UserManagement from '@/pages/Admin/UserManagement'
 import RoleManagement from '@/pages/Admin/RoleManagement'
 import PermissionManagement from '@/pages/Admin/PermissionManagement'
+import FeedbackManagement from '@/pages/Admin/FeedbackManagement'
 import Druid from '@/pages/Admin/Druid'
 import Swagger from '@/pages/Admin/Swagger'
 
@@ -97,8 +98,8 @@ const routes = [
             },
             {
                 path: '/admin/feedback',
-                name: 'AdminPermission',
-                component: AdminHome,
+                name: 'FeedbackManagement',
+                component: FeedbackManagement,
                 meta: {
                     requireAuth: true
                 }
