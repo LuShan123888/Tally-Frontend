@@ -17,13 +17,13 @@
                   :to="item.path"
               >
                 <v-list-item-icon>
-                  <v-icon v-text="item.icon"></v-icon>
+                  <v-icon v-text="item.icon"/>
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
                       v-text="item.text"
                       class="text-subtitle-2"
-                  ></v-list-item-title>
+                  />
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -39,8 +39,8 @@
           min-width="70px"
           height="inherit"
       >
-        <span v-text="item.text"></span>
-        <v-icon v-text="item.icon"></v-icon>
+        <span v-text="item.text"/>
+        <v-icon v-text="item.icon"/>
       </v-btn>
     </v-bottom-navigation>
   </div>

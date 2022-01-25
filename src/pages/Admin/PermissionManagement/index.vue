@@ -137,7 +137,7 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn
               color="grey darken-1"
               text

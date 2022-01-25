@@ -3,8 +3,8 @@
     <v-app-bar-nav-icon class="ml-3">
       <v-icon x-large color="primary"> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>
-    <v-app-bar-title class="subtitle-1" v-text="title"></v-app-bar-title>
-    <v-spacer></v-spacer>
+    <v-app-bar-title class="subtitle-1" v-text="title"/>
+    <v-spacer/>
     <v-menu
         close-delay="300ms"
         bottom
@@ -31,7 +31,7 @@
                       color="primary"
                       indeterminate
                       width="2"
-                  ></v-progress-circular>
+                  />
                 </v-row>
               </template>
             </v-img>
@@ -52,7 +52,7 @@
               <v-icon>mdi-account-box</v-icon>
             </v-list-item-icon>
             <v-list-item-content class="ml-0">
-              <v-list-item-title v-text="userInfo.username"></v-list-item-title>
+              <v-list-item-title v-text="userInfo.username"/>
             </v-list-item-content>
           </v-list-item>
           <v-list-item

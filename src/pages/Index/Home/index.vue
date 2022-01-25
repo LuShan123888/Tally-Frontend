@@ -11,7 +11,7 @@
               color="primary"
               indeterminate
               width="2"
-          ></v-progress-circular>
+          />
         </v-row>
       </template>
     </v-img>
@@ -38,7 +38,7 @@
           </v-col>
           <v-col>
             <v-row class="my-5" justify="center">
-              <div style="width: 150px; height: 150px" ref="pieChart"></div>
+              <div ref="pieChart" style="width: 150px; height: 150px"/>
             </v-row>
           </v-col>
         </v-row>
@@ -135,8 +135,7 @@
                         label="标签"
                         v-model="selectedBill.remark"
                         clearable
-                    ></v-text-field
-                    >
+                    />
                   </v-col>
                   <v-col cols="5">
                     <v-dialog
@@ -160,7 +159,7 @@
                           scrollable
                           locale="zh-cn"
                       >
-                        <v-spacer></v-spacer>
+                        <v-spacer/>
                         <v-btn
                             color="grey darken-1"
                             text

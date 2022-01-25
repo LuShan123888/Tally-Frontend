@@ -12,71 +12,44 @@
                 <v-col cols="6">
                   <v-text-field
                       clearable
-                      class="mr-2"
+                      class="mr-2 pt-0 mt-0"
                       v-model="table.query.user.id"
                       :rules="[rules.isInteger]"
-                      label="用户ID"
-                  >
+                      label="用户ID">
                   </v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
                       clearable
-                      class="mr-2"
+                      class="mr-2 pt-0 mt-0"
                       v-model="table.query.user.username"
-                      label="用户名"
-                  >
+                      label="用户名">
                   </v-text-field>
                 </v-col>
               </v-row>
               <v-row no-gutters align="center">
                 <v-col cols="6">
-                  <v-select
-                      class="mt-0 pt-0 mr-2"
-                      v-model="table.query.user.status"
-                      clearable
-                      :items="enums.userStatus"
-                      label="状态"
-                  />
+                  <v-select v-model="table.query.user.status" :items="enums.userStatus" class="mt-0 pt-0 mr-2"
+                            clearable label="状态"/>
                 </v-col>
                 <v-col cols="6">
-                  <v-select
-                      v-model="table.query.user.roleIdList"
-                      chips
-                      clearable
-                      class="mt-0 pt-0 mr-2"
-                      deletable-chips
-                      small-chips
-                      item-text="roleName"
-                      item-value="id"
-                      :items="roleMap"
-                      label="角色"
-                      multiple
-                  />
+                  <v-select v-model="table.query.user.roleIdList" :items="roleMap" chips class="mt-0 pt-0 mr-2"
+                            clearable deletable-chips item-text="roleName" item-value="id" label="角色" multiple
+                            small-chips/>
                 </v-col>
               </v-row>
             </v-form>
           </v-col>
           <v-col cols="1">
-            <v-btn
-                small
-                fab
-                class="ml-2"
-                color="primary"
-                @click="pageUser"
-            >
-              <v-icon>
-                mdi-magnify
-              </v-icon>
+            <v-btn class="ml-2" color="primary" fab small
+                   @click="pageUser">
+              <v-icon> mdi-magnify</v-icon>
             </v-btn>
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="1">
-        <v-btn
-            color="primary"
-            @click="loadUserSaveDialog"
-            v-text="'新增用户'"
+        <v-btn color="primary" @click="loadUserSaveDialog" v-text="'新增用户'"
         />
       </v-col>
     </v-row>
@@ -103,35 +76,19 @@
           sortable
           width="90px">
       </el-table-column>
-      <el-table-column
-          label="用户名"
-          property="username">
+      <el-table-column label="用户名" property="username">
       </el-table-column>
-      <el-table-column
-          label="邮箱"
-          property="email"
-      >
+      <el-table-column label="邮箱" property="email">
       </el-table-column>
-      <el-table-column
-          label="手机号"
-          property="phoneNum"
-          width="180">
+      <el-table-column label="手机号" property="phoneNum" width="180">
       </el-table-column>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
           <v-avatar size="40" v-if="scope.row.avatarUrl!=null">
             <v-img :src="getAvatarPath(scope.row.avatarUrl)">
               <template v-slot:placeholder>
-                <v-row
-                    align="center"
-                    class="fill-height ma-0"
-                    justify="center"
-                >
-                  <v-progress-circular
-                      color="primary"
-                      indeterminate
-                      width="2"
-                  ></v-progress-circular>
+                <v-row align="center" class="fill-height ma-0" justify="center">
+                  <v-progress-circular color="primary" indeterminate width="2"/>
                 </v-row>
               </template>
             </v-img>
@@ -139,26 +96,15 @@
           <v-icon size="40" v-else>mdi-account-circle</v-icon>
         </template>
       </el-table-column>
-      <el-table-column
-          label="角色"
-          align="center"
-          width="200">
+      <el-table-column align="center" label="角色" width="200">
         <template slot-scope="scope">
-          <v-chip
-              v-for="item in scope.row.roleIdList"
-              :key="item"
-              class="mx-1"
-              label
-              small
-              v-text="roleNameFormatter(item)"
-          >
+          <v-chip v-for="item in scope.row.roleIdList"
+                  :key="item" class="mx-1" label small
+                  v-text="roleNameFormatter(item)">
           </v-chip>
         </template>
       </el-table-column>
-      <el-table-column
-          label="状态"
-          :formatter="userStatusFormatter"
-      >
+      <el-table-column :formatter="userStatusFormatter" label="状态">
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
         <template v-slot="scope">
@@ -196,7 +142,7 @@
               dense
               v-model="table.query.page.size"
               @input="changePageSize"
-          ></v-select>
+          />
         </div>
       </v-col>
       <v-col cols="3">
@@ -207,7 +153,7 @@
             :length="table.query.page.count"
             @input="changePage"
             total-visible="5"
-        ></v-pagination>
+        />
       </v-col>
     </v-row>
     <v-dialog
@@ -305,7 +251,7 @@
                               color="primary"
                               indeterminate
                               width="2"
-                          ></v-progress-circular>
+                          />
                         </v-row>
                       </template>
                     </v-img>
@@ -324,7 +270,7 @@
                               color="primary"
                               indeterminate
                               width="2"
-                          ></v-progress-circular>
+                          />
                         </v-row>
                       </template>
                     </v-img>
@@ -359,7 +305,7 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn
               color="grey darken-1"
               text

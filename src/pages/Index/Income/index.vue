@@ -11,7 +11,7 @@
               color="primary"
               indeterminate
               width="2"
-          ></v-progress-circular>
+          />
         </v-row>
       </template>
     </v-img>
@@ -47,7 +47,7 @@
                         :rules="[(value) => !!value || '请选择类型']"
                         label="类型"
                         clearable
-                    ></v-combobox>
+                    />
                   </v-col>
                 </v-row>
                 <v-row justify="space-around" no-gutters>
@@ -56,8 +56,7 @@
                         label="标签"
                         v-model="bill.remark"
                         clearable
-                    ></v-text-field
-                    >
+                    />
                   </v-col>
                   <v-col cols="5">
                     <v-dialog
@@ -81,7 +80,7 @@
                           scrollable
                           locale="zh-cn"
                       >
-                        <v-spacer></v-spacer>
+                        <v-spacer/>
                         <v-btn text color="error" @click="showDatePicker = false">
                           取消
                         </v-btn>
@@ -105,8 +104,7 @@
 
                         clearable
                         label="备注"
-                    ></v-textarea
-                    >
+                    />
                   </v-col>
                 </v-row>
                 <v-row no-gutters justify="space-around" class="mb-6">

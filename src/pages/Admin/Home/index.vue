@@ -61,7 +61,7 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'用户统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.total"></div>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总用户数'"/>
                 </v-col>
               </v-row>
@@ -78,7 +78,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!userStatData.week.loading" :chartData="userStatData.week.chartData"
                           :options="userStatData.week.options"
@@ -96,7 +96,7 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'登录统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.total"></div>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总登录数'"/>
                 </v-col>
               </v-row>
@@ -113,7 +113,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!signInRecordStatData.week.loading" :chartData="signInRecordStatData.week.chartData"
                           :options="signInRecordStatData.week.options"
@@ -131,7 +131,7 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'账单统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.total"></div>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总账单数'"/>
                 </v-col>
               </v-row>
@@ -148,7 +148,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!billStatData.week.loading" :chartData="billStatData.week.chartData"
                           :options="billStatData.week.options"
@@ -197,7 +197,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.cpu.hour.loading" :chartData="monitorData.cpu.hour.chartData"
                           :options="monitorData.cpu.hour.options"
@@ -213,7 +213,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.cpu.day.loading" :chartData="monitorData.cpu.day.chartData"
                           :options="monitorData.cpu.day.options"
@@ -271,7 +271,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.internet.hour.loading" :chartData="monitorData.internet.hour.chartData"
                           :options="monitorData.internet.hour.options"
@@ -287,7 +287,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.internet.day.loading" :chartData="monitorData.internet.day.chartData"
                           :options="monitorData.internet.day.options"
@@ -339,7 +339,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.BPS.hour.loading" :chartData="monitorData.BPS.hour.chartData"
                           :options="monitorData.BPS.hour.options"
@@ -355,7 +355,7 @@
                     color="primary"
                     indeterminate
                     width="2"
-                ></v-progress-circular>
+                />
               </v-row>
               <line-chart v-if="!monitorData.BPS.day.loading" :chartData="monitorData.BPS.day.chartData"
                           :options="monitorData.BPS.day.options"

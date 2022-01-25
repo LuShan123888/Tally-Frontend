@@ -4,7 +4,7 @@
       <div>123</div>
       <div>41243</div>
     </v-col>
-    <v-col cols="3"></v-col>
+    <v-col cols="3"/>
   </v-row>
 </template>
 

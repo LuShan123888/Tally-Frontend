@@ -6,8 +6,8 @@
         @click="buttonClick($event)"
     >
       <svg class="button-svg" focusable="false">
-        <use class="svg_mode-dark" xlink:href="#icon-mode-dark"></use>
-        <use class="svg_mode-light" xlink:href="#icon-mode-light"></use>
+        <use class="svg_mode-dark" xlink:href="#icon-mode-dark"/>
+        <use class="svg_mode-light" xlink:href="#icon-mode-light"/>
       </svg>
     </button>
     <!-- Icon Definitions -->

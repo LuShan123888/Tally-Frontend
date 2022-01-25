@@ -13,7 +13,7 @@
                   <v-text-field
                       v-model="table.query.role.id"
                       :rules="[rules.isInteger]"
-                      class="mr-2"
+                      class="mr-2 pt-0 mt-0"
                       clearable
                       label="角色ID"
                   >
@@ -22,7 +22,7 @@
                 <v-col cols="4">
                   <v-text-field
                       v-model="table.query.role.roleName"
-                      class="mr-2"
+                      class="mr-2 pt-0 mt-0"
                       clearable
                       label="角色名称"
                   >
@@ -31,7 +31,7 @@
                 <v-col cols="4">
                   <v-text-field
                       v-model="table.query.role.roleDescription"
-                      class="mr-2"
+                      class="mr-2 pt-0 mt-0"
                       clearable
                       label="角色描述"
                   >
@@ -135,7 +135,7 @@
               label="分页大小"
               lined
               @input="changePageSize"
-          ></v-select>
+          />
         </div>
       </v-col>
       <v-col cols="3">
@@ -146,7 +146,7 @@
             prev-icon="mdi-menu-left"
             total-visible="5"
             @input="changePage"
-        ></v-pagination>
+        />
       </v-col>
     </v-row>
     <v-dialog
@@ -190,7 +190,7 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn
               color="grey darken-1"
               text

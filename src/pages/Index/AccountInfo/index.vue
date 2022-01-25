@@ -11,7 +11,7 @@
               color="primary"
               indeterminate
               width="2"
-          ></v-progress-circular>
+          />
         </v-row>
       </template>
     </v-img>
