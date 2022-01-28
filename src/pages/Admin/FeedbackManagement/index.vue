@@ -165,13 +165,13 @@
           width="200">
         <template slot-scope="scope">
           <v-chip v-if="scope.row.status===enums.feedbackStatus[0].value" class="mx-1" color="success"
-                  label v-text="feedbackStatusFormatter(scope.row)">
+                  label small v-text="feedbackStatusFormatter(scope.row)">
           </v-chip>
           <v-chip v-if="scope.row.status===enums.feedbackStatus[1].value" class="mx-1" color="primary"
-                  label v-text="feedbackStatusFormatter(scope.row)">
+                  label small v-text="feedbackStatusFormatter(scope.row)">
           </v-chip>
           <v-chip v-if="scope.row.status===enums.feedbackStatus[2].value" class="mx-1" label
-                  v-text="feedbackStatusFormatter(scope.row)">
+                  small v-text="feedbackStatusFormatter(scope.row)">
           </v-chip>
         </template>
       </el-table-column>

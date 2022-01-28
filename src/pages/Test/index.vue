@@ -1,8 +1,7 @@
 <template>
   <v-row>
     <v-col cols="9">
-      <div>123</div>
-      <div>41243</div>
+      <v-icon size="350">mdi-notebook-edit</v-icon>
     </v-col>
     <v-col cols="3"/>
   </v-row>

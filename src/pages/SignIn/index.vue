@@ -59,7 +59,7 @@
       </v-card>
     </v-hover>
     <v-row>
-      <v-col class="text-center text-subtitle-1 mt-5" cols="12" v-text="''">
+      <v-col class="text-center text-subtitle-1 mt-5" cols="12">
         还没有账户？
         <router-link to="/signUp" v-text="'立即注册'"/>
       </v-col>
