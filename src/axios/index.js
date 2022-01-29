@@ -13,7 +13,7 @@ axios.defaults.headers.delete['Content-Type'] = 'application/x-www-form-urlencod
 // 请求拦截器
 axios.interceptors.request.use((config) => {
     if ([Global.url.api + '/account/signIn', Global.url.api + '/account/signUp', Global.url.api + '/account/signOut'].indexOf(config.url) === -1) {
-        const token = store.getters.getToken
+        let token = store.getters.getToken
         if (token) {
             config.headers.Authorization = store.getters.getToken
         }
@@ -27,9 +27,9 @@ axios.interceptors.response.use(
         console.log("==========response==========")
         console.log(response)
         console.log("==========end==========")
-        const code = response.data.code;
-        const message = response.data.message;
-        const data = response.data.data;
+        let code = response.data.code;
+        let message = response.data.message;
+        let data = response.data.data;
         if (code !== 200) {
             Element.Message.error(!data ? message : message + "：" + data);
         }
@@ -42,9 +42,9 @@ axios.interceptors.response.use(
         if (error.response === undefined) {
             Element.Message.error("服务器无响应");
         }
-        const status = error.response.status;
-        const message = error.response.data.message;
-        const data = error.response.data.data;
+        let status = error.response.status;
+        let message = error.response.data.message;
+        let data = error.response.data.data;
         Element.Message.error(!data ? message : message + "：" + data);
         switch (status) {
             case 401:

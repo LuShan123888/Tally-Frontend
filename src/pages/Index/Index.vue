@@ -1,7 +1,5 @@
 <template>
   <div>
-    <dark-button id="dark-button" :style="styles.darkButton"/>
-    <app-bar :isShow="isMobile" :style="{ 'z-index': '101' }"/>
     <navbar/>
     <v-main>
       <v-container class="pa-0 ma-0" fluid>
@@ -40,7 +38,8 @@ export default {
     };
   },
   mounted() {
-    const _this = this;
+    let _this = this;
+    this.$router.push({name: "Home"});
     this.axios.get("/account/getUserInfo").then((response) => {
       _this.$store.commit("setUserInfo", response.data.data);
     });

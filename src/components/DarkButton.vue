@@ -61,7 +61,7 @@ export default {
       e.target.addEventListener("animationend", this.animEnd, false);
 
       let attr = e.target.getAttribute("aria-pressed");
-      const pressed = attr === "true" ? "false" : "true";
+      let pressed = attr === "true" ? "false" : "true";
       e.target.setAttribute("aria-pressed", pressed);
     },
     // 保存滚动值，这是兼容的写法

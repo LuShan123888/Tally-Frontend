@@ -1,9 +1,9 @@
 <template>
-  <v-container>
-    <app-bar/>
+  <v-container class="pa-0 ma-0" fluid>
     <v-row class="mt-16" justify="center">
       <v-img
           :src="imgSrc"
+          width="100vw"
           contain
           max-width="900"
       >

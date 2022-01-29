@@ -332,7 +332,7 @@ export default {
     },
     initCharts() {
       let pieChart = this.$echarts.init(this.$refs.pieChart);
-      const _this = this;
+      let _this = this;
       pieChart.setOption({
         tooltip: {
           trigger: "item",

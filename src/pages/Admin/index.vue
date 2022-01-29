@@ -35,7 +35,8 @@ export default {
     };
   },
   mounted() {
-    const _this = this;
+    let _this = this;
+    this.$router.push({name: "AdminHome"});
     this.axios.get("/account/getUserInfo").then((response) => {
       _this.$store.commit("setUserInfo", response.data.data);
     });

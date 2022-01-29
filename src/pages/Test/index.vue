@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="9">
-      <v-icon size="350">mdi-notebook-edit</v-icon>
+      <v-icon color="primary" size="350">mdi-notebook-edit</v-icon>
     </v-col>
     <v-col cols="3"/>
   </v-row>

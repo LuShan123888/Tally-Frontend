@@ -501,8 +501,8 @@ export default {
       this.$message.error("图像上传失败")
     },
     beforeAvatarUpload(file) {
-      const isImage = file.type === 'image/jpeg' || file.type === 'image/png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      let isImage = file.type === 'image/jpeg' || file.type === 'image/png';
+      let isLt2M = file.size / 1024 / 1024 < 2;
       if (!isImage) {
         this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
       }

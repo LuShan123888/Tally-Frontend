@@ -148,7 +148,7 @@ export default {
     }
   },
   mounted() {
-    const userinfo = this.$store.getters.getUserInfo;
+    let userinfo = this.$store.getters.getUserInfo;
     this.username = userinfo.username;
     this.phoneNum = userinfo.phoneNum;
     this.roleIdList = userinfo.roleIdList;

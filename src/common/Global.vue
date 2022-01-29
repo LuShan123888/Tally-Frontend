@@ -47,14 +47,14 @@ const rules = {
     if (!value) {
       return true;
     }
-    if (/^1\d+$/.test(value) && value.length <= 11) {
+    if (/^1\d+$/.test(value) && value.length === 11) {
       return true;
     }
     if (!/^1\d+$/.test(value)) {
       return '手机号格式不正确'
     }
-    if (!value.length <= 11) {
-      return '手机号不能超过11位';
+    if (!(value.length === 11)) {
+      return '手机号只能为11位';
     }
   },
   isRoleName: (value) => {
@@ -111,6 +111,8 @@ const images = {
   education: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/education.svg",
   ideas: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/ideas.svg",
   pageNotFound: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/pageNotFound.svg",
+  signUp: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/signUp.svg",
+  welcome: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/welcome.svg",
 };
 export default {
   url,
