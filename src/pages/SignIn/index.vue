@@ -158,6 +158,7 @@
                         :rules="[rules.isPassword]"
                         :type="form.password.showPassword ? 'text' : 'password'"
                         label="密码"
+                        clearable
                         @click:append="form.password.showPassword = !form.password.showPassword"
                     />
                   </v-row>
