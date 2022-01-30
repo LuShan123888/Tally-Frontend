@@ -30,11 +30,11 @@
       >
         <v-tabs v-model="tab" grow>
           <v-tab>
-            <v-icon class="mx-4">mdi-cellphone-message</v-icon>
+            <v-icon class="mr-4">mdi-cellphone-message</v-icon>
             <span v-if="!isMobile">手机号注册</span>
           </v-tab>
           <v-tab>
-            <v-icon class="mx-4">mdi-email-plus-outline</v-icon>
+            <v-icon class="mr-4">mdi-email-plus-outline</v-icon>
             <span v-if="!isMobile">邮箱注册</span>
           </v-tab>
         </v-tabs>
@@ -200,16 +200,16 @@
                               depressed
                               fab
                               small
-                              to="/signUp"
+                              to="/signIn"
                               v-bind="attrs"
                               v-on="on"
                           >
                             <v-icon>
-                              mdi-account-multiple-plus
+                              mdi-login
                             </v-icon>
                           </v-btn>
                         </template>
-                        <span>注册账号</span>
+                        <span>登录账号</span>
                       </v-tooltip>
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">

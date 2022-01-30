@@ -11,7 +11,7 @@
 
 <script>
 import DarkButton from "@/components/DarkButton";
-import Navbar from "@/pages/Index/components/Navbar";
+import Navbar from "@/pages/Index/components/NavBar";
 import AppBar from "@/pages/Index/components/AppBar";
 
 export default {

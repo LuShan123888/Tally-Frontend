@@ -18,15 +18,6 @@ module.exports = {
         port: 8000,
         https: false,
         hotOnly: false,
-        // proxy: {
-        //     '/api': {
-        //         target: 'http://47.95.124.239',
-        //         changeOrigin: true, // 开启跨域
-        //         pathRewrite: { // 重映射路径
-        //             '^/api': '/api'
-        //         }
-        //     }
-        // }
     },
     transpileDependencies: ['vuetify']
 }

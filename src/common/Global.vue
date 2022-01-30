@@ -113,6 +113,7 @@ const images = {
   pageNotFound: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/pageNotFound.svg",
   signUp: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/signUp.svg",
   welcome: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/welcome.svg",
+  forgot: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/forgot.svg",
 };
 export default {
   url,

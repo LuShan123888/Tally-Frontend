@@ -7,6 +7,7 @@ import Income from '@/pages/Index/Income'
 import AccountInfo from '@/pages/Index/AccountInfo'
 import SignIn from '@/pages/SignIn'
 import SignUp from '@/pages/SignUp'
+import Forgot from '@/pages/Forgot'
 import Test from '@/pages/Test'
 import PageNotFound from '@/pages/PageNotFound'
 import AdminIndex from '@/pages/Admin'
@@ -131,6 +132,11 @@ const routes = [
         path: '/signUp',
         name: 'SignUp',
         component: SignUp
+    },
+    {
+        path: '/forgot',
+        name: 'Forgot',
+        component: Forgot
     },
     {
         path: '/test',
