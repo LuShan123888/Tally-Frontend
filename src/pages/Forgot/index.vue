@@ -19,7 +19,7 @@
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-row align="center" class="my-16 ml-4" no-gutters>
       <v-col class="pt-4" cols="12">
-        <div :style="{ color: lightPrimary }" class="text-h2" v-text="'找回账号'"/>
+        <div :style="{ color: lightPrimary }" class="text-h2" v-text="'找回账户'"/>
       </v-col>
     </v-row>
     <v-hover v-slot="{ hover }">
@@ -30,12 +30,12 @@
       >
         <v-tabs v-model="tab" grow>
           <v-tab>
-            <v-icon class="mr-4">mdi-cellphone-message</v-icon>
-            <span v-if="!isMobile">手机号注册</span>
+            <v-icon>mdi-cellphone-message</v-icon>
+            <span v-if="!isMobile" class="ml-3">手机号注册</span>
           </v-tab>
           <v-tab>
-            <v-icon class="mr-4">mdi-email-plus-outline</v-icon>
-            <span v-if="!isMobile">邮箱注册</span>
+            <v-icon>mdi-email-sync</v-icon>
+            <span v-if="!isMobile" class="ml-3">邮箱注册</span>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
@@ -74,6 +74,17 @@
                         length="6"
                         plain
                         type="number"
+                    />
+                  </v-row>
+                  <v-row justify="center" no-gutters>
+                    <v-text-field
+                        v-model="form.phoneNum.password"
+                        :append-icon="form.phoneNum.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        :counter="rules.passwordMaxLength"
+                        :rules="[rules.isPassword]"
+                        :type="form.phoneNum.showPassword ? 'text' : 'password'"
+                        label="密码"
+                        @click:append="form.phoneNum.showPassword = !form.phoneNum.showPassword"
                     />
                   </v-row>
                   <v-row justify="space-between" no-gutters>
@@ -127,7 +138,7 @@
                           large
                           width="100%"
                           @click="submitForm('phoneNum')"
-                          v-text="'注册'"
+                          v-text="'重设密码'"
                       />
                     </v-col>
                   </v-row>
@@ -140,20 +151,20 @@
               <v-col cols="10">
                 <v-form
                     ref="passwordForm"
-                    v-model="form.password.valid"
+                    v-model="form.email.valid"
                 >
                   <v-row no-gutters>
                     <v-text-field
                         ref="emailTextField"
-                        v-model="form.password.email"
+                        v-model="form.email.email"
                         :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
                         clearable
                         label="邮箱"
                     >
                       <template v-slot:append-outer>
                         <v-btn
-                            :disabled="form.password.verificationCodeBtn.disabled"
-                            :loading="form.password.verificationCodeBtn.loading"
+                            :disabled="form.email.verificationCodeBtn.disabled"
+                            :loading="form.email.verificationCodeBtn.loading"
                             depressed
                             small
                             @click="sendVerificationCode('email')"
@@ -164,30 +175,22 @@
                   </v-row>
                   <v-row no-gutters>
                     <v-otp-input
-                        v-model="form.password.verificationCode"
+                        v-model="form.email.verificationCode"
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
                         type="number"
                     />
                   </v-row>
-                  <v-row no-gutters>
-                    <v-text-field
-                        v-model="form.password.username"
-                        :rules="[(value) => !!value || '请输入用户名或邮箱']"
-                        clearable
-                        label="用户名"
-                    />
-                  </v-row>
                   <v-row justify="center" no-gutters>
                     <v-text-field
-                        v-model="form.password.password"
-                        :append-icon="form.password.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        v-model="form.email.password"
+                        :append-icon="form.email.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                         :counter="rules.passwordMaxLength"
                         :rules="[rules.isPassword]"
-                        :type="form.password.showPassword ? 'text' : 'password'"
+                        :type="form.email.showPassword ? 'text' : 'password'"
                         label="密码"
-                        @click:append="form.password.showPassword = !form.password.showPassword"
+                        @click:append="form.email.showPassword = !form.email.showPassword"
                     />
                   </v-row>
                   <v-row justify="space-between" no-gutters>
@@ -233,15 +236,15 @@
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
                       <v-btn
-                          :disabled="form.password.loading"
-                          :loading="form.password.loading"
+                          :disabled="form.email.loading"
+                          :loading="form.email.loading"
                           class="my-10"
                           color="primary"
                           depressed
                           large
                           width="100%"
-                          @click="submitForm('password')"
-                          v-text="'注册'"
+                          @click="submitForm('email')"
+                          v-text="'重设密码'"
                       />
                     </v-col>
                   </v-row>
@@ -280,18 +283,19 @@ export default {
           valid: null,
           loading: false,
           phoneNum: null,
+          password: null,
+          showPassword: false,
           verificationCode: null,
           verificationCodeBtn: {
             loading: false,
             disabled: false
           }
         },
-        password: {
+        email: {
           valid: null,
           loading: false,
-          username: null,
-          password: null,
           email: null,
+          password: null,
           verificationCode: null,
           showPassword: false,
           verificationCodeBtn: {
@@ -336,9 +340,9 @@ export default {
         });
       } else if (type === 'email') {
         if (!this.$refs.emailTextField.validate(true)) return;
-        this.form.password.verificationCodeBtn.loading = true;
-        this.form.password.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?email=" + this.form.password.email).then(() => {
+        this.form.email.verificationCodeBtn.loading = true;
+        this.form.email.verificationCodeBtn.disabled = true;
+        this.axios.get("/account/sendVerificationCode?email=" + this.form.email.email).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,
@@ -346,7 +350,7 @@ export default {
             duration: 2000,
           });
         }).finally(() => {
-          this.form.password.verificationCodeBtn.loading = false;
+          this.form.email.verificationCodeBtn.loading = false;
         });
       }
     },
@@ -356,13 +360,14 @@ export default {
         if (!this.$refs.phoneNumForm.validate()) return;
         let user = {
           phoneNum: this.form.phoneNum.phoneNum,
-          verificationCode: this.form.phoneNum.verificationCode
+          verificationCode: this.form.phoneNum.verificationCode,
+          password: this.form.phoneNum.showPassword
         };
         this.form.phoneNum.loading = true;
-        this.axios.post("/account/signUp", JSON.stringify(user))
+        this.axios.put("/account/changePassword", JSON.stringify(user))
             .then(() => {
               this.$notify({
-                title: "注册成功",
+                title: "修改成功",
                 message: null,
                 type: "success",
                 duration: 2000,
@@ -385,26 +390,25 @@ export default {
             }).finally(() => {
           this.form.phoneNum.loading = false;
         });
-      } else if (type === 'password') {
+      } else if (type === 'email') {
         if (!this.$refs.passwordForm.validate()) return;
         let user = {
-          email: this.form.password.email,
-          verificationCode: this.form.password.verificationCode,
-          username: this.form.password.username,
-          password: this.form.password.password,
+          email: this.form.email.email,
+          verificationCode: this.form.email.verificationCode,
+          password: this.form.email.password,
         };
-        this.form.password.loading = true;
-        this.axios.post("/account/signUp", JSON.stringify(user))
+        this.form.email.loading = true;
+        this.axios.put("/account/changePassword", JSON.stringify(user))
             .then(() => {
               this.$notify({
-                title: "注册成功",
+                title: "修改成功",
                 message: null,
                 type: "success",
                 duration: 2000,
               });
               let params = new URLSearchParams();
-              params.append("username", this.form.password.username);
-              params.append("password", this.form.password.password);
+              params.append("username", this.form.email.email);
+              params.append("password", this.form.email.password);
               this.axios
                   .post("/account/signIn", params)
                   .then((response) => {
@@ -418,7 +422,7 @@ export default {
                     _this.$router.push({name: "Home"});
                   })
             }).finally(() => {
-          this.form.password.loading = false;
+          this.form.email.loading = false;
         });
       }
     },

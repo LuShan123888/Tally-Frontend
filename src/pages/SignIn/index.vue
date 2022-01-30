@@ -30,12 +30,12 @@
       >
         <v-tabs v-model="tab" grow>
           <v-tab>
-            <v-icon class="mr-4">mdi-cellphone-message</v-icon>
-            <span v-if="!isMobile">验证码登录</span>
+            <v-icon>mdi-cellphone-message</v-icon>
+            <span v-if="!isMobile" class="ml-3">验证码登录</span>
           </v-tab>
           <v-tab>
-            <v-icon class="mr-4">mdi-form-textbox-password</v-icon>
-            <span v-if="!isMobile">账号密码登录</span>
+            <v-icon>mdi-form-textbox-password</v-icon>
+            <span v-if="!isMobile" class="ml-3">账号密码登录</span>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
@@ -114,7 +114,7 @@
                             </v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账号</span>
+                        <span>找回账户</span>
                       </v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
@@ -200,7 +200,7 @@
                             </v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账号</span>
+                        <span>找回账户</span>
                       </v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
@@ -302,34 +302,33 @@ export default {
     },
     submitForm(signInType) {
       let _this = this;
+      let params = new URLSearchParams();
       if (signInType === "phoneNum") {
         if (!this.$refs.phoneNumForm.validate()) return;
-        let params = new URLSearchParams();
         params.append("username", this.form.phoneNum.phoneNum);
         params.append("password", this.form.phoneNum.verificationCode);
       } else if (signInType === "password") {
         if (!this.$refs.passwordForm.validate()) return;
-        let params = new URLSearchParams();
         params.append("username", this.form.password.username);
         params.append("password", this.form.password.password);
-        this.form.phoneNum.loading = true;
-        this.form.password.loading = true;
-        this.axios
-            .post("/account/signIn", params)
-            .then((response) => {
-              this.$notify({
-                title: "登录成功",
-                message: "上次登录时间：" + response.data.data.lastSignInDateTime,
-                type: "success",
-                duration: 2000,
-              });
-              _this.$store.commit("setToken", response.data.data.token);
-              _this.$router.push({name: "Home"});
-            }).finally(() => {
-          this.form.phoneNum.loading = false;
-          this.form.password.loading = false;
-        });
       }
+      this.form.phoneNum.loading = true;
+      this.form.password.loading = true;
+      this.axios
+          .post("/account/signIn", params)
+          .then((response) => {
+            this.$notify({
+              title: "登录成功",
+              message: "上次登录时间：" + response.data.data.lastSignInDateTime,
+              type: "success",
+              duration: 2000,
+            });
+            _this.$store.commit("setToken", response.data.data.token);
+            _this.$router.push({name: "Home"});
+          }).finally(() => {
+        this.form.phoneNum.loading = false;
+        this.form.password.loading = false;
+      });
     },
   },
 };
