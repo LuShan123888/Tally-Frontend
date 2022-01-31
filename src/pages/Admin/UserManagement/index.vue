@@ -80,7 +80,7 @@
       </el-table-column>
       <el-table-column label="邮箱" property="email">
       </el-table-column>
-      <el-table-column label="手机号" property="phoneNum" width="180">
+      <el-table-column label="手机号" property="phoneNumber" width="180">
       </el-table-column>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
@@ -180,8 +180,8 @@
                 </v-col>
                 <v-col class="pl-3" cols="6">
                   <v-text-field
-                      v-model="dialog.user.phoneNum"
-                      :rules="[rules.isPhoneNum]"
+                      v-model="dialog.user.phoneNumber"
+                      :rules="[rules.isphoneNumber]"
                       counter="11"
                       :disabled="!!dialog.user.id"
                       label="手机号码"
@@ -369,7 +369,7 @@ export default {
         user: {
           id: null,
           username: null,
-          phoneNum: null,
+          phoneNumber: null,
           email: null,
           avatarUrl: null,
           status: null,
@@ -461,7 +461,7 @@ export default {
     loadUserSaveDialog() {
       this.dialog.user.id = null;
       this.dialog.user.username = null;
-      this.dialog.user.phoneNum = null;
+      this.dialog.user.phoneNumber = null;
       this.dialog.user.email = null;
       this.dialog.user.avatarUrl = null;
       this.dialog.user.status = null;
@@ -473,7 +473,7 @@ export default {
     loadUserUpdateDialog(user) {
       this.dialog.user.id = user.id;
       this.dialog.user.username = user.username;
-      this.dialog.user.phoneNum = user.phoneNum;
+      this.dialog.user.phoneNumber = user.phoneNumber;
       this.dialog.user.email = user.email;
       this.dialog.user.avatarUrl = user.avatarUrl;
       this.dialog.user.status = user.status;

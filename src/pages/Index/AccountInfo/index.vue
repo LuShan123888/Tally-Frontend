@@ -1,30 +1,12 @@
 <template>
   <div>
-    <v-img :src="bgImg" :style="styles.backgroundImg" contain style="position: fixed">
-      <template v-slot:placeholder>
-        <v-row
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
-    <div
-        :class="classes.title"
-        :style="{ color: lightPrimary }"
-        v-text="title"
-    />
+    <Title :title="title"></Title>
+    <background-image :path="backgroundImagePath"></background-image>
     <v-hover v-slot="{ hover }">
       <v-card
-          class="mt-9 transition-swing"
+          :style="{ width: isMobile ? '85%' : '50%' }"
           :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-6':!hover}"
-          :style="{ width: isMobile ? '90%' : '50%' }"
+          class="transition-swing"
       >
         <v-list>
           <v-list-item-group>
@@ -47,7 +29,7 @@
             <v-list-item>
               <v-list-item-content>
                 <span style="font-weight: bold; line-height: 150%">
-                  手机：{{ phoneNum }}
+                  手机：{{ phoneNumber }}
                 </span>
               </v-list-item-content>
             </v-list-item>
@@ -93,9 +75,12 @@
 </template>
 
 <script>
+import Title from '@/pages/Index/components/Title'
+import BackgroundImage from '@/pages/Index/components/BackgroundImage'
+
 export default {
   name: "AccountInfo",
-  components: {},
+  components: {Title, BackgroundImage},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -109,30 +94,14 @@ export default {
   },
   data: function () {
     return {
-      bgImg: this.GLOBAL.images.profile,
-      title: "账户信息",
+      backgroundImagePath: this.GLOBAL.images.profile,
+      title: "我的",
       username: null,
       email: null,
-      phoneNum: null,
+      phoneNumber: null,
       status: null,
       roleIdList: null,
-      styles: {
-        backgroundImg: {
-          width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
-          bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
-          right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
-        },
-      },
-      classes: {
-        title: {
-          "text-h2": !this.$vuetify.breakpoint.mobile,
-          "text-h3": this.$vuetify.breakpoint.mobile,
-          "ml-3": this.$vuetify.breakpoint.mobile,
-          "ml-9": !this.$vuetify.breakpoint.mobile,
-          "mt-3": this.$vuetify.breakpoint.mobile,
-          "mt-9": !this.$vuetify.breakpoint.mobile,
-        },
-      },
+      classes: {},
     };
   },
   methods: {
@@ -150,7 +119,7 @@ export default {
   mounted() {
     let userinfo = this.$store.getters.getUserInfo;
     this.username = userinfo.username;
-    this.phoneNum = userinfo.phoneNum;
+    this.phoneNumber = userinfo.phoneNumber;
     this.roleIdList = userinfo.roleIdList;
     this.email = userinfo.email;
     if (userinfo.status === "NORMAL") {

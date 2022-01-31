@@ -1,31 +1,15 @@
 <template>
   <v-container class="pa-0 ma-0" fluid>
-    <v-img :src="bgImg" :style="styles.backgroundImg" contain style="position: fixed">
-      <template v-slot:placeholder>
-        <v-row
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
-    <v-row align="center" class="my-16 ml-4" no-gutters>
-      <v-col class="pt-4" cols="12">
-        <div :style="{ color: lightPrimary }" class="text-h2" v-text="'找回账户'"/>
-      </v-col>
+    <v-row no-gutters style="margin-top: 56px">
+      <Title :title="title"></Title>
     </v-row>
+    <background-image :path="backgroundImagePath"></background-image>
     <v-hover v-slot="{ hover }">
       <v-card
           :class="{'elevation-24':hover,'elevation-6':!hover}"
-          :style="{ width: isMobile ? '80%' : '30%' }"
+          :style="{ width: isMobile ? '85%' : '30%' }"
           class="mx-auto transition-swing"
       >
         <v-tabs v-model="tab" grow>
@@ -43,25 +27,25 @@
             <v-row class="pt-16" justify="center" no-gutters>
               <v-col cols="10">
                 <v-form
-                    ref="phoneNumForm"
-                    v-model="form.phoneNum.valid"
+                    ref="phoneNumberForm"
+                    v-model="form.phoneNumber.valid"
                 >
                   <v-row no-gutters>
                     <v-text-field
-                        ref="phoneNumTextField"
-                        v-model="form.phoneNum.phoneNum"
+                        ref="phoneNumberTextField"
+                        v-model="form.phoneNumber.phoneNumber"
                         :counter="11"
-                        :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNum]"
+                        :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
                         clearable
                         label="手机号"
                     >
                       <template v-slot:append-outer>
                         <v-btn
-                            :disabled="form.phoneNum.verificationCodeBtn.disabled"
-                            :loading="form.phoneNum.verificationCodeBtn.loading"
+                            :disabled="form.phoneNumber.verificationCodeBtn.disabled"
+                            :loading="form.phoneNumber.verificationCodeBtn.loading"
                             depressed
                             small
-                            @click="sendVerificationCode('phoneNum')"
+                            @click="sendVerificationCode('phoneNumber')"
                             v-text="'获取验证码'"
                         />
                       </template>
@@ -69,7 +53,7 @@
                   </v-row>
                   <v-row no-gutters>
                     <v-otp-input
-                        v-model="form.phoneNum.verificationCode"
+                        v-model="form.phoneNumber.verificationCode"
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
@@ -78,14 +62,14 @@
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-text-field
-                        v-model="form.phoneNum.password"
-                        :append-icon="form.phoneNum.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        v-model="form.phoneNumber.password"
+                        :append-icon="form.phoneNumber.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                         :counter="rules.passwordMaxLength"
                         :rules="[rules.isPassword]"
-                        :type="form.phoneNum.showPassword ? 'text' : 'password'"
+                        :type="form.phoneNumber.showPassword ? 'text' : 'password'"
                         label="密码"
                         clearable
-                        @click:append="form.phoneNum.showPassword = !form.phoneNum.showPassword"
+                        @click:append="form.phoneNumber.showPassword = !form.phoneNumber.showPassword"
                     />
                   </v-row>
                   <v-row justify="space-between" no-gutters>
@@ -131,14 +115,14 @@
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
                       <v-btn
-                          :disabled="form.phoneNum.loading"
-                          :loading="form.phoneNum.loading"
+                          :disabled="form.phoneNumber.loading"
+                          :loading="form.phoneNumber.loading"
                           class="my-10"
                           color="primary"
                           depressed
                           large
                           width="100%"
-                          @click="submitForm('phoneNum')"
+                          @click="submitForm('phoneNumber')"
                           v-text="'重设密码'"
                       />
                     </v-col>
@@ -262,11 +246,13 @@
 
 <script>
 import AppBar from "@/pages/Index/components/AppBar";
+import Title from "@/pages/Index/components/Title";
+import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
 
 export default {
   name: "Forget",
-  components: {AppBar, DarkButton},
+  components: {AppBar, Title, BackgroundImage, DarkButton},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -281,10 +267,10 @@ export default {
   data: function () {
     return {
       form: {
-        phoneNum: {
+        phoneNumber: {
           valid: null,
           loading: false,
-          phoneNum: null,
+          phoneNumber: null,
           password: null,
           showPassword: false,
           verificationCode: null,
@@ -315,22 +301,18 @@ export default {
           position: "fixed",
           "z-index": 100,
         },
-        backgroundImg: {
-          width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
-          bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
-          right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
-        },
       },
-      bgImg: this.GLOBAL.images.forgot
+      backgroundImagePath: this.GLOBAL.images.forgot,
+      title: '找回账户'
     };
   },
   methods: {
     sendVerificationCode(type) {
-      if (type === 'phoneNum') {
-        if (!this.$refs.phoneNumTextField.validate(true)) return;
-        this.form.phoneNum.verificationCodeBtn.loading = true;
-        this.form.phoneNum.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?phoneNum=" + this.form.phoneNum.phoneNum).then(() => {
+      if (type === 'phoneNumber') {
+        if (!this.$refs.phoneNumberTextField.validate(true)) return;
+        this.form.phoneNumber.verificationCodeBtn.loading = true;
+        this.form.phoneNumber.verificationCodeBtn.disabled = true;
+        this.axios.get("/account/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,
@@ -338,7 +320,7 @@ export default {
             duration: 2000,
           });
         }).finally(() => {
-          this.form.phoneNum.verificationCodeBtn.loading = false;
+          this.form.phoneNumber.verificationCodeBtn.loading = false;
         });
       } else if (type === 'email') {
         if (!this.$refs.emailTextField.validate(true)) return;
@@ -358,10 +340,10 @@ export default {
     },
     submitForm(type) {
       let _this = this;
-      if (type === 'phoneNum') {
-        if (!this.$refs.phoneNumForm.validate()) return;
+      if (type === 'phoneNumber') {
+        if (!this.$refs.phoneNumberForm.validate()) return;
         let user = {
-          phoneNum: this.form.phoneNum.phoneNum,
+          phoneNumber: this.form.phoneNumber.phoneNumber,
           verificationCode: this.form.phoneNum.verificationCode,
           password: this.form.phoneNum.showPassword
         };

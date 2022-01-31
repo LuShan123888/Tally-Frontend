@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-img :src="bgImg" :style="styles.backgroundImg" contain style="position: fixed">
+    <v-img :src="backgroundImagePath" :style="styles.backgroundImg" contain style="position: fixed">
       <template v-slot:placeholder>
         <v-row
             align="center"
@@ -149,7 +149,7 @@ export default {
   },
   data: function () {
     return {
-      bgImg: this.GLOBAL.images.coding,
+      backgroundImagePath: this.GLOBAL.images.coding,
       valid: false,
       typeList: [
         "餐饮",

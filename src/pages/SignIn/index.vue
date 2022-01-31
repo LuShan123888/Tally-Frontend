@@ -1,31 +1,15 @@
 <template>
   <v-container class="pa-0 ma-0" fluid>
-    <v-img :src="bgImg" :style="styles.backgroundImg" contain style="position: fixed">
-      <template v-slot:placeholder>
-        <v-row
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
-    <dark-button id="dark-button" :style="styles.darkButton"/>
-    <v-row align="center" class="my-16 ml-4" no-gutters>
-      <v-col class="pt-4" cols="12">
-        <div :style="{ color: lightPrimary }" class="text-h2" v-text="'登录'"/>
-      </v-col>
+    <v-row no-gutters style="margin-top: 56px">
+      <Title :title="title"></Title>
     </v-row>
+    <background-image :path="backgroundImagePath"></background-image>
+    <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-card
           class="mx-auto transition-swing"
-          :style="{ width: isMobile ? '80%' : '30%' }"
+          :style="{ width: isMobile ? '85%' : '30%' }"
           :class="{'elevation-24':hover,'elevation-6':!hover}"
       >
         <v-tabs v-model="tab" grow>
@@ -43,22 +27,22 @@
             <v-row class="pt-16" justify="center" no-gutters>
               <v-col cols="10">
                 <v-form
-                    ref="phoneNumForm"
-                    v-model="form.phoneNum.valid"
+                    ref="phoneNumberForm"
+                    v-model="form.phoneNumber.valid"
                 >
                   <v-row no-gutters>
                     <v-text-field
-                        ref="phoneNumTextField"
-                        v-model="form.phoneNum.phoneNum"
+                        ref="phoneNumberTextField"
+                        v-model="form.phoneNumber.phoneNumber"
                         :counter="11"
-                        :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNum]"
+                        :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
                         clearable
                         label="手机号"
                     >
                       <template v-slot:append-outer>
                         <v-btn
-                            :disabled="form.phoneNum.verificationCodeBtn.disabled"
-                            :loading="form.phoneNum.verificationCodeBtn.loading"
+                            :disabled="form.phoneNumber.verificationCodeBtn.disabled"
+                            :loading="form.phoneNumber.verificationCodeBtn.loading"
                             depressed
                             small
                             @click="sendVerificationCode"
@@ -69,7 +53,7 @@
                   </v-row>
                   <v-row no-gutters>
                     <v-otp-input
-                        v-model="form.phoneNum.verificationCode"
+                        v-model="form.phoneNumber.verificationCode"
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
@@ -119,14 +103,14 @@
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
                       <v-btn
-                          :disabled="form.phoneNum.loading"
-                          :loading="form.phoneNum.loading"
+                          :disabled="form.phoneNumber.loading"
+                          :loading="form.phoneNumber.loading"
                           class="my-10"
                           color="primary"
                           depressed
                           large
                           width="100%"
-                          @click="submitForm('phoneNum')"
+                          @click="submitForm('phoneNumber')"
                           v-text="'登录'"
                       />
                     </v-col>
@@ -230,11 +214,13 @@
 
 <script>
 import AppBar from "@/pages/Index/components/AppBar";
+import Title from "@/pages/Index/components/Title";
+import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
 
 export default {
   name: "SignIn",
-  components: {AppBar, DarkButton},
+  components: {AppBar, Title, BackgroundImage, DarkButton},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -249,10 +235,10 @@ export default {
   data: function () {
     return {
       form: {
-        phoneNum: {
+        phoneNumber: {
           valid: null,
           loading: false,
-          phoneNum: null,
+          phoneNumber: null,
           verificationCode: null,
           verificationCodeBtn: {
             loading: false,
@@ -276,21 +262,17 @@ export default {
           position: "fixed",
           "z-index": 100,
         },
-        backgroundImg: {
-          width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
-          bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
-          right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
-        },
       },
-      bgImg: this.GLOBAL.images.welcome
+      backgroundImagePath: this.GLOBAL.images.welcome,
+      title: '登录'
     };
   },
   methods: {
     sendVerificationCode() {
-      if (!this.$refs.phoneNumTextField.validate(true)) return;
-      this.form.phoneNum.verificationCodeBtn.loading = true;
-      this.form.phoneNum.verificationCodeBtn.disabled = true;
-      this.axios.get("/account/sendVerificationCode?phoneNum=" + this.form.phoneNum.phoneNum).then(() => {
+      if (!this.$refs.phoneNumberTextField.validate(true)) return;
+      this.form.phoneNumber.verificationCodeBtn.loading = true;
+      this.form.phoneNumber.verificationCodeBtn.disabled = true;
+      this.axios.get("/account/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
         this.$notify({
           title: "已发送验证码",
           message: null,
@@ -298,22 +280,22 @@ export default {
           duration: 2000,
         });
       }).finally(() => {
-        this.form.phoneNum.verificationCodeBtn.loading = false;
+        this.form.phoneNumber.verificationCodeBtn.loading = false;
       });
     },
     submitForm(signInType) {
       let _this = this;
       let params = new URLSearchParams();
-      if (signInType === "phoneNum") {
-        if (!this.$refs.phoneNumForm.validate()) return;
-        params.append("username", this.form.phoneNum.phoneNum);
-        params.append("password", this.form.phoneNum.verificationCode);
+      if (signInType === "phoneNumber") {
+        if (!this.$refs.phoneNumberForm.validate()) return;
+        params.append("username", this.form.phoneNumber.phoneNumber);
+        params.append("password", this.form.phoneNumber.verificationCode);
       } else if (signInType === "password") {
         if (!this.$refs.passwordForm.validate()) return;
         params.append("username", this.form.password.username);
         params.append("password", this.form.password.password);
       }
-      this.form.phoneNum.loading = true;
+      this.form.phoneNumber.loading = true;
       this.form.password.loading = true;
       this.axios
           .post("/account/signIn", params)
@@ -327,7 +309,7 @@ export default {
             _this.$store.commit("setToken", response.data.data.token);
             _this.$router.push({name: "Home"});
           }).finally(() => {
-        this.form.phoneNum.loading = false;
+        this.form.phoneNumber.loading = false;
         this.form.password.loading = false;
       });
     },

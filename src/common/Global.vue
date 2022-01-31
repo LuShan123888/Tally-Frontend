@@ -43,7 +43,7 @@ const rules = {
       return '密码不能超过30位';
     }
   },
-  isPhoneNum: (value) => {
+  isphoneNumber: (value) => {
     if (!value) {
       return true;
     }
