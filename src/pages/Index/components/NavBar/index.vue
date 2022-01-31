@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-navigation-drawer app width="320" touchless>
       <div class="d-flex align-center mx-auto" style="height: 100%; width: 80%">
         <div style="width: 100%">
@@ -43,7 +43,7 @@
         <v-icon v-text="item.icon"/>
       </v-btn>
     </v-bottom-navigation>
-  </div>
+  </v-container>
 </template>
 
 <script>

@@ -7,7 +7,7 @@ const url = {
   file: "http://47.95.124.239/static",
   upload: "http://47.95.124.239/api/file/upload"
 };
-const title = "一个简约的在线记账应用";
+const title = "一款简约的在线记账平台";
 const adminTitle = "云记贝后台管理系统";
 const rules = {
   usernameMaxLength: 20,

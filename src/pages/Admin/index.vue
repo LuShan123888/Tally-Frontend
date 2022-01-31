@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <app-bar/>
     <navbar/>
     <v-main>
-      <v-container class="pa-0 ma-0" fluid>
+      <v-container class="pa-0" fluid>
         <router-view/>
       </v-container>
     </v-main>
-  </div>
+  </v-container>
 </template>
 
 <script>

@@ -23,6 +23,7 @@
             <v-img :src="avatarPath">
               <template v-slot:placeholder>
                 <v-row
+                    no-gutters
                     align="center"
                     class="fill-height ma-0"
                     justify="center"

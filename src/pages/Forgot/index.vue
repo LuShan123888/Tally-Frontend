@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 ma-0" fluid>
+  <v-container fluid>
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-row no-gutters style="margin-top: 56px">

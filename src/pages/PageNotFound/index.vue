@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 ma-0" fluid>
+  <v-container fluid>
     <v-row class="mt-16" justify="center">
       <v-img
           :src="imgSrc"

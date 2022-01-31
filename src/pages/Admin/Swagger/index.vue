@@ -1,7 +1,7 @@
 <template>
-  <div :style="{height:height}">
+  <v-container :style="{height:height}" class="pa-0" fluid>
     <iframe :src="iframeSrc" width="100%" height="100%" frameborder="0"/>
-  </div>
+  </v-container>
 </template>
 
 <script>

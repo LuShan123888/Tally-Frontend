@@ -5,6 +5,7 @@
           align="center"
           class="fill-height ma-0"
           justify="center"
+          no-gutters
       >
         <v-progress-circular
             color="primary"

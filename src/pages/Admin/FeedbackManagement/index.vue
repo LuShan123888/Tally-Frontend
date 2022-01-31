@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="3" no-gutters>
         <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'反馈处理'"/>
@@ -79,7 +79,7 @@
         style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
-          <v-row align="center">
+          <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
               <v-list>
                 <v-list-item-group>
@@ -290,7 +290,7 @@
     <v-dialog v-model="imagePreview.isShow" max-width="600px">
       <v-img :src="imagePreview.imageUrl" contain></v-img>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>

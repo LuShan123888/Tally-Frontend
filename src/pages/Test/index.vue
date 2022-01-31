@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row no-gutters>
     <v-col cols="9">
       <v-icon color="primary" size="350">mdi-notebook-edit</v-icon>
     </v-col>

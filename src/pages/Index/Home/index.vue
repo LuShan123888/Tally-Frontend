@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-img :src="backgroundImagePath" :style="styles.backgroundImg" contain style="position: fixed">
       <template v-slot:placeholder>
         <v-row
+            no-gutters
             align="center"
             class="fill-height ma-0"
             justify="center"
@@ -29,15 +30,15 @@
       >
         <v-row no-gutters align="center">
           <v-col class="pl-6">
-            <v-row class="pa-6" align="center">
+            <v-row align="center" class="pa-6" no-gutters>
               {{ currentMonth }}月总支出：<span class="text-h6">¥&nbsp;{{ monthStatistics.out.sum }}</span>
             </v-row>
-            <v-row class="pa-6" align="center">
+            <v-row align="center" class="pa-6" no-gutters>
               {{ currentMonth }}月总收入：<span class="text-h6"> ¥&nbsp;{{ monthStatistics.in.sum }} </span>
             </v-row>
           </v-col>
           <v-col>
-            <v-row class="my-5" justify="center">
+            <v-row class="my-5" justify="center" no-gutters>
               <div ref="pieChart" style="width: 150px; height: 150px"/>
             </v-row>
           </v-col>
@@ -64,7 +65,7 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-row align="center">
+                  <v-row align="center" no-gutters>
                     <v-col cols="7" class="text-truncate">
                       <span class="text-no-wrap" v-text="item.note"/>
                     </v-col>
@@ -83,7 +84,7 @@
                   </v-row>
                 </v-list-item-title>
                 <v-list-item-subtitle class="mt-2">
-                  <v-row>
+                  <v-row no-gutters>
                     <v-col cols="7">
                       {{ item.type }}
                       <v-chip
@@ -214,7 +215,7 @@
         </v-form>
       </v-card>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>

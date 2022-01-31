@@ -1,19 +1,19 @@
 <template>
-  <v-container class="pa-0 ma-0" fluid>
+  <v-container fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="2" no-gutters>
         <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
       </v-col>
       <v-col cols="10">
-        <v-row justify="center">
+        <v-row justify="center" no-gutters>
           <v-col cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
                   <v-icon class="ml-5" size="50">mdi-account-group</v-icon>
                 </v-col>
-                <v-col class="d-flex flex-column align-end" cols="7">
+                <v-col class="d-flex flex-column align-end pr-4" cols="7">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.day"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增用户'"/>
                 </v-col>
@@ -22,12 +22,12 @@
           </v-col>
           <v-col class="mx-16" cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
                   <v-icon class="ml-5" size="50">mdi-login-variant</v-icon>
                 </v-col>
-                <v-col class="d-flex flex-column align-end" cols="7">
+                <v-col class="d-flex flex-column align-end pr-4" cols="7">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日登录用户'"/>
                 </v-col>
@@ -36,12 +36,12 @@
           </v-col>
           <v-col class="mr-16" cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}"
+              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
                   <v-icon class="ml-5" size="50">mdi-notebook-edit</v-icon>
                 </v-col>
-                <v-col class="d-flex flex-column align-end" cols="7">
+                <v-col class="d-flex flex-column align-end pr-4" cols="7">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.day"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增账单'"/>
                 </v-col>
@@ -71,6 +71,7 @@
                   v-if="userStatData.week.loading"
                   :style="{height:'200px'}"
                   align="center"
+                  no-gutters
                   class="fill-height ma-0"
                   justify="center"
               >
@@ -108,6 +109,7 @@
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
+                  no-gutters
               >
                 <v-progress-circular
                     color="primary"
@@ -143,6 +145,7 @@
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
+                  no-gutters
               >
                 <v-progress-circular
                     color="primary"

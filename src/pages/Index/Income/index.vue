@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-img :src="backgroundImagePath" :style="styles.backgroundImg" contain style="position: fixed">
       <template v-slot:placeholder>
         <v-row
+            no-gutters
             align="center"
             class="fill-height ma-0"
             justify="center"
@@ -125,7 +126,7 @@
         </v-form>
       </v-card>
     </v-hover>
-  </div>
+  </v-container>
 </template>
 
 <script>

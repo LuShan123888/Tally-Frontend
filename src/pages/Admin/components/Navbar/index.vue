@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-navigation-drawer expand-on-hover mini-variant-width="70px" app width="320">
       <v-list nav style="margin-top:48px">
         <div v-for="(item, i) in menus.data" :key="i">
@@ -41,7 +41,7 @@
         </div>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </v-container>
 </template>
 
 <script>

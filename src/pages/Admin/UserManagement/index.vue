@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0" fluid>
     <v-row style="height:150px" no-gutters align="center">
       <v-col cols="3" no-gutters>
         <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'用户管理'"/>
@@ -87,7 +87,7 @@
           <v-avatar size="40" v-if="scope.row.avatarUrl!=null">
             <v-img :src="getAvatarPath(scope.row.avatarUrl)">
               <template v-slot:placeholder>
-                <v-row align="center" class="fill-height ma-0" justify="center">
+                <v-row align="center" class="fill-height ma-0" justify="center" no-gutters>
                   <v-progress-circular color="primary" indeterminate width="2"/>
                 </v-row>
               </template>
@@ -243,6 +243,7 @@
                            contain height="150px" width="150px">
                       <template v-slot:placeholder>
                         <v-row
+                            no-gutters
                             align="center"
                             class="fill-height ma-0"
                             justify="center"
@@ -262,6 +263,7 @@
                            contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
                       <template v-slot:placeholder>
                         <v-row
+                            no-gutters
                             align="center"
                             class="fill-height ma-0"
                             justify="center"
@@ -323,7 +325,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>
