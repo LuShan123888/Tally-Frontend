@@ -7,15 +7,15 @@
                    :style="{ width: isMobile ? '85%' : '50%' ,cursor:'pointer'}"
                    class="transition-swing mb-5 pa-0 rounded-lg"
                    fluid
-                   @click="userInfoDialog.isShow = true"
+                   @click="userInfoPage.isShow = true"
       >
         <v-row align="center" class="py-3 px-3" justify="space-between" no-gutters>
-          <v-col cols="2" @click="userInfoDialog.isShow=true">
-            <avatar :path="userInfo.avatarPath" size="50"/>
+          <v-col cols="2" @click="userInfoPage.isShow=true">
+            <avatar :path="userInfoPage.userInfo.avatarPath" size="50"/>
           </v-col>
           <v-col class="pl-3" cols="9">
-            <div class="text-h6">{{ userInfo.username }}</div>
-            <div class="text-subtitle-2 grey--text text--darken-1 font-weight-regular">邮箱，手机号，密码</div>
+            <div class="text-h6" v-text="userInfoPage.userInfo.username"/>
+            <div class="text-subtitle-2 grey--text text--darken-1 font-weight-regular" v-text="'邮箱，手机号，密码'"/>
           </v-col>
           <v-col cols="1">
             <v-icon>mdi-chevron-right</v-icon>
@@ -24,13 +24,13 @@
       </v-container>
     </v-hover>
     <v-dialog
-        v-model="userInfoDialog.isShow"
+        v-model="userInfoPage.isShow"
         fullscreen
         hide-overlay
         style="height: 100vh"
         transition="dialog-bottom-transition"
     >
-      <v-container class="pa-0" fluid style="height: 100%;background: #FFFFFF">
+      <v-card>
         <v-toolbar
             class="mb-16"
             color="primary"
@@ -40,7 +40,7 @@
           <v-btn
               dark
               icon
-              @click="userInfoDialog.isShow = false"
+              @click="userInfoPage.isShow = false"
           >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
@@ -49,7 +49,10 @@
         <v-row :class="{'mx-auto':isMobile,'ml-9':!isMobile}" :style="{ width: isMobile ? '85%' : '50%' }"
                justify="center"
                no-gutters>
-          <avatar :path="userInfo.avatarPath" elevation="3" size="100"/>
+          <div style="width: 100px;cursor: pointer"
+               @click="userInfoPage.dialog.type='avatar';userInfoPage.dialog.isShow=true;">
+            <avatar :path="userInfoPage.userInfo.avatarPath" elevation="3" size="100"/>
+          </div>
         </v-row>
         <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
                      :style="{ width: isMobile ? '85%' : '50%' }"
@@ -58,19 +61,22 @@
                      style="margin-top: -50px"
         >
           <v-row align="center" class="px-3" no-gutters style="height: 50px"/>
-          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
+          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
+                 @click="userInfoPage.dialog.type='username';userInfoPage.dialog.isShow=true;">
             <v-col cols="1">
               <v-icon>mdi-account</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">用户名：</span>{{ userInfo.username }}
+              <span class="grey--text text--darken-1">用户名：</span>
+              <span v-text="userInfoPage.userInfo.username"/>
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
             </v-col>
           </v-row>
           <v-divider/>
-          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
+          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
+                 @click="userInfoPage.dialog.type='password';userInfoPage.dialog.isShow=true;">
             <v-col cols="1">
               <v-icon>mdi-account-key</v-icon>
             </v-col>
@@ -82,24 +88,26 @@
             </v-col>
           </v-row>
           <v-divider/>
-          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
+          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
+                 @click="userInfoPage.dialog.type='phoneNumber';userInfoPage.dialog.isShow=true;">
             <v-col cols="1">
               <v-icon>mdi-cellphone-text</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">手机号：</span>{{ userInfo.phoneNumber }}
+              <span class="grey--text text--darken-1">手机号：</span>{{ userInfoPage.userInfo.phoneNumber }}
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
             </v-col>
           </v-row>
           <v-divider/>
-          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
+          <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
+                 @click="userInfoPage.dialog.type='email';userInfoPage.dialog.isShow=true;">
             <v-col cols="1">
               <v-icon>mdi-email</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">邮箱：</span>{{ userInfo.email }}
+              <span class="grey--text text--darken-1">邮箱：</span>{{ userInfoPage.userInfo.email }}
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
@@ -112,7 +120,7 @@
             </v-col>
             <v-col class="ml-2">
               <span class="grey--text text--darken-1" v-text="'状态：'"/>
-              <v-chip :color="userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label
+              <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label
                       v-text="getStatusText()">
               </v-chip>
             </v-col>
@@ -123,8 +131,8 @@
               <v-icon>mdi-account</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">角色：</span>
-              <v-chip v-for="item in userInfo.roleIdList"
+              <span class="grey--text text--darken-1" v-text="'角色：'"/>
+              <v-chip v-for="item in userInfoPage.userInfo.roleIdList"
                       :key="item" class="mx-1" label
                       v-text="roleNameFormatter(item)">
               </v-chip>
@@ -136,15 +144,109 @@
                 class="rounded-lg"
                 color="error"
                 large
+                depressed
                 style="width: 70%"
-                @click="deleteAccount"
+                @click="userInfoPage.dialog.type='deleteAccount';userInfoPage.dialog.isShow=true;"
             >
               <v-icon class="mr-3">mdi-logout</v-icon>
               注销账号
             </v-btn>
           </v-row>
+          <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5" v-text="userInfoPage.dialog.title"/>
+              </v-card-title>
+              <v-card-text class="pb-0">
+                <v-form ref="updateAccountForm">
+                  <v-container v-if="userInfoPage.dialog.type==='avatar'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container v-if="userInfoPage.dialog.type==='username'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.username"
+                                      :counter="rules.usernameMaxLength" :rules="[rules.isUsername]"
+                                      class="px-2" clearable label="新用户名"/>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container v-if="userInfoPage.dialog.type==='password'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.password" :counter="rules.passwordMaxLength"
+                                      :rules="[rules.isPassword]" class="px-2"
+                                      clearable label="新密码" type="password"/>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                            :counter="rules.passwordMaxLength"
+                            :rules="[value=>value===userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
+                            class="px-2"
+                            clearable
+                            label="密码确认"
+                            type="password"
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container v-if="userInfoPage.dialog.type==='phoneNumber'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.phoneNumber" class="px-2"
+                                      clearable disabled label="原手机号"/>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.newPhoneNumber"
+                                      :rules="[(value) => !!value || '请输入新手机号',rules.isphoneNumber]"
+                                      class="px-2" clearable label="新手机号"/>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container v-if="userInfoPage.dialog.type==='email'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.email" class="px-2"
+                                      clearable disabled label="原邮箱"/>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.newEmail"
+                                      :rules="[(value) => !!value || '请输入新邮箱',rules.isEmail]"
+                                      class="px-2" clearable label="新邮箱"/>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container v-if="userInfoPage.dialog.type==='deleteAccount'">
+                    <v-row no-gutters>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.email" class="px-2"
+                                      clearable disabled label="原邮箱"/>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="userInfoPage.dialog.userInfo.newEmail"
+                                      :rules="[(value) => !!value || '请输入新邮箱',rules.isEmail]"
+                                      class="px-2" clearable label="新邮箱"/>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer/>
+                <v-btn color="grey darken-1" dark depressed
+                       @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
+                <v-btn
+                    :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
+                    depressed @click="updateAccount" v-text="'保存'"/>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-container>
-      </v-container>
+      </v-card>
     </v-dialog>
     <v-hover v-slot="{ hover }">
       <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
@@ -185,7 +287,7 @@
           <v-col cols="1">
             <v-icon>mdi-message-alert</v-icon>
           </v-col>
-          <v-col class="ml-2" @click="feedbackDialog.isShow = true">
+          <v-col class="ml-2" @click="feedbackPage.isShow = true">
             <span>提交反馈</span>
           </v-col>
           <v-col cols="1">
@@ -193,13 +295,13 @@
           </v-col>
         </v-row>
         <v-dialog
-            v-model="feedbackDialog.isShow"
+            v-model="feedbackPage.isShow"
             fullscreen
             hide-overlay
             style="height: 100vh"
             transition="dialog-bottom-transition"
         >
-          <v-container class="pa-0" fluid style="height: 100%;background: #FFFFFF">
+          <v-card class="pa-0">
             <v-toolbar
                 class="mb-16"
                 color="primary"
@@ -209,7 +311,7 @@
               <v-btn
                   dark
                   icon
-                  @click="feedbackDialog.isShow = false"
+                  @click="feedbackPage.isShow = false"
               >
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
@@ -223,13 +325,13 @@
               <v-row no-gutters>
                 <v-col cols="12">
                   <v-select
-                      v-model="feedbackDialog.feedback.type" :items="enums.feedbackType"
+                      v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
                       label="反馈类型"
                       prepend-inner-icon="mdi-format-list-bulleted-type"/>
                 </v-col>
                 <v-col cols="12">
                   <v-textarea
-                      v-model="feedbackDialog.feedback.description"
+                      v-model="feedbackPage.feedback.description"
                       auto-grow
                       clearable
                       counter
@@ -243,17 +345,18 @@
                   <span>反馈图片</span>
                 </v-col>
                 <v-col class="d-flex justify-center" cols="12">
-                  <image-uploader :image-path="feedbackDialog.feedback.imagePath"
-                                  @setImagePath="(imagePath)=>{feedbackDialog.feedback.imagePath = imagePath}"/>
+                  <image-uploader :image-path="feedbackPage.feedback.imagePath"
+                                  @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
                 </v-col>
               </v-row>
               <v-row class="mt-10" no-gutters>
                 <v-btn
-                    :disabled="feedbackDialog.loading"
-                    :loading="feedbackDialog.loading"
+                    :disabled="feedbackPage.loading"
+                    :loading="feedbackPage.loading"
                     class="rounded-lg"
                     color="primary"
                     large
+                    depressed
                     style="width: 100%"
                     @click="saveFeedback"
                 >
@@ -262,11 +365,12 @@
                 </v-btn>
               </v-row>
             </v-container>
-          </v-container>
+          </v-card>
         </v-dialog>
       </v-container>
     </v-hover>
-    <v-row v-if="userInfo.roleIdList && userInfo.roleIdList.indexOf(1) !== -1" class="mb-5" no-gutters>
+    <v-row v-if="userInfoPage.userInfo.roleIdList && userInfoPage.userInfo.roleIdList.indexOf(1) !== -1" class="mb-5"
+           no-gutters>
       <v-btn
           :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
           :style="{ width: isMobile ? '85%' : '50%' }"
@@ -320,10 +424,34 @@ export default {
     return {
       backgroundImagePath: this.GLOBAL.images.profile,
       title: "我的",
-      userInfoDialog: {
-        isShow: false
+      userInfoPage: {
+        isShow: false,
+        dialog: {
+          title: null,
+          isShow: false,
+          loading: false,
+          type: null,
+          userInfo: {
+            id: null,
+            username: null,
+            avatarPath: null,
+            password: null,
+            email: null,
+            newEmail: null,
+            phoneNumber: null,
+            newPhoneNumber: null
+          }
+        },
+        userInfo: {
+          username: null,
+          avatarPath: null,
+          email: null,
+          phoneNumber: null,
+          roleIdList: null,
+          status: null,
+        },
       },
-      feedbackDialog: {
+      feedbackPage: {
         isShow: false,
         loading: false,
         feedback: {
@@ -332,25 +460,47 @@ export default {
           description: null
         },
       },
-      userInfo: {
-        username: null,
-        avatarPath: null,
-        email: null,
-        phoneNumber: null,
-        roleIdList: null,
-        status: null,
-      },
+
       darkMode: this.$vuetify.theme.dark,
       classes: {},
       roleMap: [],
-      enums: this.GLOBAL.enums
+      enums: this.GLOBAL.enums,
+      rules: this.GLOBAL.rules
     };
   },
   methods: {
     changeDarkMode(darkMode) {
       this.$vuetify.theme.dark = darkMode;
     },
-    deleteAccount() {
+    updateAccount() {
+      let user;
+      if (this.userInfoPage.dialog.type === 'username') {
+        user = {
+          id: this.userInfoPage.dialog.userInfo.id,
+          username: this.userInfoPage.dialog.userInfo.username
+        }
+      }
+      if (this.userInfoPage.dialog.type === 'password') {
+        user = {
+          id: this.userInfoPage.dialog.userInfo.id,
+          password: this.userInfoPage.dialog.userInfo.password
+        }
+      }
+      this.userInfoPage.dialog.loading = true;
+      this.axios.put("/account/updateAccount", JSON.stringify(user))
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.loadUserInfo();
+            this.userInfoPage.dialog.isShow = false;
+          })
+          .finally(() => {
+            this.userInfoPage.dialog.loading = false;
+          });
     },
     signOut() {
       this.$notify({
@@ -364,7 +514,7 @@ export default {
     },
     getStatusText() {
       for (let item of this.enums.userStatus) {
-        if (item.value === this.userInfo.status) {
+        if (item.value === this.userInfoPage.userInfo.status) {
           return item.text;
         }
       }
@@ -377,8 +527,8 @@ export default {
       }
     },
     saveFeedback() {
-      this.feedbackDialog.loading = true;
-      this.axios.post("/feedback/saveFeedback", JSON.stringify(this.feedbackDialog.feedback))
+      this.feedbackPage.loading = true;
+      this.axios.post("/feedback/saveFeedback", JSON.stringify(this.feedbackPage.feedback))
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -386,12 +536,12 @@ export default {
               type: "success",
               duration: 2000,
             });
-            this.feedbackDialog.feedback.imagePath = null;
-            this.feedbackDialog.feedback.type = null;
-            this.feedbackDialog.feedback.description = null;
+            this.feedbackPage.feedback.imagePath = null;
+            this.feedbackPage.feedback.type = null;
+            this.feedbackPage.feedback.description = null;
           })
           .finally(() => {
-            this.feedbackDialog.loading = false;
+            this.feedbackPage.loading = false;
           });
     },
     loadRoleMap() {
@@ -401,9 +551,18 @@ export default {
         })
       });
     },
+    loadUserInfo() {
+      let _this = this;
+      this.axios.get("/account/getUserInfo").then((response) => {
+        _this.$store.commit("setUserInfo", response.data.data);
+        this.userInfoPage.userInfo = response.data.data;
+        this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(response.data.data));
+      });
+    }
   },
   mounted() {
-    this.userInfo = this.$store.getters.getUserInfo;
+    this.userInfoPage.userInfo = this.$store.getters.getUserInfo;
+    this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.$store.getters.getUserInfo));
     this.loadRoleMap();
   }
 };

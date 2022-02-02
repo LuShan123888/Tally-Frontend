@@ -81,36 +81,20 @@
         <template slot-scope="props">
           <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
-              <v-list flat>
-                <v-list-item-group>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <div>
-                        <span class="font-weight-bold" style="color: #909399" v-html="'反馈描述：'"/>
-                        <span style="color: #606266" v-text="props.row.description"/>
-                      </div>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-divider v-if="props.row.processingUserId"/>
-                  <v-list-item v-if="props.row.processingUserId">
-                    <v-list-item-content>
-                      <div>
-                        <span class="font-weight-bold" style="color: #909399" v-html="'处理人ID：'"/>
-                        <span style="color: #606266" v-html="props.row.processingUserId"/>
-                      </div>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-divider v-if="props.row.processingDescription"/>
-                  <v-list-item v-if="props.row.processingDescription">
-                    <v-list-item-content>
-                      <div>
-                        <span class="font-weight-bold" style="color: #909399" v-html="'处理描述：'"/>
-                        <span style="color: #606266" v-html="props.row.processingDescription"/>
-                      </div>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+              <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
+                <span class="font-weight-bold" style="color: #909399" v-html="'反馈描述：'"/>
+                <span style="color: #606266" v-text="props.row.description"/>
+              </v-row>
+              <v-divider v-if="props.row.processingUserId"/>
+              <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
+                <span class="font-weight-bold" style="color: #909399" v-html="'处理人ID：'"/>
+                <span style="color: #606266" v-html="props.row.processingUserId"/>
+              </v-row>
+              <v-divider v-if="props.row.processingDescription"/>
+              <v-row v-if="props.row.processingDescription" v-ripple align="center" no-gutters style="height: 50px">
+                <span class="font-weight-bold" style="color: #909399" v-html="'处理描述：'"/>
+                <span style="color: #606266" v-html="props.row.processingDescription"/>
+              </v-row>
             </v-col>
             <v-col class="px-16" cols="6">
               <div class="mb-2">
@@ -162,6 +146,7 @@
           label="反馈类型"
       />
       <el-table-column
+          align="center"
           label="处理状态"
           width="200">
         <template slot-scope="scope">

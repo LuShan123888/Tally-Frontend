@@ -10,6 +10,8 @@
         bottom
         offset-y
         nudge-bottom="5px"
+        nudge-left="65px"
+        open-on-hover
         transition="slide-y-transition"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -17,55 +19,41 @@
             icon
             v-bind="attrs"
             v-on="on"
-            class="mr-7"
+            class="mr-16 pr-5"
         >
           <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
-      <v-list flat nav>
-        <v-list-item-group>
-          <v-list-item
-              id="item-group"
-              dense
-              class="my-0"
-              inactive
-              v-if="userInfo"
-          >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-account-box</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content class="ml-0">
-              <v-list-item-title v-text="userInfo.username"/>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-              dense
-              link
+      <v-container fluid style="background: #FFFFFF">
+        <v-row v-if="userInfo" align="center" no-gutters style="height: 50px">
+          <v-icon class="ml-4 mr-3" size="24">mdi-account-box</v-icon>
+          <span v-text="userInfo.username"/>
+        </v-row>
+        <v-row no-gutters>
+          <v-btn
+              class="rounded-lg"
+              color="primary"
+              style="width: 100%"
+              text
               to="/home"
-              class="my-0"
           >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-application-outline</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="'前往前台'"/>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-              dense
-              link
-              @click="logout"
-              class="my-0"
+            <v-icon class="mr-3">mdi-application-outline</v-icon>
+            <span>前往前台</span>
+          </v-btn>
+        </v-row>
+        <v-row no-gutters>
+          <v-btn
+              class="rounded-lg"
+              color="error"
+              style="width: 100%"
+              text
+              @click="signOut"
           >
-            <v-list-item-icon class="mr-2">
-              <v-icon>mdi-logout</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>安全退出</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+            <v-icon class="mr-3">mdi-logout</v-icon>
+            <span>安全退出</span>
+          </v-btn>
+        </v-row>
+      </v-container>
     </v-menu>
   </v-app-bar>
 </template>
@@ -99,7 +87,7 @@ export default {
     this.userInfo = this.$store.getters.getUserInfo;
   },
   methods: {
-    logout() {
+    signOut() {
       this.$notify({
         title: "退出成功",
         message: null,
