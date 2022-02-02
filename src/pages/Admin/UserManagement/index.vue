@@ -84,16 +84,7 @@
       </el-table-column>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
-          <v-avatar size="40" v-if="scope.row.avatarUrl!=null">
-            <v-img :src="getAvatarPath(scope.row.avatarUrl)">
-              <template v-slot:placeholder>
-                <v-row align="center" class="fill-height ma-0" justify="center" no-gutters>
-                  <v-progress-circular color="primary" indeterminate width="2"/>
-                </v-row>
-              </template>
-            </v-img>
-          </v-avatar>
-          <v-icon size="40" v-else>mdi-account-circle</v-icon>
+          <avatar :path="scope.row.avatarPath" size="40"/>
         </template>
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
@@ -104,7 +95,12 @@
           </v-chip>
         </template>
       </el-table-column>
-      <el-table-column :formatter="userStatusFormatter" label="状态">
+      <el-table-column align="center" label="状态">
+        <template slot-scope="scope">
+          <v-chip :color="scope.row.status==='NORMAL'?'success':'secondary'" class="mx-1" label small
+                  v-text="userStatusFormatter(scope.row)">
+          </v-chip>
+        </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
         <template v-slot="scope">
@@ -220,46 +216,19 @@
                   <v-row align="center" class="mb-3 " no-gutters>
                     <div :style="{color:dialog.user.id?'#9E9E9D':'inherit'}" class="text-subtitle-1" v-text="'头像'"/>
                     <v-btn
-                        v-if="dialog.user.avatarUrl!=null && !dialog.user.id"
+                        v-if="dialog.user.avatarPath!=null && !dialog.user.id"
                         x-small
                         depressed
                         class="error"
                         style="margin-left:72px"
-                        @click="dialog.user.avatarUrl=null;"
+                        @click="dialog.user.avatarPath=null;"
                         v-text="'删除'"
                     />
                   </v-row>
-                  <el-upload
-                      v-if="!dialog.user.id"
-                      class="avatar-uploader"
-                      name="uploadFile"
-                      :action="upload.path"
-                      :headers="upload.header"
-                      :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
-                      :on-error="handleAvatarError"
-                      :before-upload="beforeAvatarUpload">
-                    <v-img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
-                           contain height="150px" width="150px">
-                      <template v-slot:placeholder>
-                        <v-row
-                            no-gutters
-                            align="center"
-                            class="fill-height ma-0"
-                            justify="center"
-                        >
-                          <v-progress-circular
-                              color="primary"
-                              indeterminate
-                              width="2"
-                          />
-                        </v-row>
-                      </template>
-                    </v-img>
-                    <v-icon v-else>mdi-upload</v-icon>
-                  </el-upload>
+                  <image-uploader v-if="!dialog.user.id" :image-path="dialog.user.avatarPath"
+                                  @setImagePath="(imagePath)=>{dialog.user.avatarPath = imagePath}"/>
                   <div v-else>
-                    <v-img v-if="dialog.user.avatarUrl" :src="getAvatarPath(dialog.user.avatarUrl)"
+                    <v-img v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
                            contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
                       <template v-slot:placeholder>
                         <v-row
@@ -329,9 +298,12 @@
 </template>
 
 <script>
+import Avatar from '@/components/Avatar';
+import ImageUploader from '@/components/ImageUploader';
+
 export default {
   name: "UserManagement",
-  components: {},
+  components: {Avatar, ImageUploader},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -373,7 +345,7 @@ export default {
           username: null,
           phoneNumber: null,
           email: null,
-          avatarUrl: null,
+          avatarPath: null,
           status: null,
           roleIdList: null,
           version: null,
@@ -381,10 +353,6 @@ export default {
         btn: {
           loading: false
         }
-      },
-      upload: {
-        path: this.GLOBAL.url.upload,
-        header: {Authorization: this.$store.getters.getToken}
       },
       roleMap: [],
       rules: this.GLOBAL.rules,
@@ -465,7 +433,7 @@ export default {
       this.dialog.user.username = null;
       this.dialog.user.phoneNumber = null;
       this.dialog.user.email = null;
-      this.dialog.user.avatarUrl = null;
+      this.dialog.user.avatarPath = null;
       this.dialog.user.status = null;
       this.dialog.user.roleIdList = null;
       this.dialog.user.version = null;
@@ -477,41 +445,17 @@ export default {
       this.dialog.user.username = user.username;
       this.dialog.user.phoneNumber = user.phoneNumber;
       this.dialog.user.email = user.email;
-      this.dialog.user.avatarUrl = user.avatarUrl;
+      this.dialog.user.avatarPath = user.avatarPath;
       this.dialog.user.status = user.status;
       this.dialog.user.roleIdList = user.roleIdList;
       this.dialog.user.version = user.version;
       this.dialog.title = "修改用户";
       this.dialog.isShow = true;
     },
-    getAvatarPath(avatarUrl) {
-      if (avatarUrl != null) {
-        return this.GLOBAL.url.file + "/" + avatarUrl;
+    getImageUrl(imagePath) {
+      if (imagePath != null) {
+        return this.GLOBAL.url.file + "/" + imagePath;
       }
-    },
-    handleAvatarSuccess(response) {
-      this.dialog.user.avatarUrl = response.data;
-      this.$notify({
-        title: "图片上传成功",
-        message: null,
-        type: "success",
-        duration: 2000,
-      });
-    },
-    handleAvatarError(error) {
-      console.log(error)
-      this.$message.error("图像上传失败")
-    },
-    beforeAvatarUpload(file) {
-      let isImage = file.type === 'image/jpeg' || file.type === 'image/png';
-      let isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isImage) {
-        this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isImage && isLt2M;
     },
     roleNameFormatter(roleId) {
       for (let item of this.roleMap) {
@@ -556,23 +500,4 @@ export default {
 .el-popconfirm__main {
   margin-bottom: 10px;
 }
-
-.avatar-uploader {
-  .el-upload {
-    border: 1px solid #949494;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    width: 150px;
-    height: 150px;
-
-    &:hover {
-      border-color: #409EFF;
-    }
-  }
-}
-
 </style>

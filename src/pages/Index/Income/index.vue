@@ -24,7 +24,7 @@
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
-          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-6':!hover}"
+          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
         <v-form ref="form" v-model="valid">

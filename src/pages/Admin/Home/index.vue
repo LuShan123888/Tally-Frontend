@@ -8,7 +8,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
+              <v-row :class="{'elevation-24':hover,'elevation-4':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
                   <v-icon class="ml-5" size="50">mdi-account-group</v-icon>
@@ -22,10 +22,10 @@
           </v-col>
           <v-col class="mx-16" cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
+              <v-row :class="{'elevation-24':hover,'elevation-4':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
-                  <v-icon class="ml-5" size="50">mdi-login-variant</v-icon>
+                  <v-icon class="ml-5" size="50">mdi-login</v-icon>
                 </v-col>
                 <v-col class="d-flex flex-column align-end pr-4" cols="7">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
@@ -36,7 +36,7 @@
           </v-col>
           <v-col class="mr-16" cols="2">
             <v-hover v-slot="{ hover }">
-              <v-row :class="{'elevation-24':hover,'elevation-6':!hover}" :style="{height:'100px'}" no-gutters
+              <v-row :class="{'elevation-24':hover,'elevation-4':!hover}" :style="{height:'100px'}" no-gutters
                      align="center" class="transition-swing rounded">
                 <v-col cols="5">
                   <v-icon class="ml-5" size="50">mdi-notebook-edit</v-icon>
@@ -55,7 +55,7 @@
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -91,7 +91,7 @@
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -127,7 +127,7 @@
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -163,7 +163,7 @@
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -228,7 +228,7 @@
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -302,7 +302,7 @@
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
           <v-card
-              :class="{'elevation-24':hover,'elevation-6':!hover}"
+              :class="{'elevation-24':hover,'elevation-4':!hover}"
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
@@ -1112,5 +1112,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

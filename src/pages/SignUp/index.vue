@@ -3,16 +3,16 @@
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-row no-gutters style="margin-top: 56px">
-      <Title :title="title"></Title>
+      <title-bar :title="title"/>
     </v-row>
-    <background-image :path="backgroundImagePath"></background-image>
+    <background-image :path="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
-      <v-card
-          class="mx-auto transition-swing"
-          :style="{ width: isMobile ? '85%' : '30%' }"
-          :class="{'elevation-24':hover,'elevation-6':!hover}"
+      <v-container :class="{'elevation-24':hover,'elevation-2':!hover}"
+                   class="mx-auto transition-swing pa-0 rounded-lg"
+                   :style="{ width: isMobile ? '85%' : '30%' }"
+                   fluid
       >
-        <v-tabs v-model="tab" grow>
+        <v-tabs v-model="tab" class="rounded-lg" grow>
           <v-tab>
             <v-icon>mdi-cellphone-message</v-icon>
             <span v-if="!isMobile" class="ml-3">手机号注册</span>
@@ -22,7 +22,7 @@
             <span v-if="!isMobile" class="ml-3">邮箱注册</span>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab" class="rounded-lg">
           <v-tab-item>
             <v-row class="pt-16" justify="center" no-gutters>
               <v-col cols="10">
@@ -235,20 +235,20 @@
             </v-row>
           </v-tab-item>
         </v-tabs-items>
-      </v-card>
+      </v-container>
     </v-hover>
   </v-container>
 </template>
 
 <script>
 import AppBar from "@/pages/Index/components/AppBar";
-import Title from "@/pages/Index/components/Title";
+import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
 
 export default {
   name: "SignUp",
-  components: {AppBar, Title, BackgroundImage, DarkButton},
+  components: {AppBar, TitleBar, BackgroundImage, DarkButton},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

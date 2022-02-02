@@ -9,6 +9,7 @@
       >
         <template v-slot:placeholder>
           <v-row
+              no-gutters
               class="fill-height ma-0"
               align="center"
               justify="center"

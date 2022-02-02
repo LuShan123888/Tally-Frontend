@@ -81,7 +81,7 @@
         <template slot-scope="props">
           <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
-              <v-list>
+              <v-list flat>
                 <v-list-item-group>
                   <v-list-item>
                     <v-list-item-content>
@@ -116,10 +116,11 @@
               <div class="mb-2">
                 <span class="font-weight-bold" style="color: #909399" v-html="'反馈图片：'"/>
               </div>
-              <v-img v-if="props.row.imageUrl!=null" id="feedbackImage" :src="getImagePath(props.row.imageUrl)" contain
-                     @click="openImageDialog(getImagePath(props.row.imageUrl))">
+              <v-img v-if="props.row.imagePath!=null" id="feedbackImage" :src="getImageUrl(props.row.imagePath)" contain
+                     @click="openImageDialog(getImageUrl(props.row.imagePath))">
                 <template v-slot:placeholder>
                   <v-row
+                      no-gutters
                       align="center"
                       class="fill-height ma-0"
                       justify="center">
@@ -288,7 +289,7 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="imagePreview.isShow" max-width="600px">
-      <v-img :src="imagePreview.imageUrl" contain></v-img>
+      <v-img :src="imagePreview.imageUrl" contain/>
     </v-dialog>
   </v-container>
 </template>
@@ -338,7 +339,7 @@ export default {
           userId: null,
           type: null,
           description: null,
-          imageUrl: null,
+          imagePath: null,
           status: null,
           processingUserId: null,
           processingDescription: null,
@@ -439,7 +440,7 @@ export default {
       this.dialog.feedback.userId = feedback.userId;
       this.dialog.feedback.type = feedback.type;
       this.dialog.feedback.description = feedback.description;
-      this.dialog.feedback.imageUrl = feedback.imageUrl;
+      this.dialog.feedback.imagePath = feedback.imagePath;
       this.dialog.feedback.status = feedback.status;
       this.dialog.feedback.processingUserId = feedback.processingUserId;
       this.dialog.feedback.processingDescription = feedback.processingDescription;
@@ -447,9 +448,9 @@ export default {
       this.dialog.title = "处理反馈";
       this.dialog.isShow = true;
     },
-    getImagePath(imageUrl) {
-      if (imageUrl != null) {
-        return this.GLOBAL.url.file + "/" + imageUrl;
+    getImageUrl(imagePath) {
+      if (imagePath != null) {
+        return this.GLOBAL.url.file + "/" + imagePath;
       }
     },
     openImageDialog(imageUrl) {

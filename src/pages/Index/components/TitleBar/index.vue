@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "Title",
+  name: "TitleBar",
   props: {
     title: String
   },

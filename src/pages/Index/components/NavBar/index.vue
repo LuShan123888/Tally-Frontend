@@ -9,12 +9,13 @@
             </v-icon>
             <span class="text-subtitle-1">{{ title }}</span>
           </div>
-          <v-list rounded>
+          <v-list flat nav>
             <v-list-item-group v-model="selectedItem" color="primary">
               <v-list-item
                   v-for="(item, i) in menus"
                   :key="i"
                   :to="item.path"
+                  class="rounded-lg"
               >
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"/>

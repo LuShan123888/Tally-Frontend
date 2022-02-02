@@ -311,22 +311,4 @@ export default {
   margin-bottom: 10px;
 }
 
-.avatar-uploader {
-  .el-upload {
-    border: 1px solid #949494;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    width: 150px;
-    height: 150px;
-
-    &:hover {
-      border-color: #409EFF;
-    }
-  }
-}
-
 </style>

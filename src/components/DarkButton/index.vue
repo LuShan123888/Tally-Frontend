@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $btn-fg: #503660;
 $btn-bg: #fafafd;
 $btn-fg-hover: #418cec;

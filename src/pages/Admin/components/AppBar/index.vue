@@ -19,28 +19,10 @@
             v-on="on"
             class="mr-7"
         >
-          <v-avatar v-if="userInfo&&userInfo.avatarUrl!=null">
-            <v-img :src="avatarPath">
-              <template v-slot:placeholder>
-                <v-row
-                    no-gutters
-                    align="center"
-                    class="fill-height ma-0"
-                    justify="center"
-                >
-                  <v-progress-circular
-                      color="primary"
-                      indeterminate
-                      width="2"
-                  />
-                </v-row>
-              </template>
-            </v-img>
-          </v-avatar>
-          <v-icon x-large v-else>mdi-account-circle</v-icon>
+          <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
-      <v-list nav>
+      <v-list flat nav>
         <v-list-item-group>
           <v-list-item
               id="item-group"
@@ -89,13 +71,18 @@
 </template>
 
 <script>
+import Avatar from '@/components/Avatar'
+
 export default {
   name: "AppBar",
+  components: {
+    Avatar
+  },
   data: function () {
     return {
       title: this.GLOBAL.adminTitle,
       userInfo: {
-        avatarUrl: null,
+        avatarPath: null,
         username: null
       }
     };
@@ -106,11 +93,6 @@ export default {
     },
     isDark: function () {
       return this.$vuetify.theme.dark;
-    },
-    avatarPath: function () {
-      if (this.userInfo.avatarUrl != null) {
-        return this.GLOBAL.url.file + "/" + this.userInfo.avatarUrl;
-      }
     }
   },
   mounted() {
@@ -131,5 +113,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

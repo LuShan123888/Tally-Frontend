@@ -6,7 +6,6 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireAuth)) { // 判断该路由是否需要登录权限
         let token = store.getters.getToken
         // 判断当前的token是否存在，如不存在则跳转至登录页面
-        console.log(to)
         if (token) {
             next();
         } else {
