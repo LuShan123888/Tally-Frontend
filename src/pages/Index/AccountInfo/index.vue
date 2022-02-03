@@ -50,7 +50,7 @@
                justify="center"
                no-gutters>
           <div style="width: 100px;cursor: pointer"
-               @click="userInfoPage.dialog.type='avatar';userInfoPage.dialog.isShow=true;">
+               @click="loadUserInfoDialog('修改头像','avatar')">
             <avatar :path="userInfoPage.userInfo.avatarPath" elevation="3" size="100"/>
           </div>
         </v-row>
@@ -62,7 +62,7 @@
         >
           <v-row align="center" class="px-3" no-gutters style="height: 50px"/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                 @click="userInfoPage.dialog.type='username';userInfoPage.dialog.isShow=true;">
+                 @click="loadUserInfoDialog('修改用户名','username')">
             <v-col cols="1">
               <v-icon>mdi-account</v-icon>
             </v-col>
@@ -76,7 +76,7 @@
           </v-row>
           <v-divider/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                 @click="userInfoPage.dialog.type='password';userInfoPage.dialog.isShow=true;">
+                 @click="loadUserInfoDialog('修改密码','password')">
             <v-col cols="1">
               <v-icon>mdi-account-key</v-icon>
             </v-col>
@@ -89,7 +89,7 @@
           </v-row>
           <v-divider/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                 @click="userInfoPage.dialog.type='phoneNumber';userInfoPage.dialog.isShow=true;">
+                 @click="loadUserInfoDialog('修改手机号','phoneNumber')">
             <v-col cols="1">
               <v-icon>mdi-cellphone-text</v-icon>
             </v-col>
@@ -102,7 +102,7 @@
           </v-row>
           <v-divider/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                 @click="userInfoPage.dialog.type='email';userInfoPage.dialog.isShow=true;">
+                 @click="loadUserInfoDialog('修改邮箱','email')">
             <v-col cols="1">
               <v-icon>mdi-email</v-icon>
             </v-col>
@@ -146,106 +146,140 @@
                 large
                 depressed
                 style="width: 70%"
-                @click="userInfoPage.dialog.type='deleteAccount';userInfoPage.dialog.isShow=true;"
+                @click="loadUserInfoDialog('注销账号','deleteAccount')"
             >
               <v-icon class="mr-3">mdi-logout</v-icon>
               注销账号
             </v-btn>
           </v-row>
-          <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px">
-            <v-card>
-              <v-card-title>
-                <span class="text-h5" v-text="userInfoPage.dialog.title"/>
-              </v-card-title>
-              <v-card-text class="pb-0">
-                <v-form ref="updateAccountForm">
-                  <v-container v-if="userInfoPage.dialog.type==='avatar'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <v-container v-if="userInfoPage.dialog.type==='username'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.username"
-                                      :counter="rules.usernameMaxLength" :rules="[rules.isUsername]"
-                                      class="px-2" clearable label="新用户名"/>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <v-container v-if="userInfoPage.dialog.type==='password'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.password" :counter="rules.passwordMaxLength"
-                                      :rules="[rules.isPassword]" class="px-2"
-                                      clearable label="新密码" type="password"/>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                            :counter="rules.passwordMaxLength"
-                            :rules="[value=>value===userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
-                            class="px-2"
-                            clearable
-                            label="密码确认"
-                            type="password"
-                        />
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <v-container v-if="userInfoPage.dialog.type==='phoneNumber'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.phoneNumber" class="px-2"
-                                      clearable disabled label="原手机号"/>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.newPhoneNumber"
-                                      :rules="[(value) => !!value || '请输入新手机号',rules.isphoneNumber]"
-                                      class="px-2" clearable label="新手机号"/>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <v-container v-if="userInfoPage.dialog.type==='email'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.email" class="px-2"
-                                      clearable disabled label="原邮箱"/>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.newEmail"
-                                      :rules="[(value) => !!value || '请输入新邮箱',rules.isEmail]"
-                                      class="px-2" clearable label="新邮箱"/>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <v-container v-if="userInfoPage.dialog.type==='deleteAccount'">
-                    <v-row no-gutters>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.email" class="px-2"
-                                      clearable disabled label="原邮箱"/>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="userInfoPage.dialog.userInfo.newEmail"
-                                      :rules="[(value) => !!value || '请输入新邮箱',rules.isEmail]"
-                                      class="px-2" clearable label="新邮箱"/>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer/>
-                <v-btn color="grey darken-1" dark depressed
-                       @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
-                <v-btn
-                    :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
-                    depressed @click="updateAccount" v-text="'保存'"/>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-container>
+        <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px">
+          <v-card>
+            <v-card-title>
+              <span class="text-h5" v-text="userInfoPage.dialog.title"/>
+            </v-card-title>
+            <v-card-text class="pb-0">
+              <v-form ref="updateAccountForm">
+                <v-container v-if="userInfoPage.dialog.type==='avatar'">
+                  <v-row no-gutters>
+                    <v-col class="d-flex justify-center" cols="12">
+                      <image-uploader :image-path="userInfoPage.dialog.userInfo.avatarPath" size="120"
+                                      @setImagePath="(imagePath)=>{userInfoPage.dialog.userInfo.avatarPath = imagePath}"/>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container v-if="userInfoPage.dialog.type==='username'">
+                  <v-row no-gutters>
+                    <v-col cols="12">
+                      <v-text-field v-model="userInfoPage.dialog.userInfo.username"
+                                    :counter="rules.usernameMaxLength" :rules="[rules.isUsername]"
+                                    class="px-2" clearable label="新用户名"/>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container v-if="userInfoPage.dialog.type==='password'">
+                  <v-row no-gutters>
+                    <v-col cols="12">
+                      <v-text-field v-model="userInfoPage.dialog.userInfo.password" :counter="rules.passwordMaxLength"
+                                    :rules="[rules.isPassword]" class="px-2"
+                                    clearable label="新密码" type="password"/>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                          :counter="rules.passwordMaxLength"
+                          :rules="[value=>value===userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
+                          class="px-2"
+                          clearable
+                          label="密码确认"
+                          type="password"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container v-if="userInfoPage.dialog.type==='phoneNumber'">
+                  <v-row no-gutters>
+                    <v-col cols="12">
+                      <v-text-field
+                          ref="phoneNumberTextField"
+                          v-model="userInfoPage.dialog.userInfo.phoneNumber"
+                          :counter="11"
+                          :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
+                          clearable
+                          label="新手机号"
+                      >
+                        <template v-slot:append-outer>
+                          <v-btn
+                              :disabled="userInfoPage.dialog.verificationCodeBtn.disabled"
+                              :loading="userInfoPage.dialog.verificationCodeBtn.loading"
+                              depressed
+                              small
+                              @click="sendVerificationCode('phoneNumber',userInfoPage.dialog.userInfo.phoneNumber)"
+                              v-text="'获取验证码'"
+                          />
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" no-gutters>
+                      <v-otp-input
+                          v-model="userInfoPage.dialog.userInfo.verificationCode"
+                          :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
+                          length="6"
+                          plain
+                          type="number"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container v-if="userInfoPage.dialog.type==='email'">
+                  <v-row no-gutters>
+                    <v-col cols="12">
+                      <v-text-field
+                          ref="emailTextField"
+                          v-model="userInfoPage.dialog.userInfo.email"
+                          :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
+                          clearable
+                          label="新邮箱"
+                      >
+                        <template v-slot:append-outer>
+                          <v-btn
+                              :disabled="userInfoPage.dialog.verificationCodeBtn.disabled"
+                              :loading="userInfoPage.dialog.verificationCodeBtn.loading"
+                              depressed
+                              small
+                              @click="sendVerificationCode('email',userInfoPage.dialog.userInfo.email)"
+                              v-text="'获取验证码'"
+                          />
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="12" no-gutters>
+                      <v-otp-input
+                          v-model="userInfoPage.dialog.userInfo.verificationCode"
+                          :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
+                          length="6"
+                          plain
+                          type="number"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container v-if="userInfoPage.dialog.type==='deleteAccount'">
+                  <v-row no-gutters>
+                    <span class="red--text">确定要注销该账号吗？</span>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer/>
+              <v-btn color="grey darken-1" dark depressed
+                     @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
+              <v-btn
+                  :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
+                  depressed @click="updateAccount" v-text="'保存'"/>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-card>
     </v-dialog>
     <v-hover v-slot="{ hover }">
@@ -437,9 +471,12 @@ export default {
             avatarPath: null,
             password: null,
             email: null,
-            newEmail: null,
             phoneNumber: null,
-            newPhoneNumber: null
+            verificationCode: null,
+          },
+          verificationCodeBtn: {
+            loading: false,
+            disabled: false
           }
         },
         userInfo: {
@@ -473,7 +510,33 @@ export default {
       this.$vuetify.theme.dark = darkMode;
     },
     updateAccount() {
+      if (!this.$refs.updateAccountForm.validate()) {
+        return;
+      }
+      if (this.userInfoPage.dialog.type === 'deleteAccount') {
+        this.axios.delete("/account/deleteAccount")
+            .then(() => {
+              this.$notify({
+                title: "注销成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.userInfoPage.dialog.isShow = false;
+              this.$router.push({name: "SignIn"});
+            })
+            .finally(() => {
+              this.userInfoPage.dialog.loading = false;
+            });
+        return;
+      }
       let user;
+      if (this.userInfoPage.dialog.type === 'avatar') {
+        user = {
+          id: this.userInfoPage.dialog.userInfo.id,
+          avatarPath: this.userInfoPage.dialog.userInfo.avatarPath
+        }
+      }
       if (this.userInfoPage.dialog.type === 'username') {
         user = {
           id: this.userInfoPage.dialog.userInfo.id,
@@ -484,6 +547,20 @@ export default {
         user = {
           id: this.userInfoPage.dialog.userInfo.id,
           password: this.userInfoPage.dialog.userInfo.password
+        }
+      }
+      if (this.userInfoPage.dialog.type === 'phoneNumber') {
+        user = {
+          id: this.userInfoPage.dialog.userInfo.id,
+          phoneNumber: this.userInfoPage.dialog.userInfo.phoneNumber,
+          verificationCode: this.userInfoPage.dialog.userInfo.verificationCode
+        }
+      }
+      if (this.userInfoPage.dialog.type === 'email') {
+        user = {
+          id: this.userInfoPage.dialog.userInfo.id,
+          email: this.userInfoPage.dialog.userInfo.email,
+          verificationCode: this.userInfoPage.dialog.userInfo.verificationCode
         }
       }
       this.userInfoPage.dialog.loading = true;
@@ -544,6 +621,12 @@ export default {
             this.feedbackPage.loading = false;
           });
     },
+    loadUserInfoDialog(title, type) {
+      this.userInfoPage.dialog.title = title;
+      this.userInfoPage.dialog.type = type;
+      this.userInfoPage.dialog.isShow = true;
+      this.userInfoPage.dialog.verificationCodeBtn.disabled = false;
+    },
     loadRoleMap() {
       this.axios.get("/role/listAllRole").then((response) => {
         response.data.data.forEach(() => {
@@ -558,7 +641,43 @@ export default {
         this.userInfoPage.userInfo = response.data.data;
         this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(response.data.data));
       });
-    }
+    },
+    getImageUrl(imagePath) {
+      if (imagePath != null) {
+        return this.GLOBAL.url.file + "/" + imagePath;
+      }
+    },
+    sendVerificationCode(type, code) {
+      if (type === 'phoneNumber') {
+        if (!this.$refs.phoneNumberTextField.validate(true)) return;
+        this.userInfoPage.dialog.verificationCodeBtn.loading = true;
+        this.userInfoPage.dialog.verificationCodeBtn.disabled = true;
+        this.axios.get("/account/sendVerificationCode?phoneNumber=" + code).then(() => {
+          this.$notify({
+            title: "已发送验证码",
+            message: null,
+            type: "success",
+            duration: 2000,
+          });
+        }).finally(() => {
+          this.userInfoPage.dialog.verificationCodeBtn.loading = false;
+        });
+      } else if (type === 'email') {
+        if (!this.$refs.emailTextField.validate(true)) return;
+        this.userInfoPage.dialog.verificationCodeBtn.loading = true;
+        this.userInfoPage.dialog.verificationCodeBtn.disabled = true;
+        this.axios.get("/account/sendVerificationCode?email=" + code).then(() => {
+          this.$notify({
+            title: "已发送验证码",
+            message: null,
+            type: "success",
+            duration: 2000,
+          });
+        }).finally(() => {
+          this.userInfoPage.dialog.verificationCodeBtn.loading = false;
+        });
+      }
+    },
   },
   mounted() {
     this.userInfoPage.userInfo = this.$store.getters.getUserInfo;

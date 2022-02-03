@@ -229,7 +229,7 @@
                                   @setImagePath="(imagePath)=>{dialog.user.avatarPath = imagePath}"/>
                   <div v-else>
                     <v-img v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
-                           contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
+                           contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;">
                       <template v-slot:placeholder>
                         <v-row
                             no-gutters
@@ -246,7 +246,7 @@
                       </template>
                     </v-img>
                     <v-icon v-else size="150px"
-                            style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 6px;">
+                            style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;">
                       mdi-account-circle
                     </v-icon>
                   </div>

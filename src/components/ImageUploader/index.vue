@@ -98,8 +98,8 @@ export default {
 <style lang="scss">
 .avatar-uploader {
   .el-upload {
-    border: 1px solid #949494;
-    border-radius: 6px;
+    border: 1.5px solid #949494;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -109,7 +109,7 @@ export default {
     width: 100%;
 
     &:hover {
-      border-color: #409EFF;
+      border-color: #3874CB;
     }
   }
 }

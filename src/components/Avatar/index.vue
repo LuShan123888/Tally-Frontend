@@ -19,7 +19,7 @@
           </template>
         </v-img>
       </v-avatar>
-      <v-icon v-else x-large>mdi-account-circle</v-icon>
+      <v-icon v-else :size="size">mdi-account-circle</v-icon>
     </v-row>
   </v-container>
 </template>
