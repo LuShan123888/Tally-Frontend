@@ -1,23 +1,8 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row justify="center" no-gutters>
-      <v-avatar v-if="path" :class="`elevation-${elevation?elevation:0}`" :size="size">
-        <v-img :src="getImageUrl(path)" contain>
-          <template v-slot:placeholder>
-            <v-row
-                align="center"
-                class="fill-height ma-0"
-                justify="center"
-                no-gutters
-            >
-              <v-progress-circular
-                  color="primary"
-                  indeterminate
-                  width="2"
-              />
-            </v-row>
-          </template>
-        </v-img>
+      <v-avatar v-if="path" :class="`elevation-${elevation}`" :size="size">
+        <images :src="getImageUrl(path)"/>
       </v-avatar>
       <v-icon v-else :size="size">mdi-account-circle</v-icon>
     </v-row>
@@ -25,12 +10,20 @@
 </template>
 
 <script>
+import Images from '@/components/Images'
+
 export default {
   name: "Avatar",
+  components: {
+    Images
+  },
   props: {
     path: String,
     size: String,
-    elevation: String
+    elevation: {
+      type: String,
+      default: 0
+    }
   },
   computed: {
     isMobile: function () {

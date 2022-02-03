@@ -176,7 +176,7 @@
                       :width="15"
                       color="primary"
                   >
-                    {{ monitorData.cpu.now }}%
+                    <span v-text="monitorData.cpu.now+'%'"/>
                   </v-progress-circular>
                 </v-col>
               </v-row>

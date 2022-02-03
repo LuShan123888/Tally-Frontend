@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
     <title-bar :title="title"/>
-    <background-image :path="backgroundImagePath"/>
+    <background-image :src="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
       <v-container v-ripple :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
                    :style="{ width: isMobile ? '85%' : '50%' ,cursor:'pointer'}"
@@ -10,8 +10,8 @@
                    @click="userInfoPage.isShow = true"
       >
         <v-row align="center" class="py-3 px-3" justify="space-between" no-gutters>
-          <v-col cols="2" @click="userInfoPage.isShow=true">
-            <avatar :path="userInfoPage.userInfo.avatarPath" size="50"/>
+          <v-col cols="2">
+            <avatar :path="userInfoPage.userInfo.avatarPath" elevation="1" size="50"/>
           </v-col>
           <v-col class="pl-3" cols="9">
             <div class="text-h6" v-text="userInfoPage.userInfo.username"/>
@@ -49,10 +49,8 @@
         <v-row :class="{'mx-auto':isMobile,'ml-9':!isMobile}" :style="{ width: isMobile ? '85%' : '50%' }"
                justify="center"
                no-gutters>
-          <div style="width: 100px;cursor: pointer"
-               @click="loadUserInfoDialog('修改头像','avatar')">
-            <avatar :path="userInfoPage.userInfo.avatarPath" elevation="3" size="100"/>
-          </div>
+          <avatar :path="userInfoPage.userInfo.avatarPath" elevation="3"
+                  size="100" style="cursor: pointer" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
         </v-row>
         <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
                      :style="{ width: isMobile ? '85%' : '50%' }"
@@ -67,7 +65,7 @@
               <v-icon>mdi-account</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">用户名：</span>
+              <span class="grey--text text--darken-1" v-text="'用户名：'"/>
               <span v-text="userInfoPage.userInfo.username"/>
             </v-col>
             <v-col cols="1">
@@ -81,7 +79,7 @@
               <v-icon>mdi-account-key</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">密码：</span>********
+              <span class="grey--text text--darken-1" v-text="'密码：********'"/>
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
@@ -94,7 +92,8 @@
               <v-icon>mdi-cellphone-text</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">手机号：</span>{{ userInfoPage.userInfo.phoneNumber }}
+              <span class="grey--text text--darken-1" v-text="'手机号：'"/>
+              <span v-text="userInfoPage.userInfo.phoneNumber"/>
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
@@ -107,7 +106,8 @@
               <v-icon>mdi-email</v-icon>
             </v-col>
             <v-col class="ml-2">
-              <span class="grey--text text--darken-1">邮箱：</span>{{ userInfoPage.userInfo.email }}
+              <span class="grey--text text--darken-1" v-text="'邮箱：'"/>
+              <span v-text="userInfoPage.userInfo.email"/>
             </v-col>
             <v-col cols="1">
               <v-icon>mdi-pencil</v-icon>
@@ -116,7 +116,7 @@
           <v-divider/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
             <v-col cols="1">
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-list-status</v-icon>
             </v-col>
             <v-col class="ml-2">
               <span class="grey--text text--darken-1" v-text="'状态：'"/>
@@ -128,7 +128,7 @@
           <v-divider/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
             <v-col cols="1">
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-clipboard-account-outline</v-icon>
             </v-col>
             <v-col class="ml-2">
               <span class="grey--text text--darken-1" v-text="'角色：'"/>
@@ -164,6 +164,7 @@
                   <v-row no-gutters>
                     <v-col class="d-flex justify-center" cols="12">
                       <image-uploader :image-path="userInfoPage.dialog.userInfo.avatarPath" size="120"
+                                      border-radius="50%"
                                       @setImagePath="(imagePath)=>{userInfoPage.dialog.userInfo.avatarPath = imagePath}"/>
                     </v-col>
                   </v-row>
@@ -171,9 +172,11 @@
                 <v-container v-if="userInfoPage.dialog.type==='username'">
                   <v-row no-gutters>
                     <v-col cols="12">
-                      <v-text-field v-model="userInfoPage.dialog.userInfo.username"
-                                    :counter="rules.usernameMaxLength" :rules="[rules.isUsername]"
-                                    class="px-2" clearable label="新用户名"/>
+                      <v-text-field
+                          v-model="userInfoPage.dialog.userInfo.username"
+                          :counter="rules.usernameMaxLength"
+                          :rules="[rules.isUsername]" clearable
+                          label="新用户名" prepend-inner-icon="mdi-account"/>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -181,14 +184,15 @@
                   <v-row no-gutters>
                     <v-col cols="12">
                       <v-text-field v-model="userInfoPage.dialog.userInfo.password" :counter="rules.passwordMaxLength"
-                                    :rules="[rules.isPassword]" class="px-2"
+                                    :rules="[rules.isPassword]"
+                                    prepend-inner-icon="mdi-account-key"
                                     clearable label="新密码" type="password"/>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
                           :counter="rules.passwordMaxLength"
+                          prepend-inner-icon="mdi-account-key"
                           :rules="[value=>value===userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
-                          class="px-2"
                           clearable
                           label="密码确认"
                           type="password"
@@ -201,6 +205,7 @@
                     <v-col cols="12">
                       <v-text-field
                           ref="phoneNumberTextField"
+                          prepend-inner-icon="mdi-cellphone-text"
                           v-model="userInfoPage.dialog.userInfo.phoneNumber"
                           :counter="11"
                           :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
@@ -235,6 +240,7 @@
                     <v-col cols="12">
                       <v-text-field
                           ref="emailTextField"
+                          prepend-inner-icon="mdi-email"
                           v-model="userInfoPage.dialog.userInfo.email"
                           :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
                           clearable

@@ -1,26 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
-    <v-img :src="backgroundImagePath" :style="styles.backgroundImg" contain style="position: fixed">
-      <template v-slot:placeholder>
-        <v-row
-            no-gutters
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
-    <div
-        :class="classes.title"
-        :style="{ color: lightPrimary }"
-        v-text="'支出'"
-    />
+    <title-bar :title="title"/>
+    <background-image :src="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
@@ -134,9 +115,12 @@
 </template>
 
 <script>
+import BackgroundImage from '@/pages/Index/components/BackgroundImage'
+import TitleBar from "@/pages/Index/components/TitleBar";
+
 export default {
   name: "Outcome",
-  components: {},
+  components: {BackgroundImage, TitleBar},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -150,6 +134,7 @@ export default {
   },
   data: function () {
     return {
+      title: '支出',
       backgroundImagePath: this.GLOBAL.images.coding,
       valid: false,
       typeList: [

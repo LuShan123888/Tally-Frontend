@@ -10,7 +10,7 @@
         bottom
         offset-y
         nudge-bottom="5px"
-        nudge-left="65px"
+        nudge-left="50px"
         open-on-hover
         transition="slide-y-transition"
     >
@@ -19,9 +19,9 @@
             icon
             v-bind="attrs"
             v-on="on"
-            class="mr-16 pr-5"
+            class="mr-16"
         >
-          <avatar :path="userInfo.avatarPath" size="50"/>
+          <avatar :path="userInfo.avatarPath" elevation="1" size="50"/>
         </v-btn>
       </template>
       <v-container fluid style="background: #FFFFFF">

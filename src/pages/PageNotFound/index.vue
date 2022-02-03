@@ -1,27 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="mt-16" justify="center">
-      <v-img
-          :src="imgSrc"
-          width="100vw"
-          contain
-          max-width="900"
-      >
-        <template v-slot:placeholder>
-          <v-row
-              no-gutters
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-          >
-            <v-progress-circular
-                indeterminate
-                color="primary"
-                width="2"
-            />
-          </v-row>
-        </template>
-      </v-img>
+      <images :src="imageUrl" width="100vw"/>
     </v-row>
     <v-row justify="center">
       <v-btn
@@ -36,11 +16,12 @@
 </template>
 <script>
 import AppBar from "@/pages/Admin/components/AppBar";
+import Images from "@/components/Images";
 
 export default {
   name: "PageNotFound",
   components: {
-    AppBar
+    AppBar, Images
   },
   computed: {
     isMobile: function () {
@@ -55,8 +36,7 @@ export default {
   },
   data: function () {
     return {
-      imgSrc: this.GLOBAL.images.pageNotFound,
-      styles: {},
+      imageUrl: this.GLOBAL.images.pageNotFound
     };
   },
   mounted() {

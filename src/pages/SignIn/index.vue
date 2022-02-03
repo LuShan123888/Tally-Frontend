@@ -4,7 +4,7 @@
     <v-row no-gutters style="margin-top: 56px">
       <title-bar :title="title"/>
     </v-row>
-    <background-image :path="backgroundImagePath"/>
+    <background-image :src="backgroundImagePath"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-container :class="{'elevation-24':hover,'elevation-2':!hover}"

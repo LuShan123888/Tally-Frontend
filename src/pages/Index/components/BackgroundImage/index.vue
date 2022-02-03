@@ -1,27 +1,15 @@
 <template>
-  <v-img :src="path" :style="styles.backgroundImg" contain style="position: fixed">
-    <template v-slot:placeholder>
-      <v-row
-          align="center"
-          class="fill-height ma-0"
-          justify="center"
-          no-gutters
-      >
-        <v-progress-circular
-            color="primary"
-            indeterminate
-            width="2"
-        />
-      </v-row>
-    </template>
-  </v-img>
+  <images :src="src" :style="styles.backgroundImg" style="position: fixed"/>
 </template>
 
 <script>
+import Images from '@/components/Images'
+
 export default {
   name: "BackgroundImage",
+  components: {Images},
   props: {
-    path: String
+    src: String
   },
   computed: {
     isMobile: function () {

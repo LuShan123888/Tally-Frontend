@@ -84,7 +84,7 @@
       </el-table-column>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
-          <avatar :path="scope.row.avatarPath" size="40"/>
+          <avatar :path="scope.row.avatarPath" elevation="1" size="40"/>
         </template>
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
@@ -225,26 +225,11 @@
                         v-text="'删除'"
                     />
                   </v-row>
-                  <image-uploader v-if="!dialog.user.id" :image-path="dialog.user.avatarPath"
+                  <image-uploader v-if="!dialog.user.id" :image-path="dialog.user.avatarPath" border-radius="50%"
                                   @setImagePath="(imagePath)=>{dialog.user.avatarPath = imagePath}"/>
                   <div v-else>
-                    <v-img v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
-                           contain style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;">
-                      <template v-slot:placeholder>
-                        <v-row
-                            no-gutters
-                            align="center"
-                            class="fill-height ma-0"
-                            justify="center"
-                        >
-                          <v-progress-circular
-                              color="primary"
-                              indeterminate
-                              width="2"
-                          />
-                        </v-row>
-                      </template>
-                    </v-img>
+                    <images v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
+                            style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;"/>
                     <v-icon v-else size="150px"
                             style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;">
                       mdi-account-circle
@@ -299,11 +284,12 @@
 
 <script>
 import Avatar from '@/components/Avatar';
+import Images from '@/components/Images';
 import ImageUploader from '@/components/ImageUploader';
 
 export default {
   name: "UserManagement",
-  components: {Avatar, ImageUploader},
+  components: {Images, Avatar, ImageUploader},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

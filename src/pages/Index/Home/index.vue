@@ -1,27 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
-    <v-img :src="backgroundImagePath" :style="styles.backgroundImg" contain style="position: fixed">
-      <template v-slot:placeholder>
-        <v-row
-            no-gutters
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
-    <div
-        :class="classes.title"
-        :style="{ color: lightPrimary }"
-    >
-      总览
-    </div>
+    <title-bar :title="title"/>
+    <background-image :src="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
@@ -31,10 +11,12 @@
         <v-row no-gutters align="center">
           <v-col class="pl-6">
             <v-row align="center" class="pa-6" no-gutters>
-              {{ currentMonth }}月总支出：<span class="text-h6">¥&nbsp;{{ monthStatistics.out.sum }}</span>
+              <span v-text="currentMonth+'月总支出：'"/>
+              <span class="text-h6" v-text="'¥&nbsp;'+monthStatistics.out.sum"/>
             </v-row>
             <v-row align="center" class="pa-6" no-gutters>
-              {{ currentMonth }}月总收入：<span class="text-h6"> ¥&nbsp;{{ monthStatistics.in.sum }} </span>
+              <span v-text="currentMonth+'月总收入：'"/>
+              <span class="text-h6" v-text="'¥&nbsp;'+monthStatistics.in.sum"/>
             </v-row>
           </v-col>
           <v-col>
@@ -86,7 +68,7 @@
                 <v-list-item-subtitle class="mt-2">
                   <v-row no-gutters>
                     <v-col cols="7">
-                      {{ item.type }}
+                      <span v-text="item.type"/>
                       <v-chip
                           v-if="item.remark != null && item.remark !== ''"
                           x-small
@@ -219,9 +201,12 @@
 </template>
 
 <script>
+import BackgroundImage from '@/pages/Index/components/BackgroundImage'
+import TitleBar from "@/pages/Index/components/TitleBar";
+
 export default {
   name: "Home",
-  components: {},
+  components: {BackgroundImage, TitleBar},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -235,6 +220,7 @@ export default {
   },
   data: function () {
     return {
+      title: '总览',
       backgroundImagePath: this.GLOBAL.images.ideas,
       billList: null,
       formValid: false,

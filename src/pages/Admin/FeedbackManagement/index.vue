@@ -100,21 +100,8 @@
               <div class="mb-2">
                 <span class="font-weight-bold" style="color: #909399" v-html="'反馈图片：'"/>
               </div>
-              <v-img v-if="props.row.imagePath!=null" id="feedbackImage" :src="getImageUrl(props.row.imagePath)" contain
-                     @click="openImageDialog(getImageUrl(props.row.imagePath))">
-                <template v-slot:placeholder>
-                  <v-row
-                      no-gutters
-                      align="center"
-                      class="fill-height ma-0"
-                      justify="center">
-                    <v-progress-circular
-                        color="primary"
-                        indeterminate
-                        width="2"/>
-                  </v-row>
-                </template>
-              </v-img>
+              <images v-if="props.row.imagePath!=null" id="feedbackImage" :src="getImageUrl(props.row.imagePath)"
+                      @click.native="openImageDialog(getImageUrl(props.row.imagePath))"/>
               <v-icon v-else size="300">mdi-note-alert-outline</v-icon>
             </v-col>
           </v-row>
@@ -274,15 +261,17 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="imagePreview.isShow" max-width="600px">
-      <v-img :src="imagePreview.imageUrl" contain/>
+      <images :src="imagePreview.imageUrl"/>
     </v-dialog>
   </v-container>
 </template>
 
 <script>
+import Images from '@/components/Images'
+
 export default {
   name: "FeedbackManagement",
-  components: {},
+  components: {Images},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

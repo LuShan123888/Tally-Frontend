@@ -7,7 +7,7 @@
             <v-icon class="mr-4" x-large color="primary">
               mdi-notebook-edit
             </v-icon>
-            <span class="text-subtitle-1">{{ title }}</span>
+            <span class="text-subtitle-1" v-text="title"/>
           </div>
           <v-list flat nav>
             <v-list-item-group v-model="selectedItem" color="primary">

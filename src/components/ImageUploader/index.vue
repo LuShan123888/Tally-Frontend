@@ -6,39 +6,31 @@
       :on-error="handleAvatarError"
       :on-success="handleAvatarSuccess"
       :show-file-list="false"
-      :style="{height:size+'px',width:size+'px'}"
+      :style="{height:size+'px',width:size+'px','--border-radius': borderRadius}"
       class="avatar-uploader"
       name="uploadFile">
-    <v-img v-if="imagePath" :height="size+'px'"
-           :src="getImageUrl(imagePath)" :width="size+'px'" contain>
-      <template v-slot:placeholder>
-        <v-row
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-            no-gutters
-        >
-          <v-progress-circular
-              color="primary"
-              indeterminate
-              width="2"
-          />
-        </v-row>
-      </template>
-    </v-img>
+    <images v-if="imagePath" :height="size+'px'"
+            :src="getImageUrl(imagePath)" :width="size+'px'"/>
     <v-icon v-else>mdi-upload</v-icon>
   </el-upload>
 </template>
 
 <script>
+import Images from '@/components/Images'
+
 export default {
   name: "ImageUploader",
+  components: {Images},
   props: {
     size: {
       type: String,
       default: '150'
     },
-    imagePath: String
+    imagePath: String,
+    borderRadius: {
+      type: String,
+      default: '6px'
+    }
   },
   computed: {
     isMobile: function () {
@@ -99,7 +91,7 @@ export default {
 .avatar-uploader {
   .el-upload {
     border: 1.5px solid #949494;
-    border-radius: 50%;
+    border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
     align-items: center;
