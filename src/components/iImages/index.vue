@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "Images",
+  name: "iImages",
   props: {
     src: String,
     width: String,

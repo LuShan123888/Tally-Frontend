@@ -12,11 +12,11 @@
           <v-col class="pl-6">
             <v-row align="center" class="pa-6" no-gutters>
               <span v-text="currentMonth+'月总支出：'"/>
-              <span class="text-h6" v-text="'¥&nbsp;'+monthStatistics.out.sum"/>
+              <span class="text-h6" v-text="monthStatistics.out.sum"/>
             </v-row>
             <v-row align="center" class="pa-6" no-gutters>
               <span v-text="currentMonth+'月总收入：'"/>
-              <span class="text-h6" v-text="'¥&nbsp;'+monthStatistics.in.sum"/>
+              <span class="text-h6" v-text="monthStatistics.in.sum"/>
             </v-row>
           </v-col>
           <v-col>

@@ -2,7 +2,7 @@
   <v-container class="pa-0" fluid>
     <v-row justify="center" no-gutters>
       <v-avatar v-if="path" :class="`elevation-${elevation}`" :size="size">
-        <images :src="getImageUrl(path)"/>
+        <i-image :src="getImageUrl(path)"/>
       </v-avatar>
       <v-icon v-else :size="size">mdi-account-circle</v-icon>
     </v-row>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import Images from '@/components/Images'
+import iImage from '@/components/iImages'
 
 export default {
   name: "Avatar",
   components: {
-    Images
+    iImage
   },
   props: {
     path: String,

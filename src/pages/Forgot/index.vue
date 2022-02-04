@@ -241,6 +241,7 @@
         </v-tabs-items>
       </v-container>
     </v-hover>
+    <i-footer/>
   </v-container>
 </template>
 
@@ -249,10 +250,11 @@ import AppBar from "@/pages/Index/components/AppBar";
 import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
+import iFooter from "@/components/iFooter";
 
 export default {
   name: "Forget",
-  components: {AppBar, TitleBar, BackgroundImage, DarkButton},
+  components: {AppBar, TitleBar, BackgroundImage, DarkButton, iFooter},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

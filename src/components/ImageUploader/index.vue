@@ -9,18 +9,18 @@
       :style="{height:size+'px',width:size+'px','--border-radius': borderRadius}"
       class="avatar-uploader"
       name="uploadFile">
-    <images v-if="imagePath" :height="size+'px'"
-            :src="getImageUrl(imagePath)" :width="size+'px'"/>
+    <i-image v-if="imagePath" :height="size+'px'"
+             :src="getImageUrl(imagePath)" :width="size+'px'"/>
     <v-icon v-else>mdi-upload</v-icon>
   </el-upload>
 </template>
 
 <script>
-import Images from '@/components/Images'
+import iImage from '@/components/iImages'
 
 export default {
   name: "ImageUploader",
-  components: {Images},
+  components: {iImage},
   props: {
     size: {
       type: String,

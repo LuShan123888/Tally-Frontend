@@ -209,6 +209,7 @@
         </v-tabs-items>
       </v-container>
     </v-hover>
+    <i-footer/>
   </v-container>
 </template>
 
@@ -217,10 +218,12 @@ import AppBar from "@/pages/Index/components/AppBar";
 import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
+import iImage from "@/components/iImages";
+import iFooter from "@/components/iFooter";
 
 export default {
   name: "SignIn",
-  components: {AppBar, TitleBar, BackgroundImage, DarkButton},
+  components: {iImage, iFooter, AppBar, TitleBar, BackgroundImage, DarkButton},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

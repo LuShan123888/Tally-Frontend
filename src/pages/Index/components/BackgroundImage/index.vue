@@ -1,13 +1,13 @@
 <template>
-  <images :src="src" :style="styles.backgroundImg" style="position: fixed"/>
+  <i-image :src="src" :style="styles.backgroundImg" style="position: fixed"/>
 </template>
 
 <script>
-import Images from '@/components/Images'
+import iImage from '@/components/iImages'
 
 export default {
   name: "BackgroundImage",
-  components: {Images},
+  components: {iImage},
   props: {
     src: String
   },

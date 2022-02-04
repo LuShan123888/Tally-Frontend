@@ -228,8 +228,8 @@
                   <image-uploader v-if="!dialog.user.id" :image-path="dialog.user.avatarPath" border-radius="50%"
                                   @setImagePath="(imagePath)=>{dialog.user.avatarPath = imagePath}"/>
                   <div v-else>
-                    <images v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
-                            style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;"/>
+                    <i-image v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
+                             style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;"/>
                     <v-icon v-else size="150px"
                             style="height: 150px;width: 150px;border: 2px dashed #9E9E9D;border-radius: 50%;">
                       mdi-account-circle
@@ -284,12 +284,12 @@
 
 <script>
 import Avatar from '@/components/Avatar';
-import Images from '@/components/Images';
+import iImage from '@/components/iImages';
 import ImageUploader from '@/components/ImageUploader';
 
 export default {
   name: "UserManagement",
-  components: {Images, Avatar, ImageUploader},
+  components: {iImage, Avatar, ImageUploader},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

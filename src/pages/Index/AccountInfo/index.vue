@@ -334,81 +334,81 @@
             <v-icon>mdi-chevron-right</v-icon>
           </v-col>
         </v-row>
-        <v-dialog
-            v-model="feedbackPage.isShow"
-            fullscreen
-            hide-overlay
-            style="height: 100vh"
-            transition="dialog-bottom-transition"
-        >
-          <v-card class="pa-0">
-            <v-toolbar
-                class="mb-16"
-                color="primary"
-                dark
-                style="border-radius: 0"
-            >
-              <v-btn
-                  dark
-                  icon
-                  @click="feedbackPage.isShow = false"
-              >
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-toolbar-title>提交反馈</v-toolbar-title>
-            </v-toolbar>
-            <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-                         :style="{ width: isMobile ? '85%' : '50%' }"
-                         class="transition-swing mb-5 pa-5 rounded-lg elevation-24"
-                         fluid
-            >
-              <v-row no-gutters>
-                <v-col cols="12">
-                  <v-select
-                      v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
-                      label="反馈类型"
-                      prepend-inner-icon="mdi-format-list-bulleted-type"/>
-                </v-col>
-                <v-col cols="12">
-                  <v-textarea
-                      v-model="feedbackPage.feedback.description"
-                      auto-grow
-                      clearable
-                      counter
-                      label="反馈描述"
-                      prepend-inner-icon="mdi-comment"
-                      rows="3"
-                  />
-                </v-col>
-                <v-col class="text--darken-1 grey--text mb-2" cols="12">
-                  <v-icon class="mr-1">mdi-file-image</v-icon>
-                  <span>反馈图片</span>
-                </v-col>
-                <v-col class="d-flex justify-center" cols="12">
-                  <image-uploader :image-path="feedbackPage.feedback.imagePath"
-                                  @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
-                </v-col>
-              </v-row>
-              <v-row class="mt-10" no-gutters>
-                <v-btn
-                    :disabled="feedbackPage.loading"
-                    :loading="feedbackPage.loading"
-                    class="rounded-lg"
-                    color="primary"
-                    large
-                    depressed
-                    style="width: 100%"
-                    @click="saveFeedback"
-                >
-                  <v-icon class="mr-3">mdi-logout</v-icon>
-                  提交反馈
-                </v-btn>
-              </v-row>
-            </v-container>
-          </v-card>
-        </v-dialog>
       </v-container>
     </v-hover>
+    <v-dialog
+        v-model="feedbackPage.isShow"
+        fullscreen
+        hide-overlay
+        style="height: 100vh"
+        transition="dialog-bottom-transition"
+    >
+      <v-card class="pa-0">
+        <v-toolbar
+            class="mb-16"
+            color="primary"
+            dark
+            style="border-radius: 0"
+        >
+          <v-btn
+              dark
+              icon
+              @click="feedbackPage.isShow = false"
+          >
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-toolbar-title>提交反馈</v-toolbar-title>
+        </v-toolbar>
+        <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
+                     :style="{ width: isMobile ? '85%' : '50%' }"
+                     class="transition-swing mb-5 pa-5 rounded-lg elevation-24"
+                     fluid
+        >
+          <v-row no-gutters>
+            <v-col cols="12">
+              <v-select
+                  v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
+                  label="反馈类型"
+                  prepend-inner-icon="mdi-format-list-bulleted-type"/>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                  v-model="feedbackPage.feedback.description"
+                  auto-grow
+                  clearable
+                  counter
+                  label="反馈描述"
+                  prepend-inner-icon="mdi-comment"
+                  rows="3"
+              />
+            </v-col>
+            <v-col class="text--darken-1 grey--text mb-2" cols="12">
+              <v-icon class="mr-1">mdi-file-image</v-icon>
+              <span>反馈图片</span>
+            </v-col>
+            <v-col class="d-flex justify-center" cols="12">
+              <image-uploader :image-path="feedbackPage.feedback.imagePath"
+                              @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
+            </v-col>
+          </v-row>
+          <v-row class="mt-10" no-gutters>
+            <v-btn
+                :disabled="feedbackPage.loading"
+                :loading="feedbackPage.loading"
+                class="rounded-lg"
+                color="primary"
+                depressed
+                large
+                style="width: 100%"
+                @click="saveFeedback"
+            >
+              <v-icon class="mr-3">mdi-logout</v-icon>
+              提交反馈
+            </v-btn>
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-dialog>
     <v-row v-if="userInfoPage.userInfo.roleIdList && userInfoPage.userInfo.roleIdList.indexOf(1) !== -1" class="mb-5"
            no-gutters>
       <v-btn

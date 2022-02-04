@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="mt-16" justify="center">
-      <images :src="imageUrl" width="100vw"/>
+      <i-image :src="imageUrl" width="100vw"/>
     </v-row>
     <v-row justify="center">
       <v-btn
@@ -16,12 +16,12 @@
 </template>
 <script>
 import AppBar from "@/pages/Admin/components/AppBar";
-import Images from "@/components/Images";
+import iImage from "@/components/iImages";
 
 export default {
   name: "PageNotFound",
   components: {
-    AppBar, Images
+    AppBar, iImage
   },
   computed: {
     isMobile: function () {
