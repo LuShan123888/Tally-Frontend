@@ -1,5 +1,5 @@
 <template>
-  <i-image :src="src" :style="styles.backgroundImg" style="position: fixed"/>
+  <i-image :src="src" :style="styles.backgroundImg"/>
 </template>
 
 <script>
@@ -26,6 +26,7 @@ export default {
     return {
       styles: {
         backgroundImg: {
+          position: 'fixed',
           width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
           bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
           right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",

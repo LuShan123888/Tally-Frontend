@@ -54,7 +54,7 @@
         </v-row>
         <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
                      :style="{ width: isMobile ? '85%' : '50%' }"
-                     class="transition-swing mb-5 pa-0 rounded-lg elevation-24"
+                     class="transition-swing pa-0 rounded-lg elevation-24"
                      fluid
                      style="margin-top: -50px"
         >
