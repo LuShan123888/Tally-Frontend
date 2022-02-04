@@ -110,6 +110,12 @@ export default {
         path: "/admin/swagger",
         title: "API文档",
         children: null
+      },
+      {
+        icon: "mdi-docker",
+        path: "/admin/portainer",
+        title: "Docker 监控",
+        children: null
       }
     ];
   },

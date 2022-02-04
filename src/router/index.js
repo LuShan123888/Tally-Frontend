@@ -17,6 +17,7 @@ import RoleManagement from '@/pages/Admin/RoleManagement'
 import PermissionManagement from '@/pages/Admin/PermissionManagement'
 import FeedbackManagement from '@/pages/Admin/FeedbackManagement'
 import Druid from '@/pages/Admin/Druid'
+import Portainer from '@/pages/Admin/Portainer'
 import Swagger from '@/pages/Admin/Swagger'
 
 Vue.use(VueRouter)
@@ -117,6 +118,14 @@ const routes = [
                 path: '/admin/swagger',
                 name: 'Swagger',
                 component: Swagger,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/portainer',
+                name: 'Portainer',
+                component: Portainer,
                 meta: {
                     requireAuth: true
                 }
