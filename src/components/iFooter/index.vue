@@ -1,12 +1,12 @@
 <template>
-  <v-footer absolute padless>
+  <v-footer absolute padless @click.native="openNewPage">
     <v-row align="center" no-gutters>
       <v-col
           class="text-center pa-1"
           cols="12"
       >
         <span class="text--darken-1 grey--text text-subtitle-2">
-          Copyright @ 2022 云记贝 版权所有
+          ©2022 云记贝 版权所有
         </span>
       </v-col>
       <v-col class="pa-1"
@@ -25,22 +25,12 @@
 </template>
 
 <script>
-import iImage from '@/components/iImages'
+import iImage from '@/components/iImage'
 
 export default {
   name: "iFooter",
   components: {iImage},
-  props: {
-    src: String,
-    width: String,
-    maxWidth: String,
-    height: String,
-    maxHeight: String,
-    elevation: {
-      type: String,
-      default: 0
-    }
-  },
+  props: {},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -55,7 +45,11 @@ export default {
   data: function () {
     return {};
   },
-  methods: {},
+  methods: {
+    openNewPage() {
+      window.open('https://beian.miit.gov.cn', '_blank');
+    }
+  },
   mounted() {
   },
 };

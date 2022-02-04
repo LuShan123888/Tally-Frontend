@@ -35,7 +35,7 @@ export default {
     height: String,
     maxHeight: String,
     elevation: {
-      type: String,
+      type: Number,
       default: 0
     }
   },

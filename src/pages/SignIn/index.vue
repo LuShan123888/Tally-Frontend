@@ -218,7 +218,7 @@ import AppBar from "@/pages/Index/components/AppBar";
 import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
-import iImage from "@/components/iImages";
+import iImage from "@/components/iImage";
 import iFooter from "@/components/iFooter";
 
 export default {

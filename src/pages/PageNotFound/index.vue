@@ -16,7 +16,7 @@
 </template>
 <script>
 import AppBar from "@/pages/Admin/components/AppBar";
-import iImage from "@/components/iImages";
+import iImage from "@/components/iImage";
 
 export default {
   name: "PageNotFound",

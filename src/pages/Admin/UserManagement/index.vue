@@ -284,7 +284,7 @@
 
 <script>
 import Avatar from '@/components/Avatar';
-import iImage from '@/components/iImages';
+import iImage from '@/components/iImage';
 import ImageUploader from '@/components/ImageUploader';
 
 export default {

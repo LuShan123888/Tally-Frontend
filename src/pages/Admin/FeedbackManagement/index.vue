@@ -267,7 +267,7 @@
 </template>
 
 <script>
-import iImage from '@/components/iImages'
+import iImage from '@/components/iImage'
 
 export default {
   name: "FeedbackManagement",
