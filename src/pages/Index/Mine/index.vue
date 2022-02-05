@@ -132,9 +132,9 @@
             </v-col>
             <v-col class="ml-2">
               <span class="grey--text text--darken-1" v-text="'角色：'"/>
-              <v-chip v-for="item in userInfoPage.userInfo.roleIdList"
-                      :key="item" class="mx-1" label
-                      v-text="roleNameFormatter(item)">
+              <v-chip v-for="item in userInfoPage.userInfo.roleVoList"
+                      :key="item.id" class="mx-1" label
+                      v-text="item.roleName">
               </v-chip>
             </v-col>
           </v-row>
@@ -490,8 +490,8 @@ export default {
           avatarPath: null,
           email: null,
           phoneNumber: null,
-          roleIdList: null,
           status: null,
+          roleVoList: []
         },
       },
       feedbackPage: {
@@ -633,13 +633,6 @@ export default {
       this.userInfoPage.dialog.isShow = true;
       this.userInfoPage.dialog.verificationCodeBtn.disabled = false;
     },
-    loadRoleMap() {
-      this.axios.get("/role/listAllRole").then((response) => {
-        response.data.data.forEach(() => {
-          this.roleMap = response.data.data;
-        })
-      });
-    },
     loadUserInfo() {
       let _this = this;
       this.axios.get("/user/getUserInfo").then((response) => {
@@ -688,7 +681,6 @@ export default {
   mounted() {
     this.userInfoPage.userInfo = this.$store.getters.getUserInfo;
     this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.$store.getters.getUserInfo));
-    this.loadRoleMap();
   }
 };
 </script>
