@@ -187,7 +187,7 @@
                   <v-btn
                       text
                       color="red darken-1"
-                      @click="deleteBill"
+                      @click="removeBill"
                       v-text="'删除'"
                   />
                 </v-row>
@@ -286,8 +286,8 @@ export default {
       this.showDialog = true;
       this.selectedBill = item;
     },
-    deleteBill() {
-      this.axios.delete("/bill/deleteBill/" + this.selectedBill.id)
+    removeBill() {
+      this.axios.delete("/bill/removeBill/" + this.selectedBill.id)
           .then(() => {
             this.showDialog = false;
             this.$notify({
@@ -297,7 +297,7 @@ export default {
               duration: 2000,
             });
             this.loadCountBanner();
-            this.axios.get("/bill/listBill").then((response) => {
+            this.axios.get("/bill/listUserBill").then((response) => {
               this.billList = response.data.data;
             });
           });
@@ -376,7 +376,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get("/bill/listBill").then((response) => {
+    this.axios.get("/bill/listUserBill").then((response) => {
       if (response.data.data != null && response.data.data.length > 0) {
         this.billList = response.data.data;
       }
