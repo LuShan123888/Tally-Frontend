@@ -1089,7 +1089,7 @@ export default {
           });
     },
     getSignInRecordStatData() {
-      this.axios.get("/account/getSignInRecordStatData")
+      this.axios.get("/user/getSignInRecordStatData")
           .then((response) => {
             let responseData = response.data.data;
             this.signInRecordStatData.total = responseData.total;

@@ -30,7 +30,7 @@
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                      v-model="table.query.role.roleDescription"
+                      v-model="table.query.role.description"
                       class="mr-2 pt-0 mt-0"
                       clearable
                       label="角色描述"
@@ -92,7 +92,7 @@
       </el-table-column>
       <el-table-column
           label="角色描述"
-          property="roleDescription">
+          property="description">
       </el-table-column>
       <el-table-column
           label="创建时间"
@@ -172,7 +172,7 @@
                 </v-col>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
-                      v-model="dialog.role.roleDescription"
+                      v-model="dialog.role.description"
                       clearable
                       label="角色描述"
                   />
@@ -243,7 +243,7 @@ export default {
           role: {
             id: null,
             roleName: null,
-            roleDescription: null,
+            description: null,
             createdDatetime: null
           },
         }
@@ -254,7 +254,7 @@ export default {
         role: {
           id: null,
           roleName: null,
-          roleDescription: null,
+          description: null,
           createdDatetime: null,
           permissionIdList: [],
           version: null,
@@ -341,7 +341,7 @@ export default {
     loadRoleSaveDialog() {
       this.dialog.role.id = null;
       this.dialog.role.roleName = null;
-      this.dialog.role.roleDescription = null;
+      this.dialog.role.description = null;
       this.dialog.role.createdDatetime = null;
       this.dialog.role.permissionIdList = null;
       this.dialog.role.version = null;
@@ -351,7 +351,7 @@ export default {
     loadRoleUpdateDialog(role) {
       this.dialog.role.id = role.id;
       this.dialog.role.roleName = role.roleName;
-      this.dialog.role.roleDescription = role.roleDescription;
+      this.dialog.role.description = role.description;
       this.dialog.role.createdDatetime = role.createdDatetime;
       this.dialog.role.permissionIdList = role.permissionIdList;
       this.dialog.role.version = role.version;

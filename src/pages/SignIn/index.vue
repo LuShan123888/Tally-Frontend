@@ -275,7 +275,7 @@ export default {
       if (!this.$refs.phoneNumberTextField.validate(true)) return;
       this.form.phoneNumber.verificationCodeBtn.loading = true;
       this.form.phoneNumber.verificationCodeBtn.disabled = true;
-      this.axios.get("/account/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
+      this.axios.get("/user/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
         this.$notify({
           title: "已发送验证码",
           message: null,
@@ -301,7 +301,7 @@ export default {
       this.form.phoneNumber.loading = true;
       this.form.password.loading = true;
       this.axios
-          .post("/account/signIn", params)
+          .post("/user/signIn", params)
           .then((response) => {
             this.$notify({
               title: "登录成功",

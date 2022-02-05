@@ -146,7 +146,7 @@
                 large
                 depressed
                 style="width: 70%"
-                @click="loadUserInfoDialog('注销账号','deleteAccount')"
+                @click="loadUserInfoDialog('注销账号','cancelUser')"
             >
               <v-icon class="mr-3">mdi-logout</v-icon>
               注销账号
@@ -269,7 +269,7 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <v-container v-if="userInfoPage.dialog.type==='deleteAccount'">
+                <v-container v-if="userInfoPage.dialog.type==='cancelUser'">
                   <v-row no-gutters>
                     <span class="red--text">确定要注销该账号吗？</span>
                   </v-row>
@@ -519,8 +519,8 @@ export default {
       if (!this.$refs.updateAccountForm.validate()) {
         return;
       }
-      if (this.userInfoPage.dialog.type === 'deleteAccount') {
-        this.axios.delete("/account/deleteAccount")
+      if (this.userInfoPage.dialog.type === 'cancelUser') {
+        this.axios.delete("/user/cancelUser")
             .then(() => {
               this.$notify({
                 title: "注销成功",
@@ -570,7 +570,7 @@ export default {
         }
       }
       this.userInfoPage.dialog.loading = true;
-      this.axios.put("/account/updateAccount", JSON.stringify(user))
+      this.axios.put("/user/updateAccount", JSON.stringify(user))
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -642,7 +642,7 @@ export default {
     },
     loadUserInfo() {
       let _this = this;
-      this.axios.get("/account/getUserInfo").then((response) => {
+      this.axios.get("/user/getUserInfo").then((response) => {
         _this.$store.commit("setUserInfo", response.data.data);
         this.userInfoPage.userInfo = response.data.data;
         this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(response.data.data));
@@ -658,7 +658,7 @@ export default {
         if (!this.$refs.phoneNumberTextField.validate(true)) return;
         this.userInfoPage.dialog.verificationCodeBtn.loading = true;
         this.userInfoPage.dialog.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?phoneNumber=" + code).then(() => {
+        this.axios.get("/user/sendVerificationCode?phoneNumber=" + code).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,
@@ -672,7 +672,7 @@ export default {
         if (!this.$refs.emailTextField.validate(true)) return;
         this.userInfoPage.dialog.verificationCodeBtn.loading = true;
         this.userInfoPage.dialog.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?email=" + code).then(() => {
+        this.axios.get("/user/sendVerificationCode?email=" + code).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,

@@ -314,7 +314,7 @@ export default {
         if (!this.$refs.phoneNumberTextField.validate(true)) return;
         this.form.phoneNumber.verificationCodeBtn.loading = true;
         this.form.phoneNumber.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
+        this.axios.get("/user/sendVerificationCode?phoneNumber=" + this.form.phoneNumber.phoneNumber).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,
@@ -328,7 +328,7 @@ export default {
         if (!this.$refs.emailTextField.validate(true)) return;
         this.form.email.verificationCodeBtn.loading = true;
         this.form.email.verificationCodeBtn.disabled = true;
-        this.axios.get("/account/sendVerificationCode?email=" + this.form.email.email).then(() => {
+        this.axios.get("/user/sendVerificationCode?email=" + this.form.email.email).then(() => {
           this.$notify({
             title: "已发送验证码",
             message: null,
@@ -350,7 +350,7 @@ export default {
           password: this.form.phoneNum.showPassword
         };
         this.form.phoneNum.loading = true;
-        this.axios.put("/account/changePassword", JSON.stringify(user))
+        this.axios.put("/user/changePassword", JSON.stringify(user))
             .then(() => {
               this.$notify({
                 title: "修改成功",
@@ -362,7 +362,7 @@ export default {
               params.append("username", this.form.phoneNum.phoneNum);
               params.append("password", this.form.phoneNum.verificationCode);
               this.axios
-                  .post("/account/signIn", params)
+                  .post("/user/signIn", params)
                   .then((response) => {
                     this.$notify({
                       title: "登录成功",
@@ -384,7 +384,7 @@ export default {
           password: this.form.email.password,
         };
         this.form.email.loading = true;
-        this.axios.put("/account/changePassword", JSON.stringify(user))
+        this.axios.put("/user/changePassword", JSON.stringify(user))
             .then(() => {
               this.$notify({
                 title: "修改成功",
@@ -396,7 +396,7 @@ export default {
               params.append("username", this.form.email.email);
               params.append("password", this.form.email.password);
               this.axios
-                  .post("/account/signIn", params)
+                  .post("/user/signIn", params)
                   .then((response) => {
                     this.$notify({
                       title: "登录成功",

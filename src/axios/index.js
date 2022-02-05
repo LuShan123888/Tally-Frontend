@@ -12,7 +12,7 @@ axios.defaults.headers.delete['Content-Type'] = 'application/x-www-form-urlencod
 
 // 请求拦截器
 axios.interceptors.request.use((config) => {
-    if ([Global.url.api + '/account/signIn', Global.url.api + '/account/signUp', Global.url.api + '/account/signOut', Global.url.api + '/account/changePassword']
+    if ([Global.url.api + '/user/signIn', Global.url.api + '/user/signUp', Global.url.api + '/user/signOut', Global.url.api + '/user/changePassword']
         .indexOf(config.url) === -1) {
         let token = store.getters.getToken;
         if (token) {
