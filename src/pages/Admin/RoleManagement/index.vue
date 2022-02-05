@@ -96,7 +96,7 @@
       </el-table-column>
       <el-table-column
           label="创建时间"
-          property="createTime"
+          property="createdDatetime"
       >
       </el-table-column>
       <el-table-column align="center" label="操作" width="250px">
@@ -244,7 +244,7 @@ export default {
             id: null,
             roleName: null,
             roleDescription: null,
-            createTime: null
+            createdDatetime: null
           },
         }
       },
@@ -255,7 +255,7 @@ export default {
           id: null,
           roleName: null,
           roleDescription: null,
-          createTime: null,
+          createdDatetime: null,
           permissionIdList: [],
           version: null,
         },
@@ -342,7 +342,7 @@ export default {
       this.dialog.role.id = null;
       this.dialog.role.roleName = null;
       this.dialog.role.roleDescription = null;
-      this.dialog.role.createTime = null;
+      this.dialog.role.createdDatetime = null;
       this.dialog.role.permissionIdList = null;
       this.dialog.role.version = null;
       this.dialog.title = "新增角色";
@@ -352,7 +352,7 @@ export default {
       this.dialog.role.id = role.id;
       this.dialog.role.roleName = role.roleName;
       this.dialog.role.roleDescription = role.roleDescription;
-      this.dialog.role.createTime = role.createTime;
+      this.dialog.role.createdDatetime = role.createdDatetime;
       this.dialog.role.permissionIdList = role.permissionIdList;
       this.dialog.role.version = role.version;
       this.dialog.title = "修改角色";

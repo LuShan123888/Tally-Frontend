@@ -1028,16 +1028,16 @@ export default {
           .then((response) => {
             let responseData = response.data.data;
 
-            this.monitorData.cpu.hour.chartData.labels = responseData.dateTime;
+            this.monitorData.cpu.hour.chartData.labels = responseData.datetime;
             this.monitorData.cpu.hour.chartData.datasets[0].data = responseData.cpu;
             this.monitorData.cpu.hour.loading = false;
 
-            this.monitorData.internet.hour.chartData.labels = responseData.dateTime;
+            this.monitorData.internet.hour.chartData.labels = responseData.datetime;
             this.monitorData.internet.hour.chartData.datasets[0].data = responseData.internetRX;
             this.monitorData.internet.hour.chartData.datasets[1].data = responseData.internetTX;
             this.monitorData.internet.hour.loading = false;
 
-            this.monitorData.BPS.hour.chartData.labels = responseData.dateTime;
+            this.monitorData.BPS.hour.chartData.labels = responseData.datetime;
             this.monitorData.BPS.hour.chartData.datasets[0].data = responseData.BPSRead;
             this.monitorData.BPS.hour.chartData.datasets[1].data = responseData.BPSWrite;
             this.monitorData.BPS.hour.loading = false;
@@ -1047,16 +1047,16 @@ export default {
       this.axios.get("/monitor/getInstanceMonitorDataDay")
           .then((response) => {
             let responseData = response.data.data;
-            for (let i = 0, len = responseData.dateTime.length; i < len; i++) {
+            for (let i = 0, len = responseData.datetime.length; i < len; i++) {
               if (i % 2 === 0) {
                 this.monitorData.cpu.day.chartData.datasets[0].data.push(responseData.cpu[i]);
-                this.monitorData.cpu.day.chartData.labels.push(responseData.dateTime[i]);
+                this.monitorData.cpu.day.chartData.labels.push(responseData.datetime[i]);
 
-                this.monitorData.internet.day.chartData.labels.push(responseData.dateTime[i]);
+                this.monitorData.internet.day.chartData.labels.push(responseData.datetime[i]);
                 this.monitorData.internet.day.chartData.datasets[0].data.push(responseData.internetRX[i]);
                 this.monitorData.internet.day.chartData.datasets[1].data.push(responseData.internetTX[i]);
 
-                this.monitorData.BPS.day.chartData.labels.push(responseData.dateTime[i]);
+                this.monitorData.BPS.day.chartData.labels.push(responseData.datetime[i]);
                 this.monitorData.BPS.day.chartData.datasets[0].data.push(responseData.BPSRead[i]);
                 this.monitorData.BPS.day.chartData.datasets[1].data.push(responseData.BPSWrite[i]);
               }
@@ -1072,7 +1072,7 @@ export default {
             let responseData = response.data.data;
             this.userStatData.total = responseData.total;
             this.userStatData.day = responseData.day;
-            this.userStatData.week.chartData.labels = responseData.dateTime;
+            this.userStatData.week.chartData.labels = responseData.datetime;
             this.userStatData.week.chartData.datasets[0].data = responseData.week;
             this.userStatData.week.loading = false;
           });
@@ -1083,7 +1083,7 @@ export default {
             let responseData = response.data.data;
             this.billStatData.total = responseData.total;
             this.billStatData.day = responseData.day;
-            this.billStatData.week.chartData.labels = responseData.dateTime;
+            this.billStatData.week.chartData.labels = responseData.datetime;
             this.billStatData.week.chartData.datasets[0].data = responseData.week;
             this.billStatData.week.loading = false;
           });
@@ -1094,7 +1094,7 @@ export default {
             let responseData = response.data.data;
             this.signInRecordStatData.total = responseData.total;
             this.signInRecordStatData.day = responseData.day;
-            this.signInRecordStatData.week.chartData.labels = responseData.dateTime;
+            this.signInRecordStatData.week.chartData.labels = responseData.datetime;
             this.signInRecordStatData.week.chartData.datasets[0].data = responseData.week;
             this.signInRecordStatData.week.loading = false;
           });

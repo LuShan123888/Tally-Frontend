@@ -150,11 +150,11 @@
       </el-table-column>
       <el-table-column
           label="创建时间"
-          property="createTime"
+          property="createdDatetime"
       />
       <el-table-column
           label="处理时间"
-          property="updateTime"
+          property="updatedDatetime"
       />
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
@@ -317,8 +317,8 @@ export default {
           status: null,
           processingUserId: null,
           processingDescription: null,
-          createTime: null,
-          updateTime: null,
+          createdDatetime: null,
+          updatedDatetime: null,
           version: null
         },
         btn: {
