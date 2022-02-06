@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '@/pages/Index/Index'
 import Home from '@/pages/Index/Home'
-import Outcome from '@/pages/Index/Outcome'
-import Income from '@/pages/Index/Income'
-import AccountInfo from '@/pages/Index/Mine'
+import Account from '@/pages/Index/Account'
+import Statistics from '@/pages/Index/Statistics'
+import Mine from '@/pages/Index/Mine'
 import SignIn from '@/pages/SignIn'
 import SignUp from '@/pages/SignUp'
 import Forgot from '@/pages/Forgot'
@@ -36,25 +36,25 @@ const routes = [
                 }
             },
             {
-                path: '/outcome',
-                name: 'Outcome',
-                component: Outcome,
+                path: '/account',
+                name: 'Account',
+                component: Account,
                 meta: {
                     requireAuth: true
                 }
             },
             {
-                path: '/income',
-                name: 'Income',
-                component: Income,
+                path: '/statistics',
+                name: 'Statistics',
+                component: Statistics,
                 meta: {
                     requireAuth: true
                 }
             },
             {
-                path: '/accountInfo',
-                name: 'AccountInfo',
-                component: AccountInfo,
+                path: '/mine',
+                name: 'Mine',
+                component: Mine,
                 meta: {
                     requireAuth: true
                 }

@@ -80,9 +80,9 @@ export default {
 
 <style lang="scss">
 $btn-fg: #503660;
-$btn-bg: #fafafd;
-$btn-fg-hover: #418cec;
-$btn-bg-hover: #fff;
+$btn-bg: #FFFFFF;
+$btn-fg-hover: #1976D2;
+$btn-bg-hover: #FFFFFF;
 
 .dark-button {
   box-sizing: content-box;
@@ -94,7 +94,6 @@ $btn-bg-hover: #fff;
   background-color: $btn-bg;
   border: 0.125rem solid transparent;
   border-radius: 50%;
-  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.3);
   text-decoration: none;
   outline: 0 solid;
   transition: all 0.3s ease-out;

@@ -5,7 +5,7 @@
     <v-hover v-slot="{ hover }">
       <v-card
           class="mt-9 transition-swing"
-          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
+          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-0':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
         <v-form ref="form" v-model="valid">
@@ -17,7 +17,7 @@
                     <v-text-field
                         label="金额"
                         prefix="¥"
-                        :rules="[(value) => !!value || '请输入金额',rules.isFloat]"
+                        :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
                         v-model="bill.amount"
                         clearable
                     />
@@ -63,7 +63,11 @@
                           locale="zh-cn"
                       >
                         <v-spacer/>
-                        <v-btn text color="error" @click="showDatePicker = false">
+                        <v-btn
+                            text
+                            color="error"
+                            @click="showDatePicker = false"
+                        >
                           取消
                         </v-btn>
                         <v-btn
@@ -115,7 +119,7 @@ import BackgroundImage from '@/pages/Index/components/BackgroundImage'
 import TitleBar from "@/pages/Index/components/TitleBar";
 
 export default {
-  name: "Income",
+  name: "Account",
   components: {BackgroundImage, TitleBar},
   computed: {
     isMobile: function () {
@@ -130,22 +134,27 @@ export default {
   },
   data: function () {
     return {
-      title: '收入',
-      backgroundImagePath: this.GLOBAL.images.working,
+      title: '账户',
+      backgroundImagePath: this.GLOBAL.images.coding,
       valid: false,
       typeList: [
-        "工资",
-        "奖金补贴",
-        "生活费",
+        "餐饮",
+        "水果零食",
+        "购物",
+        "住房",
+        "生活服务",
+        "通讯",
+        "生活日用",
         "人情社交",
-        "兼职",
-        "投资理财",
-        "报销",
-        "中奖",
+        "穿搭美容",
+        "医疗保健",
+        "休闲娱乐",
+        "家居家电",
+        "网络虚拟",
         "其他",
       ],
       bill: {
-        flow: "in",
+        flow: "out",
         amount: null,
         type: null,
         remark: null,
@@ -154,7 +163,7 @@ export default {
       },
       showDatePicker: false,
       rules: {
-        isFloat: this.GLOBAL.rules.isFloat
+        isFloat: this.GLOBAL.rules.isFloat,
       },
       styles: {
         backgroundImg: {
@@ -178,8 +187,7 @@ export default {
   methods: {
     submitForm() {
       if (this.$refs.form.validate()) {
-        this.axios
-            .post("/bill/saveBill", JSON.stringify(this.bill))
+        this.axios.post("/bill/saveBill", JSON.stringify(this.bill))
             .then(() => {
               this.$notify({
                 title: "提交成功",
@@ -195,7 +203,7 @@ export default {
     },
   },
   mounted() {
-    this.bill.billDate = (new Date()).Format("yyyy-MM-dd");
+    this.bill.billDate = new Date().Format("yyyy-MM-dd");
   },
 };
 </script>

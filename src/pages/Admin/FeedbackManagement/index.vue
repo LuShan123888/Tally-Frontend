@@ -68,7 +68,6 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-divider/>
     <el-table
         id="table"
         v-loading="table.loading"

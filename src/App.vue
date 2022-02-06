@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
     <router-view/>
   </v-app>
 </template>
@@ -8,7 +8,11 @@
 export default {
   name: "App",
   components: {},
-  computed: {},
+  computed: {
+    isDark: function () {
+      return this.$vuetify.theme.dark;
+    }
+  },
   data: function () {
     return {};
   },

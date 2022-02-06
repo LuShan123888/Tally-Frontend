@@ -63,10 +63,10 @@ export default {
       selectedItem: 1,
       title: this.GLOBAL.title,
       menus: [
-        {text: "首页", path: "/home", icon: "mdi-chart-timeline-variant-shimmer"},
-        {text: "支出", path: "/outcome", icon: "mdi-cash-minus"},
-        {text: "收入", path: "/income", icon: "mdi-cash-plus"},
-        {text: "我的", path: "/accountInfo", icon: "mdi-account"},
+        {text: "账本", path: "/home", icon: "mdi-book-edit"},
+        {text: "账户", path: "/account", icon: "mdi-bank"},
+        {text: "统计", path: "/statistics", icon: "mdi-chart-timeline-variant-shimmer"},
+        {text: "我的", path: "/mine", icon: "mdi-account"},
       ],
     };
   },
@@ -74,3 +74,6 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+
+</style>

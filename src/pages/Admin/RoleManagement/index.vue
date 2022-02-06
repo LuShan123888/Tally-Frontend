@@ -42,6 +42,7 @@
           </v-col>
           <v-col cols="1">
             <v-btn
+                depressed
                 class="ml-2"
                 color="primary"
                 fab
@@ -57,13 +58,13 @@
       </v-col>
       <v-col cols="1">
         <v-btn
+            depressed
             color="primary"
             @click="loadRoleSaveDialog"
             v-text="'新增角色'"
         />
       </v-col>
     </v-row>
-    <v-divider/>
     <el-table
         id="table"
         v-loading="table.loading"

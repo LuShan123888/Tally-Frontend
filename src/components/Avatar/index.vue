@@ -22,7 +22,7 @@ export default {
     size: String,
     elevation: {
       type: String,
-      default: 0
+      default: '0'
     }
   },
   computed: {

@@ -41,7 +41,7 @@
             </v-form>
           </v-col>
           <v-col cols="1">
-            <v-btn class="ml-2" color="primary" fab small
+            <v-btn class="ml-2" color="primary" depressed fab small
                    @click="pageUser">
               <v-icon> mdi-magnify</v-icon>
             </v-btn>
@@ -49,11 +49,10 @@
         </v-row>
       </v-col>
       <v-col cols="1">
-        <v-btn color="primary" @click="loadUserSaveDialog" v-text="'新增用户'"
+        <v-btn color="primary" depressed @click="loadUserSaveDialog" v-text="'新增用户'"
         />
       </v-col>
     </v-row>
-    <v-divider/>
     <el-table
         v-loading="table.loading"
         id="table"
@@ -84,7 +83,7 @@
       </el-table-column>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
-          <avatar :path="scope.row.avatarPath" elevation="1" size="40"/>
+          <avatar :path="scope.row.avatarPath" size="40"/>
         </template>
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
@@ -480,10 +479,19 @@ export default {
 
   &:before {
     background-color: #E0E0E0;
+    height: 0;
   }
 }
 
 .el-popconfirm__main {
   margin-bottom: 10px;
+}
+
+.v-pagination {
+  li {
+    button {
+      box-shadow: none;
+    }
+  }
 }
 </style>

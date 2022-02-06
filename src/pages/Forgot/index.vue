@@ -7,12 +7,12 @@
     </v-row>
     <background-image :src="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
-      <v-container :class="{'elevation-24':hover,'elevation-2':!hover}"
+      <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
                    class="mx-auto transition-swing pa-0 rounded-lg"
                    :style="{ width: isMobile ? '85%' : '30%' }"
                    fluid
       >
-        <v-tabs v-model="tab" class="rounded-lg" grow>
+        <v-tabs v-model="tab" class="rounded-t-lg" grow>
           <v-tab>
             <v-icon>mdi-cellphone-message</v-icon>
             <span v-if="!isMobile" class="ml-3">手机号注册</span>
@@ -22,7 +22,7 @@
             <span v-if="!isMobile" class="ml-3">邮箱注册</span>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab" class="rounded-lg">
+        <v-tabs-items v-model="tab" class="rounded-b-lg">
           <v-tab-item>
             <v-row class="pt-16" justify="center" no-gutters>
               <v-col cols="10">

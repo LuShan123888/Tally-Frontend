@@ -9,10 +9,10 @@
             color="primary"
             @click="loadPermissionSaveDialog"
             v-text="'新增权限'"
+            depressed
         />
       </v-col>
     </v-row>
-    <v-divider/>
     <el-table
         id="table"
         v-loading="table.loading"

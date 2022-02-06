@@ -2,35 +2,35 @@
   <v-container class="pa-0" fluid>
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
-    <v-hover v-slot="{ hover }">
-      <v-container v-ripple :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
-                   :style="{ width: isMobile ? '85%' : '50%' ,cursor:'pointer'}"
-                   class="transition-swing mb-5 pa-0 rounded-lg"
-                   fluid
-                   @click="userInfoPage.isShow = true"
-      >
-        <v-row align="center" class="py-3 px-3" justify="space-between" no-gutters>
-          <v-col cols="2">
-            <avatar :path="userInfoPage.userInfo.avatarPath" elevation="1" size="50"/>
-          </v-col>
-          <v-col class="pl-3" cols="9">
-            <div class="text-h6" v-text="userInfoPage.userInfo.username"/>
-            <div class="text-subtitle-2 grey--text text--darken-1 font-weight-regular" v-text="'邮箱，手机号，密码'"/>
-          </v-col>
-          <v-col cols="1">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-hover>
+    <v-card :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
+            :style="{ width: isMobile ? '85%' : '50%' ,cursor:'pointer'}"
+            class="transition-swing mb-5 pa-0 rounded-lg"
+            flat
+            fluid
+            @click.native="userInfoPage.isShow = true"
+    >
+      <v-row v-ripple align="center" class="py-3 px-3" justify="space-between" no-gutters>
+        <v-col cols="2">
+          <avatar :path="userInfoPage.userInfo.avatarPath" size="50"/>
+        </v-col>
+        <v-col class="pl-3" cols="9">
+          <div class="text-h6" v-text="userInfoPage.userInfo.username"/>
+          <div class="text-subtitle-2 grey--text text--darken-1 font-weight-regular" v-text="'邮箱，手机号，密码'"/>
+        </v-col>
+        <v-col cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+    </v-card>
     <v-dialog
         v-model="userInfoPage.isShow"
         fullscreen
         hide-overlay
         style="height: 100vh"
+        :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}"
         transition="dialog-bottom-transition"
     >
-      <v-card>
+      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
             class="mb-16"
             color="primary"
@@ -46,17 +46,19 @@
           </v-btn>
           <v-toolbar-title>用户信息</v-toolbar-title>
         </v-toolbar>
-        <v-row :class="{'mx-auto':isMobile,'ml-9':!isMobile}" :style="{ width: isMobile ? '85%' : '50%' }"
+        <v-row :style="{ width: isMobile ? '85%' : '50%' }"
                justify="center"
+               class="mx-auto"
                no-gutters>
-          <avatar :path="userInfoPage.userInfo.avatarPath" elevation="3"
-                  size="100" style="cursor: pointer" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
+          <avatar :path="userInfoPage.userInfo.avatarPath"
+                  size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
         </v-row>
-        <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-                     :style="{ width: isMobile ? '85%' : '50%' }"
-                     class="transition-swing pa-0 rounded-lg elevation-24"
-                     fluid
-                     style="margin-top: -50px"
+        <v-card
+            :style="{ width: isMobile ? '85%' : '50%' }"
+            class="transition-swing pa-0 rounded-lg mx-auto"
+            flat
+            fluid
+            style="margin-top: -50px"
         >
           <v-row align="center" class="px-3" no-gutters style="height: 50px"/>
           <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
@@ -152,7 +154,7 @@
               注销账号
             </v-btn>
           </v-row>
-        </v-container>
+        </v-card>
         <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px">
           <v-card>
             <v-card-title>
@@ -288,54 +290,53 @@
         </v-dialog>
       </v-card>
     </v-dialog>
-    <v-hover v-slot="{ hover }">
-      <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-2':!hover}"
-                   :style="{ width: isMobile ? '85%' : '50%' }"
-                   class="transition-swing mb-5 pa-0 rounded-lg"
-                   fluid
-      >
-        <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
-          <v-col cols="1">
-            <v-icon>mdi-brightness-4</v-icon>
-          </v-col>
-          <v-col class="ml-2">
-            <span>深色模式</span>
-          </v-col>
-          <v-col cols="2">
-            <el-switch
-                v-model="darkMode"
-                active-color="#13ce66"
-                inactive-color="#757575"
-                @change="changeDarkMode">
-            </el-switch>
-          </v-col>
-        </v-row>
-        <v-divider/>
-        <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
-          <v-col cols="1">
-            <v-icon>mdi-notebook-multiple</v-icon>
-          </v-col>
-          <v-col class="ml-2">
-            <span>账单分类</span>
-          </v-col>
-          <v-col cols="1">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-col>
-        </v-row>
-        <v-divider/>
-        <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer" @click="">
-          <v-col cols="1">
-            <v-icon>mdi-message-alert</v-icon>
-          </v-col>
-          <v-col class="ml-2" @click="feedbackPage.isShow = true">
-            <span>提交反馈</span>
-          </v-col>
-          <v-col cols="1">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-hover>
+    <v-card :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
+            :style="{ width: isMobile ? '85%' : '50%' }"
+            class="transition-swing mb-5 pa-0 rounded-lg"
+            flat
+            fluid
+    >
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
+        <v-col cols="1">
+          <v-icon>mdi-brightness-4</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <span>深色模式</span>
+        </v-col>
+        <v-col cols="2">
+          <el-switch
+              v-model="darkMode"
+              active-color="#13ce66"
+              inactive-color="#757575"
+              @change="changeDarkMode">
+          </el-switch>
+        </v-col>
+      </v-row>
+      <v-divider/>
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
+        <v-col cols="1">
+          <v-icon>mdi-notebook-multiple</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <span>账单类别</span>
+        </v-col>
+        <v-col cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+      <v-divider/>
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer" @click="">
+        <v-col cols="1">
+          <v-icon>mdi-message-alert</v-icon>
+        </v-col>
+        <v-col class="ml-2" @click="feedbackPage.isShow = true">
+          <span>提交反馈</span>
+        </v-col>
+        <v-col cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+    </v-card>
     <v-dialog
         v-model="feedbackPage.isShow"
         fullscreen
@@ -343,7 +344,7 @@
         style="height: 100vh"
         transition="dialog-bottom-transition"
     >
-      <v-card class="pa-0">
+      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}" class="pa-0">
         <v-toolbar
             class="mb-16"
             color="primary"
@@ -359,10 +360,9 @@
           </v-btn>
           <v-toolbar-title>提交反馈</v-toolbar-title>
         </v-toolbar>
-        <v-container :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-                     :style="{ width: isMobile ? '85%' : '50%' }"
-                     class="transition-swing mb-5 pa-5 rounded-lg elevation-24"
-                     fluid
+        <v-card :style="{ width: isMobile ? '85%' : '50%' }" class="transition-swing mb-5 pa-5 rounded-lg mx-auto"
+                flat
+                fluid
         >
           <v-row no-gutters>
             <v-col cols="12">
@@ -406,10 +406,11 @@
               提交反馈
             </v-btn>
           </v-row>
-        </v-container>
+        </v-card>
       </v-card>
     </v-dialog>
-    <v-row v-if="userInfoPage.userInfo.roleIdList && userInfoPage.userInfo.roleIdList.indexOf(1) !== -1" class="mb-5"
+    <v-row v-if="isAdmin"
+           class="mb-5"
            no-gutters>
       <v-btn
           :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
@@ -417,10 +418,11 @@
           class="ma-auto rounded-lg"
           color="primary"
           large
+          depressed
           to="/admin"
       >
         <v-icon class="mr-3">mdi-monitor-dashboard</v-icon>
-        前往后台
+        <span>前往后台</span>
       </v-btn>
     </v-row>
     <v-row class="my-3" no-gutters>
@@ -430,11 +432,12 @@
           class="ma-auto rounded-lg"
           color="error"
           large
+          depressed
           style="width: 85%"
           @click="signOut"
       >
         <v-icon class="mr-3">mdi-logout</v-icon>
-        退出登录
+        <span>退出登录</span>
       </v-btn>
     </v-row>
   </v-container>
@@ -447,7 +450,7 @@ import BackgroundImage from '@/pages/Index/components/BackgroundImage'
 import TitleBar from "@/pages/Index/components/TitleBar";
 
 export default {
-  name: "AccountInfo",
+  name: "Mine",
   components: {TitleBar, ImageUploader, Avatar, BackgroundImage},
   computed: {
     isMobile: function () {
@@ -608,6 +611,15 @@ export default {
           return item.roleName;
         }
       }
+    },
+    isAdmin() {
+      if (!this.userInfoPage.userInfo.roleVoList) return false;
+      for (let item of this.userInfoPage.userInfo.roleVoList) {
+        if (item.id === 1) {
+          return true;
+        }
+      }
+      return false;
     },
     saveFeedback() {
       this.feedbackPage.loading = true;

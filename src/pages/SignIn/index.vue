@@ -7,12 +7,12 @@
     <background-image :src="backgroundImagePath"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-hover v-slot="{ hover }">
-      <v-container :class="{'elevation-24':hover,'elevation-2':!hover}"
+      <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
                    :style="{ width: isMobile ? '85%' : '30%' }"
-                   class="mx-auto transition-swing pa-0 rounded-lg"
+                   class="mx-auto transition-swing pa-0"
                    fluid
       >
-        <v-tabs v-model="tab" class="rounded-lg" grow>
+        <v-tabs v-model="tab" class="rounded-t-lg" grow>
           <v-tab>
             <v-icon>mdi-cellphone-message</v-icon>
             <span v-if="!isMobile" class="ml-3">验证码登录</span>
@@ -22,7 +22,7 @@
             <span v-if="!isMobile" class="ml-3">账号密码登录</span>
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab" class="rounded-lg">
+        <v-tabs-items v-model="tab" class="rounded-b-lg">
           <v-tab-item>
             <v-row class="pt-16" justify="center" no-gutters>
               <v-col cols="10">

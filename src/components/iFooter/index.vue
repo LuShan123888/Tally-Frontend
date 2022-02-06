@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute padless @click.native="openNewPage">
+  <v-footer :style="{backgroundColor: isDark?'#1E1E1E':'#FFFFFF'}" absolute padless>
     <v-row align="center" no-gutters>
       <v-col
           class="text-center pa-1"
@@ -11,13 +11,12 @@
       </v-col>
       <v-col class="pa-1"
              cols="12">
-        <v-row align="center" justify="center" no-gutters>
-          <v-col cols="1">
-            <i-image height="20px" src="https://s1.ax1x.com/2020/07/02/NqYHbQ.png"/>
-          </v-col>
-          <v-col cols="5">
+        <v-row align="center" justify="center" no-gutters style="cursor:pointer;" @click="openNewPage">
+          <div class="d-inline-flex align-center">
+            <i-image height="20px" src="https://s1.ax1x.com/2020/07/02/NqYHbQ.png" style="height: 20px;width: 20px"
+                     width="20px"/>
             <span class="ml-3 text--darken-1 grey--text text-subtitle-2">赣ICP备2022000564号</span>
-          </v-col>
+          </div>
         </v-row>
       </v-col>
     </v-row>

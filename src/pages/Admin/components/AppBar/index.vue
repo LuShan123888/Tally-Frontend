@@ -21,7 +21,7 @@
             v-on="on"
             class="mr-16"
         >
-          <avatar :path="userInfo.avatarPath" elevation="1" size="50"/>
+          <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
       <v-container fluid style="background: #FFFFFF">
