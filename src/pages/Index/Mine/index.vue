@@ -3,7 +3,7 @@
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
     <v-card :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-            :style="{ width: isMobile ? '85%' : '50%' ,cursor:'pointer'}"
+            :style="{ width: isMobile ? '90%' : '50%' ,cursor:'pointer'}"
             class="transition-swing mb-5 pa-0 rounded-lg"
             flat
             fluid
@@ -14,8 +14,8 @@
           <avatar :path="userInfoPage.userInfo.avatarPath" size="50"/>
         </v-col>
         <v-col class="pl-3" cols="9">
-          <div class="text-h6" v-text="userInfoPage.userInfo.username"/>
-          <div class="text-subtitle-2 grey--text text--darken-1 font-weight-regular" v-text="'邮箱，手机号，密码'"/>
+          <v-row class="text-h6" no-gutters v-text="userInfoPage.userInfo.username"/>
+          <v-row class="text-subtitle-2 grey--text text--darken-1 font-weight-regular" no-gutters v-text="'邮箱，手机号，密码'"/>
         </v-col>
         <v-col cols="1">
           <v-icon>mdi-chevron-right</v-icon>
@@ -46,7 +46,7 @@
           </v-btn>
           <v-toolbar-title>用户信息</v-toolbar-title>
         </v-toolbar>
-        <v-row :style="{ width: isMobile ? '85%' : '50%' }"
+        <v-row :style="{ width: isMobile ? '90%' : '50%' }"
                justify="center"
                class="mx-auto"
                no-gutters>
@@ -54,7 +54,7 @@
                   size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
         </v-row>
         <v-card
-            :style="{ width: isMobile ? '85%' : '50%' }"
+            :style="{ width: isMobile ? '90%' : '50%' }"
             class="transition-swing pa-0 rounded-lg mx-auto"
             flat
             fluid
@@ -291,7 +291,7 @@
       </v-card>
     </v-dialog>
     <v-card :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-            :style="{ width: isMobile ? '85%' : '50%' }"
+            :style="{ width: isMobile ? '90%' : '50%' }"
             class="transition-swing mb-5 pa-0 rounded-lg"
             flat
             fluid
@@ -360,7 +360,7 @@
           </v-btn>
           <v-toolbar-title>提交反馈</v-toolbar-title>
         </v-toolbar>
-        <v-card :style="{ width: isMobile ? '85%' : '50%' }" class="transition-swing mb-5 pa-5 rounded-lg mx-auto"
+        <v-card :style="{ width: isMobile ? '90%' : '50%' }" class="transition-swing mb-5 pa-5 rounded-lg mx-auto"
                 flat
                 fluid
         >
@@ -414,7 +414,7 @@
            no-gutters>
       <v-btn
           :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-          :style="{ width: isMobile ? '85%' : '50%' }"
+          :style="{ width: isMobile ? '90%' : '50%' }"
           class="ma-auto rounded-lg"
           color="primary"
           large
@@ -428,12 +428,12 @@
     <v-row class="my-3" no-gutters>
       <v-btn
           :class="{'mx-auto':isMobile,'ml-9':!isMobile}"
-          :style="{ width: isMobile ? '85%' : '50%' }"
+          :style="{ width: isMobile ? '90%' : '50%' }"
           class="ma-auto rounded-lg"
           color="error"
           large
           depressed
-          style="width: 85%"
+          style="width: 90%"
           @click="signOut"
       >
         <v-icon class="mr-3">mdi-logout</v-icon>

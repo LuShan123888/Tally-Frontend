@@ -2,7 +2,7 @@
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="11" no-gutters>
-        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'权限管理'"/>
+        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'权限管理'"/>
       </v-col>
       <v-col cols="1">
         <v-btn

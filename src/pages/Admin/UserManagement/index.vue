@@ -2,7 +2,7 @@
   <v-container class="pa-0" fluid>
     <v-row style="height:150px" no-gutters align="center">
       <v-col cols="3" no-gutters>
-        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'用户管理'"/>
+        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'用户管理'"/>
       </v-col>
       <v-col cols="8">
         <v-row no-gutters align="center">
@@ -213,7 +213,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-row align="center" class="mb-3 " no-gutters>
-                    <div :style="{color:dialog.user.id?'#9E9E9D':'inherit'}" class="text-subtitle-1" v-text="'头像'"/>
+                    <span :style="{color:dialog.user.id?'#9E9E9D':'inherit'}" class="text-subtitle-1" v-text="'头像'"/>
                     <v-btn
                         v-if="dialog.user.avatarPath!=null && !dialog.user.id"
                         x-small

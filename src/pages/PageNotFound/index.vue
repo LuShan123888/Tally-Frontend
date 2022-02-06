@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid>
-    <v-row class="mt-16" justify="center">
+  <v-container class="pa-0" fluid>
+    <v-row class="mt-16" justify="center" no-gutters>
       <i-image :src="imageUrl" width="100vw"/>
     </v-row>
     <v-row justify="center">

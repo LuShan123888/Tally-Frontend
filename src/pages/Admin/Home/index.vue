@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="2" no-gutters>
-        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
+        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
       </v-col>
       <v-col cols="10">
         <v-row justify="center" no-gutters>
@@ -889,7 +889,7 @@ export default {
             labels: [],
             datasets: [
               {
-                label: '登录用户',
+                label: '访问用户',
                 backgroundColor: this.$vuetify.theme.themes.light.primary,
                 fill: false,
                 data: [],
@@ -901,7 +901,7 @@ export default {
             maintainAspectRatio: false,
             title: {
               display: true,
-              text: '登录用户'
+              text: '访问用户'
             },
             tooltips: {
               mode: 'nearest',

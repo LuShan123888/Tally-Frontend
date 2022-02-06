@@ -89,7 +89,7 @@
     <v-dialog v-model="showDialog" max-width="400px">
       <v-card>
         <v-form ref="form" v-model="formValid">
-          <v-container>
+          <v-container class="pa-0" fluid>
             <v-row justify="center" no-gutters class="mt-6">
               <v-col cols="12">
                 <v-row no-gutters justify="space-around">

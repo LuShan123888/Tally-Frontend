@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="pa-0" fluid>
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
     <v-row no-gutters style="margin-top: 56px">
       <title-bar :title="title"/>
@@ -8,7 +8,7 @@
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-hover v-slot="{ hover }">
       <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
-                   :style="{ width: isMobile ? '85%' : '30%' }"
+                   :style="{ width: isMobile ? '90%' : '30%' }"
                    class="mx-auto transition-swing pa-0"
                    fluid
       >

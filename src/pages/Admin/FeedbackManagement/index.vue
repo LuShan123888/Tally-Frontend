@@ -2,7 +2,7 @@
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="3" no-gutters>
-        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'反馈处理'"/>
+        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'反馈处理'"/>
       </v-col>
       <v-col cols="8">
         <v-row align="center" no-gutters>

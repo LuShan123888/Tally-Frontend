@@ -8,109 +8,110 @@
           :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-0':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
-        <v-form ref="form" v-model="valid">
-          <v-container>
-            <v-row justify="center" no-gutters class="mt-6">
-              <v-col cols="12">
-                <v-row no-gutters justify="space-around">
-                  <v-col cols="5">
-                    <v-text-field
-                        label="金额"
-                        prefix="¥"
-                        :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
-                        v-model="bill.amount"
-                        clearable
-                    />
-                  </v-col>
-                  <v-col cols="5">
-                    <v-combobox
-                        :items="typeList"
-                        v-model="bill.type"
-                        :rules="[(value) => !!value || '请选择类型']"
-                        label="类型"
-                        clearable
-                    />
-                  </v-col>
-                </v-row>
-                <v-row justify="space-around" no-gutters>
-                  <v-col cols="5">
-                    <v-text-field
-                        label="标签"
-                        v-model="bill.remark"
-                        clearable
-                    />
-                  </v-col>
-                  <v-col cols="5">
-                    <v-dialog
-                        ref="dialog"
-                        v-model="showDatePicker"
-                        :return-value.sync="bill.billDate"
-                        width="290px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                            v-model="bill.billDate"
-                            label="日期"
-                            :rules="[(value) => !!value || '请输入日期']"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                        />
-                      </template>
-                      <v-date-picker
-                          v-model="bill.billDate"
-                          scrollable
-                          locale="zh-cn"
-                      >
-                        <v-spacer/>
-                        <v-btn
-                            text
-                            color="error"
-                            @click="showDatePicker = false"
-                        >
-                          取消
-                        </v-btn>
-                        <v-btn
-                            text
-                            color="primary"
-                            @click="$refs.dialog.save(bill.billDate)"
-                        >
-                          确认
-                        </v-btn>
-                      </v-date-picker>
-                    </v-dialog>
-                  </v-col>
-                </v-row>
-                <v-row no-gutters justify="center">
-                  <v-col cols="11">
-                    <v-textarea
-                        v-model="bill.note"
-                        auto-grow
-                        rows="1"
-
-                        clearable
-                        label="备注"
-                    />
-                  </v-col>
-                </v-row>
-                <v-row no-gutters justify="space-around" class="mb-6">
-                  <v-col cols="6" class="text-center">
-                    <v-btn color="primary" x-large @click="submitForm"
-                    >提交
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="6" class="text-center">
-                    <v-btn color="error" x-large @click="resetForm"
-                    >清空
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
+        234
       </v-card>
     </v-hover>
+    <v-form ref="form" v-model="valid">
+      <v-container class="pa-0" fluid>
+        <v-row class="mt-6" justify="center" no-gutters>
+          <v-col cols="12">
+            <v-row justify="space-around" no-gutters>
+              <v-col cols="5">
+                <v-text-field
+                    v-model="bill.amount"
+                    :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
+                    clearable
+                    label="金额"
+                    prefix="¥"
+                />
+              </v-col>
+              <v-col cols="5">
+                <v-combobox
+                    v-model="bill.type"
+                    :items="typeList"
+                    :rules="[(value) => !!value || '请选择类型']"
+                    clearable
+                    label="类型"
+                />
+              </v-col>
+            </v-row>
+            <v-row justify="space-around" no-gutters>
+              <v-col cols="5">
+                <v-text-field
+                    v-model="bill.remark"
+                    clearable
+                    label="标签"
+                />
+              </v-col>
+              <v-col cols="5">
+                <v-dialog
+                    ref="dialog"
+                    v-model="showDatePicker"
+                    :return-value.sync="bill.billDate"
+                    width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                        v-model="bill.billDate"
+                        :rules="[(value) => !!value || '请输入日期']"
+                        label="日期"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                    />
+                  </template>
+                  <v-date-picker
+                      v-model="bill.billDate"
+                      locale="zh-cn"
+                      scrollable
+                  >
+                    <v-spacer/>
+                    <v-btn
+                        color="error"
+                        text
+                        @click="showDatePicker = false"
+                    >
+                      取消
+                    </v-btn>
+                    <v-btn
+                        color="primary"
+                        text
+                        @click="$refs.dialog.save(bill.billDate)"
+                    >
+                      确认
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
+            <v-row justify="center" no-gutters>
+              <v-col cols="11">
+                <v-textarea
+                    v-model="bill.note"
+                    auto-grow
+                    clearable
+
+                    label="备注"
+                    rows="1"
+                />
+              </v-col>
+            </v-row>
+            <v-row class="mb-6" justify="space-around" no-gutters>
+              <v-col class="text-center" cols="6">
+                <v-btn color="primary" x-large @click="submitForm"
+                >提交
+                </v-btn>
+              </v-col>
+              <v-col class="text-center" cols="6">
+                <v-btn color="error" x-large @click="resetForm"
+                >清空
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
   </v-container>
 </template>
 

@@ -2,7 +2,7 @@
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="3" no-gutters>
-        <div :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'角色管理'"/>
+        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'角色管理'"/>
       </v-col>
       <v-col cols="8">
         <v-row align="center" no-gutters>
@@ -179,7 +179,7 @@
                   />
                 </v-col>
                 <v-col cols="12">
-                  <div :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
+                  <span :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
                   <v-treeview
                       v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" dense
                       open-on-click selectable
