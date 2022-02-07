@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" class="my-4 ml-4" no-gutters>
+  <v-row align="center" class="my-4" no-gutters>
     <v-col cols="12">
       <span :style="{ color: lightPrimary }" class="text-h2" v-text="title"/>
     </v-col>

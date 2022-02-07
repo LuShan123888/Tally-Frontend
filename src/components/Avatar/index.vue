@@ -42,7 +42,7 @@ export default {
   methods: {
     getImageUrl: function (imagePath) {
       if (imagePath != null) {
-        return this.GLOBAL.url.file + "/" + imagePath;
+        return this.GLOBAL.url.static + "/" + imagePath;
       }
     }
   },

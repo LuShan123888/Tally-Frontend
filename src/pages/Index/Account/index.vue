@@ -1,117 +1,120 @@
 <template>
-  <v-container class="pa-0" fluid>
+  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="px-4" fluid>
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
-    <v-hover v-slot="{ hover }">
-      <v-card
-          class="mt-9 transition-swing"
-          :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-0':!hover}"
-          :style="{ width: isMobile ? '90%' : '50%' }"
-      >
-        234
-      </v-card>
-    </v-hover>
-    <v-form ref="form" v-model="valid">
-      <v-container class="pa-0" fluid>
-        <v-row class="mt-6" justify="center" no-gutters>
-          <v-col cols="12">
-            <v-row justify="space-around" no-gutters>
-              <v-col cols="5">
-                <v-text-field
-                    v-model="bill.amount"
-                    :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
-                    clearable
-                    label="金额"
-                    prefix="¥"
-                />
-              </v-col>
-              <v-col cols="5">
-                <v-combobox
-                    v-model="bill.type"
-                    :items="typeList"
-                    :rules="[(value) => !!value || '请选择类型']"
-                    clearable
-                    label="类型"
-                />
-              </v-col>
-            </v-row>
-            <v-row justify="space-around" no-gutters>
-              <v-col cols="5">
-                <v-text-field
-                    v-model="bill.remark"
-                    clearable
-                    label="标签"
-                />
-              </v-col>
-              <v-col cols="5">
-                <v-dialog
-                    ref="dialog"
-                    v-model="showDatePicker"
-                    :return-value.sync="bill.billDate"
-                    width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="bill.billDate"
-                        :rules="[(value) => !!value || '请输入日期']"
-                        label="日期"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                    />
-                  </template>
-                  <v-date-picker
-                      v-model="bill.billDate"
-                      locale="zh-cn"
-                      scrollable
-                  >
-                    <v-spacer/>
-                    <v-btn
-                        color="error"
-                        text
-                        @click="showDatePicker = false"
-                    >
-                      取消
-                    </v-btn>
-                    <v-btn
-                        color="primary"
-                        text
-                        @click="$refs.dialog.save(bill.billDate)"
-                    >
-                      确认
-                    </v-btn>
-                  </v-date-picker>
-                </v-dialog>
-              </v-col>
-            </v-row>
-            <v-row justify="center" no-gutters>
-              <v-col cols="11">
-                <v-textarea
-                    v-model="bill.note"
-                    auto-grow
-                    clearable
-
-                    label="备注"
-                    rows="1"
-                />
-              </v-col>
-            </v-row>
-            <v-row class="mb-6" justify="space-around" no-gutters>
-              <v-col class="text-center" cols="6">
-                <v-btn color="primary" x-large @click="submitForm"
-                >提交
-                </v-btn>
-              </v-col>
-              <v-col class="text-center" cols="6">
-                <v-btn color="error" x-large @click="resetForm"
-                >清空
-                </v-btn>
-              </v-col>
-            </v-row>
+    <v-btn
+        color="primary"
+        fab
+        fixed
+        right
+        style="bottom: 70px"
+    >
+      <v-icon>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+    <v-card
+        class="90% pa-0 rounded-lg"
+        flat fluid
+    >
+      <v-card-subtitle class="py-2 font-weight-bold">净资产</v-card-subtitle>
+      <v-card-title :style="{ color: lightPrimary }" class="py-0 text-h3">¥123312</v-card-title>
+      <v-card-subtitle class="py-4">
+        <v-row no-gutters>
+          <v-col class="font-weight-bold" cols="6">
+            <span>总资产：</span>
+            <span>¥123312</span>
+          </v-col>
+          <v-col class="font-weight-bold" cols="6">
+            <span>总负债：</span>
+            <span>¥123312</span>
           </v-col>
         </v-row>
-      </v-container>
-    </v-form>
+      </v-card-subtitle>
+    </v-card>
+    <v-subheader class="px-0 font-weight-bold d-flex justify-space-between"
+    >
+      <span>资金账户</span>
+      <span>余额：¥1231232</span>
+    </v-subheader>
+    <v-card
+        class="90% mb-5 py-0  px-3 rounded-lg"
+        flat fluid
+    >
+      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
+        <v-col cols="1">
+          <v-icon color="primary">mdi-credit-card-outline</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <div class="text-subtitle-1">消费卡</div>
+          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
+        </v-col>
+        <v-col cols="3">
+          <div class="text-subtitle-1">¥10000</div>
+        </v-col>
+        <v-col class="d-flex justify-end" cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+      <v-divider/>
+      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
+        <v-col cols="1">
+          <v-icon color="primary">mdi-credit-card-outline</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <div class="text-subtitle-1">消费卡</div>
+          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
+        </v-col>
+        <v-col cols="3">
+          <div class="text-subtitle-1">¥10000</div>
+        </v-col>
+        <v-col class="d-flex justify-end" cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-subheader class="px-0 font-weight-bold d-flex justify-space-between"
+    >
+      <span>资金账户</span>
+      <span>余额：¥1231232</span>
+    </v-subheader>
+    <v-card
+        class="90% mb-5 py-0  px-3 rounded-lg"
+        flat fluid
+    >
+      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
+        <v-col cols="1">
+          <v-icon color="primary">mdi-credit-card-outline</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <div class="text-subtitle-1">消费卡</div>
+          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
+        </v-col>
+        <v-col cols="3">
+          <div class="text-subtitle-1">¥10000</div>
+        </v-col>
+        <v-col class="d-flex justify-end" cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+      <v-divider/>
+      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
+        <v-col cols="1">
+          <v-icon color="primary">mdi-credit-card-outline</v-icon>
+        </v-col>
+        <v-col class="ml-2">
+          <div class="text-subtitle-1">消费卡</div>
+          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
+        </v-col>
+        <v-col cols="3">
+          <div class="text-subtitle-1">¥10000</div>
+        </v-col>
+        <v-col class="d-flex justify-end" cols="1">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-col>
+      </v-row>
+    </v-card>
+
   </v-container>
 </template>
 

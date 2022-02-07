@@ -1,11 +1,8 @@
 <script>
 const url = {
-  // api: "http://47.95.124.239/api",
-  api: "http://127.0.0.1:8080",
-  // iframe: "http://47.95.124.239:8080",
-  iframe: "http://127.0.0.1:8080",
-  file: "http://47.95.124.239/static",
-  upload: "http://47.95.124.239/api/file/upload"
+  api: "http://api.tally.ltd",
+  // api: "http://127.0.0.1:8080",
+  static: "http://static.tally.ltd",
 };
 const title = "一款简约的在线记账平台";
 const adminTitle = "云记贝后台管理系统";

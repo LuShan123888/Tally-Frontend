@@ -15,7 +15,7 @@
           <div class="d-inline-flex align-center">
             <i-image height="20px" src="https://s1.ax1x.com/2020/07/02/NqYHbQ.png" style="height: 20px;width: 20px"
                      width="20px"/>
-            <span class="ml-3 text--darken-1 grey--text text-subtitle-2">赣ICP备2022000564号</span>
+            <span class="ml-3 text--darken-1 grey--text text-subtitle-2">赣ICP备2022000564号-2</span>
           </div>
         </v-row>
       </v-col>

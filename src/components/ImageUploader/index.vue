@@ -46,7 +46,7 @@ export default {
   data: function () {
     return {
       upload: {
-        path: this.GLOBAL.url.upload,
+        path: this.GLOBAL.url.api + "/file/upload",
         header: {Authorization: this.$store.getters.getToken}
       },
     };
@@ -54,7 +54,7 @@ export default {
   methods: {
     getImageUrl: function (imagePath) {
       if (imagePath != null) {
-        return this.GLOBAL.url.file + "/" + imagePath;
+        return this.GLOBAL.url.static + "/" + imagePath;
       }
     },
     handleAvatarSuccess(response) {

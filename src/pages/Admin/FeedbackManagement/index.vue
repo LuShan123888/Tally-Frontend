@@ -329,7 +329,7 @@ export default {
         imageUrl: null
       },
       upload: {
-        path: this.GLOBAL.url.upload,
+        path: this.GLOBAL.url.api + "/file/upload",
         header: {Authorization: this.$store.getters.getToken}
       },
       rules: this.GLOBAL.rules,
@@ -423,7 +423,7 @@ export default {
     },
     getImageUrl(imagePath) {
       if (imagePath != null) {
-        return this.GLOBAL.url.file + "/" + imagePath;
+        return this.GLOBAL.url.static + "/" + imagePath;
       }
     },
     openImageDialog(imageUrl) {

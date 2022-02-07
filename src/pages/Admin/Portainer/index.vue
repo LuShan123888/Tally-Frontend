@@ -17,7 +17,7 @@ export default {
   },
   data: function () {
     return {
-      iframeSrc: 'http://47.95.124.239:9000',
+      iframeSrc: 'http://portainer.tally.ltd:9000',
       height: document.documentElement.clientHeight - 64 + "px"
     };
   },

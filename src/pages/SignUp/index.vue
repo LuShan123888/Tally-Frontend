@@ -24,8 +24,8 @@
         </v-tabs>
         <v-tabs-items v-model="tab" class="rounded-b-lg">
           <v-tab-item>
-            <v-row class="pt-16" justify="center" no-gutters>
-              <v-col cols="10">
+            <v-row class="pa-10" justify="center" no-gutters>
+              <v-col cols="12">
                 <v-form
                     ref="phoneNumberForm"
                     v-model="form.phoneNumber.valid"
@@ -61,7 +61,7 @@
                     />
                   </v-row>
                   <v-row justify="space-between" no-gutters>
-                    <v-col class="d-flex align-center" cols="4">
+                    <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
@@ -105,7 +105,7 @@
                       <v-btn
                           :disabled="form.phoneNumber.loading"
                           :loading="form.phoneNumber.loading"
-                          class="my-10"
+                          class="mt-5"
                           color="primary"
                           depressed
                           large
@@ -120,8 +120,8 @@
             </v-row>
           </v-tab-item>
           <v-tab-item>
-            <v-row class="pt-16" justify="center" no-gutters>
-              <v-col cols="10">
+            <v-row class="pa-10" justify="center" no-gutters>
+              <v-col cols="12">
                 <v-form
                     ref="passwordForm"
                     v-model="form.email.valid"
@@ -176,7 +176,7 @@
                     />
                   </v-row>
                   <v-row justify="space-between" no-gutters>
-                    <v-col class="d-flex align-center" cols="4">
+                    <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
@@ -220,7 +220,7 @@
                       <v-btn
                           :disabled="form.email.loading"
                           :loading="form.email.loading"
-                          class="my-10"
+                          class="mt-5"
                           color="primary"
                           depressed
                           large
