@@ -37,10 +37,14 @@ export default {
   },
   mounted() {
     let _this = this;
-    this.$router.push({name: "Home"});
-    this.axios.get("/user/getUserInfo").then((response) => {
-      _this.$store.commit("setUserInfo", response.data.data);
-    });
+    if (this.$store.getters.getToken) {
+      this.$router.push({name: "Home"});
+      this.axios.get("/user/getUserInfo").then((response) => {
+        _this.$store.commit("setUserInfo", response.data.data);
+      });
+    } else {
+      this.$router.push({name: "SignIn"});
+    }
   },
 };
 </script>
