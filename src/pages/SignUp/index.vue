@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0" fluid>
+  <v-container class="py-0 px-4" fluid>
     <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-row no-gutters style="margin-top: 56px">
@@ -9,7 +9,7 @@
     <v-hover v-slot="{ hover }">
       <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
                    class="mx-auto transition-swing pa-0 rounded-lg"
-                   :style="{ width: isMobile ? '90%' : '30%' }"
+                   :style="{ width: isMobile ? '100%' : '30%' }"
                    fluid
       >
         <v-tabs v-model="tab" class="rounded-t-lg" grow>
