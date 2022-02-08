@@ -1,5 +1,5 @@
 <template>
-  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="px-4" fluid>
+  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="py-0 px-4" fluid>
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
     <v-card
@@ -61,9 +61,11 @@
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
               <v-col cols="1">
-                <v-icon color="primary">mdi-account</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-account</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'用户名：'"/>
                 <span v-text="userInfoPage.userInfo.username"/>
               </v-col>
@@ -75,9 +77,11 @@
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
               <v-col cols="1">
-                <v-icon color="primary">mdi-account-key</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-account-key</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'密码：********'"/>
               </v-col>
               <v-col cols="1">
@@ -88,9 +92,11 @@
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改手机号','phoneNumber')">
               <v-col cols="1">
-                <v-icon color="primary">mdi-cellphone-text</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-cellphone-text</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'手机号：'"/>
                 <span v-text="userInfoPage.userInfo.phoneNumber"/>
               </v-col>
@@ -102,9 +108,11 @@
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改邮箱','email')">
               <v-col cols="1">
-                <v-icon color="primary">mdi-email</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-email</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'邮箱：'"/>
                 <span v-text="userInfoPage.userInfo.email"/>
               </v-col>
@@ -115,11 +123,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
               <v-col cols="1">
-                <v-icon color="primary">mdi-list-status</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-list-status</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'状态：'"/>
-                <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label
+                <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label small
                         v-text="getStatusText()">
                 </v-chip>
               </v-col>
@@ -127,12 +137,14 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
               <v-col cols="1">
-                <v-icon color="primary">mdi-clipboard-account-outline</v-icon>
+                <v-btn color="primary" depressed fab x-small>
+                  <v-icon>mdi-clipboard-account-outline</v-icon>
+                </v-btn>
               </v-col>
-              <v-col class="ml-2">
+              <v-col class="ml-3">
                 <span class="grey--text text--darken-1" v-text="'角色：'"/>
-                <v-chip v-for="item in userInfoPage.userInfo.roleVoList"
-                        :key="item.id" class="mx-1" label
+                <v-chip v-for="item in userInfoPage.userInfo.roleVOList"
+                        :key="item.id" class="mx-1" label small
                         v-text="item.roleName">
                 </v-chip>
               </v-col>
@@ -143,7 +155,7 @@
                   class="rounded-lg"
                   color="error"
                   depressed
-                  style="width: 100%"
+                  block
                   @click="loadUserInfoDialog('注销账号','cancelUser')"
               >
                 <v-icon class="mr-3">mdi-logout</v-icon>
@@ -152,13 +164,13 @@
             </v-row>
           </v-card>
         </v-row>
-        <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px">
+        <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
           <v-card>
             <v-card-title>
               <span class="text-h5" v-text="userInfoPage.dialog.title"/>
             </v-card-title>
             <v-card-text class="pb-0">
-              <v-form ref="updateAccountForm">
+              <v-form ref="updateUserInfoForm">
                 <v-container v-if="userInfoPage.dialog.type==='avatar'">
                   <v-row no-gutters>
                     <v-col class="d-flex justify-center" cols="12">
@@ -270,7 +282,7 @@
                 </v-container>
                 <v-container v-if="userInfoPage.dialog.type==='cancelUser'">
                   <v-row no-gutters>
-                    <span class="red--text font-weight-bold">确定要注销该账号吗？</span>
+                    <span class="red--text font-weight-medium">确定要注销该账号吗？</span>
                   </v-row>
                 </v-container>
               </v-form>
@@ -281,7 +293,7 @@
                      @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
               <v-btn
                   :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
-                  depressed @click="updateAccount" v-text="'保存'"/>
+                  depressed @click="updateUserInfo" v-text="'保存'"/>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -294,9 +306,11 @@
     >
       <v-row v-ripple align="center" no-gutters style="height: 50px">
         <v-col cols="1">
-          <v-icon color="primary">mdi-brightness-4</v-icon>
+          <v-btn color="primary" depressed fab x-small>
+            <v-icon>mdi-brightness-4</v-icon>
+          </v-btn>
         </v-col>
-        <v-col class="ml-2">
+        <v-col class="ml-3">
           <span>深色模式</span>
         </v-col>
         <v-col class="d-flex justify-end" cols="2">
@@ -311,9 +325,11 @@
       <v-divider/>
       <v-row v-ripple align="center" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
-          <v-icon color="primary">mdi-notebook-multiple</v-icon>
+          <v-btn color="primary" depressed fab x-small>
+            <v-icon>mdi-notebook-multiple</v-icon>
+          </v-btn>
         </v-col>
-        <v-col class="ml-2">
+        <v-col class="ml-3">
           <span>账单类别</span>
         </v-col>
         <v-col class="d-flex justify-end" cols="1">
@@ -323,9 +339,11 @@
       <v-divider/>
       <v-row v-ripple align="center" no-gutters style="height: 50px;cursor: pointer" @click="">
         <v-col cols="1">
-          <v-icon color="primary">mdi-message-alert</v-icon>
+          <v-btn color="primary" depressed fab x-small>
+            <v-icon>mdi-message-alert</v-icon>
+          </v-btn>
         </v-col>
-        <v-col class="ml-2" @click="feedbackPage.isShow = true">
+        <v-col class="ml-3" @click="feedbackPage.isShow = true;feedbackPage.feedback={};">
           <span>提交反馈</span>
         </v-col>
         <v-col class="d-flex justify-end" cols="1">
@@ -349,7 +367,7 @@
           <v-btn
               dark
               icon
-              @click="feedbackPage.isShow = false"
+              @click="feedbackPage.isShow = false;"
           >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
@@ -360,7 +378,7 @@
                justify="center"
                no-gutters>
           <v-card class="pa-3 rounded-lg" flat fluid>
-            <v-row no-gutters>
+            <v-row align="center" no-gutters>
               <v-col cols="12">
                 <v-select
                     v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
@@ -378,8 +396,8 @@
                     rows="3"
                 />
               </v-col>
-              <v-col class="text--darken-1 grey--text mb-2" cols="12">
-                <v-icon :color="feedbackPage.feedback.imagePath?'primary':''" class="mr-1">mdi-file-image</v-icon>
+              <v-col class="text--darken-1 grey--text mb-3 d-flex align-center" cols="12" style="height: 32px">
+                <v-icon :color="feedbackPage.feedback.imagePath?'primary':''" class="pr-1 mt-1">mdi-file-image</v-icon>
                 <span>反馈图片</span>
               </v-col>
               <v-col class="d-flex justify-center" cols="12">
@@ -387,14 +405,14 @@
                                 @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
               </v-col>
             </v-row>
-            <v-row class="mt-10" no-gutters>
+            <v-row class="mt-3" no-gutters>
               <v-btn
                   :disabled="feedbackPage.loading"
                   :loading="feedbackPage.loading"
                   class="rounded-lg"
                   color="primary"
                   depressed
-                  style="width: 100%"
+                  block
                   @click="saveFeedback"
               >
                 <v-icon class="mr-3">mdi-logout</v-icon>
@@ -412,7 +430,7 @@
           class="ma-auto rounded-lg"
           color="primary"
           large
-          style="width: 100%"
+          block
           depressed
           to="/admin"
       >
@@ -426,7 +444,7 @@
           color="error"
           large
           depressed
-          style="width: 100%"
+          block
           @click="signOut"
       >
         <v-icon class="mr-3">mdi-logout</v-icon>
@@ -454,7 +472,16 @@ export default {
     },
     lightPrimary: function () {
       return this.$vuetify.theme.themes.light.primary;
-    }
+    },
+    isAdmin: function () {
+      if (!this.userInfoPage.userInfo.roleVOList) return false;
+      for (let item of this.userInfoPage.userInfo.roleVOList) {
+        if (item.roleName === '管理员' || item.roleName === '测试用户') {
+          return true;
+        }
+      }
+      return false;
+    },
   },
   data: function () {
     return {
@@ -487,7 +514,7 @@ export default {
           email: null,
           phoneNumber: null,
           status: null,
-          roleVoList: []
+          roleVOList: []
         },
       },
       feedbackPage: {
@@ -499,7 +526,6 @@ export default {
           description: null
         },
       },
-
       darkMode: this.$vuetify.theme.dark,
       classes: {},
       roleMap: [],
@@ -511,8 +537,8 @@ export default {
     changeDarkMode(darkMode) {
       this.$vuetify.theme.dark = darkMode;
     },
-    updateAccount() {
-      if (!this.$refs.updateAccountForm.validate()) {
+    updateUserInfo() {
+      if (!this.$refs.updateUserInfoForm.validate()) {
         return;
       }
       if (this.userInfoPage.dialog.type === 'cancelUser') {
@@ -566,7 +592,7 @@ export default {
         }
       }
       this.userInfoPage.dialog.loading = true;
-      this.axios.put("/user/updateAccount", JSON.stringify(user))
+      this.axios.put("/user/updateUserInfo", JSON.stringify(user))
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -605,15 +631,6 @@ export default {
         }
       }
     },
-    isAdmin() {
-      if (!this.userInfoPage.userInfo.roleVoList) return false;
-      for (let item of this.userInfoPage.userInfo.roleVoList) {
-        if (item.id === 1) {
-          return true;
-        }
-      }
-      return false;
-    },
     saveFeedback() {
       this.feedbackPage.loading = true;
       this.axios.post("/feedback/saveFeedback", JSON.stringify(this.feedbackPage.feedback))
@@ -624,9 +641,7 @@ export default {
               type: "success",
               duration: 2000,
             });
-            this.feedbackPage.feedback.imagePath = null;
-            this.feedbackPage.feedback.type = null;
-            this.feedbackPage.feedback.description = null;
+            this.feedbackPage.isShow = false;
           })
           .finally(() => {
             this.feedbackPage.loading = false;

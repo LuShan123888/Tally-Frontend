@@ -28,7 +28,6 @@
               <v-col cols="12">
                 <v-form
                     ref="phoneNumberForm"
-                    v-model="form.phoneNumber.valid"
                 >
                   <v-row no-gutters>
                     <v-text-field
@@ -109,7 +108,7 @@
                           color="primary"
                           depressed
                           large
-                          width="100%"
+                          block
                           @click="submitForm('phoneNumber')"
                           v-text="'登录'"
                       />
@@ -124,7 +123,6 @@
               <v-col cols="12">
                 <v-form
                     ref="passwordForm"
-                    v-model="form.password.valid"
                 >
                   <v-row no-gutters>
                     <v-text-field
@@ -196,7 +194,7 @@
                           color="primary"
                           depressed
                           large
-                          width="100%"
+                          block
                           @click="submitForm('password')"
                           v-text="'登录'"
                       />
@@ -239,7 +237,6 @@ export default {
     return {
       form: {
         phoneNumber: {
-          valid: null,
           loading: false,
           phoneNumber: null,
           verificationCode: null,
@@ -249,7 +246,6 @@ export default {
           }
         },
         password: {
-          valid: null,
           loading: false,
           username: null,
           password: null,

@@ -200,7 +200,7 @@
         />
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog.isShow" max-width="600px">
+    <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
       <v-card>
         <v-card-title>
           <span class="text-h5" v-text="dialog.title"/>
@@ -259,7 +259,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="imagePreview.isShow" max-width="600px">
+    <v-dialog v-model="imagePreview.isShow" max-width="600px" persistent>
       <i-image :src="imagePreview.imageUrl"/>
     </v-dialog>
   </v-container>

@@ -151,6 +151,7 @@
       </v-col>
     </v-row>
     <v-dialog
+        persistent
         v-model="dialog.isShow"
         max-width="600px"
     >
@@ -289,7 +290,6 @@ export default {
       }
     },
     saveOrUpdateRole() {
-      console.log(this.dialog.role.permissionIdList);
       if (!this.$refs.roleSaveOrUpdateForm.validate()) {
         return;
       }
@@ -340,14 +340,9 @@ export default {
           });
     },
     loadRoleSaveDialog() {
-      this.dialog.role.id = null;
-      this.dialog.role.roleName = null;
-      this.dialog.role.description = null;
-      this.dialog.role.createdDatetime = null;
-      this.dialog.role.permissionIdList = null;
-      this.dialog.role.version = null;
       this.dialog.title = "新增角色";
       this.dialog.isShow = true;
+      this.dialog.role = {};
     },
     loadRoleUpdateDialog(role) {
       this.dialog.role.id = role.id;

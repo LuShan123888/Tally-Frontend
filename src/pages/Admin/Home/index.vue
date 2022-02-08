@@ -12,7 +12,7 @@
                       class="transition-swing rounded">
                 <v-row :style="{height:'100px'}" align="center" no-gutters>
                   <v-col cols="5">
-                    <v-icon class="ml-5" size="50">mdi-account-group</v-icon>
+                    <v-icon class="ml-5" color="primary" size="50">mdi-account-group</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.day"/>
@@ -28,7 +28,7 @@
                       class="transition-swing rounded">
                 <v-row :style="{height:'100px'}" align="center" no-gutters>
                   <v-col cols="5">
-                    <v-icon class="ml-5" size="50">mdi-login</v-icon>
+                    <v-icon class="ml-5" color="primary" size="50">mdi-login</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
@@ -45,7 +45,7 @@
                 <v-row :style="{height:'100px'}" align="center"
                        no-gutters>
                   <v-col cols="5">
-                    <v-icon class="ml-5" size="50">mdi-notebook-edit</v-icon>
+                    <v-icon class="ml-5" color="primary" size="50">mdi-notebook-edit</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.day"/>
@@ -660,7 +660,7 @@ export default {
                   display: true,
                   ticks: {
                     min: 0,
-                    stepSize: 20
+                    stepSize: 200
                   },
                   gridLines: {
                     display: false

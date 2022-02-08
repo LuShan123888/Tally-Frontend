@@ -1,7 +1,7 @@
 <script>
 const url = {
-  api: "https://api.tally.ltd",
-  // api: "http://127.0.0.1:8080",
+  // api: "https://api.tally.ltd",
+  api: "http://127.0.0.1:8080",
   static: "https://static.tally.ltd",
 };
 const title = "一款简约的在线记账平台";
@@ -14,7 +14,9 @@ const rules = {
   permissionNameMaxLength: 20,
   isEmail: (value) => !value || /.+@.+\..+/.test(value) || "邮箱格式有误",
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
-  isFloat: (value) => !value || /^\d+$/.test(value) || /^\d+[.]?\d+$/.test(value) || "只能输入数字",
+  isFloat: (value) => !value || /^[-]?\d+[.]?\d+$/.test(value) || "只能输入数字",
+  isPositive: (value) => !value || /^\d+[.]?\d+$/.test(value) || "只能输入正数",
+  isNegative: (value) => !value || /^-\d+[.]?\d+$/.test(value) || "只能输入负数",
   isUsername: (value) => {
     if (!!value && value.length <= 20) {
       return true;
@@ -76,7 +78,7 @@ const rules = {
       return '权限名称不能超过20位';
     }
   },
-}
+};
 const enums = {
   requestMethod: [
     {text: '*', value: '*'},
@@ -98,8 +100,21 @@ const enums = {
     {text: '问题解决', value: 'PROBLEM'},
     {text: '网站建议', value: 'SUGGESTION'}
   ],
+  billFlow: [
+    {text: '收入', value: 'IN'},
+    {text: '支出', value: 'OUT'},
+    {text: '转账', value: 'TRANSFER'}
+  ],
+  accountType: [
+    {text: '资金账户', value: 'CAPITAL'},
+    {text: '信用账户', value: 'CREDIT'},
+    {text: '充值账户', value: 'RECHARGE'},
+    {text: '理财账户', value: 'FINANCIAL'},
+    {text: '应收账户', value: 'RECEIVABLE'},
+    {text: '应付账户', value: 'PAYABLE'}
+  ],
   page: [5, 15, 50, 100]
-}
+};
 const images = {
   avatar: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/avatar.jpg",
   profile: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/profile.svg",
@@ -114,12 +129,128 @@ const images = {
   annotation: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/annotation.svg",
   feedback: "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/feedback.svg",
 };
+const icons = {
+  accountType: [
+    'wallet',
+    'wallet-giftcard',
+    'wallet-membership',
+    'wallet-outline',
+    'wallet-plus',
+    'wallet-plus-outline',
+    'wallet-travel',
+    'bank',
+    'bank-check',
+    'bank-minus',
+    'bank-off',
+    'bank-off-outline',
+    'bank-plus',
+    'bank-remove',
+    'bank-transfer',
+    'bank-transfer-in',
+    'bank-transfer-out',
+    'piggy-bank',
+    'piggy-bank-outline',
+    'credit-card',
+    'credit-card-check',
+    'credit-card-check-outline',
+    'credit-card-chip',
+    'credit-card-chip-outline',
+    'credit-card-clock',
+    'credit-card-clock-outline',
+    'credit-card-edit',
+    'credit-card-edit-outline',
+    'credit-card-fast',
+    'credit-card-fast-outline',
+    'credit-card-lock',
+    'credit-card-lock-outline',
+    'credit-card-marker',
+    'credit-card-marker-outline',
+    'credit-card-minus',
+    'credit-card-minus-outline',
+    'credit-card-multiple',
+    'credit-card-multiple-outline',
+    'credit-card-off',
+    'credit-card-off-outline',
+    'credit-card-outline',
+    'credit-card-plus',
+    'credit-card-plus-outline',
+    'credit-card-refresh',
+    'credit-card-refresh-outline',
+    'credit-card-refund',
+    'credit-card-refund-outline',
+    'credit-card-remove',
+    'credit-card-remove-outline',
+    'credit-card-scan',
+    'credit-card-scan-outline',
+    'credit-card-search',
+    'credit-card-search-outline',
+    'credit-card-settings',
+    'credit-card-settings-outline',
+    'credit-card-sync',
+    'credit-card-sync-outline',
+    'credit-card-wireless',
+    'credit-card-wireless-outline',
+    'credit-card-wireless-off',
+    'credit-card-wireless-off-outline',
+    'cash',
+    'cash-100',
+    'cash-multiple',
+    'currency-usd',
+    'currency-usd-off',
+    'account-cash',
+    'account-cash-outline',
+    'wechat',
+    'qqchat',
+    'home-analytics',
+    'home',
+    'home-heart',
+    'home-floor-0',
+    'home-floor-1',
+    'home-floor-2',
+    'home-floor-3',
+    'home-group',
+    'home-group-minus',
+    'home-group-plus',
+    'home-group-remove',
+    'hospital',
+    'hospital-box',
+    'hospital-box-outline',
+    'hospital-building',
+    'bus',
+    'apple',
+    'apple-icloud',
+    'application',
+    'cellphone',
+    'cellphone-basic',
+    'cellphone-dock',
+    'gold',
+    'podium-gold',
+    'bitcoin',
+    'currency-btc',
+    'hand-coin',
+    'hand-coin-outline',
+    'chart-arc',
+    'chart-areaspline',
+    'chart-areaspline-variant',
+    'chart-bar',
+    'chart-bar-stacked',
+    'chart-bell-curve',
+    'chart-bell-curve-cumulative',
+    'chart-box',
+    'chart-box-outline',
+    'chart-box-plus-outline',
+    'chart-gantt',
+    'chart-waterfall',
+    'finance',
+  ]
+};
 export default {
   url,
   title,
   adminTitle,
   images,
   rules,
-  enums
+  enums,
+  icons
 };
 </script>

@@ -8,7 +8,7 @@
           :class="{'mx-auto':isMobile,'ml-9':!isMobile,'elevation-24':hover,'elevation-0':!hover}"
           :style="{ width: isMobile ? '90%' : '50%' }"
       >
-        <v-form ref="form" v-model="valid">
+        <v-form ref="form">
           <v-container class="pa-0" fluid>
             <v-row justify="center" no-gutters class="mt-6">
               <v-col cols="12">
@@ -42,6 +42,7 @@
                   </v-col>
                   <v-col cols="5">
                     <v-dialog
+                        persistent
                         ref="dialog"
                         v-model="showDatePicker"
                         :return-value.sync="bill.billDate"
@@ -63,9 +64,7 @@
                           locale="zh-cn"
                       >
                         <v-spacer/>
-                        <v-btn text color="error" @click="showDatePicker = false">
-                          取消
-                        </v-btn>
+                        <v-btn color="grey darken-1" text @click="showDatePicker = false" v-text="'取消'"/>
                         <v-btn
                             text
                             color="primary"
@@ -132,7 +131,6 @@ export default {
     return {
       title: '统计',
       backgroundImagePath: this.GLOBAL.images.working,
-      valid: false,
       typeList: [
         "工资",
         "奖金补贴",

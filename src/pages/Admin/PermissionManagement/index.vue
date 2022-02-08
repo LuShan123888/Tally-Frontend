@@ -81,6 +81,7 @@
       </el-table-column>
     </el-table>
     <v-dialog
+        persistent
         v-model="dialog.isShow"
         max-width="600px"
     >
@@ -269,14 +270,11 @@ export default {
           });
     },
     loadPermissionSaveDialog() {
-      if (this.dialog.permission.id) {
-        this.$refs.permissionSaveOrUpdateForm.resetValidation();
-      }
+      this.dialog.title = "新增权限";
+      this.dialog.isShow = true;
       this.dialog.permission.id = null;
       this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
       this.dialog.permission.version = null;
-      this.dialog.title = "新增权限";
-      this.dialog.isShow = true;
     },
     loadPermissionUpdateDialog(permission) {
       this.dialog.permission.id = permission.id;

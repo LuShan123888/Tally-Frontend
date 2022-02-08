@@ -1,5 +1,5 @@
 <template>
-  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="px-4" fluid>
+  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="py-0 px-4" fluid>
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
     <v-btn
@@ -7,7 +7,8 @@
         fab
         fixed
         right
-        style="bottom: 70px"
+        style="bottom: 68px"
+        @click="loadSaveAccountPage"
     >
       <v-icon>
         mdi-plus
@@ -17,104 +18,193 @@
         class="90% pa-0 rounded-lg"
         flat fluid
     >
-      <v-card-subtitle class="py-2 font-weight-bold">净资产</v-card-subtitle>
-      <v-card-title :style="{ color: lightPrimary }" class="py-0 text-h3">¥123312</v-card-title>
-      <v-card-subtitle class="py-4">
+      <v-card-subtitle class="pa-3 pb-1 font-weight-medium">净资产</v-card-subtitle>
+      <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
+                    v-text="numFormat(accountBalance.netAssets)"></v-card-title>
+      <v-card-subtitle class="pa-3 pt-4">
         <v-row no-gutters>
-          <v-col class="font-weight-bold" cols="6">
-            <span>总资产：</span>
-            <span>¥123312</span>
+          <v-col cols="6">
+            <span class="font-weight-medium">总资产</span>
+            <span class="ml-3" v-text="'¥'+numFormat(accountBalance.assets)"/>
           </v-col>
-          <v-col class="font-weight-bold" cols="6">
-            <span>总负债：</span>
-            <span>¥123312</span>
+          <v-col cols="6">
+            <span class="font-weight-medium">总负债</span>
+            <span class="ml-3" v-text="'¥'+numFormat(accountBalance.liabilities)"/>
           </v-col>
         </v-row>
       </v-card-subtitle>
     </v-card>
-    <v-subheader class="px-0 font-weight-bold d-flex justify-space-between"
-    >
-      <span>资金账户</span>
-      <span>余额：¥1231232</span>
-    </v-subheader>
-    <v-card
-        class="90% mb-5 py-0  px-3 rounded-lg"
-        flat fluid
-    >
-      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
-        <v-col cols="1">
-          <v-icon color="primary">mdi-credit-card-outline</v-icon>
-        </v-col>
-        <v-col class="ml-2">
-          <div class="text-subtitle-1">消费卡</div>
-          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
-        </v-col>
-        <v-col cols="3">
-          <div class="text-subtitle-1">¥10000</div>
-        </v-col>
-        <v-col class="d-flex justify-end" cols="1">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-col>
+    <v-container v-for="(type, i) in accountInfoList"
+                 :key="i"
+                 class="pa-0">
+      <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
+             style="position: relative"
+      >
+        <span v-text="accountTypeFormatter(type.type)"></span>
+        <span class="text-subtitle-2 text--darken-1 grey--text">
+          <span>余额</span>
+          <span class="ml-2" v-text="'¥'+numFormat(type.amount)"/>
+        </span>
       </v-row>
-      <v-divider/>
-      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
-        <v-col cols="1">
-          <v-icon color="primary">mdi-credit-card-outline</v-icon>
-        </v-col>
-        <v-col class="ml-2">
-          <div class="text-subtitle-1">消费卡</div>
-          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
-        </v-col>
-        <v-col cols="3">
-          <div class="text-subtitle-1">¥10000</div>
-        </v-col>
-        <v-col class="d-flex justify-end" cols="1">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-col>
-      </v-row>
-    </v-card>
-    <v-subheader class="px-0 font-weight-bold d-flex justify-space-between"
+      <v-card
+          class="90% py-0  px-3 rounded-lg"
+          flat fluid
+      >
+        <v-container v-for="(item, i) in type.list" :key="i" class="pa-0">
+          <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
+                 @click="loadUpdateAccountPage(item)">
+            <v-col cols="1">
+              <v-btn color="primary" depressed fab x-small>
+                <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
+                <v-icon v-else>mdi-credit-card-outline</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col class="ml-3">
+              <div class="text-subtitle-1" v-text="item.accountName"/>
+              <div class="text-subtitle-2 text--darken-1 grey--text" v-text="item.description"/>
+            </v-col>
+            <v-col class="d-flex justify-end" cols="3">
+              <div class="text-subtitle-1">
+                <span v-text="'¥'+numFormat(item.amount)"/>
+              </div>
+            </v-col>
+            <v-col class="d-flex justify-end" cols="1">
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-col>
+          </v-row>
+          <v-divider v-if="i!==(type.list.length-1)"/>
+        </v-container>
+      </v-card>
+    </v-container>
+    <v-dialog
+        v-model="accountPage.isShow"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
     >
-      <span>资金账户</span>
-      <span>余额：¥1231232</span>
-    </v-subheader>
-    <v-card
-        class="90% mb-5 py-0  px-3 rounded-lg"
-        flat fluid
-    >
-      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
-        <v-col cols="1">
-          <v-icon color="primary">mdi-credit-card-outline</v-icon>
-        </v-col>
-        <v-col class="ml-2">
-          <div class="text-subtitle-1">消费卡</div>
-          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
-        </v-col>
-        <v-col cols="3">
-          <div class="text-subtitle-1">¥10000</div>
-        </v-col>
-        <v-col class="d-flex justify-end" cols="1">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-col>
-      </v-row>
-      <v-divider/>
-      <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer">
-        <v-col cols="1">
-          <v-icon color="primary">mdi-credit-card-outline</v-icon>
-        </v-col>
-        <v-col class="ml-2">
-          <div class="text-subtitle-1">消费卡</div>
-          <div class="text-subtitle-2 text--darken-1 grey--text">储蓄卡</div>
-        </v-col>
-        <v-col cols="3">
-          <div class="text-subtitle-1">¥10000</div>
-        </v-col>
-        <v-col class="d-flex justify-end" cols="1">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-col>
-      </v-row>
-    </v-card>
-
+      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
+        <v-toolbar
+            class="mb-16"
+            color="primary"
+            dark
+            style="border-radius: 0"
+        >
+          <v-btn
+              dark
+              icon
+              @click="accountPage.isShow = false"
+          >
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-toolbar-title v-text="accountPage.title"/>
+        </v-toolbar>
+        <v-row :style="{ width: isMobile ? '100%' : '50%' }"
+               class="mx-auto px-4"
+               justify="center"
+               no-gutters>
+          <v-form ref="accountSaveOrUpdateForm">
+            <v-card class="pa-3 rounded-lg" flat fluid>
+              <v-row no-gutters>
+                <v-col cols="10">
+                  <v-select
+                      v-model="accountPage.account.type" :items="enums.accountType"
+                      :rules="[(value) => !!value || '请选择账户类型']"
+                      label="账户类型"
+                      prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                </v-col>
+                <v-col cols="2">
+                  <v-row class="mb-1" justify="end" no-gutters>
+                    <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">账户图标</div>
+                  </v-row>
+                  <v-row justify="end" no-gutters>
+                    <v-btn color="primary" depressed fab x-small
+                           @click="iconDialog.isShow=true;">
+                      <v-icon>mdi-{{ accountPage.account.icon }}</v-icon>
+                    </v-btn>
+                  </v-row>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="accountPage.account.accountName"
+                      :rules="[(value) => !!value || '请输入账户名称']"
+                      clearable
+                      label="账户名称"
+                      prepend-inner-icon="mdi-card-text">
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="accountPage.account.description"
+                      clearable
+                      label="账户描述"
+                      prepend-inner-icon="mdi-card-bulleted-settings">
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="accountPage.account.amountString"
+                      :rules="[(value) => !!value || '请输入金额', accountPage.account.type==='PAYABLE'?rules.isNegative:rules.isPositive]"
+                      clearable
+                      label="账户金额"
+                      prefix="¥"
+                      prepend-inner-icon="mdi-currency-usd">
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="mt-3" no-gutters>
+                <v-col v-if="accountPage.type==='update'" class="pr-3" cols="6">
+                  <v-btn
+                      :disabled="accountPage.buttons.delete.loading"
+                      :loading="accountPage.buttons.delete.loading"
+                      block
+                      class="rounded-lg"
+                      color="error"
+                      depressed
+                      @click="deleteAccount(accountPage.account.id)"
+                  >
+                    <v-icon class="mr-3">mdi-delete</v-icon>
+                    <span>删除</span>
+                  </v-btn>
+                </v-col>
+                <v-col :class="{'pl-3':accountPage.type==='update'}" :cols="accountPage.type==='update'?6:12">
+                  <v-btn
+                      :disabled="accountPage.buttons.saveOrUpdate.loading"
+                      :loading="accountPage.buttons.saveOrUpdate.loading"
+                      block
+                      class="rounded-lg"
+                      color="primary"
+                      depressed
+                      @click="saveOrUpdateAccount"
+                  >
+                    <v-icon class="mr-3">mdi-content-save</v-icon>
+                    <span>保存</span>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-form>
+        </v-row>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="iconDialog.isShow" max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5" v-text="'图标库'"/>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
+                   cols="2"
+                   @click="accountPage.account.icon = item;iconDialog.isShow=false;">
+              <v-btn color="primary" depressed fab x-small>
+                <v-icon>mdi-{{ item }}</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-container class="py-16"/>
   </v-container>
 </template>
 
@@ -139,75 +229,135 @@ export default {
   data: function () {
     return {
       title: '账户',
-      backgroundImagePath: this.GLOBAL.images.coding,
-      valid: false,
-      typeList: [
-        "餐饮",
-        "水果零食",
-        "购物",
-        "住房",
-        "生活服务",
-        "通讯",
-        "生活日用",
-        "人情社交",
-        "穿搭美容",
-        "医疗保健",
-        "休闲娱乐",
-        "家居家电",
-        "网络虚拟",
-        "其他",
-      ],
-      bill: {
-        flow: "out",
-        amount: null,
+      accountInfoList: [],
+      accountBalance: {
+        assets: 0.00,
+        netAssets: 0.00,
+        liabilities: 0.00
+      },
+      accountPage: {
+        isShow: false,
+        title: null,
         type: null,
-        remark: null,
-        note: null,
-        billDate: null,
-      },
-      showDatePicker: false,
-      rules: {
-        isFloat: this.GLOBAL.rules.isFloat,
-      },
-      styles: {
-        backgroundImg: {
-          width: this.$vuetify.breakpoint.mobile ? "60vw" : "20vw",
-          bottom: this.$vuetify.breakpoint.mobile ? "20vw" : "3vw",
-          right: this.$vuetify.breakpoint.mobile ? "3vw" : "3vw",
+        account: {
+          accountName: null,
+          icon: null,
+          amountString: null,
+          description: null,
+          type: null
         },
+        buttons: {
+          delete: {
+            loading: false
+          },
+          saveOrUpdate: {
+            loading: false
+          }
+        }
       },
-      classes: {
-        title: {
-          "text-h2": !this.$vuetify.breakpoint.mobile,
-          "text-h3": this.$vuetify.breakpoint.mobile,
-          "ml-3": this.$vuetify.breakpoint.mobile,
-          "ml-9": !this.$vuetify.breakpoint.mobile,
-          "mt-3": this.$vuetify.breakpoint.mobile,
-          "mt-9": !this.$vuetify.breakpoint.mobile,
-        },
+      iconDialog: {
+        isShow: false
       },
+      backgroundImagePath: this.GLOBAL.images.coding,
+      rules: this.GLOBAL.rules,
+      enums: this.GLOBAL.enums,
+      icons: this.GLOBAL.icons.accountType
     };
   },
   methods: {
-    submitForm() {
-      if (this.$refs.form.validate()) {
-        this.axios.post("/bill/saveBill", JSON.stringify(this.bill))
+    listUserAccount() {
+      this.axios.get("/account/listUserAccount").then((response) => {
+        this.accountInfoList = response.data.data.accountInfoList;
+        this.accountBalance = response.data.data.accountBalance;
+      });
+    },
+    accountTypeFormatter(accountCode) {
+      for (let item of this.enums.accountType) {
+        if (item.value === accountCode) {
+          return item.text;
+        }
+      }
+    },
+    loadUpdateAccountPage(account) {
+      let accountPage = this.accountPage;
+      accountPage.isShow = true;
+      accountPage.type = 'update';
+      accountPage.title = '修改账户';
+      accountPage.account = account;
+    },
+    loadSaveAccountPage() {
+      let accountPage = this.accountPage;
+      accountPage.isShow = true;
+      accountPage.type = 'save';
+      accountPage.title = '新建账户';
+      accountPage.account = {};
+      accountPage.account.icon = "credit-card-outline";
+    },
+    deleteAccount(accountId) {
+      this.accountPage.buttons.delete.loading = true;
+      this.axios.delete("/account/removeAccount/" + accountId)
+          .then(() => {
+            this.showDialog = false;
+            this.$notify({
+              title: "删除成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.accountPage.isShow = false;
+            this.listUserAccount();
+          }).finally(() => {
+        this.accountPage.buttons.delete.loading = false;
+      });
+    },
+    saveOrUpdateAccount() {
+      if (!this.$refs.accountSaveOrUpdateForm.validate()) {
+        return;
+      }
+      if (this.accountPage.type === 'update') {
+        this.accountPage.buttons.saveOrUpdate.loading = true;
+        this.axios.put("/account/updateAccount", JSON.stringify(this.accountPage.account))
             .then(() => {
               this.$notify({
-                title: "提交成功",
+                title: "保存成功",
                 message: null,
                 type: "success",
                 duration: 2000,
               });
+              this.accountPage.isShow = false;
+              this.listUserAccount();
+            })
+            .finally(() => {
+              this.accountPage.buttons.saveOrUpdate.loading = false;
+            });
+      } else if (this.accountPage.type === 'save') {
+        this.accountPage.buttons.saveOrUpdate.loading = true;
+        this.axios.post("/account/saveAccount", JSON.stringify(this.accountPage.account))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.accountPage.isShow = false;
+              this.listUserAccount();
+            })
+            .finally(() => {
+              this.accountPage.buttons.saveOrUpdate.loading = false;
             });
       }
     },
-    resetForm() {
-      this.$refs.form.reset();
-    },
+    numFormat(num) {
+      return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+        return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
+          return $1 + ",";
+        });
+      });
+    }
   },
   mounted() {
-    this.bill.billDate = new Date().Format("yyyy-MM-dd");
+    this.listUserAccount();
   },
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
-    <v-navigation-drawer expand-on-hover mini-variant-width="70px" app width="320">
+    <v-navigation-drawer app expand-on-hover mini-variant-width="70px"
+                         style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);" width="320">
       <v-list nav style="margin-top:48px">
         <div v-for="(item, i) in menus.data" :key="i">
           <v-list-item v-if="item.children == null"

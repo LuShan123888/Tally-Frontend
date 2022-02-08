@@ -39,7 +39,7 @@
             <v-list-item
                 v-for="(item, i) in billList"
                 :key="i"
-                @click.stop="selectBill(item)"
+                @click="selectBill(item)"
             >
               <v-list-item-icon class="mr-5" v-if="!isMobile">
                 <v-icon x-large color="primary" v-if="item.flow === 'in'"> mdi-cash-plus</v-icon>
@@ -86,7 +86,7 @@
         </v-list>
       </v-card>
     </v-hover>
-    <v-dialog v-model="showDialog" max-width="400px">
+    <v-dialog v-model="showDialog" max-width="400px" persistent>
       <v-card>
         <v-form ref="form" v-model="formValid">
           <v-container class="pa-0" fluid>
@@ -122,6 +122,7 @@
                   </v-col>
                   <v-col cols="5">
                     <v-dialog
+                        persistent
                         ref="dialog"
                         v-model="showDatePicker"
                         :return-value.sync="selectedBill.billDate"

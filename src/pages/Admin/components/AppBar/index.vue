@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
     <v-app-bar-nav-icon class="ml-3">
       <v-icon x-large color="primary"> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>
@@ -10,7 +10,7 @@
         bottom
         offset-y
         nudge-bottom="5px"
-        nudge-left="50px"
+        nudge-left="25px"
         open-on-hover
         transition="slide-y-transition"
     >
@@ -24,20 +24,18 @@
           <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
-      <v-container fluid style="background: #FFFFFF">
-        <v-row v-if="userInfo" align="center" no-gutters style="height: 50px">
-          <v-icon class="ml-4 mr-3" size="24">mdi-account-box</v-icon>
+      <v-container :style="{backgroundColor: isDark?'#000000':'#FFFFFF'}" class="pa-3" fluid>
+        <v-row v-if="userInfo" align="center" class="mb-1 d-flex justify-center" no-gutters style="height: 36px">
           <span v-text="userInfo.username"/>
         </v-row>
-        <v-row no-gutters>
+        <v-row class="mb-1" no-gutters>
           <v-btn
               class="rounded-lg"
               color="primary"
-              style="width: 100%"
-              text
+              block depressed
+              small
               to="/home"
           >
-            <v-icon class="mr-3">mdi-application-outline</v-icon>
             <span>前往前台</span>
           </v-btn>
         </v-row>
@@ -45,11 +43,11 @@
           <v-btn
               class="rounded-lg"
               color="error"
-              style="width: 100%"
-              text
+              block
+              depressed
+              small
               @click="signOut"
           >
-            <v-icon class="mr-3">mdi-logout</v-icon>
             <span>安全退出</span>
           </v-btn>
         </v-row>

@@ -19,9 +19,9 @@ export default new Vuex.Store({
         },
         clean: (state) => {
             state.token = null;
-            state.userInfo = {};
-            localStorage.setItem("token", null);
-            sessionStorage.setItem("userInfo", null);
+            state.userInfo = null;
+            localStorage.removeItem("token");
+            sessionStorage.removeItem("userInfo");
         }
     },
     getters: {

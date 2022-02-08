@@ -152,6 +152,7 @@
       </v-col>
     </v-row>
     <v-dialog
+        persistent
         v-model="dialog.isShow"
         max-width="600px"
     >
@@ -414,16 +415,9 @@ export default {
           });
     },
     loadUserSaveDialog() {
-      this.dialog.user.id = null;
-      this.dialog.user.username = null;
-      this.dialog.user.phoneNumber = null;
-      this.dialog.user.email = null;
-      this.dialog.user.avatarPath = null;
-      this.dialog.user.status = null;
-      this.dialog.user.roleIdList = null;
-      this.dialog.user.version = null;
       this.dialog.title = "新增用户";
       this.dialog.isShow = true;
+      this.dialog.user = {};
     },
     loadUserUpdateDialog(user) {
       this.dialog.user.id = user.id;
