@@ -1,8 +1,9 @@
 <template>
   <v-container class="pa-0" fluid>
+    <app-bar :isShow="appBar.isShow" :title="appBar.title"/>
     <navbar/>
     <v-main>
-        <router-view/>
+      <router-view @changeTitle="changeTitle"/>
     </v-main>
   </v-container>
 </template>
@@ -23,8 +24,18 @@ export default {
       return this.$vuetify.theme.dark;
     },
   },
+  methods: {
+    changeTitle(title) {
+      this.appBar.isShow = false;
+      this.appBar.title = title;
+    },
+  },
   data: function () {
     return {
+      appBar: {
+        title: null,
+        isShow: false
+      },
       styles: {
         darkButton: {
           top: this.$vuetify.breakpoint.mobile ? "70px" : "20px",

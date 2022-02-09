@@ -114,7 +114,7 @@
                 </v-col>
                 <v-col cols="2">
                   <v-row class="mb-1" justify="end" no-gutters>
-                    <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">账户图标</div>
+                    <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">账户图标</div>
                   </v-row>
                   <v-row justify="end" no-gutters>
                     <v-btn color="primary" depressed fab x-small
@@ -357,6 +357,7 @@ export default {
     }
   },
   mounted() {
+    this.$emit("changeTitle", this.title);
     this.listUserAccount();
   },
 };

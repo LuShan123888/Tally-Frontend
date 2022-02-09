@@ -701,6 +701,7 @@ export default {
   mounted() {
     this.userInfoPage.userInfo = this.$store.getters.getUserInfo;
     this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.$store.getters.getUserInfo));
+    this.$emit("changeTitle", this.title);
   }
 };
 </script>

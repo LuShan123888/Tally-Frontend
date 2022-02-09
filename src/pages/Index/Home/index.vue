@@ -377,6 +377,7 @@ export default {
     },
   },
   mounted() {
+    this.$emit("changeTitle", this.title);
     this.axios.get("/bill/listUserBill").then((response) => {
       if (response.data.data != null && response.data.data.length > 0) {
         this.billList = response.data.data;

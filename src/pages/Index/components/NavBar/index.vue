@@ -40,7 +40,6 @@
           min-width="70px"
           height="inherit"
       >
-        <span v-text="item.text"/>
         <v-icon v-text="item.icon"/>
       </v-btn>
     </v-bottom-navigation>
@@ -63,10 +62,10 @@ export default {
       selectedItem: 1,
       title: this.GLOBAL.title,
       menus: [
-        {text: "账本", path: "/home", icon: "mdi-book-edit"},
-        {text: "账户", path: "/account", icon: "mdi-bank"},
-        {text: "统计", path: "/statistics", icon: "mdi-chart-timeline-variant-shimmer"},
-        {text: "我的", path: "/mine", icon: "mdi-account"},
+        {path: "/home", icon: "mdi-book-edit"},
+        {path: "/account", icon: "mdi-bank"},
+        {path: "/statistics", icon: "mdi-chart-timeline-variant-shimmer"},
+        {path: "/mine", icon: "mdi-account"},
       ],
     };
   },

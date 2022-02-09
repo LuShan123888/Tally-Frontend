@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-0 px-4" fluid>
-    <app-bar :isShow="true" :style="{ zIndex: '101' }"/>
+    <app-bar/>
     <dark-button id="dark-button" :style="styles.darkButton"/>
     <v-row no-gutters style="margin-top: 56px">
       <title-bar :title="title"/>
@@ -244,7 +244,7 @@
 </template>
 
 <script>
-import AppBar from "@/pages/Index/components/AppBar";
+import AppBar from "@/components/AppBar";
 import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";

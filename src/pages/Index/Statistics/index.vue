@@ -193,6 +193,7 @@ export default {
     },
   },
   mounted() {
+    this.$emit("changeTitle", this.title);
     this.bill.billDate = (new Date()).Format("yyyy-MM-dd");
   },
 };

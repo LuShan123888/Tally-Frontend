@@ -1,6 +1,5 @@
 <template>
-  <v-app-bar v-model="isShow" app inverted-scroll
-             style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
+  <v-app-bar app style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
     <v-app-bar-nav-icon>
       <v-icon class="pl-3" color="primary" x-large> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>
@@ -11,14 +10,12 @@
 <script>
 export default {
   name: "AppBar",
-  props: {
-    title: String,
-    isShow: Boolean
-  },
+  props: {},
   data: function () {
-    return {};
+    return {
+      title: this.GLOBAL.title
+    };
   },
-  methods: {},
   mounted() {
   },
 };
