@@ -404,7 +404,6 @@ export default {
     deleteUser(userId) {
       this.axios.delete("/user/removeUser/" + userId)
           .then(() => {
-            this.showDialog = false;
             this.$notify({
               title: "删除成功",
               message: null,
@@ -420,14 +419,7 @@ export default {
       this.dialog.user = {};
     },
     loadUserUpdateDialog(user) {
-      this.dialog.user.id = user.id;
-      this.dialog.user.username = user.username;
-      this.dialog.user.phoneNumber = user.phoneNumber;
-      this.dialog.user.email = user.email;
-      this.dialog.user.avatarPath = user.avatarPath;
-      this.dialog.user.status = user.status;
-      this.dialog.user.roleIdList = user.roleIdList;
-      this.dialog.user.version = user.version;
+      this.dialog.user = JSON.parse(JSON.stringify(user));
       this.dialog.title = "修改用户";
       this.dialog.isShow = true;
     },

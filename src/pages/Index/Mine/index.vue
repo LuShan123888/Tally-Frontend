@@ -4,7 +4,7 @@
     <background-image :src="backgroundImagePath"/>
     <v-card
         :style="{ cursor:'pointer'}"
-        class="90% mb-5 px-3 rounded-lg"
+        class="mb-5 px-3 rounded-lg"
         flat
         fluid
         @click.native="userInfoPage.isShow = true"
@@ -53,7 +53,7 @@
                   size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
           <v-card
               :style="{ width: '100%' }"
-              class="90% pt-16 px-3 rounded-lg"
+              class="pt-16 px-3 rounded-lg"
               flat
               fluid
               style="margin-top: -50px"
@@ -300,7 +300,7 @@
       </v-card>
     </v-dialog>
     <v-card
-        class="90% mb-5 pa-0 px-3 rounded-lg"
+        class="mb-5 pa-0 px-3 rounded-lg"
         flat
         fluid
     >

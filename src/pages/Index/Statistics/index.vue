@@ -34,13 +34,6 @@
                 </v-row>
                 <v-row justify="space-around" no-gutters>
                   <v-col cols="5">
-                    <v-text-field
-                        label="标签"
-                        v-model="bill.remark"
-                        clearable
-                    />
-                  </v-col>
-                  <v-col cols="5">
                     <v-dialog
                         persistent
                         ref="dialog"
@@ -79,7 +72,7 @@
                 <v-row no-gutters justify="center">
                   <v-col cols="11">
                     <v-textarea
-                        v-model="bill.note"
+                        v-model="bill.description"
                         auto-grow
                         rows="1"
 
@@ -130,7 +123,7 @@ export default {
   data: function () {
     return {
       title: '统计',
-      backgroundImagePath: this.GLOBAL.images.working,
+      backgroundImagePath: this.GLOBAL.images.dataReport,
       typeList: [
         "工资",
         "奖金补贴",
@@ -143,7 +136,7 @@ export default {
         "其他",
       ],
       bill: {
-        flow: "in",
+        flow: "IN",
         amount: null,
         type: null,
         remark: null,

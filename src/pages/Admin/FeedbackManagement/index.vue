@@ -398,7 +398,6 @@ export default {
     deleteFeedback(feedbackId) {
       this.axios.delete("/feedback/removeFeedback/" + feedbackId)
           .then(() => {
-            this.showDialog = false;
             this.$notify({
               title: "删除成功",
               message: null,
@@ -409,15 +408,7 @@ export default {
           });
     },
     loadFeedbackUpdateDialog(feedback) {
-      this.dialog.feedback.id = feedback.id;
-      this.dialog.feedback.userId = feedback.userId;
-      this.dialog.feedback.type = feedback.type;
-      this.dialog.feedback.description = feedback.description;
-      this.dialog.feedback.imagePath = feedback.imagePath;
-      this.dialog.feedback.status = feedback.status;
-      this.dialog.feedback.processingUserId = feedback.processingUserId;
-      this.dialog.feedback.processingDescription = feedback.processingDescription;
-      this.dialog.feedback.version = feedback.version;
+      this.dialog.feedback = JSON.parse(JSON.stringify(feedback));
       this.dialog.title = "处理反馈";
       this.dialog.isShow = true;
     },

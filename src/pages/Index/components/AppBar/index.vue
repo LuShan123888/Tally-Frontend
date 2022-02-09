@@ -1,6 +1,6 @@
 <template>
   <v-app-bar v-model="isShow" app inverted-scroll
-             style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
+             :style="{backdropFilter: 'blur(10px)',background:isDark?'rgba(30, 30, 30, 0.7)':'rgba(255, 255, 255, 0.7)'}">
     <v-app-bar-nav-icon>
       <v-icon class="pl-3" color="primary" x-large> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>
@@ -12,13 +12,23 @@
 export default {
   name: "AppBar",
   props: {
-    title: String,
-    isShow: Boolean
+    title: String
+  },
+  computed: {
+    isDark: function () {
+      return this.$vuetify.theme.dark;
+    }
   },
   data: function () {
-    return {};
+    return {
+      isShow: false
+    };
   },
-  methods: {},
+  methods: {
+    changeIsShow: function (isShow) {
+      this.isShow = isShow;
+    }
+  },
   mounted() {
   },
 };

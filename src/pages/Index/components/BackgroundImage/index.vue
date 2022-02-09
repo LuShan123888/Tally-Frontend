@@ -1,5 +1,5 @@
 <template>
-  <i-image :src="src" :style="styles.backgroundImg"/>
+  <i-image v-if="!isMobile" :src="src" :style="styles.backgroundImg"/>
 </template>
 
 <script>

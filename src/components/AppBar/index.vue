@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
+  <v-app-bar app>
     <v-app-bar-nav-icon>
       <v-icon class="pl-3" color="primary" x-large> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>
@@ -11,6 +11,7 @@
 export default {
   name: "AppBar",
   props: {},
+  computed: {},
   data: function () {
     return {
       title: this.GLOBAL.title

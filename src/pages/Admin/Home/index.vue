@@ -32,7 +32,7 @@
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
-                    <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日访问用户'"/>
+                    <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
                   </v-col>
                 </v-row>
               </v-card>

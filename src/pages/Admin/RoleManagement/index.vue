@@ -329,7 +329,6 @@ export default {
     deleteRole(roleId) {
       this.axios.delete("/role/removeRole/" + roleId)
           .then(() => {
-            this.showDialog = false;
             this.$notify({
               title: "删除成功",
               message: null,
@@ -345,12 +344,7 @@ export default {
       this.dialog.role = {};
     },
     loadRoleUpdateDialog(role) {
-      this.dialog.role.id = role.id;
-      this.dialog.role.roleName = role.roleName;
-      this.dialog.role.description = role.description;
-      this.dialog.role.createdDatetime = role.createdDatetime;
-      this.dialog.role.permissionIdList = role.permissionIdList;
-      this.dialog.role.version = role.version;
+      this.dialog.role = JSON.parse(JSON.stringify(role));
       this.dialog.title = "修改角色";
       this.dialog.isShow = true;
     },

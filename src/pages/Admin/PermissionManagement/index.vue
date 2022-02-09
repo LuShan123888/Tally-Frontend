@@ -105,7 +105,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.parentId"
-                      :rules="[(value) => !!value || '请输入父权限ID',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
+                      :rules="[(value) => value != null || value !== '' || '请输入父权限ID',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
                       clearable
                       label="父权限ID"
                   />
@@ -113,7 +113,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.weight"
-                      :rules="[(value) => !!value || '请输入权重', rules.isInteger]"
+                      :rules="[(value) => value != null || value !== '' || '请输入权重', rules.isInteger]"
                       clearable
                       label="权重"
                   />
@@ -224,6 +224,7 @@ export default {
         return;
       }
       this.dialog.btn.loading = true;
+      this.dialog.permission.children = null;
       if (this.dialog.permission.id) {
         this.axios.put("/permission/updatePermission", JSON.stringify(this.dialog.permission))
             .then(() => {
@@ -259,7 +260,6 @@ export default {
     deletePermission(permissionId) {
       this.axios.delete("/permission/removePermission/" + permissionId)
           .then(() => {
-            this.showDialog = false;
             this.$notify({
               title: "删除成功",
               message: null,
@@ -273,17 +273,12 @@ export default {
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
       this.dialog.permission.id = null;
-      this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
       this.dialog.permission.version = null;
+      this.dialog.permission.deleted = null;
+      this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
     },
     loadPermissionUpdateDialog(permission) {
-      this.dialog.permission.id = permission.id;
-      this.dialog.permission.parentId = permission.parentId;
-      this.dialog.permission.weight = permission.weight;
-      this.dialog.permission.permissionName = permission.permissionName;
-      this.dialog.permission.requestUrl = permission.requestUrl;
-      this.dialog.permission.requestMethod = permission.requestMethod;
-      this.dialog.permission.version = permission.version;
+      this.dialog.permission = JSON.parse(JSON.stringify(permission));
       this.dialog.title = "修改权限";
       this.dialog.isShow = true;
     },

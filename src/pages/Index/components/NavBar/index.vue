@@ -20,12 +20,10 @@
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"/>
                 </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                      v-text="item.text"
-                      class="text-subtitle-2"
-                  />
-                </v-list-item-content>
+                <v-list-item-title
+                    class="text-subtitle-2 pl-10"
+                    v-text="item.text"
+                />
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -62,10 +60,10 @@ export default {
       selectedItem: 1,
       title: this.GLOBAL.title,
       menus: [
-        {path: "/home", icon: "mdi-book-edit"},
-        {path: "/account", icon: "mdi-bank"},
-        {path: "/statistics", icon: "mdi-chart-timeline-variant-shimmer"},
-        {path: "/mine", icon: "mdi-account"},
+        {text: "账本", path: "/home", icon: "mdi-book-edit"},
+        {text: "账户", path: "/account", icon: "mdi-bank"},
+        {text: "统计", path: "/statistics", icon: "mdi-chart-timeline-variant-shimmer"},
+        {text: "我的", path: "/mine", icon: "mdi-account"}
       ],
     };
   },

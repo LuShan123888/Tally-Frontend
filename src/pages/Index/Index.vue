@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0" fluid>
-    <app-bar :isShow="appBar.isShow" :title="appBar.title"/>
+    <app-bar ref="appBar" :title="appBar.title"/>
     <navbar/>
     <v-main>
       <router-view @changeTitle="changeTitle"/>
@@ -26,15 +26,14 @@ export default {
   },
   methods: {
     changeTitle(title) {
-      this.appBar.isShow = false;
+      this.$refs.appBar.changeIsShow(false);
       this.appBar.title = title;
     },
   },
   data: function () {
     return {
       appBar: {
-        title: null,
-        isShow: false
+        title: null
       },
       styles: {
         darkButton: {

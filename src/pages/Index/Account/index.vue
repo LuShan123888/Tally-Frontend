@@ -15,25 +15,31 @@
       </v-icon>
     </v-btn>
     <v-card
-        class="90% pa-0 rounded-lg"
+        class="pa-0 rounded-lg"
         flat fluid
     >
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">净资产</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
-                    v-text="numFormat(accountBalance.netAssets)"></v-card-title>
+                    v-text="numFormat(accountStat.netAssets)"></v-card-title>
       <v-card-subtitle class="pa-3 pt-4">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总资产</span>
-            <span class="ml-3" v-text="'¥'+numFormat(accountBalance.assets)"/>
+            <span class="ml-3" v-text="'¥'+numFormat(accountStat.assets)"/>
           </v-col>
           <v-col cols="6">
             <span class="font-weight-medium">总负债</span>
-            <span class="ml-3" v-text="'¥'+numFormat(accountBalance.liabilities)"/>
+            <span class="ml-3" v-text="'¥'+numFormat(accountStat.liabilities)"/>
           </v-col>
         </v-row>
       </v-card-subtitle>
     </v-card>
+    <v-skeleton-loader
+        v-for="(item, i) in 6"
+        v-if="loading"
+        class="rounded-lg mt-5"
+        type="list-item-avatar-two-line"
+    />
     <v-container v-for="(type, i) in accountInfoList"
                  :key="i"
                  class="pa-0">
@@ -47,7 +53,7 @@
         </span>
       </v-row>
       <v-card
-          class="90% py-0  px-3 rounded-lg"
+          class="py-0  px-3 rounded-lg"
           flat fluid
       >
         <v-container v-for="(item, i) in type.list" :key="i" class="pa-0">
@@ -229,8 +235,9 @@ export default {
   data: function () {
     return {
       title: '账户',
+      loading: true,
       accountInfoList: [],
-      accountBalance: {
+      accountStat: {
         assets: 0.00,
         netAssets: 0.00,
         liabilities: 0.00
@@ -258,7 +265,7 @@ export default {
       iconDialog: {
         isShow: false
       },
-      backgroundImagePath: this.GLOBAL.images.coding,
+      backgroundImagePath: this.GLOBAL.images.wallet,
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
       icons: this.GLOBAL.icons.accountType
@@ -266,9 +273,11 @@ export default {
   },
   methods: {
     listUserAccount() {
+      this.loading = true;
       this.axios.get("/account/listUserAccount").then((response) => {
         this.accountInfoList = response.data.data.accountInfoList;
-        this.accountBalance = response.data.data.accountBalance;
+        this.accountStat = response.data.data.accountStat;
+        this.loading = false;
       });
     },
     accountTypeFormatter(accountCode) {
@@ -283,7 +292,7 @@ export default {
       accountPage.isShow = true;
       accountPage.type = 'update';
       accountPage.title = '修改账户';
-      accountPage.account = account;
+      accountPage.account = JSON.parse(JSON.stringify(account));
     },
     loadSaveAccountPage() {
       let accountPage = this.accountPage;
@@ -297,7 +306,6 @@ export default {
       this.accountPage.buttons.delete.loading = true;
       this.axios.delete("/account/removeAccount/" + accountId)
           .then(() => {
-            this.showDialog = false;
             this.$notify({
               title: "删除成功",
               message: null,
@@ -348,8 +356,8 @@ export default {
             });
       }
     },
-    numFormat(num) {
-      return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+    numFormat(number) {
+      return number.toString().replace(/\d+/, function (n) { // 先提取整数部分
         return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
           return $1 + ",";
         });
