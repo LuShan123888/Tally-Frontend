@@ -10,9 +10,7 @@
         style="bottom: 68px"
         @click="loadSaveAccountPage"
     >
-      <v-icon>
-        mdi-plus
-      </v-icon>
+      <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-card
         class="pa-0 rounded-lg"
@@ -35,7 +33,8 @@
       </v-card-subtitle>
     </v-card>
     <v-skeleton-loader
-        v-for="(item, i) in 6"
+        v-for="(item) in 6"
+        :key="'skeleton-loader'+item"
         v-if="loading"
         class="rounded-lg mt-5"
         type="list-item-avatar-two-line"
@@ -62,7 +61,7 @@
             <v-col cols="1">
               <v-btn color="primary" depressed fab x-small>
                 <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
-                <v-icon v-else>mdi-credit-card-outline</v-icon>
+                <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
             <v-col class="ml-3">
@@ -124,8 +123,9 @@
                   </v-row>
                   <v-row justify="end" no-gutters>
                     <v-btn color="primary" depressed fab x-small
-                           @click="iconDialog.isShow=true;">
-                      <v-icon>mdi-{{ accountPage.account.icon }}</v-icon>
+                           @click="accountPage.iconDialog.isShow=true;">
+                      <v-icon v-if="accountPage.account.icon">mdi-{{ accountPage.account.icon }}</v-icon>
+                      <v-icon v-else>mdi-help</v-icon>
                     </v-btn>
                   </v-row>
                 </v-col>
@@ -192,7 +192,7 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="iconDialog.isShow" max-width="600px">
+    <v-dialog v-model="accountPage.iconDialog.isShow" max-width="600px">
       <v-card>
         <v-card-title>
           <span class="text-h5" v-text="'图标库'"/>
@@ -201,13 +201,22 @@
           <v-row>
             <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
                    cols="2"
-                   @click="accountPage.account.icon = item;iconDialog.isShow=false;">
+                   @click="accountPage.account.icon = item;accountPage.iconDialog.isShow=false;">
               <v-btn color="primary" depressed fab x-small>
                 <v-icon>mdi-{{ item }}</v-icon>
               </v-btn>
             </v-col>
           </v-row>
         </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn
+              color="grey darken-1"
+              text
+              @click="accountPage.iconDialog.isShow = false"
+              v-text="'取消'"
+          />
+        </v-card-actions>
       </v-card>
     </v-dialog>
     <v-container class="py-16"/>
@@ -260,10 +269,10 @@ export default {
           saveOrUpdate: {
             loading: false
           }
-        }
-      },
-      iconDialog: {
-        isShow: false
+        },
+        iconDialog: {
+          isShow: false
+        },
       },
       backgroundImagePath: this.GLOBAL.images.wallet,
       rules: this.GLOBAL.rules,
@@ -300,7 +309,6 @@ export default {
       accountPage.type = 'save';
       accountPage.title = '新建账户';
       accountPage.account = {};
-      accountPage.account.icon = "credit-card-outline";
     },
     deleteAccount(accountId) {
       this.accountPage.buttons.delete.loading = true;

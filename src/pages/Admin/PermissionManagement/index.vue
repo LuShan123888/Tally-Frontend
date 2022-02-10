@@ -273,6 +273,8 @@ export default {
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
       this.dialog.permission.id = null;
+      this.dialog.permission.createdDatetime = null;
+      this.dialog.permission.updatedDatetime = null;
       this.dialog.permission.version = null;
       this.dialog.permission.deleted = null;
       this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
