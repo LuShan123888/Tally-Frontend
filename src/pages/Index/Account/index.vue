@@ -150,7 +150,7 @@
                 <v-col cols="12">
                   <v-text-field
                       v-model="accountPage.account.amountString"
-                      :rules="[(value) => !!value || '请输入金额', accountPage.account.type==='PAYABLE'?rules.isNegative:rules.isPositive]"
+                      :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
                       clearable
                       label="账户金额"
                       prefix="¥"

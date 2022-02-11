@@ -14,7 +14,7 @@
     </v-btn>
     <v-row no-gutters>
       <v-col
-          class="pr-3"
+          class="pr-1"
           cols="6"
       >
         <v-menu
@@ -27,7 +27,9 @@
             <v-text-field
                 v-model="query.monthString"
                 dense
+                flat
                 label="请选择月份"
+                solo
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -46,13 +48,14 @@
         </v-menu>
       </v-col>
       <v-col
-          class="pl-3"
+          class="pl-1"
           cols="6"
       >
         <v-text-field
             v-model="query.description"
             clearable
             dense
+            flat solo
             label="请输入关键字"
             prepend-icon="mdi-magnify"
         ></v-text-field>
@@ -224,7 +227,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDate"
-                              label="请选择月份"
+                              label="请选择账单日期"
                               prepend-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
@@ -357,7 +360,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDate"
-                              label="请选择月份"
+                              label="请选择账单日期"
                               prepend-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
@@ -438,16 +441,6 @@
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
-                          v-model="billPage.bill.inAccountId"
-                          :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
-                          no-data-text="无对应选项"
-                          dense item-text="accountName"
-                          item-value="id" label="转入账户"
-                          prepend-inner-icon="mdi-wallet"/>
-                    </v-col>
-                    <v-col class="my-3" cols="6">
-                      <v-select
                           v-model="billPage.bill.outAccountId"
                           :items="billPage.accountList"
                           :rules="[(value) => !!value || '请选择转出账户']"
@@ -455,6 +448,16 @@
                           item-text="accountName" item-value="id"
                           label="转出账户"
                           no-data-text="无对应选项"
+                          prepend-inner-icon="mdi-wallet"/>
+                    </v-col>
+                    <v-col class="my-3" cols="6">
+                      <v-select
+                          v-model="billPage.bill.inAccountId"
+                          :items="billPage.accountList"
+                          :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
+                          no-data-text="无对应选项"
+                          dense item-text="accountName"
+                          item-value="id" label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
                     <v-col
@@ -470,7 +473,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDate"
-                              label="请选择月份"
+                              label="请选择账单日期"
                               prepend-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"

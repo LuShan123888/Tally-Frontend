@@ -31,7 +31,7 @@
                     <v-icon class="ml-5" color="primary" size="50">mdi-login</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.day"/>
+                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessStatData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
                   </v-col>
                 </v-row>
@@ -104,14 +104,14 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'访问统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="signInRecordStatData.total"/>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessStatData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总访问数'"/>
                 </v-col>
               </v-row>
             </v-card-title>
             <v-card-text>
               <v-row
-                  v-if="signInRecordStatData.week.loading"
+                  v-if="userAccessStatData.week.loading"
                   :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
@@ -124,8 +124,8 @@
                     width="2"
                 />
               </v-row>
-              <line-chart v-if="!signInRecordStatData.week.loading" :chartData="signInRecordStatData.week.chartData"
-                          :options="signInRecordStatData.week.options"
+              <line-chart v-if="!userAccessStatData.week.loading" :chartData="userAccessStatData.week.chartData"
+                          :options="userAccessStatData.week.options"
                           style="height: 200px"/>
             </v-card-text>
           </v-card>
@@ -880,7 +880,7 @@ export default {
           },
         },
       },
-      signInRecordStatData: {
+      userAccessStatData: {
         total: 0,
         day: 0,
         week: {
@@ -1095,15 +1095,15 @@ export default {
             this.billStatData.week.loading = false;
           });
     },
-    getSignInRecordStatData() {
-      this.axios.get("/user/getSignInRecordStatData")
+    getUserAccessStatData() {
+      this.axios.get("/userRecord/getUserAccessStatData")
           .then((response) => {
             let responseData = response.data.data;
-            this.signInRecordStatData.total = responseData.total;
-            this.signInRecordStatData.day = responseData.day;
-            this.signInRecordStatData.week.chartData.labels = responseData.datetime;
-            this.signInRecordStatData.week.chartData.datasets[0].data = responseData.week;
-            this.signInRecordStatData.week.loading = false;
+            this.userAccessStatData.total = responseData.total;
+            this.userAccessStatData.day = responseData.day;
+            this.userAccessStatData.week.chartData.labels = responseData.datetime;
+            this.userAccessStatData.week.chartData.datasets[0].data = responseData.week;
+            this.userAccessStatData.week.loading = false;
           });
     }
   },
@@ -1114,7 +1114,7 @@ export default {
     this.getInstanceMonitorDataDay();
     this.getUserStatData();
     this.getBillStatData();
-    this.getSignInRecordStatData();
+    this.getUserAccessStatData();
   },
 };
 </script>
