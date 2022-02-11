@@ -39,7 +39,7 @@
         class="rounded-lg mt-5"
         type="list-item-avatar-two-line"
     />
-    <v-container v-for="(type, i) in accountInfoList"
+    <v-container v-for="(type, i) in accountInfoList" v-if="!loading"
                  :key="i"
                  class="pa-0">
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters

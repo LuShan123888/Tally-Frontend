@@ -5,6 +5,7 @@
     <v-main>
       <router-view @changeTitle="changeTitle"/>
     </v-main>
+    <i-footer v-if="!isMobile"/>
   </v-container>
 </template>
 
@@ -12,10 +13,11 @@
 import DarkButton from "@/components/DarkButton";
 import Navbar from "@/pages/Index/components/NavBar";
 import AppBar from "@/pages/Index/components/AppBar";
+import IFooter from "@/components/iFooter";
 
 export default {
   name: "Index",
-  components: {DarkButton, Navbar, AppBar},
+  components: {IFooter, DarkButton, Navbar, AppBar},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
