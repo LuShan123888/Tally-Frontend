@@ -1,7 +1,7 @@
 <template>
-  <v-container class="pa-0" fluid>
+  <v-container class="pa-0 px-4" fluid>
     <v-row class="mt-16" justify="center" no-gutters>
-      <i-image :src="imageUrl" width="100vw"/>
+      <i-image :src="imageUrl" max-width="1000px" width="100%"/>
     </v-row>
     <v-row justify="center">
       <v-btn

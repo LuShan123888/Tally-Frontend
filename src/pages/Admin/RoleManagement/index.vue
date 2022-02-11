@@ -132,6 +132,7 @@
           <v-select
               v-model="table.query.page.size"
               :items="enums.page"
+              no-data-text="无对应选项"
               dense
               label="分页大小"
               lined

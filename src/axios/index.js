@@ -25,9 +25,9 @@ axios.interceptors.request.use((config) => {
 // 响应拦截器
 axios.interceptors.response.use(
     response => {
-        console.log("==========response==========");
-        console.log(response);
-        console.log("==========end==========");
+        // console.log("==========response==========");
+        // console.log(response);
+        // console.log("==========end==========");
         let code = response.data.code;
         let message = response.data.message;
         let data = response.data.data;
@@ -37,9 +37,9 @@ axios.interceptors.response.use(
         return response;
     },
     error => {
-        console.log("==========response==========")
-        console.log(error)
-        console.log("==========end==========")
+        // console.log("==========response==========")
+        // console.log(error)
+        // console.log("==========end==========")
         if (error.response === undefined) {
             Element.Message.error("服务器无响应");
         }

@@ -383,6 +383,7 @@
                 <v-select
                     v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
                     label="反馈类型"
+                    no-data-text="无对应选项"
                     prepend-inner-icon="mdi-format-list-bulleted-type"/>
               </v-col>
               <v-col cols="12">

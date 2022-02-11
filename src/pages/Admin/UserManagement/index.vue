@@ -29,11 +29,15 @@
               </v-row>
               <v-row no-gutters align="center">
                 <v-col cols="6">
-                  <v-select v-model="table.query.user.status" :items="enums.userStatus" class="mt-0 pt-0 mr-2"
+                  <v-select v-model="table.query.user.status"
+                            :items="enums.userStatus" class="mt-0 pt-0 mr-2"
+                            no-data-text="无对应选项"
                             clearable label="状态"/>
                 </v-col>
                 <v-col cols="6">
-                  <v-select v-model="table.query.user.roleIdList" :items="roleMap" chips class="mt-0 pt-0 mr-2"
+                  <v-select v-model="table.query.user.roleIdList"
+                            :items="roleMap" chips class="mt-0 pt-0 mr-2"
+                            no-data-text="无对应选项"
                             clearable deletable-chips item-text="roleName" item-value="id" label="角色" multiple
                             small-chips/>
                 </v-col>
@@ -135,6 +139,7 @@
               label="分页大小"
               lined
               dense
+              no-data-text="无对应选项"
               v-model="table.query.page.size"
               @input="changePageSize"
           />
@@ -240,12 +245,14 @@
                   <v-select
                       v-model="dialog.user.status"
                       class="pl-3"
+                      no-data-text="无对应选项"
                       :items="enums.userStatus"
                       label="状态"
                   />
                   <v-select
                       v-model="dialog.user.roleIdList"
                       class="pl-3"
+                      no-data-text="无对应选项"
                       chips
                       deletable-chips
                       small-chips

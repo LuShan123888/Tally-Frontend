@@ -115,6 +115,7 @@
                       v-model="accountPage.account.type" :items="enums.accountType"
                       :rules="[(value) => !!value || '请选择账户类型']"
                       label="账户类型"
+                      no-data-text="无对应选项"
                       prepend-inner-icon="mdi-format-list-bulleted-type"/>
                 </v-col>
                 <v-col cols="2">

@@ -35,6 +35,7 @@
                   <v-select
                       v-model="table.query.feedback.type"
                       :items="enums.feedbackType"
+                      no-data-text="无对应选项"
                       class="mt-0 pt-0 mr-2"
                       clearable
                       label="反馈类型"
@@ -44,6 +45,7 @@
                   <v-select
                       v-model="table.query.feedback.status"
                       :items="enums.feedbackStatus"
+                      no-data-text="无对应选项"
                       class="mt-0 pt-0 mr-2"
                       clearable
                       label="处理状态"
@@ -183,6 +185,7 @@
               v-model="table.query.page.size"
               :items="enums.page"
               dense
+              no-data-text="无对应选项"
               label="分页大小"
               lined
               @input="changePageSize"
@@ -210,11 +213,15 @@
             <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[0].value">
               <v-row no-gutters>
                 <v-col align-self="center" cols="4">
-                  <v-select v-model="dialog.feedback.type" :items="enums.feedbackType" class="px-2"
+                  <v-select v-model="dialog.feedback.type"
+                            :items="enums.feedbackType" class="px-2"
+                            no-data-text="无对应选项"
                             disabled label="反馈类型"/>
                 </v-col>
                 <v-col cols="4">
-                  <v-select v-model="dialog.feedback.status" :items="enums.feedbackStatus"
+                  <v-select v-model="dialog.feedback.status"
+                            :items="enums.feedbackStatus"
+                            no-data-text="无对应选项"
                             class="px-2" disabled label="反馈状态"/>
                 </v-col>
                 <v-col cols="4">
@@ -226,11 +233,15 @@
             <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[1].value">
               <v-row no-gutters>
                 <v-col align-self="center" cols="6">
-                  <v-select v-model="dialog.feedback.type" :items="enums.feedbackType"
+                  <v-select v-model="dialog.feedback.type"
+                            :items="enums.feedbackType"
+                            no-data-text="无对应选项"
                             class="px-3" disabled label="反馈类型"/>
                 </v-col>
                 <v-col cols="6">
-                  <v-select v-model="dialog.feedback.status" :items="enums.feedbackStatus"
+                  <v-select v-model="dialog.feedback.status"
+                            :items="enums.feedbackStatus"
+                            no-data-text="无对应选项"
                             class="px-3" disabled label="反馈状态"/>
                 </v-col>
                 <v-col cols="12">

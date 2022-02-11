@@ -206,6 +206,7 @@
                           :items="billPage.accountList"
                           :rules="[(value) => !!value || '请选择转出账户']"
                           chips class="pr-1" dense
+                          no-data-text="无对应选项"
                           item-text="accountName" item-value="id"
                           label="转出账户"
                           prepend-inner-icon="mdi-wallet"/>
@@ -338,6 +339,7 @@
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
                           :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
+                          no-data-text="无对应选项"
                           dense item-text="accountName"
                           item-value="id" label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
@@ -439,6 +441,7 @@
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
                           :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
+                          no-data-text="无对应选项"
                           dense item-text="accountName"
                           item-value="id" label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
@@ -451,6 +454,7 @@
                           chips class="pr-1" dense
                           item-text="accountName" item-value="id"
                           label="转出账户"
+                          no-data-text="无对应选项"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
                     <v-col
@@ -669,7 +673,7 @@ export default {
       });
     },
     loadAccountList() {
-      this.axios.get("/account/listAllUserAccount")
+      this.axios.get("/account/listUserAllAccount")
           .then((response) => {
             this.billPage.accountList = response.data.data;
           });
@@ -757,6 +761,11 @@ export default {
           break;
       }
       this.billPage.bill.flow = billFlow;
+      if (this.billPage.bill.billType.id) {
+        this.billPage.bill.billTypeId = this.billPage.bill.billType.id;
+      } else {
+        this.billPage.bill.billTypeId = this.billPage.bill.billType.parentId;
+      }
       if (this.billPage.type === 'update') {
         this.billPage.buttons.saveOrUpdate.loading = true;
         this.axios.put("/bill/updateBill", JSON.stringify(this.billPage.bill))

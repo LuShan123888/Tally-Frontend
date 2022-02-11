@@ -122,6 +122,7 @@
                   <v-select
                       v-model="dialog.permission.requestMethod"
                       :items="enums.requestMethod"
+                      no-data-text="无对应选项"
                       label="请求方式"
                   />
                 </v-col>
