@@ -15,7 +15,8 @@
     <v-row no-gutters>
       <v-col
           class="pr-1"
-          cols="6"
+          cols="4"
+          md="2"
       >
         <v-menu
             max-width="290px"
@@ -30,7 +31,7 @@
                 flat
                 label="请选择月份"
                 solo
-                prepend-icon="mdi-calendar"
+                prepend-inner-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
                 v-on="on"
@@ -49,7 +50,6 @@
       </v-col>
       <v-col
           class="pl-1"
-          cols="6"
       >
         <v-text-field
             v-model="query.description"
@@ -57,7 +57,7 @@
             dense
             flat solo
             label="请输入关键字"
-            prepend-icon="mdi-magnify"
+            prepend-inner-icon="mdi-magnify"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -94,7 +94,7 @@
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
              style="position: relative"
       >
-        <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.billDate"/>
+        <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.billMouth"/>
         <span class="text-subtitle-2 text--darken-1 grey--text">
           <span>余额</span>
           <span class="ml-2" v-text="'¥'+numFormat(date.amount)"/>
@@ -193,10 +193,10 @@
                           prepend-inner-icon="mdi-format-list-bulleted-type"/>
                     </v-col>
                     <v-col cols="2">
-                      <v-row class="mb-1" justify="end" no-gutters>
+                      <v-row class="mb-1" justify="center" no-gutters>
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
-                      <v-row justify="end" no-gutters>
+                      <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
                           <v-icon v-if="billPage.bill.billType.icon">mdi-{{ billPage.bill.billType.icon }}</v-icon>
                           <v-icon v-else>mdi-help</v-icon>
@@ -226,16 +226,16 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDate"
+                              v-model="billPage.bill.billDateString"
                               label="请选择账单日期"
-                              prepend-icon="mdi-calendar"
+                              prepend-inner-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
                               v-on="on"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDate"
+                            v-model="billPage.bill.billDateString"
                             color="primary"
                             locale="zh-cn"
                             no-title
@@ -327,10 +327,10 @@
                           prepend-inner-icon="mdi-format-list-bulleted-type"/>
                     </v-col>
                     <v-col cols="2">
-                      <v-row class="mb-1" justify="end" no-gutters>
+                      <v-row class="mb-1" justify="center" no-gutters>
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
-                      <v-row justify="end" no-gutters>
+                      <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
                           <v-icon v-if="billPage.bill.billType.icon">mdi-{{ billPage.bill.billType.icon }}</v-icon>
                           <v-icon v-else>mdi-help</v-icon>
@@ -359,16 +359,16 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDate"
+                              v-model="billPage.bill.billDateString"
                               label="请选择账单日期"
-                              prepend-icon="mdi-calendar"
+                              prepend-inner-icon="mdi-calendar"
                               readonly
                               v-bind="attrs"
                               v-on="on"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDate"
+                            v-model="billPage.bill.billDateString"
                             color="primary"
                             locale="zh-cn"
                             no-title
@@ -454,7 +454,8 @@
                       <v-select
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
+                          :rules="[(value) => !!value || '请选择转入账户', (value) => value !== billPage.bill.outAccountId || '转入账户不能为转出账户']"
+                          chips class="pr-1"
                           no-data-text="无对应选项"
                           dense item-text="accountName"
                           item-value="id" label="转入账户"
@@ -472,7 +473,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDate"
+                              v-model="billPage.bill.billDateString"
                               label="请选择账单日期"
                               prepend-icon="mdi-calendar"
                               readonly
@@ -481,7 +482,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDate"
+                            v-model="billPage.bill.billDateString"
                             color="primary"
                             locale="zh-cn"
                             no-title
@@ -596,6 +597,7 @@ export default {
           description: null,
           amountString: null,
           billDate: null,
+          billDateString: null,
           billTypeId: null,
           inAccountId: null,
           outAccountId: null,
@@ -725,7 +727,7 @@ export default {
         billPage.bill[key] = null;
       }
       billPage.bill.billType = {};
-      billPage.bill.billDate = new Date().Format("yyyy-MM-dd");
+      billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
     },
     deleteBill(billId) {
       this.billPage.buttons.delete.loading = true;

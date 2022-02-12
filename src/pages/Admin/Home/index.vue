@@ -191,8 +191,8 @@
             <v-card-subtitle :style="{height:'32px'}" class="py-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-cpu-64-bit</v-icon>
-                <span class="font-weight-bold" v-text="'CPU 核心数：'"/>
-                <span :style="{color:lightPrimary}" class="text-subtitle-1" v-text="instanceAttribute.cpu"/>
+                <span class="font-weight-bold" v-text="'CPU 核心数'"/>
+                <span :style="{color:lightPrimary}" class="ml-3 text-subtitle-1" v-text="instanceAttribute.cpu"/>
               </v-row>
             </v-card-subtitle>
             <v-card-text>
@@ -265,8 +265,8 @@
             <v-card-subtitle :style="{height:'32px'}" class="py-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-ip</v-icon>
-                <span class="font-weight-bold" v-text="'公网地址：'"/>
-                <span :style="{color:lightPrimary}" class="text-subtitle-1" v-text="instanceAttribute.ipAddress"/>
+                <span class="font-weight-bold" v-text="'公网地址'"/>
+                <span :style="{color:lightPrimary}" class="ml-3 text-subtitle-1" v-text="instanceAttribute.ipAddress"/>
               </v-row>
             </v-card-subtitle>
             <v-card-text>

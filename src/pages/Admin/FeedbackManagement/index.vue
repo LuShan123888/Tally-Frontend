@@ -83,23 +83,23 @@
           <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
               <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
-                <span class="font-weight-bold" style="color: #909399" v-html="'反馈描述：'"/>
-                <span style="color: #606266" v-text="props.row.description"/>
+                <span class="font-weight-bold" style="color: #909399" v-html="'反馈描述'"/>
+                <span class="ml-3" style="color: #606266" v-text="props.row.description"/>
               </v-row>
               <v-divider v-if="props.row.processingUserId"/>
               <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
-                <span class="font-weight-bold" style="color: #909399" v-html="'处理人ID：'"/>
-                <span style="color: #606266" v-html="props.row.processingUserId"/>
+                <span class="font-weight-bold" style="color: #909399" v-html="'处理人ID'"/>
+                <span class="ml-3" style="color: #606266" v-html="props.row.processingUserId"/>
               </v-row>
               <v-divider v-if="props.row.processingDescription"/>
               <v-row v-if="props.row.processingDescription" v-ripple align="center" no-gutters style="height: 50px">
-                <span class="font-weight-bold" style="color: #909399" v-html="'处理描述：'"/>
-                <span style="color: #606266" v-html="props.row.processingDescription"/>
+                <span class="font-weight-bold" style="color: #909399" v-html="'处理描述'"/>
+                <span class="ml-3" style="color: #606266" v-html="props.row.processingDescription"/>
               </v-row>
             </v-col>
             <v-col class="px-16" cols="6">
               <div class="mb-2">
-                <span class="font-weight-bold" style="color: #909399" v-html="'反馈图片：'"/>
+                <span class="font-weight-bold" style="color: #909399" v-html="'反馈图片'"/>
               </div>
               <i-image v-if="props.row.imagePath!=null" id="feedbackImage" :src="getImageUrl(props.row.imagePath)"
                        @click.native="openImageDialog(getImageUrl(props.row.imagePath))"/>
@@ -270,7 +270,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="imagePreview.isShow" max-width="600px" persistent>
+    <v-dialog v-model="imagePreview.isShow" max-width="600px">
       <i-image :src="imagePreview.imageUrl"/>
     </v-dialog>
   </v-container>

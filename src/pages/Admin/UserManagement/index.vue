@@ -212,7 +212,7 @@
                       v-if="!dialog.user.id"
                       type="password"
                       label="密码确认"
-                      :rules="[value=>value===dialog.user.password||'两次输入的密码不一致']"
+                      :rules="[(value) => value === dialog.user.password || '两次输入的密码不一致']"
                       :counter="rules.passwordMaxLength"
                       clearable
                   />

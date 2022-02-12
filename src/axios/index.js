@@ -32,7 +32,12 @@ axios.interceptors.response.use(
         let message = response.data.message;
         let data = response.data.data;
         if (code !== 200) {
-            Element.Message.error(!data ? message : message + "：" + data);
+            Element.Notification({
+                title: message,
+                message: data,
+                type: "error",
+                duration: 2000,
+            });
         }
         return response;
     },
@@ -41,12 +46,22 @@ axios.interceptors.response.use(
         // console.log(error)
         // console.log("==========end==========")
         if (error.response === undefined) {
-            Element.Message.error("服务器无响应");
+            Element.Notification({
+                title: "服务器无响应",
+                message: null,
+                type: "error",
+                duration: 2000,
+            });
         }
         let status = error.response.status;
         let message = error.response.data.message;
         let data = error.response.data.data;
-        Element.Message.error(!data ? message : message + "：" + data);
+        Element.Notification({
+            title: message,
+            message: data,
+            type: "error",
+            duration: 2000,
+        });
         switch (status) {
             case 401:
                 router.push({name: "SignIn"}).then(() => {

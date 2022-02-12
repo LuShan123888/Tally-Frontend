@@ -60,13 +60,13 @@
           >
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-account</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'用户名'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'用户名：'"/>
+              <v-col class="ml-2">
                 <span v-text="userInfoPage.userInfo.username"/>
               </v-col>
               <v-col cols="1">
@@ -76,13 +76,14 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-account-key</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'密码'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'密码：********'"/>
+              <v-col class="ml-2">
+                <span v-text="'********'"/>
               </v-col>
               <v-col cols="1">
                 <v-icon>mdi-pencil</v-icon>
@@ -91,13 +92,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改手机号','phoneNumber')">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-cellphone-text</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'手机号'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'手机号：'"/>
+              <v-col class="ml-2">
                 <span v-text="userInfoPage.userInfo.phoneNumber"/>
               </v-col>
               <v-col cols="1">
@@ -107,13 +108,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改邮箱','email')">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-email</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'邮箱'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'邮箱：'"/>
+              <v-col class="ml-2">
                 <span v-text="userInfoPage.userInfo.email"/>
               </v-col>
               <v-col cols="1">
@@ -122,13 +123,13 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-list-status</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'状态'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'状态：'"/>
+              <v-col class="ml-2">
                 <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label small
                         v-text="getStatusText()">
                 </v-chip>
@@ -136,13 +137,13 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
-              <v-col cols="1">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-clipboard-account-outline</v-icon>
                 </v-btn>
+                <span class="ml-2 grey--text text--darken-1" v-text="'角色'"/>
               </v-col>
-              <v-col class="ml-3">
-                <span class="grey--text text--darken-1" v-text="'角色：'"/>
+              <v-col class="ml-2">
                 <v-chip v-for="item in userInfoPage.userInfo.roleVOList"
                         :key="item.id" class="mx-1" label small
                         v-text="item.roleName">
@@ -203,7 +204,7 @@
                       <v-text-field
                           :counter="rules.passwordMaxLength"
                           prepend-inner-icon="mdi-account-key"
-                          :rules="[value=>value===userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
+                          :rules="[(value) => value === userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
                           clearable
                           label="密码确认"
                           type="password"
@@ -378,48 +379,53 @@
                justify="center"
                no-gutters>
           <v-card class="pa-3 rounded-lg" flat fluid>
-            <v-row align="center" no-gutters>
-              <v-col cols="12">
-                <v-select
-                    v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
-                    label="反馈类型"
-                    no-data-text="无对应选项"
-                    prepend-inner-icon="mdi-format-list-bulleted-type"/>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea
-                    v-model="feedbackPage.feedback.description"
-                    auto-grow
-                    clearable
-                    counter
-                    label="反馈描述"
-                    prepend-inner-icon="mdi-comment"
-                    rows="3"
-                />
-              </v-col>
-              <v-col class="text--darken-1 grey--text mb-3 d-flex align-center" cols="12" style="height: 32px">
-                <v-icon :color="feedbackPage.feedback.imagePath?'primary':''" class="pr-1 mt-1">mdi-file-image</v-icon>
-                <span>反馈图片</span>
-              </v-col>
-              <v-col class="d-flex justify-center" cols="12">
-                <image-uploader :image-path="feedbackPage.feedback.imagePath"
-                                @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
-              </v-col>
-            </v-row>
-            <v-row class="mt-3" no-gutters>
-              <v-btn
-                  :disabled="feedbackPage.loading"
-                  :loading="feedbackPage.loading"
-                  class="rounded-lg"
-                  color="primary"
-                  depressed
-                  block
-                  @click="saveFeedback"
-              >
-                <v-icon class="mr-3">mdi-logout</v-icon>
-                <span>提交反馈</span>
-              </v-btn>
-            </v-row>
+            <v-form ref="feedbackForm">
+              <v-row align="center" no-gutters>
+                <v-col cols="12">
+                  <v-select
+                      v-model="feedbackPage.feedback.type" :items="enums.feedbackType"
+                      :rules="[(value) => !!value || '请选择反馈类型']"
+                      label="反馈类型"
+                      no-data-text="无对应选项"
+                      prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                </v-col>
+                <v-col cols="12">
+                  <v-textarea
+                      v-model="feedbackPage.feedback.description"
+                      :rules="[(value) => !!value || '请填写反馈类型']"
+                      auto-grow
+                      clearable
+                      counter
+                      label="反馈描述"
+                      prepend-inner-icon="mdi-comment"
+                      rows="3"
+                  />
+                </v-col>
+                <v-col class="text--darken-1 grey--text mb-3 d-flex align-center" cols="12" style="height: 32px">
+                  <v-icon :color="feedbackPage.feedback.imagePath?'primary':''" class="pr-1 mt-1">mdi-file-image
+                  </v-icon>
+                  <span>反馈图片</span>
+                </v-col>
+                <v-col class="d-flex justify-center" cols="12">
+                  <image-uploader :image-path="feedbackPage.feedback.imagePath"
+                                  @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
+                </v-col>
+              </v-row>
+              <v-row class="mt-3" no-gutters>
+                <v-btn
+                    :disabled="feedbackPage.loading"
+                    :loading="feedbackPage.loading"
+                    block
+                    class="rounded-lg"
+                    color="primary"
+                    depressed
+                    @click="saveFeedback"
+                >
+                  <v-icon class="mr-3">mdi-logout</v-icon>
+                  <span>提交反馈</span>
+                </v-btn>
+              </v-row>
+            </v-form>
           </v-card>
         </v-row>
       </v-card>
@@ -633,6 +639,7 @@ export default {
       }
     },
     saveFeedback() {
+      if (!this.$refs.feedbackForm.validate()) return;
       this.feedbackPage.loading = true;
       this.axios.post("/feedback/saveFeedback", JSON.stringify(this.feedbackPage.feedback))
           .then(() => {
