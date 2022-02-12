@@ -109,7 +109,7 @@
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
               <v-btn
-                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':'secondary'"
+                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
                   depressed fab x-small>
                 <v-icon v-if="item.billType.icon">mdi-{{ item.billType.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
@@ -140,13 +140,13 @@
     >
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
-            class="mb-16"
+            class="mb-4"
             color="primary"
             dark
             style="border-radius: 0"
         >
           <template v-slot:extension>
-            <v-tabs v-model="billPage.tab" grow>
+            <v-tabs v-model="billPage.tab" grow @change="billPage.bill.billType={}">
               <v-tab>支出</v-tab>
               <v-tab>收入</v-tab>
               <v-tab>转账</v-tab>
@@ -173,13 +173,13 @@
                     <v-col class="my-3" cols="5">
                       <v-select
                           v-model="billPage.bill.billType.parentId"
-                          :items="billPage.outBillTypeList"
+                          :items="billPage.outBillTypeTree"
                           :rules="[(value) => !!value || '请选择一级账户类别']"
                           chips
                           class="pr-1" dense item-text="billTypeName"
                           item-value="id"
                           label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billType.id=null">
+                          @change="billPage.bill.billType.id = null">
                       </v-select>
                     </v-col>
                     <v-col class="my-3" cols="5">
@@ -309,13 +309,13 @@
                     <v-col class="my-3" cols="5">
                       <v-select
                           v-model="billPage.bill.billType.parentId"
-                          :items="billPage.inBillTypeList"
+                          :items="billPage.inBillTypeTree"
                           :rules="[(value) => !!value || '请选择一级账户类别']"
                           chips
                           class="pr-1" dense item-text="billTypeName"
                           item-value="id"
                           label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billType.id=null"/>
+                          @change="billPage.bill.billType.id = null"/>
                     </v-col>
                     <v-col class="my-3" cols="5">
                       <v-select
@@ -618,9 +618,9 @@ export default {
           }
         },
         accountList: [],
-        billTypeList: [],
-        outBillTypeList: [],
-        inBillTypeList: [],
+        billTypeTree: [],
+        outBillTypeTree: [],
+        inBillTypeTree: [],
         billTypeChildren: [],
       },
       rules: this.GLOBAL.rules,
@@ -636,7 +636,7 @@ export default {
     },
     'billPage.bill.billType.parentId': {
       handler(newVal) {
-        for (let item of this.billPage.billTypeList) {
+        for (let item of this.billPage.billTypeTree) {
           if (item.id === newVal) {
             this.billPage.billTypeChildren = item.children;
             this.billPage.bill.billType.icon = item.icon;
@@ -648,7 +648,7 @@ export default {
     },
     'billPage.bill.billType.id': {
       handler(newVal) {
-        for (let item of this.billPage.billTypeList) {
+        for (let item of this.billPage.billTypeTree) {
           if (item.id === this.billPage.bill.billType.parentId && item.children) {
             for (let child of item.children) {
               if (child.id === newVal) {
@@ -684,15 +684,15 @@ export default {
             this.billPage.accountList = response.data.data;
           });
     },
-    loadBillTypeList() {
-      this.axios.get("/billType/listUserBillType")
+    loadBillTypeTree() {
+      this.axios.get("/billType/listUserBillTypeTree")
           .then((response) => {
-            this.billPage.billTypeList = response.data.data;
-            for (let item of this.billPage.billTypeList) {
+            this.billPage.billTypeTree = response.data.data;
+            for (let item of this.billPage.billTypeTree) {
               if (item.flow === 'OUT') {
-                this.billPage.outBillTypeList.push(item);
+                this.billPage.outBillTypeTree.push(item);
               } else if (item.flow === 'IN') {
-                this.billPage.inBillTypeList.push(item);
+                this.billPage.inBillTypeTree.push(item);
               }
             }
           });
@@ -818,7 +818,7 @@ export default {
     this.$emit("changeTitle", this.title);
     this.listBill();
     this.loadAccountList();
-    this.loadBillTypeList();
+    this.loadBillTypeTree();
   }
 };
 </script>

@@ -91,7 +91,7 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <v-chip v-for="item in scope.row.roleIdSet"
                   :key="item" class="mx-1" label small
                   v-text="roleNameFormatter(item)">
@@ -99,7 +99,7 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <v-chip :color="scope.row.status==='NORMAL'?'success':'secondary'" class="mx-1" label small
                   v-text="userStatusFormatter(scope.row)">
           </v-chip>
@@ -167,7 +167,7 @@
         </v-card-title>
         <v-card-text class="pb-0">
           <v-form ref="userSaveOrUpdateForm">
-            <v-container>
+            <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col cols="6" class="pr-3">
                   <v-text-field

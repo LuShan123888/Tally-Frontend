@@ -91,7 +91,7 @@
         </v-card-title>
         <v-card-text class="pb-0">
           <v-form ref="permissionSaveOrUpdateForm">
-            <v-container>
+            <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
@@ -102,7 +102,7 @@
                       label="权限名称"
                   />
                 </v-col>
-                <v-col class="pr-3" cols="6">
+                <v-col class="pl-3" cols="6">
                   <v-select
                       v-model="dialog.permission.parentId"
                       :items="permissionList"
@@ -121,7 +121,7 @@
                       label="权重"
                   />
                 </v-col>
-                <v-col class="pr-3" cols="6">
+                <v-col class="pl-3" cols="6">
                   <v-select
                       v-model="dialog.permission.requestMethod"
                       :items="enums.requestMethod"
@@ -129,7 +129,7 @@
                       label="请求方式"
                   />
                 </v-col>
-                <v-col class="pr-3" cols="12">
+                <v-col cols="12">
                   <v-text-field
                       v-model="dialog.permission.requestUrl"
                       :rules="[(value) => !!value || '请输入访问路径']"

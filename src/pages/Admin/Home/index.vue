@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
       <v-col cols="2" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>

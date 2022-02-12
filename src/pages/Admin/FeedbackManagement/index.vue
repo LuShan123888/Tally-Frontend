@@ -82,7 +82,7 @@
         stripe
         style="width: 100%">
       <el-table-column type="expand">
-        <template slot-scope="props">
+        <template v-slot="props">
           <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
               <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
@@ -140,7 +140,7 @@
           align="center"
           label="处理状态"
           width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <v-chip v-if="scope.row.status===enums.feedbackStatus[0].value" class="mx-1" color="success"
                   label small v-text="feedbackStatusFormatter(scope.row)">
           </v-chip>
@@ -175,8 +175,10 @@
               title="确定删除该反馈吗？"
               @confirm="deleteFeedback(scope.row.id)"
           >
-            <v-btn slot="reference" class="mx-1"
-                   color="red darken-1" text v-text="'删除'"/>
+            <template v-slot:reference>
+              <v-btn class="mx-1"
+                     color="red darken-1" text v-text="'删除'"/>
+            </template>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -213,7 +215,7 @@
         </v-card-title>
         <v-card-text class="pb-0">
           <v-form ref="feedbackUpdateForm">
-            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[0].value">
+            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[0].value" class="pa-0">
               <v-row no-gutters>
                 <v-col align-self="center" cols="4">
                   <v-select v-model="dialog.feedback.type"
@@ -238,7 +240,7 @@
                 </v-col>
               </v-row>
             </v-container>
-            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[1].value">
+            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[1].value" class="pa-0">
               <v-row no-gutters>
                 <v-col align-self="center" cols="6">
                   <v-select v-model="dialog.feedback.type"
@@ -258,7 +260,7 @@
                 </v-col>
               </v-row>
             </v-container>
-            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[2].value">
+            <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[2].value" class="pa-0">
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12">
                   <span class="font-weight-bold text--lighten-1 red--text">该反馈已处理完成，请勿重复处理！</span>
