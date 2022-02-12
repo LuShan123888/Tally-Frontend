@@ -183,7 +183,7 @@
                 <v-col cols="12">
                   <span :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
                   <v-treeview
-                      v-model="dialog.role.permissionIdList" :items="dialog.permissionMap" dense
+                      v-model="dialog.role.permissionIdList" :items="dialog.permissionTree" dense
                       open-on-click selectable
                       hoverable item-children="children" item-key="id" item-text="permissionName"
                       selected-color="primary" transition/>
@@ -265,7 +265,7 @@ export default {
         btn: {
           loading: false
         },
-        permissionMap: null
+        permissionTree: null
       },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
@@ -349,16 +349,16 @@ export default {
       this.dialog.title = "修改角色";
       this.dialog.isShow = true;
     },
-    loadPermissionMap() {
+    loadPermissionTree() {
       this.table.loading = true;
-      this.axios.get("/permission/listAllPermission")
+      this.axios.get("/permission/getAllPermissionTree")
           .then((response) => {
-            this.dialog.permissionMap = response.data.data;
+            this.dialog.permissionTree = response.data.data;
           });
     },
   },
   mounted() {
-    this.loadPermissionMap();
+    this.loadPermissionTree();
     this.pageRole();
   },
 };

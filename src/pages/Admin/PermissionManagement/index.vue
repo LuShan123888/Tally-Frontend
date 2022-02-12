@@ -103,17 +103,20 @@
                   />
                 </v-col>
                 <v-col class="pr-3" cols="6">
-                  <v-text-field
+                  <v-select
                       v-model="dialog.permission.parentId"
-                      :rules="[(value) => value != null || value !== '' || '请输入父权限ID',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
-                      clearable
-                      label="父权限ID"
+                      :items="permissionList"
+                      :rules="[(value) => !!value || '请选择父权限',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
+                      item-text="permissionName"
+                      item-value="id"
+                      label="父权限"
+                      no-data-text="无对应选项"
                   />
                 </v-col>
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.weight"
-                      :rules="[(value) => value != null || value !== '' || '请输入权重', rules.isInteger]"
+                      :rules="[(value) => !!value || '请输入权重', rules.isInteger]"
                       clearable
                       label="权重"
                   />
@@ -200,6 +203,7 @@ export default {
           loading: false
         }
       },
+      permissionList: [],
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
     };
@@ -214,7 +218,7 @@ export default {
     },
     pagePermission() {
       this.table.loading = true;
-      this.axios.get("/permission/listAllPermission")
+      this.axios.get("/permission/getAllPermissionTree")
           .then((response) => {
             this.table.data = response.data.data;
             this.table.loading = false;
@@ -285,9 +289,17 @@ export default {
       this.dialog.title = "修改权限";
       this.dialog.isShow = true;
     },
+    loadPermissionList() {
+      this.table.loading = true;
+      this.axios.get("/permission/listAllPermission")
+          .then((response) => {
+            this.permissionList = response.data.data;
+          });
+    },
   },
   mounted() {
     this.pagePermission();
+    this.loadPermissionList();
   },
 };
 </script>

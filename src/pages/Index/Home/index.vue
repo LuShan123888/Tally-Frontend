@@ -342,9 +342,10 @@
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
                           :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
-                          no-data-text="无对应选项"
                           dense item-text="accountName"
-                          item-value="id" label="转入账户"
+                          no-data-text="无对应选项"
+                          item-value="id"
+                          label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
                     <v-col

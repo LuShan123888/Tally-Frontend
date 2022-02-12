@@ -20,14 +20,17 @@
                   </v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field
+                  <v-select
                       v-model="table.query.feedback.processingUserId"
-                      :rules="[rules.isInteger]"
                       class="mr-2 pt-0 mt-0"
+                      :items="adminList"
+                      item-text="username"
+                      item-value="id"
+                      label="处理人"
                       clearable
-                      label="处理人ID"
+                      no-data-text="无对应选项"
                   >
-                  </v-text-field>
+                  </v-select>
                 </v-col>
               </v-row>
               <v-row align="center" no-gutters>
@@ -225,8 +228,13 @@
                             class="px-2" disabled label="反馈状态"/>
                 </v-col>
                 <v-col cols="4">
-                  <v-text-field v-model="dialog.feedback.processingUserId" :rules="[rules.isInteger]"
-                                class="px-2" clearable hint="请分配处理人" label="处理人ID"/>
+                  <v-select v-model="dialog.feedback.processingUserId"
+                            :items="adminList"
+                            :rules="[(value) => !!value || '请分配处理人']"
+                            class="px-2"
+                            clearable
+                            item-text="username" item-value="id"
+                            label="处理人"/>
                 </v-col>
               </v-row>
             </v-container>
@@ -343,6 +351,7 @@ export default {
         path: this.GLOBAL.url.api + "/file/upload",
         header: {Authorization: this.$store.getters.getToken}
       },
+      adminList: [],
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
     };
@@ -446,9 +455,19 @@ export default {
         }
       }
     },
+    loadAdminList() {
+      let user = {
+        roleIdList: [1]
+      };
+      this.axios.post("/user/listUser", JSON.stringify(user))
+          .then((response) => {
+            this.adminList = response.data.data;
+          })
+    }
   },
   mounted() {
     this.pageFeedback();
+    this.loadAdminList();
   },
 };
 </script>

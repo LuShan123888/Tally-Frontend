@@ -35,7 +35,7 @@
                             clearable label="状态"/>
                 </v-col>
                 <v-col cols="6">
-                  <v-select v-model="table.query.user.roleIdList"
+                  <v-select v-model="table.query.user.roleIdSet"
                             :items="roleMap" chips class="mt-0 pt-0 mr-2"
                             no-data-text="无对应选项"
                             clearable deletable-chips item-text="roleName" item-value="id" label="角色" multiple
@@ -92,7 +92,7 @@
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
         <template slot-scope="scope">
-          <v-chip v-for="item in scope.row.roleIdList"
+          <v-chip v-for="item in scope.row.roleIdSet"
                   :key="item" class="mx-1" label small
                   v-text="roleNameFormatter(item)">
           </v-chip>
@@ -250,7 +250,7 @@
                       label="状态"
                   />
                   <v-select
-                      v-model="dialog.user.roleIdList"
+                      v-model="dialog.user.roleIdSet"
                       class="pl-3"
                       no-data-text="无对应选项"
                       chips
@@ -326,7 +326,7 @@ export default {
             id: null,
             username: null,
             status: null,
-            roleIdList: null
+            roleIdSet: null
           },
         }
       },
@@ -340,7 +340,7 @@ export default {
           email: null,
           avatarPath: null,
           status: null,
-          roleIdList: null,
+          roleIdSet: null,
           version: null,
         },
         btn: {
