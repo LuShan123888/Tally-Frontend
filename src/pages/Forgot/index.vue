@@ -10,8 +10,7 @@
       <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
                    class="mx-auto transition-swing pa-0 rounded-lg"
                    :style="{ width: isMobile ? '100%' : '30%' }"
-                   fluid
-      >
+                   fluid>
         <v-tabs v-model="tab" class="rounded-t-lg" grow>
           <v-tab>
             <v-icon>mdi-cellphone-message</v-icon>
@@ -26,9 +25,7 @@
           <v-tab-item>
             <v-row class="pa-10" justify="center" no-gutters>
               <v-col cols="12">
-                <v-form
-                    ref="phoneNumberForm"
-                >
+                <v-form ref="phoneNumberForm">
                   <v-row no-gutters>
                     <v-text-field
                         ref="phoneNumberTextField"
@@ -36,8 +33,7 @@
                         :counter="11"
                         :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
                         clearable
-                        label="手机号"
-                    >
+                        label="手机号">
                       <template v-slot:append-outer>
                         <v-btn
                             :disabled="form.phoneNumber.verificationCodeBtn.disabled"
@@ -45,8 +41,7 @@
                             depressed
                             small
                             @click="sendVerificationCode('phoneNumber')"
-                            v-text="'获取验证码'"
-                        />
+                            v-text="'获取验证码'"/>
                       </template>
                     </v-text-field>
                   </v-row>
@@ -133,9 +128,7 @@
           <v-tab-item>
             <v-row class="pa-10" justify="center" no-gutters>
               <v-col cols="12">
-                <v-form
-                    ref="passwordForm"
-                >
+                <v-form ref="passwordForm">
                   <v-row no-gutters>
                     <v-text-field
                         ref="emailTextField"

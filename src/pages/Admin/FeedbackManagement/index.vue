@@ -7,7 +7,7 @@
       <v-col cols="8">
         <v-row align="center" no-gutters>
           <v-col cols="5">
-            <v-form ref="feedbackQueryForm" style="width:100%">
+            <v-form ref="feedbackQueryForm">
               <v-row align="center" no-gutters>
                 <v-col cols="6">
                   <v-text-field
@@ -208,13 +208,13 @@
         />
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
-      <v-card>
-        <v-card-title>
-          <span class="text-h5" v-text="dialog.title"/>
-        </v-card-title>
-        <v-card-text class="pb-0">
-          <v-form ref="feedbackUpdateForm">
+    <v-form ref="feedbackUpdateForm">
+      <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
+        <v-card>
+          <v-card-title>
+            <span class="text-h5" v-text="dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
             <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[0].value" class="pa-0">
               <v-row no-gutters>
                 <v-col align-self="center" cols="4">
@@ -267,19 +267,19 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn color="grey darken-1" text
-                 @click="dialog.isShow = false" v-text="'取消'"/>
-          <v-btn
-              v-if="dialog.feedback.status !== enums.feedbackStatus[2].value"
-              :disabled="dialog.btn.loading" :loading="dialog.btn.loading" color="primary"
-              text @click="updateFeedback" v-text="'保存'"/>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn color="grey darken-1" text
+                   @click="dialog.isShow = false" v-text="'取消'"/>
+            <v-btn
+                v-if="dialog.feedback.status !== enums.feedbackStatus[2].value"
+                :disabled="dialog.btn.loading" :loading="dialog.btn.loading" color="primary"
+                text @click="updateFeedback" v-text="'保存'"/>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
     <v-dialog v-model="imagePreview.isShow" max-width="600px">
       <i-image :src="imagePreview.imageUrl"/>
     </v-dialog>
@@ -385,37 +385,23 @@ export default {
       let postFeedback = JSON.parse(JSON.stringify(this.dialog.feedback));
       if (postFeedback.status === this.enums.feedbackStatus[0].value) {
         postFeedback.status = this.enums.feedbackStatus[1].value;
-        this.axios.put("/feedback/updateFeedback", JSON.stringify(postFeedback))
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.dialog.isShow = false;
-              this.pageFeedback();
-            })
-            .finally(() => {
-              this.dialog.btn.loading = false;
-            });
       } else {
         postFeedback.status = this.enums.feedbackStatus[2].value;
-        this.axios.put("/feedback/updateFeedback", JSON.stringify(postFeedback))
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.dialog.isShow = false;
-              this.pageFeedback();
-            })
-            .finally(() => {
-              this.dialog.btn.loading = false;
-            });
       }
+      this.axios.put("/feedback/updateFeedback", JSON.stringify(postFeedback))
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.dialog.isShow = false;
+            this.pageFeedback();
+          })
+          .finally(() => {
+            this.dialog.btn.loading = false;
+          });
     },
     deleteFeedback(feedbackId) {
       this.axios.delete("/feedback/removeFeedback/" + feedbackId)
@@ -430,6 +416,7 @@ export default {
           });
     },
     loadFeedbackUpdateDialog(feedback) {
+      this.$refs.feedbackUpdateForm.resetValidation();
       this.dialog.feedback = JSON.parse(JSON.stringify(feedback));
       this.dialog.title = "处理反馈";
       this.dialog.isShow = true;

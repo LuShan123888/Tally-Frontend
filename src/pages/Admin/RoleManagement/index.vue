@@ -7,7 +7,7 @@
       <v-col cols="8">
         <v-row align="center" no-gutters>
           <v-col cols="7">
-            <v-form ref="roleQueryForm" style="width:100%">
+            <v-form ref="roleQueryForm">
               <v-row align="center" no-gutters>
                 <v-col cols="4">
                   <v-text-field
@@ -151,17 +151,16 @@
         />
       </v-col>
     </v-row>
-    <v-dialog
-        persistent
-        v-model="dialog.isShow"
-        max-width="600px"
-    >
-      <v-card>
-        <v-card-title>
-          <span class="text-h5" v-text="dialog.title"/>
-        </v-card-title>
-        <v-card-text class="pb-0">
-          <v-form ref="roleSaveOrUpdateForm">
+    <v-form ref="roleSaveOrUpdateForm">
+      <v-dialog
+          v-model="dialog.isShow"
+          max-width="600px"
+          persistent>
+        <v-card>
+          <v-card-title>
+            <span class="text-h5" v-text="dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col class="pr-3" cols="6">
@@ -190,27 +189,27 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-              color="grey darken-1"
-              text
-              @click="dialog.isShow = false"
-              v-text="'取消'"
-          />
-          <v-btn
-              :disabled="dialog.btn.loading"
-              :loading="dialog.btn.loading"
-              color="blue darken-1"
-              text
-              @click="saveOrUpdateRole"
-              v-text="'保存'"
-          />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                color="grey darken-1"
+                text
+                @click="dialog.isShow = false"
+                v-text="'取消'"
+            />
+            <v-btn
+                :disabled="dialog.btn.loading"
+                :loading="dialog.btn.loading"
+                color="blue darken-1"
+                text
+                @click="saveOrUpdateRole"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
   </v-container>
 </template>
 
@@ -340,11 +339,13 @@ export default {
           });
     },
     loadRoleSaveDialog() {
+      this.$refs.roleSaveOrUpdateForm.resetValidation()
       this.dialog.title = "新增角色";
       this.dialog.isShow = true;
       this.dialog.role = {};
     },
     loadRoleUpdateDialog(role) {
+      this.$refs.roleSaveOrUpdateForm.resetValidation()
       this.dialog.role = JSON.parse(JSON.stringify(role));
       this.dialog.title = "修改角色";
       this.dialog.isShow = true;

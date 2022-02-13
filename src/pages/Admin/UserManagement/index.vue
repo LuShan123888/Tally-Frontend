@@ -7,7 +7,7 @@
       <v-col cols="8">
         <v-row no-gutters align="center">
           <v-col cols="5">
-            <v-form style="width:100%" ref="userQueryForm">
+            <v-form ref="userQueryForm">
               <v-row no-gutters align="center">
                 <v-col cols="6">
                   <v-text-field
@@ -156,17 +156,16 @@
         />
       </v-col>
     </v-row>
-    <v-dialog
-        persistent
-        v-model="dialog.isShow"
-        max-width="600px"
-    >
-      <v-card>
-        <v-card-title>
-          <span class="text-h5" v-text="dialog.title"/>
-        </v-card-title>
-        <v-card-text class="pb-0">
-          <v-form ref="userSaveOrUpdateForm">
+    <v-form ref="userSaveOrUpdateForm">
+      <v-dialog
+          v-model="dialog.isShow"
+          max-width="600px"
+          persistent>
+        <v-card>
+          <v-card-title>
+            <span class="text-h5" v-text="dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col cols="6" class="pr-3">
@@ -265,27 +264,27 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-              color="grey darken-1"
-              text
-              @click="dialog.isShow = false"
-              v-text="'取消'"
-          />
-          <v-btn
-              color="primary"
-              text
-              :disabled="dialog.btn.loading"
-              :loading="dialog.btn.loading"
-              @click="saveOrUpdateUser"
-              v-text="'保存'"
-          />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                color="grey darken-1"
+                text
+                @click="dialog.isShow = false"
+                v-text="'取消'"
+            />
+            <v-btn
+                :disabled="dialog.btn.loading"
+                :loading="dialog.btn.loading"
+                color="primary"
+                text
+                @click="saveOrUpdateUser"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
   </v-container>
 </template>
 
@@ -421,11 +420,13 @@ export default {
           });
     },
     loadUserSaveDialog() {
+      this.$refs.userSaveOrUpdateForm.resetValidation();
       this.dialog.title = "新增用户";
       this.dialog.isShow = true;
       this.dialog.user = {};
     },
     loadUserUpdateDialog(user) {
+      this.$refs.userSaveOrUpdateForm.resetValidation();
       this.dialog.user = JSON.parse(JSON.stringify(user));
       this.dialog.title = "修改用户";
       this.dialog.isShow = true;

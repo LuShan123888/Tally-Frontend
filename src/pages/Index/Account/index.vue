@@ -81,33 +81,30 @@
         </v-container>
       </v-card>
     </v-container>
-    <v-dialog
-        v-model="accountPage.isShow"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-    >
-      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
-        <v-toolbar
-            class="mb-16"
-            color="primary"
-            dark
-            style="border-radius: 0"
-        >
-          <v-btn
+    <v-form ref="accountSaveOrUpdateForm">
+      <v-dialog
+          v-model="accountPage.isShow"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition">
+        <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
+          <v-toolbar
+              class="mb-16"
+              color="primary"
               dark
-              icon
-              @click="accountPage.isShow = false"
-          >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-toolbar-title v-text="accountPage.title"/>
-        </v-toolbar>
-        <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-               class="mx-auto px-4"
-               justify="center"
-               no-gutters>
-          <v-form ref="accountSaveOrUpdateForm">
+              style="border-radius: 0">
+            <v-btn
+                dark
+                icon
+                @click="accountPage.isShow = false">
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-toolbar-title v-text="accountPage.title"/>
+          </v-toolbar>
+          <v-row :style="{ width: isMobile ? '100%' : '50%' }"
+                 class="mx-auto px-4"
+                 justify="center"
+                 no-gutters>
             <v-card class="pa-4 rounded-lg" flat fluid>
               <v-row no-gutters>
                 <v-col cols="10">
@@ -189,11 +186,11 @@
                 </v-col>
               </v-row>
             </v-card>
-          </v-form>
-        </v-row>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="accountPage.iconDialog.isShow" max-width="600px">
+          </v-row>
+        </v-card>
+      </v-dialog>
+    </v-form>
+    <v-dialog v-model="accountPage.iconDialog.isShow" max-width="600px" scrollable>
       <v-card>
         <v-card-title>
           <span v-text="'图标库'"/>
@@ -298,6 +295,7 @@ export default {
       }
     },
     loadUpdateAccountPage(account) {
+      this.$refs.accountSaveOrUpdateForm.resetValidation()
       let accountPage = this.accountPage;
       accountPage.isShow = true;
       accountPage.type = 'update';
@@ -305,6 +303,7 @@ export default {
       accountPage.account = JSON.parse(JSON.stringify(account));
     },
     loadSaveAccountPage() {
+      this.$refs.accountSaveOrUpdateForm.resetValidation()
       let accountPage = this.accountPage;
       accountPage.isShow = true;
       accountPage.type = 'save';

@@ -80,17 +80,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <v-dialog
-        persistent
-        v-model="dialog.isShow"
-        max-width="600px"
-    >
-      <v-card>
-        <v-card-title>
-          <span class="text-h5" v-text="dialog.title"/>
-        </v-card-title>
-        <v-card-text class="pb-0">
-          <v-form ref="permissionSaveOrUpdateForm">
+    <v-form ref="permissionSaveOrUpdateForm">
+      <v-dialog
+          v-model="dialog.isShow"
+          max-width="600px"
+          persistent
+      >
+        <v-card>
+          <v-card-title>
+            <span class="text-h5" v-text="dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col class="pr-3" cols="6">
@@ -106,7 +106,8 @@
                   <v-select
                       v-model="dialog.permission.parentId"
                       :items="permissionList"
-                      :rules="[(value) => !!value || '请选择父权限',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
+                      :disabled="dialog.permission.parentId === 0"
+                      :rules="[(value) => value != null || value !== '' || '请选择父权限',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
                       item-text="permissionName"
                       item-value="id"
                       label="父权限"
@@ -116,7 +117,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.weight"
-                      :rules="[(value) => !!value || '请输入权重', rules.isInteger]"
+                      :rules="[(value) => value != null || value !== '' || '请输入权重', rules.isInteger]"
                       clearable
                       label="权重"
                   />
@@ -139,27 +140,27 @@
                 </v-col>
               </v-row>
             </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-              color="grey darken-1"
-              text
-              @click="dialog.isShow = false"
-              v-text="'取消'"
-          />
-          <v-btn
-              :disabled="dialog.btn.loading"
-              :loading="dialog.btn.loading"
-              color="primary"
-              text
-              @click="saveOrUpdatePermission"
-              v-text="'保存'"
-          />
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                color="grey darken-1"
+                text
+                @click="dialog.isShow = false"
+                v-text="'取消'"
+            />
+            <v-btn
+                :disabled="dialog.btn.loading"
+                :loading="dialog.btn.loading"
+                color="primary"
+                text
+                @click="saveOrUpdatePermission"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
   </v-container>
 </template>
 
@@ -275,6 +276,7 @@ export default {
           });
     },
     loadPermissionSaveDialog() {
+      this.$refs.permissionSaveOrUpdateForm.resetValidation();
       this.dialog.title = "新增权限";
       this.dialog.isShow = true;
       this.dialog.permission.id = null;
@@ -285,6 +287,7 @@ export default {
       this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
     },
     loadPermissionUpdateDialog(permission) {
+      this.$refs.permissionSaveOrUpdateForm.resetValidation();
       this.dialog.permission = JSON.parse(JSON.stringify(permission));
       this.dialog.title = "修改权限";
       this.dialog.isShow = true;

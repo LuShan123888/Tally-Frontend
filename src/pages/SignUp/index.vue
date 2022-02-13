@@ -26,9 +26,7 @@
           <v-tab-item>
             <v-row class="pa-10" justify="center" no-gutters>
               <v-col cols="12">
-                <v-form
-                    ref="phoneNumberForm"
-                >
+                <v-form ref="phoneNumberForm">
                   <v-row no-gutters>
                     <v-text-field
                         ref="phoneNumberTextField"
@@ -121,9 +119,7 @@
           <v-tab-item>
             <v-row class="pa-10" justify="center" no-gutters>
               <v-col cols="12">
-                <v-form
-                    ref="passwordForm"
-                >
+                <v-form ref="passwordForm">
                   <v-row no-gutters>
                     <v-text-field
                         ref="emailTextField"

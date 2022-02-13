@@ -48,9 +48,7 @@
           </v-date-picker>
         </v-menu>
       </v-col>
-      <v-col
-          class="pl-1"
-      >
+      <v-col class="pl-1">
         <v-text-field
             v-model="query.description"
             clearable
@@ -89,27 +87,23 @@
         type="list-item-avatar-two-line"
     />
     <v-container v-for="(date, i) in billInfoList" v-if="!loading"
-                 :key="i"
-                 class="pa-0">
+                 :key="i" class="pa-0">
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
-             style="position: relative"
-      >
+             style="position: relative">
         <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.billMouth"/>
         <span class="text-subtitle-2 text--darken-1 grey--text">
-          <span>余额</span>
+          <span>结余</span>
           <span class="ml-2" v-text="'¥'+numFormat(date.amount)"/>
         </span>
       </v-row>
-      <v-card
-          class="py-0  px-3 rounded-lg"
-          flat fluid
-      >
+      <v-card class="py-0  px-3 rounded-lg"
+              flat fluid>
         <v-container v-for="(item, i) in date.list" :key="i" class="pa-0">
           <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
               <v-btn
-                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
+                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'success':item.flow==='TRANSFER'?'warning':''"
                   depressed fab x-small>
                 <v-icon v-if="item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
@@ -133,30 +127,25 @@
       </v-card>
     </v-container>
     <v-dialog
+        eager
         v-model="billPage.isShow"
         fullscreen
         hide-overlay
-        transition="dialog-bottom-transition"
-    >
+        transition="dialog-bottom-transition">
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
             class="mb-4"
             color="primary"
             dark
-            style="border-radius: 0"
-        >
+            style="border-radius: 0">
           <template v-slot:extension>
-            <v-tabs v-model="billPage.tab" grow @change="billPage.bill.billTypeVO={}">
+            <v-tabs v-model="billPage.tab" grow @change="changeTabs">
               <v-tab>支出</v-tab>
               <v-tab>收入</v-tab>
               <v-tab>转账</v-tab>
             </v-tabs>
           </template>
-          <v-btn
-              dark
-              icon
-              @click="billPage.isShow = false"
-          >
+          <v-btn dark icon @click="billPage.isShow = false">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-toolbar-title v-text="billPage.title"/>
@@ -198,7 +187,10 @@
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{ billPage.bill.billTypeVO.icon }}</v-icon>
+                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{
+                              billPage.bill.billTypeVO.icon
+                            }}
+                          </v-icon>
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
@@ -214,16 +206,12 @@
                           label="转出账户"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
-                    <v-col
-                        class="pr-1"
-                        cols="6"
-                    >
+                    <v-col class="pr-1" cols="6">
                       <v-menu
                           max-width="290px"
                           min-width="auto"
                           offset-y
-                          transition="scale-transition"
-                      >
+                          transition="scale-transition">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDateString"
@@ -240,8 +228,7 @@
                             locale="zh-cn"
                             no-title
                             scrollable
-                            type="date"
-                        >
+                            type="date">
                         </v-date-picker>
                       </v-menu>
                     </v-col>
@@ -273,8 +260,7 @@
                           class="rounded-lg"
                           color="error"
                           depressed
-                          @click="deleteBill(billPage.bill.id)"
-                      >
+                          @click="deleteBill(billPage.bill.id)">
                         <v-icon class="mr-3">mdi-delete</v-icon>
                         <span>删除</span>
                       </v-btn>
@@ -287,8 +273,7 @@
                           class="rounded-lg"
                           color="primary"
                           depressed
-                          @click="saveOrUpdateBill('OUT')"
-                      >
+                          @click="saveOrUpdateBill('OUT')">
                         <v-icon class="mr-3">mdi-content-save</v-icon>
                         <span>保存</span>
                       </v-btn>
@@ -332,7 +317,8 @@
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{ billPage.bill.billTypeVO.icon }}</v-icon>
+                          <v-icon v-if="billPage.bill.billTypeVO.icon"
+                                  v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
@@ -348,16 +334,12 @@
                           label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
-                    <v-col
-                        class="pr-1"
-                        cols="6"
-                    >
+                    <v-col class="pr-1" cols="6">
                       <v-menu
                           max-width="290px"
                           min-width="auto"
                           offset-y
-                          transition="scale-transition"
-                      >
+                          transition="scale-transition">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDateString"
@@ -374,8 +356,7 @@
                             locale="zh-cn"
                             no-title
                             scrollable
-                            type="date"
-                        >
+                            type="date">
                         </v-date-picker>
                       </v-menu>
                     </v-col>
@@ -407,8 +388,7 @@
                           class="rounded-lg"
                           color="error"
                           depressed
-                          @click="deleteBill(billPage.bill.id)"
-                      >
+                          @click="deleteBill(billPage.bill.id)">
                         <v-icon class="mr-3">mdi-delete</v-icon>
                         <span>删除</span>
                       </v-btn>
@@ -421,8 +401,7 @@
                           class="rounded-lg"
                           color="primary"
                           depressed
-                          @click="saveOrUpdateBill('IN')"
-                      >
+                          @click="saveOrUpdateBill('IN')">
                         <v-icon class="mr-3">mdi-content-save</v-icon>
                         <span>保存</span>
                       </v-btn>
@@ -462,16 +441,12 @@
                           item-value="id" label="转入账户"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
-                    <v-col
-                        class="pr-1"
-                        cols="6"
-                    >
+                    <v-col class="pr-1" cols="6">
                       <v-menu
                           max-width="290px"
                           min-width="auto"
                           offset-y
-                          transition="scale-transition"
-                      >
+                          transition="scale-transition">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                               v-model="billPage.bill.billDateString"
@@ -488,8 +463,7 @@
                             locale="zh-cn"
                             no-title
                             scrollable
-                            type="date"
-                        >
+                            type="date">
                         </v-date-picker>
                       </v-menu>
                     </v-col>
@@ -521,8 +495,7 @@
                           class="rounded-lg"
                           color="error"
                           depressed
-                          @click="deleteBill(billPage.bill.id)"
-                      >
+                          @click="deleteBill(billPage.bill.id)">
                         <v-icon class="mr-3">mdi-delete</v-icon>
                         <span>删除</span>
                       </v-btn>
@@ -535,8 +508,7 @@
                           class="rounded-lg"
                           color="primary"
                           depressed
-                          @click="saveOrUpdateBill('TRANSFER')"
-                      >
+                          @click="saveOrUpdateBill('TRANSFER')">
                         <v-icon class="mr-3">mdi-content-save</v-icon>
                         <span>保存</span>
                       </v-btn>
@@ -641,6 +613,13 @@ export default {
       },
       deep: true
     },
+    'billPage.isShow': {
+      handler() {
+        this.$refs.outBillSaveOrUpdateForm.resetValidation();
+        this.$refs.inBillSaveOrUpdateForm.resetValidation();
+        this.$refs.transferBillSaveOrUpdateForm.resetValidation();
+      },
+    },
     'billPage.bill.billTypeVO.parentId': {
       handler(newVal) {
         for (let item of this.billPage.billTypeTree) {
@@ -650,8 +629,7 @@ export default {
             return;
           }
         }
-      },
-      deep: true
+      }
     },
     'billPage.bill.billTypeVO.id': {
       handler(newVal) {
@@ -664,11 +642,16 @@ export default {
             }
           }
         }
-      },
-      deep: true
+      }
     }
   },
   methods: {
+    changeTabs() {
+      this.billPage.bill.billTypeVO = {};
+      this.$refs.outBillSaveOrUpdateForm.resetValidation();
+      this.$refs.inBillSaveOrUpdateForm.resetValidation();
+      this.$refs.transferBillSaveOrUpdateForm.resetValidation();
+    },
     listBill() {
       this.loading = true;
       this.axios.post("/bill/listUserBill", JSON.stringify(this.query)).then((response) => {

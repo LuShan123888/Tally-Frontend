@@ -27,20 +27,17 @@
         fullscreen
         hide-overlay
         :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}"
-        transition="dialog-bottom-transition"
-    >
+        transition="dialog-bottom-transition">
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
             class="mb-16"
             color="primary"
             dark
-            style="border-radius: 0"
-        >
+            style="border-radius: 0">
           <v-btn
               dark
               icon
-              @click="userInfoPage.isShow = false"
-          >
+              @click="userInfoPage.isShow = false">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-toolbar-title>用户信息</v-toolbar-title>
@@ -165,13 +162,13 @@
             </v-row>
           </v-card>
         </v-row>
-        <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
-          <v-card>
-            <v-card-title>
-              <span v-text="userInfoPage.dialog.title"/>
-            </v-card-title>
-            <v-card-text class="pb-0">
-              <v-form ref="updateUserInfoForm">
+        <v-form ref="updateUserInfoForm">
+          <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
+            <v-card>
+              <v-card-title>
+                <span v-text="userInfoPage.dialog.title"/>
+              </v-card-title>
+              <v-card-text class="pb-0">
                 <v-container v-if="userInfoPage.dialog.type==='avatar'" class="pa-0">
                   <v-row no-gutters>
                     <v-col class="d-flex justify-center" cols="12">
@@ -287,18 +284,18 @@
                     <span class="ml-2">确定要注销该账号吗？</span>
                   </v-row>
                 </v-container>
-              </v-form>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn depressed
-                     @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
-              <v-btn
-                  :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
-                  depressed @click="updateUserInfo" v-text="'保存'"/>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer/>
+                <v-btn depressed
+                       @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
+                <v-btn
+                    :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
+                    depressed @click="updateUserInfo" v-text="'保存'"/>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-form>
       </v-card>
     </v-dialog>
     <v-card
@@ -344,7 +341,7 @@
             <v-icon>mdi-message-alert</v-icon>
           </v-btn>
         </v-col>
-        <v-col class="ml-3" @click="feedbackPage.isShow = true;feedbackPage.feedback={};">
+        <v-col class="ml-3" @click="loadFeedbackPage">
           <span>提交反馈</span>
         </v-col>
         <v-col class="d-flex justify-end" cols="1">
@@ -395,7 +392,6 @@
                 :items="billTypePage.billTypeTree"
                 item-children="children"
                 item-key="id"
-                rounded
                 item-text="billTypeName" open-on-click selected-color="primary"
                 style="width: 100%" transition>
               <template v-slot:prepend="{ item, open }">
@@ -411,7 +407,7 @@
                        depressed small
                        v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
                 <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>
-                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" class="mr-1" color="error" depressed
+                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" color="error" depressed
                        small
                        v-text="'删除'"
                        @click.stop="billTypePage.removeDialog.isShow = true;billTypePage.removeDialog.billType.id = item.id"/>
@@ -420,13 +416,13 @@
           </v-card>
         </v-row>
       </v-card>
-      <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent>
-        <v-card>
-          <v-card-title>
-            <span v-text="billTypePage.dialog.title"/>
-          </v-card-title>
-          <v-card-text class="pb-0">
-            <v-form ref="billTypeForm">
+      <v-form ref="billTypeForm">
+        <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent scrollable>
+          <v-card>
+            <v-card-title>
+              <span v-text="billTypePage.dialog.title"/>
+            </v-card-title>
+            <v-card-text class="pb-0">
               <v-container class="pa-0">
                 <v-row no-gutters>
                   <v-col align-self="center" cols="10">
@@ -462,7 +458,7 @@
                   <v-col class="pl-1" cols="6">
                     <v-select v-model="billTypePage.dialog.billType.parentId"
                               :items="billTypePage.dialog.billType.flow==='OUT'?billTypePage.outBillTypeList:billTypePage.dialog.billType.flow==='IN'?billTypePage.inBillTypeList:[]"
-                              :rules="[(value) => value != null || '请选择父账单类别']"
+                              :rules="[(value) => value != null || value !== '' || '请选择父账单类别']"
                               item-text="billTypeName"
                               item-value="id"
                               label="父账单类别"
@@ -471,19 +467,19 @@
                   </v-col>
                 </v-row>
               </v-container>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn depressed
-                   @click="billTypePage.dialog.isShow = false" v-text="'取消'"/>
-            <v-btn
-                :disabled="billTypePage.dialog.btn.loading" :loading="billTypePage.dialog.btn.loading"
-                color="primary" depressed
-                @click="saveOrUpdateBillTpe" v-text="'保存'"/>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer/>
+              <v-btn depressed
+                     @click="billTypePage.dialog.isShow = false" v-text="'取消'"/>
+              <v-btn
+                  :disabled="billTypePage.dialog.btn.loading" :loading="billTypePage.dialog.btn.loading"
+                  color="primary" depressed
+                  @click="saveOrUpdateBillTpe" v-text="'保存'"/>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-form>
       <v-dialog v-model="billTypePage.removeDialog.isShow" max-width="600px" persistent>
         <v-card>
           <v-card-title>
@@ -508,7 +504,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog v-model="billTypePage.iconDialog.isShow" max-width="600px">
+      <v-dialog v-model="billTypePage.iconDialog.isShow" max-width="600px" scrollable>
         <v-card>
           <v-card-title>
             <span v-text="'图标库'"/>
@@ -536,34 +532,33 @@
         </v-card>
       </v-dialog>
     </v-dialog>
-    <v-dialog
-        v-model="feedbackPage.isShow"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-    >
-      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
-        <v-toolbar
-            class="mb-16"
-            color="primary"
-            dark
-            style="border-radius: 0"
-        >
-          <v-btn
+    <v-form ref="feedbackForm">
+      <v-dialog
+          v-model="feedbackPage.isShow"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition">
+        <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
+          <v-toolbar
+              class="mb-16"
+              color="primary"
               dark
-              icon
-              @click="feedbackPage.isShow = false;"
+              style="border-radius: 0"
           >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-toolbar-title>提交反馈</v-toolbar-title>
-        </v-toolbar>
-        <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-               class="mx-auto px-4"
-               justify="center"
-               no-gutters>
-          <v-card class="pa-4 rounded-lg" flat fluid>
-            <v-form ref="feedbackForm">
+            <v-btn
+                dark
+                icon
+                @click="feedbackPage.isShow = false;"
+            >
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-toolbar-title>提交反馈</v-toolbar-title>
+          </v-toolbar>
+          <v-row :style="{ width: isMobile ? '100%' : '50%' }"
+                 class="mx-auto px-4"
+                 justify="center"
+                 no-gutters>
+            <v-card class="pa-4 rounded-lg" flat fluid>
               <v-row align="center" no-gutters>
                 <v-col cols="12">
                   <v-select
@@ -609,11 +604,11 @@
                   <span>提交反馈</span>
                 </v-btn>
               </v-row>
-            </v-form>
-          </v-card>
-        </v-row>
-      </v-card>
-    </v-dialog>
+            </v-card>
+          </v-row>
+        </v-card>
+      </v-dialog>
+    </v-form>
     <v-row v-if="isAdmin"
            class="mb-4"
            no-gutters>
@@ -761,6 +756,21 @@ export default {
     changeDarkMode(darkMode) {
       this.$vuetify.theme.dark = darkMode;
     },
+    loadUserInfo() {
+      let _this = this;
+      this.axios.get("/user/getUserInfo").then((response) => {
+        _this.$store.commit("setUserInfo", response.data.data);
+        this.userInfoPage.userInfo = response.data.data;
+      });
+    },
+    loadUserInfoDialog(title, type) {
+      this.$refs.updateUserInfoForm.resetValidation();
+      this.userInfoPage.dialog.title = title;
+      this.userInfoPage.dialog.type = type;
+      this.userInfoPage.dialog.isShow = true;
+      this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.userInfoPage.userInfo));
+      this.userInfoPage.dialog.verificationCodeBtn.disabled = false;
+    },
     updateUserInfo() {
       if (!this.$refs.updateUserInfoForm.validate()) {
         return;
@@ -831,22 +841,10 @@ export default {
             this.userInfoPage.dialog.loading = false;
           });
     },
-    signOut() {
-      this.$notify({
-        title: "退出成功",
-        message: null,
-        type: "success",
-        duration: 2000,
-      });
-      this.$store.commit("clean");
-      this.$router.push({name: "SignIn"});
-    },
-    getStatusText() {
-      for (let item of this.enums.userStatus) {
-        if (item.value === this.userInfoPage.userInfo.status) {
-          return item.text;
-        }
-      }
+    loadFeedbackPage() {
+      this.$refs.feedbackForm.resetValidation();
+      this.feedbackPage.feedback = {};
+      this.feedbackPage.isShow = true;
     },
     saveFeedback() {
       if (!this.$refs.feedbackForm.validate()) return;
@@ -866,6 +864,7 @@ export default {
           });
     },
     loadSaveBillTypeDialog() {
+      this.$refs.billTypeForm.resetValidation();
       let dialog = this.billTypePage.dialog;
       dialog.isShow = true;
       dialog.type = 'save';
@@ -873,6 +872,7 @@ export default {
       dialog.billType = {};
     },
     loadUpdateBillTypeDialog(billType) {
+      this.$refs.billTypeForm.resetValidation();
       let dialog = this.billTypePage.dialog;
       dialog.isShow = true;
       dialog.type = 'update';
@@ -937,20 +937,6 @@ export default {
         this.billTypePage.removeDialog.btn.loading = false;
       });
     },
-    loadUserInfoDialog(title, type) {
-      this.userInfoPage.dialog.title = title;
-      this.userInfoPage.dialog.type = type;
-      this.userInfoPage.dialog.isShow = true;
-      this.userInfoPage.dialog.verificationCodeBtn.disabled = false;
-    },
-    loadUserInfo() {
-      let _this = this;
-      this.axios.get("/user/getUserInfo").then((response) => {
-        _this.$store.commit("setUserInfo", response.data.data);
-        this.userInfoPage.userInfo = response.data.data;
-        this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(response.data.data));
-      });
-    },
     loadBillTypeTree() {
       this.axios.get("/billType/listUserBillTypeTree")
           .then((response) => {
@@ -1013,6 +999,23 @@ export default {
         }).finally(() => {
           this.userInfoPage.dialog.verificationCodeBtn.loading = false;
         });
+      }
+    },
+    signOut() {
+      this.$notify({
+        title: "退出成功",
+        message: null,
+        type: "success",
+        duration: 2000,
+      });
+      this.$store.commit("clean");
+      this.$router.push({name: "SignIn"});
+    },
+    getStatusText() {
+      for (let item of this.enums.userStatus) {
+        if (item.value === this.userInfoPage.userInfo.status) {
+          return item.text;
+        }
       }
     },
   },
