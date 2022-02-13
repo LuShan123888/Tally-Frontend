@@ -407,9 +407,10 @@
                        depressed small
                        v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
                 <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>
-                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" color="error" depressed
-                       small
-                       v-text="'删除'"
+                <v-btn v-if="item.flow !== 'TRANSFER'&& (item.billTypeName !== '其他' || item.parentId !== 0)"
+                       color="error"
+                       depressed
+                       small v-text="'删除'"
                        @click.stop="billTypePage.removeDialog.isShow = true;billTypePage.removeDialog.billType.id = item.id"/>
               </template>
             </v-treeview>
