@@ -403,7 +403,8 @@
                 </v-btn>
               </template>
               <template v-slot:append="{ item, open }">
-                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" class="mr-1" color="primary"
+                <v-btn v-if="item.flow !== 'TRANSFER'&& (item.billTypeName !== '其他' || item.parentId !== 0)"
+                       class="mr-1" color="primary"
                        depressed small
                        v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
                 <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>

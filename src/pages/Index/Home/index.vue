@@ -159,7 +159,7 @@
               <v-form ref="outBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
-                    <v-col class="my-3" cols="5">
+                    <v-col class="my-3" cols="6">
                       <v-select
                           v-model="billPage.bill.billTypeVO.parentId"
                           :items="billPage.outBillTypeTree"
@@ -171,17 +171,7 @@
                           @change="billPage.bill.billTypeVO.id = null">
                       </v-select>
                     </v-col>
-                    <v-col class="my-3" cols="5">
-                      <v-select
-                          v-model="billPage.bill.billTypeVO.id"
-                          :items="billPage.billTypeChildren"
-                          chips class="pl-1" deletable-chips
-                          dense
-                          item-text="billTypeName"
-                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
-                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
-                    </v-col>
-                    <v-col cols="2">
+                    <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
@@ -195,7 +185,17 @@
                         </v-btn>
                       </v-row>
                     </v-col>
-                    <v-col class="mb-3" cols="12">
+                    <v-col class="pr-1" cols="6">
+                      <v-select
+                          v-model="billPage.bill.billTypeVO.id"
+                          :items="billPage.billTypeChildren"
+                          chips class="pl-1" deletable-chips
+                          dense
+                          item-text="billTypeName"
+                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
+                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                    </v-col>
+                    <v-col class="pl-1" cols="6">
                       <v-select
                           v-model="billPage.bill.outAccountId"
                           :items="billPage.accountList"
@@ -291,7 +291,7 @@
               <v-form ref="inBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
-                    <v-col class="my-3" cols="5">
+                    <v-col class="my-3" cols="6">
                       <v-select
                           v-model="billPage.bill.billTypeVO.parentId"
                           :items="billPage.inBillTypeTree"
@@ -302,16 +302,7 @@
                           label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
                           @change="billPage.bill.billTypeVO.id = null"/>
                     </v-col>
-                    <v-col class="my-3" cols="5">
-                      <v-select
-                          v-model="billPage.bill.billTypeVO.id"
-                          :items="billPage.billTypeChildren" chips class="pl-1"
-                          deletable-chips dense
-                          item-text="billTypeName"
-                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
-                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
-                    </v-col>
-                    <v-col cols="2">
+                    <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
@@ -323,7 +314,16 @@
                         </v-btn>
                       </v-row>
                     </v-col>
-                    <v-col class="mb-3" cols="12">
+                    <v-col class="pr-1" cols="6">
+                      <v-select
+                          v-model="billPage.bill.billTypeVO.id"
+                          :items="billPage.billTypeChildren" chips class="pl-1"
+                          deletable-chips dense
+                          item-text="billTypeName"
+                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
+                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                    </v-col>
+                    <v-col class="pl-1" cols="6">
                       <v-select
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
@@ -419,7 +419,7 @@
               <v-form ref="transferBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
-                    <v-col class="my-3" cols="6">
+                    <v-col class="mt-3" cols="6">
                       <v-select
                           v-model="billPage.bill.outAccountId"
                           :items="billPage.accountList"
@@ -430,7 +430,7 @@
                           no-data-text="无对应选项"
                           prepend-inner-icon="mdi-wallet"/>
                     </v-col>
-                    <v-col class="my-3" cols="6">
+                    <v-col class="mt-3" cols="6">
                       <v-select
                           v-model="billPage.bill.inAccountId"
                           :items="billPage.accountList"
