@@ -4,12 +4,12 @@
     <background-image :src="backgroundImagePath"/>
     <v-card
         :style="{ cursor:'pointer'}"
-        class="mb-5 px-3 rounded-lg"
+        class="mb-4 pa-3 rounded-lg"
         flat
         fluid
         @click.native="userInfoPage.isShow = true"
     >
-      <v-row v-ripple align="center" class="py-3" no-gutters>
+      <v-row v-ripple align="center" no-gutters>
         <v-col cols="2">
           <avatar :path="userInfoPage.userInfo.avatarPath" class="mx-0" size="50" style="width: 50px"/>
         </v-col>
@@ -53,20 +53,20 @@
                   size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
           <v-card
               :style="{ width: '100%' }"
-              class="pt-16 px-3 rounded-lg"
+              class="pt-16 pa-4 rounded-lg"
               flat
               fluid
               style="margin-top: -50px"
           >
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-account</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'用户名'"/>
               </v-col>
-              <v-col class="ml-2">
+              <v-col>
                 <span v-text="userInfoPage.userInfo.username"/>
               </v-col>
               <v-col cols="1">
@@ -76,13 +76,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-account-key</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'密码'"/>
               </v-col>
-              <v-col class="ml-2">
+              <v-col>
                 <span v-text="'********'"/>
               </v-col>
               <v-col cols="1">
@@ -92,13 +92,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改手机号','phoneNumber')">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-cellphone-text</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'手机号'"/>
               </v-col>
-              <v-col class="ml-2">
+              <v-col>
                 <span v-text="userInfoPage.userInfo.phoneNumber"/>
               </v-col>
               <v-col cols="1">
@@ -108,13 +108,13 @@
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改邮箱','email')">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-email</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'邮箱'"/>
               </v-col>
-              <v-col class="ml-2">
+              <v-col>
                 <span v-text="userInfoPage.userInfo.email"/>
               </v-col>
               <v-col cols="1">
@@ -123,35 +123,35 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-list-status</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'状态'"/>
               </v-col>
-              <v-col class="ml-2">
-                <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mx-1" label small
+              <v-col>
+                <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mr-1" label small
                         v-text="getStatusText()">
                 </v-chip>
               </v-col>
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" no-gutters style="height: 50px">
-              <v-col cols="3">
+              <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-clipboard-account-outline</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'角色'"/>
               </v-col>
-              <v-col class="ml-2">
+              <v-col>
                 <v-chip v-for="item in userInfoPage.userInfo.roleVOList"
-                        :key="item.id" class="mx-1" label small
+                        :key="item.id" class="mr-1" label small
                         v-text="item.roleName">
                 </v-chip>
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row align="center" justify="center" no-gutters style="height: 50px">
+            <v-row align="center" class="pt-4" justify="center" no-gutters>
               <v-btn
                   class="rounded-lg"
                   color="error"
@@ -168,7 +168,7 @@
         <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
           <v-card>
             <v-card-title>
-              <span class="text-h5" v-text="userInfoPage.dialog.title"/>
+              <span v-text="userInfoPage.dialog.title"/>
             </v-card-title>
             <v-card-text class="pb-0">
               <v-form ref="updateUserInfoForm">
@@ -283,14 +283,15 @@
                 </v-container>
                 <v-container v-if="userInfoPage.dialog.type==='cancelUser'" class="pa-0">
                   <v-row no-gutters>
-                    <span class="red--text font-weight-medium">确定要注销该账号吗？</span>
+                    <v-icon color="error">mdi-alert-circle</v-icon>
+                    <span class="ml-2">确定要注销该账号吗？</span>
                   </v-row>
                 </v-container>
               </v-form>
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
-              <v-btn color="grey darken-1" dark depressed
+              <v-btn depressed
                      @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
               <v-btn
                   :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
@@ -301,7 +302,7 @@
       </v-card>
     </v-dialog>
     <v-card
-        class="mb-5 pa-0 px-3 rounded-lg"
+        class="mb-4 pa-0 px-3 rounded-lg"
         flat
         fluid
     >
@@ -318,7 +319,6 @@
           <el-switch
               v-model="darkMode"
               active-color="#13ce66"
-              inactive-color="#757575"
               @change="changeDarkMode">
           </el-switch>
         </v-col>
@@ -378,13 +378,15 @@
                class="mx-auto px-4"
                justify="center"
                no-gutters>
-          <v-card class="pa-3 rounded-lg" flat fluid style="width: 100%">
+          <v-card class="pa-4 rounded-lg" flat fluid style="width: 100%">
             <v-row align="center" no-gutters>
               <v-row no-gutters>
                 <span class="text-h6">账单类别</span>
               </v-row>
               <v-row class="d-flex justify-end" no-gutters>
-                <v-btn class="mr-1" color="info" depressed small @click="billTypePage.dialog.isShow = true">新增</v-btn>
+                <v-btn class="mr-1" color="info" depressed small
+                       @click="loadSaveBillTypeDialog">新增
+                </v-btn>
                 <v-btn color="warning" depressed small>排序</v-btn>
               </v-row>
             </v-row>
@@ -393,11 +395,12 @@
                 :items="billTypePage.billTypeTree"
                 item-children="children"
                 item-key="id"
+                rounded
                 item-text="billTypeName" open-on-click selected-color="primary"
                 style="width: 100%" transition>
               <template v-slot:prepend="{ item, open }">
                 <v-btn :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                       class="mr-3" color="primary" depressed fab
+                       class="mr-3" depressed fab
                        x-small>
                   <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                   <v-icon v-else>mdi-help</v-icon>
@@ -405,108 +408,133 @@
               </template>
               <template v-slot:append="{ item, open }">
                 <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" class="mr-1" color="primary"
-                       depressed
-                       small>编辑
-                </v-btn>
-                <v-btn v-if="item.children" class="mr-1" color="warning" depressed small>排序</v-btn>
-                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" color="error" depressed small
-                       @click.stop="()=>{}">删除
-                </v-btn>
+                       depressed small
+                       v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
+                <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>
+                <v-btn v-if="item.flow !== 'TRANSFER'&& item.billTypeName !== '其他'" class="mr-1" color="error" depressed
+                       small
+                       v-text="'删除'"
+                       @click.stop="billTypePage.removeDialog.isShow = true;billTypePage.removeDialog.billType.id = item.id"/>
               </template>
             </v-treeview>
           </v-card>
-          <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent>
-            <v-card>
-              <v-card-title>
-                <span class="text-h5" v-text="billTypePage.dialog.title"/>
-              </v-card-title>
-              <v-card-text class="pb-0">
-                <v-form ref="billTypeForm">
-                  <v-container class="pa-0">
-                    <v-row no-gutters>
-                      <v-col align-self="center" cols="10">
-                        <v-text-field v-model="billTypePage.dialog.billType.billTypeName"
-                                      :rules="[(value) => !!value || '请输入类别名称']"
-                                      label="类别名称"
-                                      prepend-inner-icon="mdi-notebook"/>
-                      </v-col>
-                      <v-col cols="2">
-                        <v-row justify="center" no-gutters>
-                          <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">图标</div>
-                        </v-row>
-                        <v-row justify="center" no-gutters>
-                          <v-btn
-                              :color="billTypePage.dialog.billType.flow === 'OUT'?'error':billTypePage.dialog.billType.flow === 'IN'?'primary':''"
-                              depressed fab x-small
-                              @click="billTypePage.iconDialog.isShow=true;">
-                            <v-icon v-if="billTypePage.dialog.billType.icon"
-                                    v-text="'mdi-'+billTypePage.dialog.billType.icon"></v-icon>
-                            <v-icon v-else>mdi-help</v-icon>
-                          </v-btn>
-                        </v-row>
-                      </v-col>
-                      <v-col class="pr-1" cols="6">
-                        <v-select v-model="billTypePage.dialog.billType.flow"
-                                  :items="[{text:'支出',value:'OUT'},{text:'收入',value:'IN'}]"
-                                  :rules="[(value) => !!value || '请选择类别类型']"
-                                  label="类型"
-                                  no-data-text="无对应选项"
-                                  prepend-inner-icon="mdi-format-list-bulleted-type"/>
-                      </v-col>
-                      <v-col class="pl-1" cols="6">
-                        <v-select v-model="billTypePage.dialog.billType.parentId"
-                                  :items="billTypePage.billTypeList"
-                                  :rules="[(value) => !!value || '请选择父账单类别']"
-                                  item-text="billTypeName"
-                                  item-value="id"
-                                  label="父账单类别"
-                                  no-data-text="无对应选项"
-                                  prepend-inner-icon="mdi-account-arrow-up"/>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer/>
-                <v-btn depressed
-                       @click="billTypePage.dialog.isShow = false" v-text="'取消'"/>
-                <v-btn
-                    :disabled="billTypePage.dialog.btn.loading" :loading="billTypePage.dialog.btn.loading"
-                    color="primary" depressed
-                    @click="()=>{}" v-text="'保存'"/>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="billTypePage.iconDialog.isShow" max-width="600px">
-            <v-card>
-              <v-card-title>
-                <span class="text-h5" v-text="'图标库'"/>
-              </v-card-title>
-              <v-card-text>
-                <v-row>
-                  <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
-                         cols="2"
-                         @click="billTypePage.dialog.billType.icon = item; billTypePage.iconDialog.isShow = false;">
-                    <v-btn depressed fab x-small>
-                      <v-icon>mdi-{{ item }}</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer/>
-                <v-btn
-                    class="rounded-lg"
-                    depressed
-                    @click="billTypePage.iconDialog.isShow = false"
-                    v-text="'取消'"
-                />
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-row>
       </v-card>
+      <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent>
+        <v-card>
+          <v-card-title>
+            <span v-text="billTypePage.dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-form ref="billTypeForm">
+              <v-container class="pa-0">
+                <v-row no-gutters>
+                  <v-col align-self="center" cols="10">
+                    <v-text-field v-model="billTypePage.dialog.billType.billTypeName"
+                                  :rules="[(value) => !!value || '请输入类别名称']"
+                                  label="类别名称"
+                                  prepend-inner-icon="mdi-notebook"/>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-row justify="center" no-gutters>
+                      <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">图标</div>
+                    </v-row>
+                    <v-row justify="center" no-gutters>
+                      <v-btn
+                          :color="billTypePage.dialog.billType.flow === 'OUT'?'error':billTypePage.dialog.billType.flow === 'IN'?'primary':''"
+                          depressed fab x-small
+                          @click="billTypePage.iconDialog.isShow=true;">
+                        <v-icon v-if="billTypePage.dialog.billType.icon"
+                                v-text="'mdi-'+billTypePage.dialog.billType.icon"></v-icon>
+                        <v-icon v-else>mdi-help</v-icon>
+                      </v-btn>
+                    </v-row>
+                  </v-col>
+                  <v-col class="pr-1" cols="6">
+                    <v-select v-model="billTypePage.dialog.billType.flow"
+                              :items="[{text:'支出',value:'OUT'},{text:'收入',value:'IN'}]"
+                              :rules="[(value) => !!value || '请选择类别类型']"
+                              label="类型"
+                              no-data-text="无对应选项"
+                              prepend-inner-icon="mdi-format-list-bulleted-type"
+                              @change="billTypePage.dialog.billType.parentId = null"/>
+                  </v-col>
+                  <v-col class="pl-1" cols="6">
+                    <v-select v-model="billTypePage.dialog.billType.parentId"
+                              :items="billTypePage.dialog.billType.flow==='OUT'?billTypePage.outBillTypeList:billTypePage.dialog.billType.flow==='IN'?billTypePage.inBillTypeList:[]"
+                              :rules="[(value) => value != null || '请选择父账单类别']"
+                              item-text="billTypeName"
+                              item-value="id"
+                              label="父账单类别"
+                              no-data-text="请先选择类别类型"
+                              prepend-inner-icon="mdi-account-arrow-up"/>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn depressed
+                   @click="billTypePage.dialog.isShow = false" v-text="'取消'"/>
+            <v-btn
+                :disabled="billTypePage.dialog.btn.loading" :loading="billTypePage.dialog.btn.loading"
+                color="primary" depressed
+                @click="saveOrUpdateBillTpe" v-text="'保存'"/>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="billTypePage.removeDialog.isShow" max-width="600px" persistent>
+        <v-card>
+          <v-card-title>
+            <span v-text="'删除账单类别'"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-container class="pa-0">
+              <v-row no-gutters>
+                <v-icon color="error">mdi-alert-circle</v-icon>
+                <span class="ml-2">确定要删除该账单类别吗？</span>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn depressed
+                   @click="billTypePage.removeDialog.isShow = false" v-text="'取消'"/>
+            <v-btn
+                :disabled="billTypePage.removeDialog.btn.loading" :loading="billTypePage.removeDialog.btn.loading"
+                color="primary" depressed
+                @click="removeBillType" v-text="'确定'"/>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="billTypePage.iconDialog.isShow" max-width="600px">
+        <v-card>
+          <v-card-title>
+            <span v-text="'图标库'"/>
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
+                     cols="2"
+                     @click="billTypePage.dialog.billType.icon = item; billTypePage.iconDialog.isShow = false;">
+                <v-btn depressed fab x-small>
+                  <v-icon>mdi-{{ item }}</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                class="rounded-lg"
+                depressed
+                @click="billTypePage.iconDialog.isShow = false"
+                v-text="'取消'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-dialog>
     <v-dialog
         v-model="feedbackPage.isShow"
@@ -534,7 +562,7 @@
                class="mx-auto px-4"
                justify="center"
                no-gutters>
-          <v-card class="pa-3 rounded-lg" flat fluid>
+          <v-card class="pa-4 rounded-lg" flat fluid>
             <v-form ref="feedbackForm">
               <v-row align="center" no-gutters>
                 <v-col cols="12">
@@ -587,7 +615,7 @@
       </v-card>
     </v-dialog>
     <v-row v-if="isAdmin"
-           class="mb-5"
+           class="mb-4"
            no-gutters>
       <v-btn
           class="ma-auto rounded-lg"
@@ -693,15 +721,27 @@ export default {
         isShow: false,
         loading: false,
         billTypeTree: [],
-        billTypeList: [],
+        outBillTypeList: [],
+        inBillTypeList: [],
         iconDialog: {
           isShow: false
+        },
+        removeDialog: {
+          isShow: false,
+          billType: {
+            id: null
+          },
+          btn: {
+            loading: false
+          }
         },
         dialog: {
           isShow: false,
           title: null,
+          type: null,
           billType: {
             parentId: null,
+            weight: null,
             billTypeName: null,
             icon: null,
             flow: null
@@ -825,6 +865,78 @@ export default {
             this.feedbackPage.loading = false;
           });
     },
+    loadSaveBillTypeDialog() {
+      let dialog = this.billTypePage.dialog;
+      dialog.isShow = true;
+      dialog.type = 'save';
+      dialog.title = '新增账单类别';
+      dialog.billType = {};
+    },
+    loadUpdateBillTypeDialog(billType) {
+      let dialog = this.billTypePage.dialog;
+      dialog.isShow = true;
+      dialog.type = 'update';
+      dialog.title = '修改账单类别';
+      dialog.billType = JSON.parse(JSON.stringify(billType));
+    },
+    saveOrUpdateBillTpe() {
+      if (!this.$refs.billTypeForm.validate()) {
+        return;
+      }
+      if (this.billTypePage.dialog.type === 'update') {
+        this.billTypePage.dialog.btn.loading = true;
+        this.axios.put("/billType/updateBillType", JSON.stringify(this.billTypePage.dialog.billType))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.loadBillTypeTree();
+              this.loadBillTypeList();
+              this.billTypePage.dialog.isShow = false;
+            })
+            .finally(() => {
+              this.billTypePage.dialog.btn.loading = false;
+            });
+      } else if (this.billTypePage.dialog.type === 'save') {
+        this.billTypePage.dialog.loading = true;
+        this.billTypePage.dialog.billType.weight = 0;
+        this.axios.post("/billType/saveBillType", JSON.stringify(this.billTypePage.dialog.billType))
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.loadBillTypeTree();
+              this.loadBillTypeList();
+              this.billTypePage.dialog.isShow = false;
+            })
+            .finally(() => {
+              this.billTypePage.dialog.btn.loading = false;
+            });
+      }
+    },
+    removeBillType() {
+      this.billTypePage.removeDialog.btn.loading = true;
+      this.axios.delete("/billType/removeBillType/" + this.billTypePage.removeDialog.billType.id)
+          .then(() => {
+            this.$notify({
+              title: "删除成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.loadBillTypeTree();
+            this.loadBillTypeList();
+            this.billTypePage.removeDialog.isShow = false;
+          }).finally(() => {
+        this.billTypePage.removeDialog.btn.loading = false;
+      });
+    },
     loadUserInfoDialog(title, type) {
       this.userInfoPage.dialog.title = title;
       this.userInfoPage.dialog.type = type;
@@ -852,10 +964,17 @@ export default {
       }
       this.axios.post("/billType/listBillType", billType)
           .then((response) => {
-            this.billTypePage.billTypeList.push({id: 0, billTypeName: '根结点'});
+            this.billTypePage.outBillTypeList = [];
+            this.billTypePage.outBillTypeList.push({id: 0, billTypeName: '根结点'});
+            this.billTypePage.inBillTypeList = [];
+            this.billTypePage.inBillTypeList.push({id: 0, billTypeName: '根结点'});
             for (let item of response.data.data) {
-              if (item.flow !== 'TRANSFER' && item.billTypeName !== '其他') {
-                this.billTypePage.billTypeList.push({id: item.id, billTypeName: item.billTypeName});
+              if (item.billTypeName !== '其他') {
+                if (item.flow === 'OUT') {
+                  this.billTypePage.outBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
+                } else if (item.flow === 'IN') {
+                  this.billTypePage.inBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
+                }
               }
             }
           });

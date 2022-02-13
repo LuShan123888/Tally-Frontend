@@ -61,7 +61,7 @@
               color="blue darken-1"
               text
               @click="loadPermissionUpdateDialog(scope.row)"
-              v-text="'编辑'"
+              v-text="'修改'"
           />
           <el-popconfirm
               icon="el-icon-info"

@@ -14,9 +14,9 @@ const rules = {
   permissionNameMaxLength: 20,
   isEmail: (value) => !value || /.+@.+\..+/.test(value) || "邮箱格式有误",
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
-  isFloat: (value) => !value || /^[-]?\d+[.]?\d+$/.test(value) || "只能输入数字",
-  isPositive: (value) => !value || /^\d+[.]?\d+$/.test(value) || "只能输入正数",
-  isNegative: (value) => !value || /^-\d+[.]?\d+$/.test(value) || "只能输入负数",
+  isFloat: (value) => !value || /^(-)?[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) || "请输入正确格式的数字",
+  isPositive: (value) => !value || /^[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) || "请输入正确格式的正数",
+  isNegative: (value) => !value || /^-[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) || "请输入正确格式的负数",
   isUsername: (value) => {
     if (!!value && value.length <= 20) {
       return true;

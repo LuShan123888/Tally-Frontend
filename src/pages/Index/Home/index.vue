@@ -68,7 +68,7 @@
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">总支出</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
                     v-text="numFormat(billStat.expenditure)"></v-card-title>
-      <v-card-subtitle class="pa-3 pt-4">
+      <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总收入</span>
@@ -111,12 +111,12 @@
               <v-btn
                   :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
                   depressed fab x-small>
-                <v-icon v-if="item.billType.icon">mdi-{{ item.billType.icon }}</v-icon>
+                <v-icon v-if="item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
             <v-col class="ml-3">
-              <div class="text-subtitle-1" v-text="item.billType.billTypeName"/>
+              <div class="text-subtitle-1" v-text="item.billTypeVO.billTypeFullName"/>
               <div class="text-subtitle-2 text--darken-1 grey--text" v-text="item.description"/>
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
@@ -146,7 +146,7 @@
             style="border-radius: 0"
         >
           <template v-slot:extension>
-            <v-tabs v-model="billPage.tab" grow @change="billPage.bill.billType={}">
+            <v-tabs v-model="billPage.tab" grow @change="billPage.bill.billTypeVO={}">
               <v-tab>支出</v-tab>
               <v-tab>收入</v-tab>
               <v-tab>转账</v-tab>
@@ -168,23 +168,23 @@
                    justify="center"
                    no-gutters>
               <v-form ref="outBillSaveOrUpdateForm">
-                <v-card class="pa-3 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="5">
                       <v-select
-                          v-model="billPage.bill.billType.parentId"
+                          v-model="billPage.bill.billTypeVO.parentId"
                           :items="billPage.outBillTypeTree"
                           :rules="[(value) => !!value || '请选择一级账户类别']"
                           chips
                           class="pr-1" dense item-text="billTypeName"
                           item-value="id"
                           label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billType.id = null">
+                          @change="billPage.bill.billTypeVO.id = null">
                       </v-select>
                     </v-col>
                     <v-col class="my-3" cols="5">
                       <v-select
-                          v-model="billPage.bill.billType.id"
+                          v-model="billPage.bill.billTypeVO.id"
                           :items="billPage.billTypeChildren"
                           chips class="pl-1" deletable-chips
                           dense
@@ -198,7 +198,7 @@
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billType.icon">mdi-{{ billPage.bill.billType.icon }}</v-icon>
+                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{ billPage.bill.billTypeVO.icon }}</v-icon>
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
@@ -304,22 +304,22 @@
                    justify="center"
                    no-gutters>
               <v-form ref="inBillSaveOrUpdateForm">
-                <v-card class="pa-3 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="5">
                       <v-select
-                          v-model="billPage.bill.billType.parentId"
+                          v-model="billPage.bill.billTypeVO.parentId"
                           :items="billPage.inBillTypeTree"
                           :rules="[(value) => !!value || '请选择一级账户类别']"
                           chips
                           class="pr-1" dense item-text="billTypeName"
                           item-value="id"
                           label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billType.id = null"/>
+                          @change="billPage.bill.billTypeVO.id = null"/>
                     </v-col>
                     <v-col class="my-3" cols="5">
                       <v-select
-                          v-model="billPage.bill.billType.id"
+                          v-model="billPage.bill.billTypeVO.id"
                           :items="billPage.billTypeChildren" chips class="pl-1"
                           deletable-chips dense
                           item-text="billTypeName"
@@ -332,7 +332,7 @@
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billType.icon">mdi-{{ billPage.bill.billType.icon }}</v-icon>
+                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{ billPage.bill.billTypeVO.icon }}</v-icon>
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
@@ -438,7 +438,7 @@
                    justify="center"
                    no-gutters>
               <v-form ref="transferBillSaveOrUpdateForm">
-                <v-card class="pa-3 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat fluid>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
@@ -580,7 +580,13 @@ export default {
         monthString: new Date().Format("yyyy-MM"),
         description: null
       },
-      billInfoList: [],
+      billInfoList: [
+        {
+          amount: null,
+          billMouth: null,
+          list: []
+        },
+      ],
       billStat: {
         expenditure: 0.00,
         income: 0.00,
@@ -602,10 +608,11 @@ export default {
           billTypeId: null,
           inAccountId: null,
           outAccountId: null,
-          billType: {
+          billTypeVO: {
             id: null,
             parentId: null,
             billTypeName: null,
+            billTypeFullName: null,
             icon: null
           }
         },
@@ -634,25 +641,25 @@ export default {
       },
       deep: true
     },
-    'billPage.bill.billType.parentId': {
+    'billPage.bill.billTypeVO.parentId': {
       handler(newVal) {
         for (let item of this.billPage.billTypeTree) {
           if (item.id === newVal) {
             this.billPage.billTypeChildren = item.children;
-            this.billPage.bill.billType.icon = item.icon;
+            this.billPage.bill.billTypeVO.icon = item.icon;
             return;
           }
         }
       },
       deep: true
     },
-    'billPage.bill.billType.id': {
+    'billPage.bill.billTypeVO.id': {
       handler(newVal) {
         for (let item of this.billPage.billTypeTree) {
-          if (item.id === this.billPage.bill.billType.parentId && item.children) {
+          if (item.id === this.billPage.bill.billTypeVO.parentId && item.children) {
             for (let child of item.children) {
               if (child.id === newVal) {
-                this.billPage.bill.billType.icon = child.icon;
+                this.billPage.bill.billTypeVO.icon = child.icon;
               }
             }
           }
@@ -668,9 +675,9 @@ export default {
         this.billInfoList = response.data.data.billInfoList;
         for (let list of this.billInfoList) {
           for (let item of list.list) {
-            if (item.billType.parentId === 0) {
-              item.billType.parentId = item.billType.id;
-              item.billType.id = null;
+            if (item.billTypeVO.parentId === 0) {
+              item.billTypeVO.parentId = item.billTypeVO.id;
+              item.billTypeVO.id = null;
             }
           }
         }
@@ -727,7 +734,7 @@ export default {
       for (let key in billPage.bill) {
         billPage.bill[key] = null;
       }
-      billPage.bill.billType = {};
+      billPage.bill.billTypeVO = {};
       billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
     },
     deleteBill(billId) {
@@ -767,10 +774,10 @@ export default {
           break;
       }
       this.billPage.bill.flow = billFlow;
-      if (this.billPage.bill.billType.id) {
-        this.billPage.bill.billTypeId = this.billPage.bill.billType.id;
+      if (this.billPage.bill.billTypeVO.id) {
+        this.billPage.bill.billTypeId = this.billPage.bill.billTypeVO.id;
       } else {
-        this.billPage.bill.billTypeId = this.billPage.bill.billType.parentId;
+        this.billPage.bill.billTypeId = this.billPage.bill.billTypeVO.parentId;
       }
       if (this.billPage.type === 'update') {
         this.billPage.buttons.saveOrUpdate.loading = true;

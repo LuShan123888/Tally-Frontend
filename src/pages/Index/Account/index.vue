@@ -19,7 +19,7 @@
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">净资产</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
                     v-text="numFormat(accountStat.netAssets)"></v-card-title>
-      <v-card-subtitle class="pa-3 pt-4">
+      <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总资产</span>
@@ -108,7 +108,7 @@
                justify="center"
                no-gutters>
           <v-form ref="accountSaveOrUpdateForm">
-            <v-card class="pa-3 rounded-lg" flat fluid>
+            <v-card class="pa-4 rounded-lg" flat fluid>
               <v-row no-gutters>
                 <v-col cols="10">
                   <v-select
@@ -196,7 +196,7 @@
     <v-dialog v-model="accountPage.iconDialog.isShow" max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5" v-text="'图标库'"/>
+          <span v-text="'图标库'"/>
         </v-card-title>
         <v-card-text>
           <v-row>
