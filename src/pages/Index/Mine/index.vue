@@ -301,8 +301,7 @@
     <v-card
         class="mb-4 pa-0 px-3 rounded-lg"
         flat
-        fluid
-    >
+        fluid>
       <v-row v-ripple align="center" no-gutters style="height: 50px">
         <v-col cols="1">
           <v-btn color="primary" depressed fab x-small>
@@ -353,8 +352,7 @@
         v-model="billTypePage.isShow"
         fullscreen
         hide-overlay
-        transition="dialog-bottom-transition"
-    >
+        transition="dialog-bottom-transition">
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
             class="mb-16"
@@ -384,7 +382,9 @@
                 <v-btn class="mr-1" color="info" depressed small
                        @click="loadSaveBillTypeDialog">新增
                 </v-btn>
-                <v-btn color="warning" depressed small>排序</v-btn>
+                <v-btn color="warning" depressed small
+                       @click="loadOrderBillTypeDialog(billTypePage.billTypeTree)">排序
+                </v-btn>
               </v-row>
             </v-row>
             <v-divider class="my-3"></v-divider>
@@ -407,7 +407,8 @@
                        class="mr-1" color="primary"
                        depressed small
                        v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
-                <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>
+                <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"
+                       @click.stop="loadOrderBillTypeDialog(item.children)"/>
                 <v-btn v-if="item.flow !== 'TRANSFER'"
                        color="error"
                        depressed
@@ -419,7 +420,7 @@
         </v-row>
       </v-card>
       <v-form ref="billTypeForm">
-        <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent scrollable>
+        <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent>
           <v-card>
             <v-card-title>
               <span v-text="billTypePage.dialog.title"/>
@@ -533,6 +534,54 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="billTypePage.orderDialog.isShow" max-width="600px" scrollable>
+        <v-card>
+          <v-card-title>
+            <span v-text="'账单类别排序'"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <draggable :list="billTypePage.orderDialog.billTypeList" handle="#handle" tag="div"
+                       v-bind="dragOptions">
+              <transition-group type="transition">
+                <v-row v-for="(item) in billTypePage.orderDialog.billTypeList" :key="item.id"
+                       align="center"
+                       class="rounded-lg mb-1 px-2 py-1" no-gutters>
+                  <v-col cols="2">
+                    <v-btn
+                        :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
+                        depressed fab
+                        x-small>
+                      <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
+                      <v-icon v-else>mdi-help</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <span class="text-subtitle-2">{{ item.billTypeName }}</span>
+                  </v-col>
+                  <v-col class="d-flex justify-end" cols="2">
+                    <v-icon id="handle">mdi-format-list-bulleted</v-icon>
+                  </v-col>
+                </v-row>
+              </transition-group>
+            </draggable>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                class="rounded-lg"
+                depressed
+                @click="billTypePage.orderDialog.isShow = false"
+                v-text="'取消'"/>
+            <v-btn
+                class="rounded-lg"
+                color="primary"
+                depressed
+                @click="updateOrderBillType"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-dialog>
     <v-form ref="feedbackForm">
       <v-dialog
@@ -545,13 +594,11 @@
               class="mb-16"
               color="primary"
               dark
-              style="border-radius: 0"
-          >
+              style="border-radius: 0">
             <v-btn
                 dark
                 icon
-                @click="feedbackPage.isShow = false;"
-            >
+                @click="feedbackPage.isShow = false;">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
             <v-toolbar-title>提交反馈</v-toolbar-title>
@@ -579,8 +626,7 @@
                       counter
                       label="反馈描述"
                       prepend-inner-icon="mdi-comment"
-                      rows="3"
-                  />
+                      rows="3"/>
                 </v-col>
                 <v-col class="text--darken-1 grey--text mb-3 d-flex align-center" cols="12" style="height: 32px">
                   <v-icon :color="feedbackPage.feedback.imagePath?'primary':''" class="pr-1 mt-1">mdi-file-image
@@ -647,10 +693,11 @@ import Avatar from '@/components/Avatar'
 import ImageUploader from '@/components/ImageUploader'
 import BackgroundImage from '@/pages/Index/components/BackgroundImage'
 import TitleBar from "@/pages/Index/components/TitleBar";
+import draggable from "vuedraggable";
 
 export default {
   name: "Mine",
-  components: {TitleBar, ImageUploader, Avatar, BackgroundImage},
+  components: {TitleBar, ImageUploader, Avatar, BackgroundImage, draggable},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -670,6 +717,13 @@ export default {
       }
       return false;
     },
+    dragOptions() {
+      return {
+        animation: 200,
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
   },
   data: function () {
     return {
@@ -722,6 +776,22 @@ export default {
         inBillTypeList: [],
         iconDialog: {
           isShow: false
+        },
+        orderDialog: {
+          isShow: false,
+          btn: {
+            loading: false
+          },
+          billTypeList: [
+            {
+              id: null,
+              parentId: null,
+              weight: null,
+              billTypeName: null,
+              icon: null,
+              flow: null
+            }
+          ]
         },
         removeDialog: {
           isShow: false,
@@ -964,6 +1034,34 @@ export default {
             }
           });
     },
+    loadOrderBillTypeDialog(billTypeList) {
+      this.billTypePage.orderDialog.billTypeList = JSON.parse(JSON.stringify(billTypeList));
+      this.billTypePage.orderDialog.isShow = true;
+    },
+    updateOrderBillType() {
+      this.billTypePage.orderDialog.btn.loading = true;
+      let list = [];
+      let weight = 1;
+      for (let item of this.billTypePage.orderDialog.billTypeList) {
+        list.push({id: item.id, weight: weight})
+        weight = weight + 1;
+      }
+      this.axios.put("/billType/orderBillType", JSON.stringify(list))
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.billTypePage.orderDialog.isShow = false;
+            this.loadBillTypeTree();
+            this.loadBillTypeList();
+          })
+          .finally(() => {
+            this.billTypePage.orderDialog.btn.loading = false;
+          });
+    },
     getImageUrl(imagePath) {
       if (imagePath != null) {
         return this.GLOBAL.url.static + "/" + imagePath;
@@ -1029,5 +1127,8 @@ export default {
 </script>
 
 <style lang="scss">
-
+.ghost {
+  opacity: 0.5;
+  background: #F1F2F6;
+}
 </style>
