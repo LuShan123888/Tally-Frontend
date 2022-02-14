@@ -107,7 +107,7 @@
                       v-model="dialog.permission.parentId"
                       :items="permissionList"
                       :disabled="dialog.permission.parentId === 0"
-                      :rules="[(value) => value != null || value !== '' || '请选择父权限',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
+                      :rules="[(value) => value === 0 || !!value || '请选择父权限',(value)=>!dialog.permission.id||value!==dialog.permission.id.toString()||'不能指定父权限为自身', rules.isInteger]"
                       item-text="permissionName"
                       item-value="id"
                       label="父权限"
@@ -117,7 +117,7 @@
                 <v-col class="pr-3" cols="6">
                   <v-text-field
                       v-model="dialog.permission.weight"
-                      :rules="[(value) => value != null || value !== '' || '请输入权重', rules.isInteger]"
+                      :rules="[(value) => value === 0 || !!value || '请输入权重', rules.isInteger]"
                       clearable
                       label="权重"
                   />

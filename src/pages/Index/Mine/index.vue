@@ -460,7 +460,7 @@
                   <v-col class="pl-1" cols="6">
                     <v-select v-model="billTypePage.dialog.billType.parentId"
                               :items="billTypePage.dialog.billType.flow==='OUT'?billTypePage.outBillTypeList:billTypePage.dialog.billType.flow==='IN'?billTypePage.inBillTypeList:[]"
-                              :rules="[(value) => value != null || value !== '' || '请选择父账单类别']"
+                              :rules="[(value) => value === 0 || !!value || '请选择父账单类别']"
                               item-text="billTypeName"
                               item-value="id"
                               label="父账单类别"

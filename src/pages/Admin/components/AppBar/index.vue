@@ -30,24 +30,20 @@
         </v-row>
         <v-row class="mb-1" no-gutters>
           <v-btn
-              class="rounded-lg"
               color="primary"
               block depressed
               small
-              to="/home"
-          >
+              to="/home">
             <span>前往前台</span>
           </v-btn>
         </v-row>
         <v-row no-gutters>
           <v-btn
-              class="rounded-lg"
               color="error"
               block
               depressed
               small
-              @click="signOut"
-          >
+              @click="signOut">
             <span>安全退出</span>
           </v-btn>
         </v-row>

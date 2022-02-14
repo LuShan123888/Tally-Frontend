@@ -263,7 +263,8 @@
             <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[2].value" class="pa-0">
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12">
-                  <span class="font-weight-bold text--lighten-1 red--text">该反馈已处理完成，请勿重复处理！</span>
+                  <v-icon color="error">mdi-alert-circle</v-icon>
+                  <span class="ml-2">该反馈已处理完成，请勿重复处理！</span>
                 </v-col>
               </v-row>
             </v-container>
