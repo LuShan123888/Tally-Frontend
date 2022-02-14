@@ -182,7 +182,7 @@
                 <v-col cols="12">
                   <span :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
                   <v-treeview
-                      v-model="dialog.role.permissionIdList" :items="dialog.permissionTree" dense
+                      v-model="dialog.role.permissionIdSet" :items="dialog.permissionTree" dense
                       open-on-click selectable
                       hoverable item-children="children" item-key="id" item-text="permissionName"
                       selected-color="primary" transition/>
@@ -258,7 +258,7 @@ export default {
           roleName: null,
           description: null,
           createdDatetime: null,
-          permissionIdList: [],
+          permissionIdSet: [],
           version: null,
         },
         btn: {

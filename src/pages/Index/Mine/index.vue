@@ -403,12 +403,12 @@
                 </v-btn>
               </template>
               <template v-slot:append="{ item, open }">
-                <v-btn v-if="item.flow !== 'TRANSFER'&& (item.billTypeName !== '其他' || item.parentId !== 0)"
+                <v-btn v-if="item.flow !== 'TRANSFER'"
                        class="mr-1" color="primary"
                        depressed small
                        v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
                 <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"/>
-                <v-btn v-if="item.flow !== 'TRANSFER'&& (item.billTypeName !== '其他' || item.parentId !== 0)"
+                <v-btn v-if="item.flow !== 'TRANSFER'"
                        color="error"
                        depressed
                        small v-text="'删除'"
@@ -947,7 +947,6 @@ export default {
     },
     loadBillTypeList() {
       let billType = {
-        userId: this.$store.getters.getUserInfo.id,
         parentId: 0
       }
       this.axios.post("/billType/listBillType", billType)
@@ -957,12 +956,10 @@ export default {
             this.billTypePage.inBillTypeList = [];
             this.billTypePage.inBillTypeList.push({id: 0, billTypeName: '根结点'});
             for (let item of response.data.data) {
-              if (item.billTypeName !== '其他') {
-                if (item.flow === 'OUT') {
-                  this.billTypePage.outBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
-                } else if (item.flow === 'IN') {
-                  this.billTypePage.inBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
-                }
+              if (item.flow === 'OUT') {
+                this.billTypePage.outBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
+              } else if (item.flow === 'IN') {
+                this.billTypePage.inBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
               }
             }
           });
