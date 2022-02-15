@@ -109,7 +109,7 @@
         <template v-slot="scope">
           <v-btn
               text
-              color="blue darken-1"
+              color="primary"
               class="mx-1"
               @click="loadUserUpdateDialog(scope.row)"
               v-text="'修改'"
@@ -123,7 +123,7 @@
             <v-btn
                 slot="reference"
                 text
-                color="red darken-1"
+                color="red"
                 class="mx-1"
                 v-text="'删除'"
             />
@@ -268,7 +268,6 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn
-                color="grey darken-1"
                 text
                 @click="dialog.isShow = false"
                 v-text="'取消'"

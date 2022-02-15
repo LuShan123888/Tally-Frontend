@@ -164,7 +164,7 @@
         <template v-slot="scope">
           <v-btn
               class="mx-1"
-              color="blue darken-1"
+              color="primary"
               text
               @click="loadFeedbackUpdateDialog(scope.row)"
               v-text="'处理'"
@@ -177,7 +177,7 @@
           >
             <template v-slot:reference>
               <v-btn class="mx-1"
-                     color="red darken-1" text v-text="'删除'"/>
+                     color="red" text v-text="'删除'"/>
             </template>
           </el-popconfirm>
         </template>
@@ -230,13 +230,13 @@
                             class="px-2" disabled label="反馈状态"/>
                 </v-col>
                 <v-col cols="4">
-                  <v-select v-model="dialog.feedback.processingUserId"
-                            :items="adminList"
-                            :rules="[(value) => !!value || '请分配处理人']"
-                            class="px-2"
-                            clearable
-                            item-text="username" item-value="id"
-                            label="处理人"/>
+                  <v-autocomplete v-model="dialog.feedback.processingUserId"
+                                  :items="adminList"
+                                  :rules="[(value) => !!value || '请分配处理人']"
+                                  class="px-2"
+                                  clearable
+                                  item-text="username" item-value="id"
+                                  label="处理人"/>
                 </v-col>
               </v-row>
             </v-container>
@@ -271,7 +271,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
-            <v-btn color="grey darken-1" text
+            <v-btn text
                    @click="dialog.isShow = false" v-text="'取消'"/>
             <v-btn
                 v-if="dialog.feedback.status !== enums.feedbackStatus[2].value"

@@ -38,11 +38,6 @@
           width="200px">
       </el-table-column>
       <el-table-column
-          label="权重"
-          property="weight"
-          width="70px">
-      </el-table-column>
-      <el-table-column
           label="权限名称"
           property="permissionName">
       </el-table-column>
@@ -58,12 +53,13 @@
         <template v-slot="scope">
           <v-btn
               class="mx-1"
-              color="blue darken-1"
+              color="primary"
               text
               @click="loadPermissionUpdateDialog(scope.row)"
               v-text="'修改'"
           />
           <el-popconfirm
+              v-if="!scope.row.children"
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该权限吗？"
@@ -72,11 +68,19 @@
             <v-btn
                 slot="reference"
                 class="mx-1"
-                color="red darken-1"
+                color="red"
                 text
                 v-text="'删除'"
             />
           </el-popconfirm>
+          <v-btn
+              v-else
+              class="mx-1"
+              color="warning"
+              text
+              @click="loadPermissionOrderDialog(scope.row.children)"
+              v-text="'排序'"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -93,7 +97,7 @@
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
-                <v-col class="pr-3" cols="6">
+                <v-col cols="12">
                   <v-text-field
                       v-model="dialog.permission.permissionName"
                       :counter="rules.permissionNameMaxLength"
@@ -102,8 +106,8 @@
                       label="权限名称"
                   />
                 </v-col>
-                <v-col class="pl-3" cols="6">
-                  <v-select
+                <v-col class="pr-1" cols="6">
+                  <v-autocomplete
                       v-model="dialog.permission.parentId"
                       :items="permissionList"
                       :disabled="dialog.permission.parentId === 0"
@@ -114,15 +118,7 @@
                       no-data-text="无对应选项"
                   />
                 </v-col>
-                <v-col class="pr-3" cols="6">
-                  <v-text-field
-                      v-model="dialog.permission.weight"
-                      :rules="[(value) => value === 0 || !!value || '请输入权重', rules.isInteger]"
-                      clearable
-                      label="权重"
-                  />
-                </v-col>
-                <v-col class="pl-3" cols="6">
+                <v-col class="pl-1" cols="6">
                   <v-select
                       v-model="dialog.permission.requestMethod"
                       :items="enums.requestMethod"
@@ -144,7 +140,6 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn
-                color="grey darken-1"
                 text
                 @click="dialog.isShow = false"
                 v-text="'取消'"
@@ -161,13 +156,53 @@
         </v-card>
       </v-dialog>
     </v-form>
+    <v-dialog v-model="orderDialog.isShow" max-width="600px" scrollable>
+      <v-card>
+        <v-card-title>
+          <span v-text="orderDialog.title"/>
+        </v-card-title>
+        <v-card-text class="pb-0">
+          <draggable :list="orderDialog.permissionList" handle="#handle" tag="div"
+                     v-bind="dragOptions">
+            <transition-group type="transition">
+              <v-row v-for="(item) in orderDialog.permissionList" :key="item.id"
+                     align="center" class="rounded-lg mb-1 px-2 py-1" no-gutters>
+                <v-col>
+                  <span class="text-subtitle-2">{{ item.permissionName }}</span>
+                </v-col>
+                <v-col class="d-flex justify-end" cols="2">
+                  <v-icon id="handle">mdi-format-list-bulleted</v-icon>
+                </v-col>
+              </v-row>
+            </transition-group>
+          </draggable>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn
+              depressed
+              text
+              @click="orderDialog.isShow = false"
+              v-text="'取消'"/>
+          <v-btn
+              color="primary"
+              depressed
+              text
+              @click="updatePermissionOrder"
+              v-text="'保存'"
+          />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
 export default {
   name: "PermissionManager",
-  components: {},
+  components: {draggable},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -177,6 +212,13 @@ export default {
     },
     lightPrimary: function () {
       return this.$vuetify.theme.themes.light.primary;
+    },
+    dragOptions() {
+      return {
+        animation: 200,
+        disabled: false,
+        ghostClass: "ghost"
+      };
     }
   },
   watch: {},
@@ -198,8 +240,25 @@ export default {
           permissionName: null,
           requestUrl: null,
           requestMethod: null,
-          version: null
+          version: null,
+          children: []
         },
+        btn: {
+          loading: false
+        }
+      },
+      orderDialog: {
+        isShow: false,
+        title: null,
+        permissionList: [{
+          id: null,
+          parentId: null,
+          weight: null,
+          permissionName: null,
+          requestUrl: null,
+          requestMethod: null,
+          version: null
+        }],
         btn: {
           loading: false
         }
@@ -212,12 +271,12 @@ export default {
   methods: {
     changePageSize() {
       this.table.query.page.current = 1;
-      this.pagePermission();
+      this.loadPermissionTree();
     },
     changePage() {
-      this.pagePermission();
+      this.loadPermissionTree();
     },
-    pagePermission() {
+    loadPermissionTree() {
       this.table.loading = true;
       this.axios.get("/permission/getAllPermissionTree")
           .then((response) => {
@@ -241,7 +300,8 @@ export default {
                 duration: 2000,
               });
               this.dialog.isShow = false;
-              this.pagePermission();
+              this.loadPermissionTree();
+              this.loadPermissionList();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
@@ -256,12 +316,37 @@ export default {
                 duration: 2000,
               });
               this.dialog.isShow = false;
-              this.pagePermission();
+              this.loadPermissionTree();
+              this.loadPermissionList();
             })
             .finally(() => {
               this.dialog.btn.loading = false;
             });
       }
+    },
+    updatePermissionOrder() {
+      this.orderDialog.btn.loading = true;
+      let list = [];
+      let weight = 1;
+      for (let item of this.orderDialog.permissionList) {
+        list.push({id: item.id, weight: weight, version: item.version})
+        weight = weight + 1;
+      }
+      this.axios.put("/permission/orderPermission", JSON.stringify(list))
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.orderDialog.isShow = false;
+            this.loadPermissionTree();
+            this.loadPermissionList();
+          })
+          .finally(() => {
+            this.orderDialog.btn.loading = false;
+          });
     },
     deletePermission(permissionId) {
       this.axios.delete("/permission/removePermission/" + permissionId)
@@ -272,7 +357,8 @@ export default {
               type: "success",
               duration: 2000,
             });
-            this.pagePermission();
+            this.loadPermissionTree();
+            this.loadPermissionList();
           });
     },
     loadPermissionSaveDialog() {
@@ -284,13 +370,18 @@ export default {
       this.dialog.permission.updatedDatetime = null;
       this.dialog.permission.version = null;
       this.dialog.permission.deleted = null;
-      this.dialog.permission.weight = this.dialog.permission.weight ? this.dialog.permission.weight + 1 : null;
+      this.dialog.permission.weight = 0;
     },
     loadPermissionUpdateDialog(permission) {
       this.$refs.permissionSaveOrUpdateForm.resetValidation();
       this.dialog.permission = JSON.parse(JSON.stringify(permission));
       this.dialog.title = "修改权限";
       this.dialog.isShow = true;
+    },
+    loadPermissionOrderDialog(permissionList) {
+      this.orderDialog.permissionList = JSON.parse(JSON.stringify(permissionList));
+      this.orderDialog.title = '权限排序';
+      this.orderDialog.isShow = true;
     },
     loadPermissionList() {
       this.table.loading = true;
@@ -301,7 +392,7 @@ export default {
     },
   },
   mounted() {
-    this.pagePermission();
+    this.loadPermissionTree();
     this.loadPermissionList();
   },
 };
@@ -322,4 +413,8 @@ export default {
   margin-bottom: 10px;
 }
 
+.ghost {
+  opacity: 0.5;
+  background: #F1F2F6;
+}
 </style>

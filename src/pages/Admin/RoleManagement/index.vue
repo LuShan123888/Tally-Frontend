@@ -104,7 +104,7 @@
         <template v-slot="scope">
           <v-btn
               class="mx-1"
-              color="blue darken-1"
+              color="primary"
               text
               @click="loadRoleUpdateDialog(scope.row)"
               v-text="'修改'"
@@ -118,7 +118,7 @@
             <v-btn
                 slot="reference"
                 class="mx-1"
-                color="red darken-1"
+                color="red"
                 text
                 v-text="'删除'"
             />
@@ -193,7 +193,6 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn
-                color="grey darken-1"
                 text
                 @click="dialog.isShow = false"
                 v-text="'取消'"
@@ -201,7 +200,7 @@
             <v-btn
                 :disabled="dialog.btn.loading"
                 :loading="dialog.btn.loading"
-                color="blue darken-1"
+                color="primary"
                 text
                 @click="saveOrUpdateRole"
                 v-text="'保存'"

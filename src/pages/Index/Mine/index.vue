@@ -380,10 +380,10 @@
               </v-row>
               <v-row class="d-flex justify-end" no-gutters>
                 <v-btn class="mr-1" color="info" depressed small
-                       @click="loadSaveBillTypeDialog">新增
+                       @click="loadBillTypeSaveDialog">新增
                 </v-btn>
                 <v-btn color="warning" depressed small
-                       @click="loadOrderBillTypeDialog(billTypePage.billTypeTree)">排序
+                       @click="loadBillTypeOrderDialog(billTypePage.billTypeTree)">排序
                 </v-btn>
               </v-row>
             </v-row>
@@ -406,9 +406,9 @@
                 <v-btn v-if="item.flow !== 'TRANSFER'"
                        class="mr-1" color="primary"
                        depressed small
-                       v-text="'修改'" @click.stop="loadUpdateBillTypeDialog(item)"/>
+                       v-text="'修改'" @click.stop="loadBillTypeUpdateDialog(item)"/>
                 <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"
-                       @click.stop="loadOrderBillTypeDialog(item.children)"/>
+                       @click.stop="loadBillTypeOrderDialog(item.children)"/>
                 <v-btn v-if="item.flow !== 'TRANSFER'"
                        color="error"
                        depressed
@@ -576,7 +576,7 @@
                 class="rounded-lg"
                 color="primary"
                 depressed
-                @click="updateOrderBillType"
+                @click="updateBillTypeOrder"
                 v-text="'保存'"
             />
           </v-card-actions>
@@ -679,8 +679,7 @@
           large
           depressed
           block
-          @click="signOut"
-      >
+          @click="signOut">
         <v-icon class="mr-3">mdi-logout</v-icon>
         <span>安全退出</span>
       </v-btn>
@@ -789,7 +788,8 @@ export default {
               weight: null,
               billTypeName: null,
               icon: null,
-              flow: null
+              flow: null,
+              version: null
             }
           ]
         },
@@ -935,7 +935,7 @@ export default {
             this.feedbackPage.loading = false;
           });
     },
-    loadSaveBillTypeDialog() {
+    loadBillTypeSaveDialog() {
       this.$refs.billTypeForm.resetValidation();
       let dialog = this.billTypePage.dialog;
       dialog.isShow = true;
@@ -943,7 +943,7 @@ export default {
       dialog.title = '新增账单类别';
       dialog.billType = {};
     },
-    loadUpdateBillTypeDialog(billType) {
+    loadBillTypeUpdateDialog(billType) {
       this.$refs.billTypeForm.resetValidation();
       let dialog = this.billTypePage.dialog;
       dialog.isShow = true;
@@ -1034,16 +1034,16 @@ export default {
             }
           });
     },
-    loadOrderBillTypeDialog(billTypeList) {
+    loadBillTypeOrderDialog(billTypeList) {
       this.billTypePage.orderDialog.billTypeList = JSON.parse(JSON.stringify(billTypeList));
       this.billTypePage.orderDialog.isShow = true;
     },
-    updateOrderBillType() {
+    updateBillTypeOrder() {
       this.billTypePage.orderDialog.btn.loading = true;
       let list = [];
       let weight = 1;
       for (let item of this.billTypePage.orderDialog.billTypeList) {
-        list.push({id: item.id, weight: weight})
+        list.push({id: item.id, weight: weight, version: item.version})
         weight = weight + 1;
       }
       this.axios.put("/billType/orderBillType", JSON.stringify(list))

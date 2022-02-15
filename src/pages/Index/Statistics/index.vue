@@ -57,7 +57,7 @@
                           locale="zh-cn"
                       >
                         <v-spacer/>
-                        <v-btn color="grey darken-1" text @click="showDatePicker = false" v-text="'取消'"/>
+                        <v-btn text @click="showDatePicker = false" v-text="'取消'"/>
                         <v-btn
                             text
                             color="primary"
