@@ -168,7 +168,7 @@
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
-                <v-col cols="6" class="pr-3">
+                <v-col class="pr-1" cols="6">
                   <v-text-field
                       v-model="dialog.user.username"
                       :disabled="!!dialog.user.id"
@@ -178,7 +178,7 @@
                       clearable
                   />
                 </v-col>
-                <v-col class="pl-3" cols="6">
+                <v-col class="pl-1" cols="6">
                   <v-text-field
                       v-model="dialog.user.phoneNumber"
                       :rules="[rules.isphoneNumber]"
@@ -216,7 +216,7 @@
                       clearable
                   />
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="4">
                   <v-row align="center" class="mb-3 " no-gutters>
                     <span :style="{color:dialog.user.id?'#9E9E9D':'inherit'}" class="text-subtitle-1" v-text="'头像'"/>
                     <v-btn
@@ -240,17 +240,15 @@
                     </v-icon>
                   </div>
                 </v-col>
-                <v-col cols=" 6" align-self="center">
+                <v-col align-self="center">
                   <v-select
                       v-model="dialog.user.status"
-                      class="pl-3"
                       no-data-text="无对应选项"
                       :items="enums.userStatus"
                       label="状态"
                   />
                   <v-select
                       v-model="dialog.user.roleIdSet"
-                      class="pl-3"
                       no-data-text="无对应选项"
                       chips
                       deletable-chips

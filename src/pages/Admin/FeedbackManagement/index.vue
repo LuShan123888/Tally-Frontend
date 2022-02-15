@@ -217,23 +217,22 @@
           <v-card-text class="pb-0">
             <v-container v-if="dialog.feedback.status=== enums.feedbackStatus[0].value" class="pa-0">
               <v-row no-gutters>
-                <v-col align-self="center" cols="4">
+                <v-col align-self="center" cols="6">
                   <v-select v-model="dialog.feedback.type"
-                            :items="enums.feedbackType" class="px-2"
+                            :items="enums.feedbackType" class="pr-1"
                             no-data-text="无对应选项"
                             disabled label="反馈类型"/>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="6">
                   <v-select v-model="dialog.feedback.status"
                             :items="enums.feedbackStatus"
                             no-data-text="无对应选项"
-                            class="px-2" disabled label="反馈状态"/>
+                            class="pl-1" disabled label="反馈状态"/>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="12">
                   <v-autocomplete v-model="dialog.feedback.processingUserId"
                                   :items="adminList"
                                   :rules="[(value) => !!value || '请分配处理人']"
-                                  class="px-2"
                                   clearable
                                   item-text="username" item-value="id"
                                   label="处理人"/>
@@ -246,16 +245,16 @@
                   <v-select v-model="dialog.feedback.type"
                             :items="enums.feedbackType"
                             no-data-text="无对应选项"
-                            class="px-3" disabled label="反馈类型"/>
+                            class="pr-1" disabled label="反馈类型"/>
                 </v-col>
                 <v-col cols="6">
                   <v-select v-model="dialog.feedback.status"
                             :items="enums.feedbackStatus"
                             no-data-text="无对应选项"
-                            class="px-3" disabled label="反馈状态"/>
+                            class="pl-1" disabled label="反馈状态"/>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea v-model="dialog.feedback.processingDescription" auto-grow class="px-3"
+                  <v-textarea v-model="dialog.feedback.processingDescription" auto-grow
                               clearable label="处理描述" rows="1"/>
                 </v-col>
               </v-row>

@@ -163,7 +163,7 @@
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
-                <v-col class="pr-3" cols="6">
+                <v-col class="pr-1" cols="6">
                   <v-text-field
                       v-model="dialog.role.roleName"
                       :counter="rules.roleNameMaxLength"
@@ -172,7 +172,7 @@
                       label="角色名称"
                   />
                 </v-col>
-                <v-col class="pl-3" cols="6">
+                <v-col class="pl-1" cols="6">
                   <v-text-field
                       v-model="dialog.role.description"
                       clearable

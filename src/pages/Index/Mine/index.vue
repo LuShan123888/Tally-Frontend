@@ -1022,9 +1022,9 @@ export default {
       this.axios.post("/billType/listBillType", billType)
           .then((response) => {
             this.billTypePage.outBillTypeList = [];
-            this.billTypePage.outBillTypeList.push({id: 0, billTypeName: '根结点'});
+            this.billTypePage.outBillTypeList.push({id: 0, billTypeName: '根类别'});
             this.billTypePage.inBillTypeList = [];
-            this.billTypePage.inBillTypeList.push({id: 0, billTypeName: '根结点'});
+            this.billTypePage.inBillTypeList.push({id: 0, billTypeName: '根类别'});
             for (let item of response.data.data) {
               if (item.flow === 'OUT') {
                 this.billTypePage.outBillTypeList.push({id: item.id, billTypeName: item.billTypeName});
