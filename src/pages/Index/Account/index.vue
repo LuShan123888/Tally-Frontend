@@ -197,7 +197,7 @@
         </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
+            <v-col v-for="item in icons.accountType" :key="item" class="d-flex justify-center"
                    cols="2"
                    @click="accountPage.account.icon = item;accountPage.iconDialog.isShow=false;">
               <v-btn color="primary" depressed fab x-small>
@@ -275,7 +275,7 @@ export default {
       backgroundImagePath: this.GLOBAL.images.wallet,
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
-      icons: this.GLOBAL.icons.accountType
+      icons: this.GLOBAL.icons
     };
   },
   methods: {

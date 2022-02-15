@@ -403,13 +403,14 @@
                 </v-btn>
               </template>
               <template v-slot:append="{ item, open }">
-                <v-btn v-if="item.flow !== 'TRANSFER'"
-                       class="mr-1" color="primary"
+                <v-btn v-if="item.flow !== 'TRANSFER'" class="mr-1" color="primary"
                        depressed small
                        v-text="'修改'" @click.stop="loadBillTypeUpdateDialog(item)"/>
-                <v-btn v-if="item.children" class="mr-1" color="warning" depressed small v-text="'排序'"
+                <v-btn v-if="item.children && item.flow !== 'TRANSFER'" class="mr-1" color="warning" depressed small
+                       v-text="'排序'"
                        @click.stop="loadBillTypeOrderDialog(item.children)"/>
-                <v-btn v-if="item.flow !== 'TRANSFER'"
+                <v-btn v-if="!item.children && item.flow !== 'TRANSFER'"
+                       class="mr-1"
                        color="error"
                        depressed
                        small v-text="'删除'"
@@ -514,7 +515,7 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col v-for="item in icons" :key="item" class="d-flex justify-center"
+              <v-col v-for="item in icons.billType" :key="item" class="d-flex justify-center"
                      cols="2"
                      @click="billTypePage.dialog.billType.icon = item; billTypePage.iconDialog.isShow = false;">
                 <v-btn depressed fab x-small>
@@ -821,7 +822,7 @@ export default {
       darkMode: this.$vuetify.theme.dark,
       enums: this.GLOBAL.enums,
       rules: this.GLOBAL.rules,
-      icons: this.GLOBAL.icons.accountType
+      icons: this.GLOBAL.icons
     };
   },
   methods: {
