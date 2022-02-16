@@ -14,8 +14,7 @@
     </v-btn>
     <v-card
         class="pa-0 rounded-lg"
-        flat fluid
-    >
+        flat fluid>
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">净资产</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
                     v-text="numFormat(accountStat.netAssets)"></v-card-title>
@@ -41,10 +40,9 @@
     />
     <v-container v-for="(type, i) in accountInfoList" v-if="!loading"
                  :key="i"
-                 class="pa-0">
+                 class="pa-0" fluid>
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
-             style="position: relative"
-      >
+             style="position: relative">
         <span v-text="accountTypeFormatter(type.type)"></span>
         <span class="text-subtitle-2 text--darken-1 grey--text">
           <span>余额</span>
@@ -55,7 +53,7 @@
           class="py-0  px-3 rounded-lg"
           flat fluid
       >
-        <v-container v-for="(item, i) in type.list" :key="i" class="pa-0">
+        <v-container v-for="(item, i) in type.list" :key="i" class="pa-0" fluid>
           <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateAccountPage(item)">
             <v-col cols="1">

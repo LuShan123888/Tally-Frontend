@@ -26,7 +26,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-                v-model="query.monthString"
+                v-model="query.dateGroupString"
                 dense
                 flat
                 label="请选择月份"
@@ -38,7 +38,7 @@
             ></v-text-field>
           </template>
           <v-date-picker
-              v-model="query.monthString"
+              v-model="query.dateGroupString"
               color="primary"
               locale="zh-cn"
               no-title
@@ -87,10 +87,10 @@
         type="list-item-avatar-two-line"
     />
     <v-container v-for="(date, i) in billInfoList" v-if="!loading"
-                 :key="i" class="pa-0">
+                 :key="i" class="pa-0" fluid>
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
              style="position: relative">
-        <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.billMouth"/>
+        <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.groupName"/>
         <span class="text-subtitle-2 text--darken-1 grey--text">
           <span>结余</span>
           <span class="ml-2" v-text="'¥'+numFormat(date.amount)"/>
@@ -98,7 +98,7 @@
       </v-row>
       <v-card class="py-0  px-3 rounded-lg"
               flat fluid>
-        <v-container v-for="(item, i) in date.list" :key="i" class="pa-0">
+        <v-container v-for="(item, i) in date.list" :key="i" class="pa-0" fluid>
           <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
@@ -152,12 +152,11 @@
         </v-toolbar>
         <v-tabs-items v-model="billPage.tab" :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
           <v-tab-item>
-            <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-                   class="mx-auto px-4"
-                   justify="center"
-                   no-gutters>
+            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
+                         class="mx-auto px-4"
+                         no-gutters>
               <v-form ref="outBillSaveOrUpdateForm">
-                <v-card class="pa-4 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
@@ -281,15 +280,14 @@
                   </v-row>
                 </v-card>
               </v-form>
-            </v-row>
+            </v-container>
           </v-tab-item>
           <v-tab-item>
-            <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-                   class="mx-auto px-4"
-                   justify="center"
-                   no-gutters>
+            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
+                         class="mx-auto px-4"
+                         no-gutters>
               <v-form ref="inBillSaveOrUpdateForm">
-                <v-card class="pa-4 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
@@ -409,15 +407,14 @@
                   </v-row>
                 </v-card>
               </v-form>
-            </v-row>
+            </v-container>
           </v-tab-item>
           <v-tab-item>
-            <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-                   class="mx-auto px-4"
-                   justify="center"
-                   no-gutters>
+            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
+                         class="mx-auto px-4"
+                         no-gutters>
               <v-form ref="transferBillSaveOrUpdateForm">
-                <v-card class="pa-4 rounded-lg" flat fluid>
+                <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="mt-3" cols="6">
                       <v-select
@@ -516,7 +513,7 @@
                   </v-row>
                 </v-card>
               </v-form>
-            </v-row>
+            </v-container>
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -549,13 +546,13 @@ export default {
       backgroundImagePath: this.GLOBAL.images.noteList,
       loading: true,
       query: {
-        monthString: new Date().Format("yyyy-MM"),
+        dateGroupString: new Date().Format("yyyy-MM"),
         description: null
       },
       billInfoList: [
         {
           amount: null,
-          billMouth: null,
+          groupName: null,
           list: []
         },
       ],

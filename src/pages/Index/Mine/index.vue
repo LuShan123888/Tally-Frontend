@@ -604,11 +604,10 @@
             </v-btn>
             <v-toolbar-title>提交反馈</v-toolbar-title>
           </v-toolbar>
-          <v-row :style="{ width: isMobile ? '100%' : '50%' }"
-                 class="mx-auto px-4"
-                 justify="center"
-                 no-gutters>
-            <v-card class="pa-4 rounded-lg" flat fluid>
+          <v-container :style="{ width: isMobile ? '100%' : '50%'}" class="mx-auto px-4"
+                       fluid
+                       no-gutters>
+            <v-card class="pa-4 rounded-lg" flat>
               <v-row align="center" no-gutters>
                 <v-col cols="12">
                   <v-select
@@ -654,7 +653,7 @@
                 </v-btn>
               </v-row>
             </v-card>
-          </v-row>
+          </v-container>
         </v-card>
       </v-dialog>
     </v-form>
