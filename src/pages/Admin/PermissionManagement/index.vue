@@ -32,7 +32,6 @@
           width="70px">
       </el-table-column>
       <el-table-column
-          align="center"
           label="权限ID"
           property="id"
           width="200px">

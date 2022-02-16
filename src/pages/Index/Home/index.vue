@@ -65,16 +65,16 @@
     >
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">总支出</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
-                    v-text="numFormat(billStat.expenditure)"></v-card-title>
+                    v-text="numFormat(billSummaryData.expenditure)"></v-card-title>
       <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总收入</span>
-            <span class="ml-3" v-text="'¥'+numFormat(billStat.income)"/>
+            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.income)"/>
           </v-col>
           <v-col cols="6">
             <span class="font-weight-medium">结余</span>
-            <span class="ml-3" v-text="'¥'+numFormat(billStat.balance)"/>
+            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.balance)"/>
           </v-col>
         </v-row>
       </v-card-subtitle>
@@ -86,7 +86,7 @@
         class="rounded-lg mt-5"
         type="list-item-avatar-two-line"
     />
-    <v-container v-for="(date, i) in billInfoList" v-if="!loading"
+    <v-container v-for="(date, i) in billList" v-if="!loading"
                  :key="i" class="pa-0" fluid>
       <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
              style="position: relative">
@@ -549,14 +549,14 @@ export default {
         dateGroupString: new Date().Format("yyyy-MM"),
         description: null
       },
-      billInfoList: [
+      billList: [
         {
           amount: null,
           groupName: null,
           list: []
         },
       ],
-      billStat: {
+      billSummaryData: {
         expenditure: 0.00,
         income: 0.00,
         balance: 0.00
@@ -652,8 +652,8 @@ export default {
     listBill() {
       this.loading = true;
       this.axios.post("/bill/listUserBill", JSON.stringify(this.query)).then((response) => {
-        this.billInfoList = response.data.data.billInfoList;
-        for (let list of this.billInfoList) {
+        this.billList = response.data.data.billList;
+        for (let list of this.billList) {
           for (let item of list.list) {
             if (item.billTypeVO.parentId === 0) {
               item.billTypeVO.parentId = item.billTypeVO.id;
@@ -661,7 +661,7 @@ export default {
             }
           }
         }
-        this.billStat = response.data.data.billStat;
+        this.billSummaryData = response.data.data.billSummaryData;
         this.loading = false;
       });
     },
