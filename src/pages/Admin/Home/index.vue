@@ -15,7 +15,7 @@
                     <v-icon class="ml-5" color="primary" size="50">mdi-account-group</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.day"/>
+                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增用户'"/>
                   </v-col>
                 </v-row>
@@ -31,7 +31,7 @@
                     <v-icon class="ml-5" color="primary" size="50">mdi-login</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessStatData.day"/>
+                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
                   </v-col>
                 </v-row>
@@ -48,7 +48,7 @@
                     <v-icon class="ml-5" color="primary" size="50">mdi-notebook-edit</v-icon>
                   </v-col>
                   <v-col class="d-flex flex-column align-end pr-4" cols="7">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.day"/>
+                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增账单'"/>
                   </v-col>
                 </v-row>
@@ -68,14 +68,14 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'用户统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userStatData.total"/>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总用户数'"/>
                 </v-col>
               </v-row>
             </v-card-title>
             <v-card-text>
               <v-row
-                  v-if="userStatData.week.loading"
+                  v-if="userMonitorData.week.loading"
                   :style="{height:'200px'}"
                   align="center"
                   no-gutters
@@ -88,8 +88,8 @@
                     width="2"
                 />
               </v-row>
-              <line-chart v-if="!userStatData.week.loading" :chartData="userStatData.week.chartData"
-                          :options="userStatData.week.options"
+              <line-chart v-if="!userMonitorData.week.loading" :chartData="userMonitorData.week.chartData"
+                          :options="userMonitorData.week.options"
                           style="height: 200px"/>
             </v-card-text>
           </v-card>
@@ -104,14 +104,14 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'访问统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessStatData.total"/>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总访问数'"/>
                 </v-col>
               </v-row>
             </v-card-title>
             <v-card-text>
               <v-row
-                  v-if="userAccessStatData.week.loading"
+                  v-if="userAccessMonitorData.week.loading"
                   :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
@@ -124,8 +124,8 @@
                     width="2"
                 />
               </v-row>
-              <line-chart v-if="!userAccessStatData.week.loading" :chartData="userAccessStatData.week.chartData"
-                          :options="userAccessStatData.week.options"
+              <line-chart v-if="!userAccessMonitorData.week.loading" :chartData="userAccessMonitorData.week.chartData"
+                          :options="userAccessMonitorData.week.options"
                           style="height: 200px"/>
             </v-card-text>
           </v-card>
@@ -140,14 +140,14 @@
               <v-row :style="{height: '100px'}" align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'账单统计'"/>
                 <v-col class="d-flex flex-column align-end">
-                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billStatData.total"/>
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.total"/>
                   <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'总账单数'"/>
                 </v-col>
               </v-row>
             </v-card-title>
             <v-card-text>
               <v-row
-                  v-if="billStatData.week.loading"
+                  v-if="billMonitorData.week.loading"
                   :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
@@ -160,8 +160,8 @@
                     width="2"
                 />
               </v-row>
-              <line-chart v-if="!billStatData.week.loading" :chartData="billStatData.week.chartData"
-                          :options="billStatData.week.options"
+              <line-chart v-if="!billMonitorData.week.loading" :chartData="billMonitorData.week.chartData"
+                          :options="billMonitorData.week.options"
                           style="height: 200px"/>
             </v-card-text>
           </v-card>
@@ -815,7 +815,7 @@ export default {
         cpu: 0,
         ipAddress: '0.0.0.0'
       },
-      userStatData: {
+      userMonitorData: {
         total: 0,
         day: 0,
         week: {
@@ -880,7 +880,7 @@ export default {
           },
         },
       },
-      userAccessStatData: {
+      userAccessMonitorData: {
         total: 0,
         day: 0,
         week: {
@@ -945,7 +945,7 @@ export default {
           },
         },
       },
-      billStatData: {
+      billMonitorData: {
         total: 0,
         day: 0,
         week: {
@@ -1073,37 +1073,37 @@ export default {
             this.monitorData.BPS.day.loading = false;
           });
     },
-    getUserStatData() {
-      this.axios.get("/user/getUserStatData")
+    getUserMonitorData() {
+      this.axios.get("/user/getUserMonitorData")
           .then((response) => {
             let responseData = response.data.data;
-            this.userStatData.total = responseData.total;
-            this.userStatData.day = responseData.day;
-            this.userStatData.week.chartData.labels = responseData.datetime;
-            this.userStatData.week.chartData.datasets[0].data = responseData.week;
-            this.userStatData.week.loading = false;
+            this.userMonitorData.total = responseData.total;
+            this.userMonitorData.day = responseData.day;
+            this.userMonitorData.week.chartData.labels = responseData.datetime;
+            this.userMonitorData.week.chartData.datasets[0].data = responseData.week;
+            this.userMonitorData.week.loading = false;
           });
     },
-    getBillStatData() {
-      this.axios.get("/bill/getBillStatData")
+    getBillMonitorData() {
+      this.axios.get("/bill/getBillMonitorData")
           .then((response) => {
             let responseData = response.data.data;
-            this.billStatData.total = responseData.total;
-            this.billStatData.day = responseData.day;
-            this.billStatData.week.chartData.labels = responseData.datetime;
-            this.billStatData.week.chartData.datasets[0].data = responseData.week;
-            this.billStatData.week.loading = false;
+            this.billMonitorData.total = responseData.total;
+            this.billMonitorData.day = responseData.day;
+            this.billMonitorData.week.chartData.labels = responseData.datetime;
+            this.billMonitorData.week.chartData.datasets[0].data = responseData.week;
+            this.billMonitorData.week.loading = false;
           });
     },
-    getUserAccessStatData() {
-      this.axios.get("/userRecord/getUserAccessStatData")
+    getUserAccessMonitorData() {
+      this.axios.get("/userRecord/getUserAccessMonitorData")
           .then((response) => {
             let responseData = response.data.data;
-            this.userAccessStatData.total = responseData.total;
-            this.userAccessStatData.day = responseData.day;
-            this.userAccessStatData.week.chartData.labels = responseData.datetime;
-            this.userAccessStatData.week.chartData.datasets[0].data = responseData.week;
-            this.userAccessStatData.week.loading = false;
+            this.userAccessMonitorData.total = responseData.total;
+            this.userAccessMonitorData.day = responseData.day;
+            this.userAccessMonitorData.week.chartData.labels = responseData.datetime;
+            this.userAccessMonitorData.week.chartData.datasets[0].data = responseData.week;
+            this.userAccessMonitorData.week.loading = false;
           });
     }
   },
@@ -1112,9 +1112,9 @@ export default {
     this.getInstanceMonitorDataNow();
     this.getInstanceMonitorDataHour();
     this.getInstanceMonitorDataDay();
-    this.getUserStatData();
-    this.getBillStatData();
-    this.getUserAccessStatData();
+    this.getUserMonitorData();
+    this.getBillMonitorData();
+    this.getUserAccessMonitorData();
   },
 };
 </script>
