@@ -1,24 +1,36 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
-      <v-col cols="11" no-gutters>
+      <v-col cols="10" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'账单类别管理'"/>
       </v-col>
-      <v-col cols="1">
-        <v-btn
-            class="mb-2"
-            color="primary"
-            depressed
-            @click="loadBillTypeSaveDialog"
-            v-text="'新增类别'"
-        />
-        <v-btn
-            class="mt-2"
-            color="warning"
-            depressed
-            @click="loadBillTypeOrderDialog(table.data)"
-            v-text="'排序类别'"
-        />
+      <v-col class="d-flex justify-end" cols="2">
+        <v-row justify="end">
+          <v-col class="d-flex" cols="6">
+            <v-btn
+                color="primary"
+                depressed
+                @click="loadBillTypeSaveDialog"
+                v-text="'新增类别'"
+            />
+          </v-col>
+          <v-col cols="6">
+            <v-btn
+                color="warning"
+                depressed
+                @click="loadBillTypeOrderDialog(table.data)"
+                v-text="'排序类别'"
+            />
+          </v-col>
+          <v-col cols="6">
+            <v-btn
+                color="error"
+                depressed
+                @click="allocateDialog.isShow = true"
+                v-text="'分配类别'"
+            />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <el-table
@@ -221,12 +233,50 @@
           <v-btn
               color="primary"
               depressed text
+              :disabled="orderDialog.btn.loading"
+              :loading="orderDialog.btn.loading"
               @click="updateBillTypeOrder"
               v-text="'保存'"
           />
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-form ref="allocateForm">
+      <v-dialog v-model="allocateDialog.isShow" max-width="600px" scrollable>
+        <v-card>
+          <v-card-title>
+            <span v-text="'分配默认账单类别'"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-row align="center" no-gutters>
+              <v-col cols="12">
+                <v-text-field
+                    v-model="allocateDialog.userId"
+                    :rules="[rules.isInteger]"
+                    clearable
+                    label="用户ID">
+                </v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                depressed text
+                @click="allocateDialog.isShow = false"
+                v-text="'取消'"/>
+            <v-btn
+                :disabled="allocateDialog.btn.loading"
+                :loading="allocateDialog.btn.loading" color="primary"
+                depressed
+                text
+                @click="allocateDefaultBillType"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
     <v-dialog v-model="iconDialog.isShow" max-width="600px" scrollable>
       <v-card>
         <v-card-title>
@@ -328,6 +378,13 @@ export default {
           }
         ]
       },
+      allocateDialog: {
+        isShow: false,
+        btn: {
+          loading: false
+        },
+        userId: null
+      },
       outBillTypeList: [],
       inBillTypeList: [],
       rules: this.GLOBAL.rules,
@@ -345,7 +402,6 @@ export default {
           });
     },
     saveOrUpdateBillType() {
-      console.log(1123)
       if (!this.$refs.billTypeForm.validate()) {
         return;
       }
@@ -461,6 +517,25 @@ export default {
             }
           });
     },
+    allocateDefaultBillType() {
+      if (!this.$refs.allocateForm.validate()) {
+        return;
+      }
+      this.allocateDialog.btn.loading = true;
+      this.axios.put("/billType/allocateDefaultBillType/" + this.allocateDialog.userId)
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.allocateDialog.isShow = false;
+          })
+          .finally(() => {
+            this.allocateDialog.btn.loading = false;
+          });
+    }
   },
   mounted() {
     this.loadBillTypeTree();

@@ -61,7 +61,7 @@
             <v-btn
                 class="ml-2"
                 color="primary"
-                fab
+                depressed fab
                 small
                 @click="pageFeedback"
             >

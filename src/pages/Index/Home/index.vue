@@ -105,12 +105,12 @@
               <v-btn
                   :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
                   depressed fab x-small>
-                <v-icon v-if="item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
+                <v-icon v-if="item.billTypeVO && item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
             <v-col class="ml-3">
-              <div class="text-subtitle-1" v-text="item.billTypeVO.billTypeFullName"/>
+              <div class="text-subtitle-1" v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"/>
               <div class="text-subtitle-2 text--darken-1 grey--text" v-text="item.description"/>
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
@@ -176,10 +176,8 @@
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billTypeVO.icon">mdi-{{
-                              billPage.bill.billTypeVO.icon
-                            }}
-                          </v-icon>
+                          <v-icon v-if="billPage.bill.billTypeVO.icon"
+                                  v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
@@ -655,7 +653,7 @@ export default {
         this.billList = response.data.data.billList;
         for (let list of this.billList) {
           for (let item of list.list) {
-            if (item.billTypeVO.parentId === 0) {
+            if (item.billTypeVO && item.billTypeVO.parentId === 0) {
               item.billTypeVO.parentId = item.billTypeVO.id;
               item.billTypeVO.id = null;
             }
@@ -703,6 +701,9 @@ export default {
       billPage.type = 'update';
       billPage.title = '修改账单';
       billPage.bill = JSON.parse(JSON.stringify(bill));
+      if (!bill.billTypeVO) {
+        bill.billTypeVO = {};
+      }
     },
     loadSaveBillPage() {
       let billPage = this.billPage;

@@ -573,6 +573,8 @@
                 class="rounded-lg"
                 color="primary"
                 depressed
+                :disabled="billTypePage.orderDialog.btn.loading"
+                :loading="billTypePage.orderDialog.btn.loading"
                 @click="updateBillTypeOrder"
                 v-text="'保存'"
             />

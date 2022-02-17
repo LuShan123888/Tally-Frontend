@@ -19,8 +19,7 @@
             icon
             v-bind="attrs"
             v-on="on"
-            class="mr-16"
-        >
+            class="mr-16">
           <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
