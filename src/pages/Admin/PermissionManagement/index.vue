@@ -186,6 +186,8 @@
           <v-btn
               color="primary"
               depressed
+              :disabled="orderDialog.btn.loading"
+              :loading="orderDialog.btn.loading"
               text
               @click="updatePermissionOrder"
               v-text="'保存'"

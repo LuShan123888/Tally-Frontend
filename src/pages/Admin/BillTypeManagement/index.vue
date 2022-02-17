@@ -6,10 +6,18 @@
       </v-col>
       <v-col cols="1">
         <v-btn
+            class="mb-2"
             color="primary"
             depressed
             @click="loadBillTypeSaveDialog"
-            v-text="'新增账单类别'"
+            v-text="'新增类别'"
+        />
+        <v-btn
+            class="mt-2"
+            color="warning"
+            depressed
+            @click="loadBillTypeOrderDialog(table.data)"
+            v-text="'排序类别'"
         />
       </v-col>
     </v-row>
@@ -47,7 +55,8 @@
               :color="scope.row.flow==='OUT'?'error':scope.row.flow==='IN'?'primary':scope.row.flow==='TRANSFER'?'warning':''"
               depressed fab
               x-small>
-            <v-icon>mdi-{{ scope.row.icon }}</v-icon>
+            <v-icon v-if="scope.row.icon">mdi-{{ scope.row.icon }}</v-icon>
+            <v-icon v-else>mdi-help</v-icon>
           </v-btn>
         </template>
       </el-table-column>
@@ -319,7 +328,6 @@ export default {
           }
         ]
       },
-      billTypeTree: [],
       outBillTypeList: [],
       inBillTypeList: [],
       rules: this.GLOBAL.rules,
@@ -343,7 +351,7 @@ export default {
       }
       if (this.dialog.type === 'update') {
         this.dialog.btn.loading = true;
-        this.axios.put("/billType/updateBillType", JSON.stringify(this.dialog.billType))
+        this.axios.put("/billType/updateDefaultBillType", JSON.stringify(this.dialog.billType))
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -361,7 +369,7 @@ export default {
       } else if (this.dialog.type === 'save') {
         this.dialog.loading = true;
         this.dialog.billType.weight = 0;
-        this.axios.post("/billType/saveBillType", JSON.stringify(this.dialog.billType))
+        this.axios.post("/billType/saveDefaultBillType", JSON.stringify(this.dialog.billType))
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -386,7 +394,7 @@ export default {
         list.push({id: item.id, weight: weight, version: item.version})
         weight = weight + 1;
       }
-      this.axios.put("/billType/orderBillType", JSON.stringify(list))
+      this.axios.put("/billType/orderDefaultBillType", JSON.stringify(list))
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -403,7 +411,7 @@ export default {
           });
     },
     deleteBillType(billTypeId) {
-      this.axios.delete("/billType/removeBillType/" + billTypeId)
+      this.axios.delete("/billType/removeDefaultBillType/" + billTypeId)
           .then(() => {
             this.$notify({
               title: "删除成功",
@@ -438,7 +446,7 @@ export default {
       let billType = {
         parentId: 0
       }
-      this.axios.post("/billType/listBillType", billType)
+      this.axios.post("/billType/listDefaultBillType", billType)
           .then((response) => {
             this.outBillTypeList = [];
             this.outBillTypeList.push({id: 0, billTypeName: '根类别'});
