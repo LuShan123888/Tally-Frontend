@@ -118,7 +118,7 @@
             <v-btn
                 slot="reference"
                 class="mx-1"
-                color="red"
+                color="error"
                 text
                 v-text="'删除'"
             />
@@ -351,7 +351,7 @@ export default {
     },
     loadPermissionTree() {
       this.table.loading = true;
-      this.axios.get("/permission/getAllPermissionTree")
+      this.axios.get("/permission/listAllPermissionTree")
           .then((response) => {
             this.dialog.permissionTree = response.data.data;
           });

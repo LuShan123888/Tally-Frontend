@@ -153,37 +153,36 @@
                   </v-text-field>
                 </v-col>
               </v-row>
-              <v-row class="mt-3" no-gutters>
-                <v-col v-if="accountPage.type==='update'" class="pr-3" cols="6">
-                  <v-btn
-                      :disabled="accountPage.buttons.delete.loading"
-                      :loading="accountPage.buttons.delete.loading"
-                      block
-                      class="rounded-lg"
-                      color="error"
-                      depressed
-                      @click="deleteAccount(accountPage.account.id)"
-                  >
-                    <v-icon class="mr-3">mdi-delete</v-icon>
-                    <span>删除</span>
-                  </v-btn>
-                </v-col>
-                <v-col :class="{'pl-3':accountPage.type==='update'}" :cols="accountPage.type==='update'?6:12">
-                  <v-btn
-                      :disabled="accountPage.buttons.saveOrUpdate.loading"
-                      :loading="accountPage.buttons.saveOrUpdate.loading"
-                      block
-                      class="rounded-lg"
-                      color="primary"
-                      depressed
-                      @click="saveOrUpdateAccount"
-                  >
-                    <v-icon class="mr-3">mdi-content-save</v-icon>
-                    <span>保存</span>
-                  </v-btn>
-                </v-col>
-              </v-row>
             </v-card>
+            <v-row class="mt-4" no-gutters>
+              <v-col v-if="accountPage.type==='update'" class="pr-2" cols="6">
+                <v-btn
+                    :disabled="accountPage.buttons.delete.loading"
+                    :loading="accountPage.buttons.delete.loading"
+                    block
+                    class="rounded-lg"
+                    color="error"
+                    depressed
+                    large
+                    @click="deleteAccount(accountPage.account.id)">
+                  <v-icon class="mr-3">mdi-delete</v-icon>
+                  <span>删除</span>
+                </v-btn>
+              </v-col>
+              <v-col :class="{'pl-2':accountPage.type==='update'}" :cols="accountPage.type==='update'?6:12">
+                <v-btn
+                    :disabled="accountPage.buttons.saveOrUpdate.loading"
+                    :loading="accountPage.buttons.saveOrUpdate.loading"
+                    block class="rounded-lg"
+                    color="primary"
+                    depressed
+                    large
+                    @click="saveOrUpdateAccount">
+                  <v-icon class="mr-3">mdi-content-save</v-icon>
+                  <span>保存</span>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-row>
         </v-card>
       </v-dialog>

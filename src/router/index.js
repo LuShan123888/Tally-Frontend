@@ -15,6 +15,7 @@ import AdminHome from '@/pages/Admin/Home'
 import UserManagement from '@/pages/Admin/UserManagement'
 import RoleManagement from '@/pages/Admin/RoleManagement'
 import PermissionManagement from '@/pages/Admin/PermissionManagement'
+import BillTypeManagement from '@/pages/Admin/BillTypeManagement'
 import FeedbackManagement from '@/pages/Admin/FeedbackManagement'
 import Druid from '@/pages/Admin/Druid'
 import Portainer from '@/pages/Admin/Portainer'
@@ -94,6 +95,14 @@ const routes = [
                 path: '/admin/permission',
                 name: 'PermissionManagement',
                 component: PermissionManagement,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/billType',
+                name: 'BillTypeManagement',
+                component: BillTypeManagement,
                 meta: {
                     requireAuth: true
                 }

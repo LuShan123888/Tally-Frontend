@@ -96,6 +96,12 @@ export default {
         ]
       },
       {
+        icon: "mdi-ballot-outline",
+        path: "/admin/billType",
+        title: "账单类别管理",
+        children: null
+      },
+      {
         icon: "mdi-message-alert",
         path: "/admin/feedback",
         title: "反馈处理",

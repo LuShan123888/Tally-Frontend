@@ -67,7 +67,7 @@
             <v-btn
                 slot="reference"
                 class="mx-1"
-                color="red"
+                color="error"
                 text
                 v-text="'删除'"
             />
@@ -200,7 +200,7 @@
 import draggable from "vuedraggable";
 
 export default {
-  name: "PermissionManager",
+  name: "PermissionManagement",
   components: {draggable},
   computed: {
     isMobile: function () {
@@ -268,16 +268,9 @@ export default {
     };
   },
   methods: {
-    changePageSize() {
-      this.table.query.page.current = 1;
-      this.loadPermissionTree();
-    },
-    changePage() {
-      this.loadPermissionTree();
-    },
     loadPermissionTree() {
       this.table.loading = true;
-      this.axios.get("/permission/getAllPermissionTree")
+      this.axios.get("/permission/listAllPermissionTree")
           .then((response) => {
             this.table.data = response.data.data;
             this.table.loading = false;

@@ -103,7 +103,7 @@
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
               <v-btn
-                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'success':item.flow==='TRANSFER'?'warning':''"
+                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
                   depressed fab x-small>
                 <v-icon v-if="item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
@@ -250,35 +250,35 @@
                       </v-text-field>
                     </v-col>
                   </v-row>
-                  <v-row class="mt-3" no-gutters>
-                    <v-col v-if="billPage.type==='update'" class="pr-3" cols="6">
-                      <v-btn
-                          :disabled="billPage.buttons.delete.loading"
-                          :loading="billPage.buttons.delete.loading"
-                          block
-                          class="rounded-lg"
-                          color="error"
-                          depressed
-                          @click="deleteBill(billPage.bill.id)">
-                        <v-icon class="mr-3">mdi-delete</v-icon>
-                        <span>删除</span>
-                      </v-btn>
-                    </v-col>
-                    <v-col :class="{'pl-3':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
-                      <v-btn
-                          :disabled="billPage.buttons.saveOrUpdate.loading"
-                          :loading="billPage.buttons.saveOrUpdate.loading"
-                          block
-                          class="rounded-lg"
-                          color="primary"
-                          depressed
-                          @click="saveOrUpdateBill('OUT')">
-                        <v-icon class="mr-3">mdi-content-save</v-icon>
-                        <span>保存</span>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                 </v-card>
+                <v-row class="mt-4" no-gutters>
+                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                    <v-btn
+                        :disabled="billPage.buttons.delete.loading"
+                        :loading="billPage.buttons.delete.loading"
+                        block class="rounded-lg"
+                        color="error"
+                        depressed
+                        large
+                        @click="deleteBill(billPage.bill.id)">
+                      <v-icon class="mr-3">mdi-delete</v-icon>
+                      <span>删除</span>
+                    </v-btn>
+                  </v-col>
+                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                    <v-btn
+                        :disabled="billPage.buttons.saveOrUpdate.loading"
+                        :loading="billPage.buttons.saveOrUpdate.loading"
+                        block class="rounded-lg"
+                        color="primary"
+                        depressed
+                        large
+                        @click="saveOrUpdateBill('OUT')">
+                      <v-icon class="mr-3">mdi-content-save</v-icon>
+                      <span>保存</span>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-form>
             </v-container>
           </v-tab-item>
@@ -377,35 +377,35 @@
                       </v-text-field>
                     </v-col>
                   </v-row>
-                  <v-row class="mt-3" no-gutters>
-                    <v-col v-if="billPage.type==='update'" class="pr-3" cols="6">
-                      <v-btn
-                          :disabled="billPage.buttons.delete.loading"
-                          :loading="billPage.buttons.delete.loading"
-                          block
-                          class="rounded-lg"
-                          color="error"
-                          depressed
-                          @click="deleteBill(billPage.bill.id)">
-                        <v-icon class="mr-3">mdi-delete</v-icon>
-                        <span>删除</span>
-                      </v-btn>
-                    </v-col>
-                    <v-col :class="{'pl-3':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
-                      <v-btn
-                          :disabled="billPage.buttons.saveOrUpdate.loading"
-                          :loading="billPage.buttons.saveOrUpdate.loading"
-                          block
-                          class="rounded-lg"
-                          color="primary"
-                          depressed
-                          @click="saveOrUpdateBill('IN')">
-                        <v-icon class="mr-3">mdi-content-save</v-icon>
-                        <span>保存</span>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                 </v-card>
+                <v-row class="mt-4" no-gutters>
+                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                    <v-btn
+                        :disabled="billPage.buttons.delete.loading"
+                        :loading="billPage.buttons.delete.loading"
+                        block class="rounded-lg"
+                        color="error"
+                        depressed
+                        large
+                        @click="deleteBill(billPage.bill.id)">
+                      <v-icon class="mr-3">mdi-delete</v-icon>
+                      <span>删除</span>
+                    </v-btn>
+                  </v-col>
+                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                    <v-btn
+                        :disabled="billPage.buttons.saveOrUpdate.loading"
+                        :loading="billPage.buttons.saveOrUpdate.loading"
+                        block class="rounded-lg"
+                        color="primary"
+                        depressed
+                        large
+                        @click="saveOrUpdateBill('IN')">
+                      <v-icon class="mr-3">mdi-content-save</v-icon>
+                      <span>保存</span>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-form>
             </v-container>
           </v-tab-item>
@@ -483,35 +483,35 @@
                       </v-text-field>
                     </v-col>
                   </v-row>
-                  <v-row class="mt-3" no-gutters>
-                    <v-col v-if="billPage.type==='update'" class="pr-3" cols="6">
-                      <v-btn
-                          :disabled="billPage.buttons.delete.loading"
-                          :loading="billPage.buttons.delete.loading"
-                          block
-                          class="rounded-lg"
-                          color="error"
-                          depressed
-                          @click="deleteBill(billPage.bill.id)">
-                        <v-icon class="mr-3">mdi-delete</v-icon>
-                        <span>删除</span>
-                      </v-btn>
-                    </v-col>
-                    <v-col :class="{'pl-3':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
-                      <v-btn
-                          :disabled="billPage.buttons.saveOrUpdate.loading"
-                          :loading="billPage.buttons.saveOrUpdate.loading"
-                          block
-                          class="rounded-lg"
-                          color="primary"
-                          depressed
-                          @click="saveOrUpdateBill('TRANSFER')">
-                        <v-icon class="mr-3">mdi-content-save</v-icon>
-                        <span>保存</span>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                 </v-card>
+                <v-row class="mt-4" no-gutters>
+                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                    <v-btn
+                        :disabled="billPage.buttons.delete.loading"
+                        :loading="billPage.buttons.delete.loading"
+                        block
+                        class="rounded-lg"
+                        color="error"
+                        depressed large
+                        @click="deleteBill(billPage.bill.id)">
+                      <v-icon class="mr-3">mdi-delete</v-icon>
+                      <span>删除</span>
+                    </v-btn>
+                  </v-col>
+                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                    <v-btn
+                        :disabled="billPage.buttons.saveOrUpdate.loading"
+                        :loading="billPage.buttons.saveOrUpdate.loading"
+                        block class="rounded-lg"
+                        color="primary"
+                        depressed
+                        large
+                        @click="saveOrUpdateBill('TRANSFER')">
+                      <v-icon class="mr-3">mdi-content-save</v-icon>
+                      <span>保存</span>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-form>
             </v-container>
           </v-tab-item>

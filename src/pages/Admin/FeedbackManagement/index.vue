@@ -177,7 +177,7 @@
           >
             <template v-slot:reference>
               <v-btn class="mx-1"
-                     color="red" text v-text="'删除'"/>
+                     color="error" text v-text="'删除'"/>
             </template>
           </el-popconfirm>
         </template>

@@ -123,7 +123,7 @@
             <v-btn
                 slot="reference"
                 text
-                color="red"
+                color="error"
                 class="mx-1"
                 v-text="'删除'"
             />

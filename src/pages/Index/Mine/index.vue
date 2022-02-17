@@ -50,11 +50,10 @@
                   size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
           <v-card
               :style="{ width: '100%' }"
-              class="pt-16 pa-4 rounded-lg"
+              class="pt-16 px-4 rounded-lg mb-4"
               flat
               fluid
-              style="margin-top: -50px"
-          >
+              style="margin-top: -50px">
             <v-row v-ripple align="center" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
               <v-col cols="4">
@@ -147,20 +146,17 @@
                 </v-chip>
               </v-col>
             </v-row>
-            <v-divider/>
-            <v-row align="center" class="pt-4" justify="center" no-gutters>
-              <v-btn
-                  class="rounded-lg"
-                  color="error"
-                  depressed
-                  block
-                  @click="loadUserInfoDialog('注销账号','cancelUser')"
-              >
-                <v-icon class="mr-3">mdi-logout</v-icon>
-                注销账号
-              </v-btn>
-            </v-row>
           </v-card>
+          <v-btn
+              block
+              class="rounded-lg"
+              color="error"
+              depressed
+              large
+              @click="loadUserInfoDialog('注销账号','cancelUser')">
+            <v-icon class="mr-3">mdi-logout</v-icon>
+            注销账号
+          </v-btn>
         </v-row>
         <v-form ref="updateUserInfoForm">
           <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
@@ -418,6 +414,18 @@
               </template>
             </v-treeview>
           </v-card>
+          <v-row class="mt-4" no-gutters>
+            <v-btn
+                block
+                class="rounded-lg"
+                color="error"
+                depressed
+                large
+                @click="billTypePage.resetDialog.isShow = true;">
+              <v-icon class="mr-3">mdi-cached</v-icon>
+              <span>重置账单类别</span>
+            </v-btn>
+          </v-row>
         </v-row>
       </v-card>
       <v-form ref="billTypeForm">
@@ -505,6 +513,30 @@
                 :disabled="billTypePage.removeDialog.btn.loading" :loading="billTypePage.removeDialog.btn.loading"
                 color="primary" depressed
                 @click="removeBillType" v-text="'确定'"/>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="billTypePage.resetDialog.isShow" max-width="600px" persistent>
+        <v-card>
+          <v-card-title>
+            <span v-text="'重置账单类别'"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-container class="pa-0">
+              <v-row no-gutters>
+                <v-icon color="error">mdi-alert-circle</v-icon>
+                <span class="ml-2">确定要删除重置账单类别吗？</span>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn depressed
+                   @click="billTypePage.resetDialog.isShow = false" v-text="'取消'"/>
+            <v-btn
+                :disabled="billTypePage.resetDialog.btn.loading" :loading="billTypePage.resetDialog.btn.loading"
+                color="primary" depressed
+                @click="resetBillType" v-text="'确定'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -638,21 +670,22 @@
                                   @setImagePath="(imagePath)=>{feedbackPage.feedback.imagePath = imagePath}"/>
                 </v-col>
               </v-row>
-              <v-row class="mt-3" no-gutters>
-                <v-btn
-                    :disabled="feedbackPage.loading"
-                    :loading="feedbackPage.loading"
-                    block
-                    class="rounded-lg"
-                    color="primary"
-                    depressed
-                    @click="saveFeedback"
-                >
-                  <v-icon class="mr-3">mdi-logout</v-icon>
-                  <span>提交反馈</span>
-                </v-btn>
-              </v-row>
             </v-card>
+            <v-row class="mt-4" no-gutters>
+              <v-btn
+                  :disabled="feedbackPage.loading"
+                  :loading="feedbackPage.loading"
+                  block
+                  class="rounded-lg"
+                  color="primary"
+                  depressed
+                  large
+                  @click="saveFeedback"
+              >
+                <v-icon class="mr-3">mdi-logout</v-icon>
+                <span>提交反馈</span>
+              </v-btn>
+            </v-row>
           </v-container>
         </v-card>
       </v-dialog>
@@ -661,7 +694,7 @@
            class="mb-4"
            no-gutters>
       <v-btn
-          class="ma-auto rounded-lg"
+          class="rounded-lg"
           color="primary"
           large
           block
@@ -672,9 +705,9 @@
         <span>前往后台</span>
       </v-btn>
     </v-row>
-    <v-row class="my-3" no-gutters>
+    <v-row no-gutters>
       <v-btn
-          class="ma-auto rounded-lg"
+          class="rounded-lg"
           color="error"
           large
           depressed
@@ -798,6 +831,12 @@ export default {
           billType: {
             id: null
           },
+          btn: {
+            loading: false
+          }
+        },
+        resetDialog: {
+          isShow: false,
           btn: {
             loading: false
           }
@@ -1007,6 +1046,23 @@ export default {
             this.billTypePage.removeDialog.isShow = false;
           }).finally(() => {
         this.billTypePage.removeDialog.btn.loading = false;
+      });
+    },
+    resetBillType() {
+      this.billTypePage.resetDialog.btn.loading = true;
+      this.axios.get("/billType/resetBillType/")
+          .then(() => {
+            this.$notify({
+              title: "重置成功",
+              message: null,
+              type: "success",
+              duration: 2000,
+            });
+            this.loadBillTypeTree();
+            this.loadBillTypeList();
+            this.billTypePage.resetDialog.isShow = false;
+          }).finally(() => {
+        this.billTypePage.resetDialog.btn.loading = false;
       });
     },
     loadBillTypeTree() {
