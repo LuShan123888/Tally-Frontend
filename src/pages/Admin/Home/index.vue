@@ -80,13 +80,11 @@
                   align="center"
                   no-gutters
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!userMonitorData.week.loading" :chartData="userMonitorData.week.chartData"
                           :options="userMonitorData.week.options"
@@ -116,13 +114,11 @@
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
-                  no-gutters
-              >
+                  no-gutters>
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!userAccessMonitorData.week.loading" :chartData="userAccessMonitorData.week.chartData"
                           :options="userAccessMonitorData.week.options"
@@ -152,13 +148,11 @@
                   align="center"
                   class="fill-height ma-0"
                   justify="center"
-                  no-gutters
-              >
+                  no-gutters>
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!billMonitorData.week.loading" :chartData="billMonitorData.week.chartData"
                           :options="billMonitorData.week.options"
@@ -181,8 +175,7 @@
                       :size="100"
                       :value="monitorData.cpu.now"
                       :width="15"
-                      color="primary"
-                  >
+                      color="primary">
                     <span v-text="monitorData.cpu.now+'%'"/>
                   </v-progress-circular>
                 </v-col>
@@ -201,13 +194,11 @@
                   v-if="monitorData.cpu.hour.loading"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.cpu.hour.loading" :chartData="monitorData.cpu.hour.chartData"
                           :options="monitorData.cpu.hour.options"
@@ -217,13 +208,11 @@
                   v-if="monitorData.cpu.day.loading"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.cpu.day.loading" :chartData="monitorData.cpu.day.chartData"
                           :options="monitorData.cpu.day.options"
@@ -275,13 +264,11 @@
                   :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.internet.hour.loading" :chartData="monitorData.internet.hour.chartData"
                           :options="monitorData.internet.hour.options"
@@ -291,13 +278,11 @@
                   :style="{height:'200px'}"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.internet.day.loading" :chartData="monitorData.internet.day.chartData"
                           :options="monitorData.internet.day.options"
@@ -343,13 +328,11 @@
                   v-if="monitorData.BPS.hour.loading"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.BPS.hour.loading" :chartData="monitorData.BPS.hour.chartData"
                           :options="monitorData.BPS.hour.options"
@@ -359,13 +342,11 @@
                   v-if="monitorData.BPS.day.loading"
                   align="center"
                   class="fill-height ma-0"
-                  justify="center"
-              >
+                  justify="center">
                 <v-progress-circular
                     color="primary"
                     indeterminate
-                    width="2"
-                />
+                    width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.BPS.day.loading" :chartData="monitorData.BPS.day.chartData"
                           :options="monitorData.BPS.day.options"

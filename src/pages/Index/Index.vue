@@ -5,7 +5,7 @@
     <v-main>
       <router-view @changeTitle="changeTitle"/>
     </v-main>
-    <i-footer v-if="!isMobile"/>
+    <i-footer v-if="!isMobile" style="padding-left: 320px"/>
   </v-container>
 </template>
 
