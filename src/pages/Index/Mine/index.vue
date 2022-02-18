@@ -602,7 +602,7 @@
             </v-btn>
             <v-toolbar-title>提交反馈</v-toolbar-title>
           </v-toolbar>
-          <v-container :style="{ width: isMobile ? '100%' : '50%'}" class="mx-auto px-4"
+          <v-container :style="{ width: isMobile ? '100%' : '50%'}" class="mx-auto px-4 py-0"
                        fluid
                        no-gutters>
             <v-card class="pa-4 rounded-lg" flat>

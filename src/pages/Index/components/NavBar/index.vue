@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0" fluid>
-    <v-navigation-drawer app width="320" touchless>
+    <v-navigation-drawer app width="320">
       <div class="d-flex align-center mx-auto" style="height: 100%; width: 80%">
         <div style="width: 100%">
           <div class="mb-16">
@@ -9,21 +9,19 @@
             </v-icon>
             <span class="text-subtitle-1" v-text="title"/>
           </div>
-          <v-list flat nav>
+          <v-list nav>
             <v-list-item-group v-model="selectedItem" color="primary">
               <v-list-item
                   v-for="(item, i) in menus"
                   :key="i"
                   :to="item.path"
-                  class="rounded-lg"
-              >
+                  class="listItem rounded-lg">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"/>
                 </v-list-item-icon>
                 <v-list-item-title
                     class="text-subtitle-2 pl-10"
-                    v-text="item.text"
-                />
+                    v-text="item.text"/>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -72,5 +70,9 @@ export default {
 };
 </script>
 <style lang="scss">
-
+.listItem {
+  &:before {
+    border-radius: 8px !important;
+  }
+}
 </style>

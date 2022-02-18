@@ -15,18 +15,21 @@
     <v-card
         class="pa-0 rounded-lg"
         flat fluid>
-      <v-card-subtitle class="pa-3 pb-1 font-weight-medium">净资产</v-card-subtitle>
+      <v-card-subtitle class="pa-3 pb-1 font-weight-medium d-flex align-center">
+        <span>净资产</span>
+        <v-icon class="ml-1" small @click="changeHide">mdi-{{ hide.icon }}</v-icon>
+      </v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
-                    v-text="numFormat(accountStat.netAssets)"></v-card-title>
+                    v-text="hide.isHide?'******':'¥'+numFormat(accountStat.netAssets)"></v-card-title>
       <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总资产</span>
-            <span class="ml-3" v-text="'¥'+numFormat(accountStat.assets)"/>
+            <span class="ml-3" v-text="hide.isHide?'******':'¥'+numFormat(accountStat.assets)"/>
           </v-col>
           <v-col cols="6">
             <span class="font-weight-medium">总负债</span>
-            <span class="ml-3" v-text="'¥'+numFormat(accountStat.liabilities)"/>
+            <span class="ml-3" v-text="hide.isHide?'******':'¥'+numFormat(accountStat.liabilities)"/>
           </v-col>
         </v-row>
       </v-card-subtitle>
@@ -35,7 +38,7 @@
         v-for="(item) in 6"
         :key="'skeleton-loader'+item"
         v-if="loading"
-        class="rounded-lg mt-5"
+        class="rounded-lg mt-4"
         type="list-item-avatar-two-line"
     />
     <v-container v-for="(type, i) in accountInfoList" v-if="!loading"
@@ -240,6 +243,10 @@ export default {
     return {
       title: '账户',
       loading: true,
+      hide: {
+        icon: 'eye',
+        isHide: false
+      },
       accountInfoList: [],
       accountStat: {
         assets: 0.00,
@@ -367,6 +374,14 @@ export default {
           return $1 + ",";
         });
       });
+    },
+    changeHide() {
+      this.hide.isHide = !this.hide.isHide;
+      if (this.hide.icon === 'eye') {
+        this.hide.icon = 'eye-off';
+      } else {
+        this.hide.icon = 'eye';
+      }
     }
   },
   mounted() {

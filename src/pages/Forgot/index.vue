@@ -12,11 +12,11 @@
                    :style="{ width: isMobile ? '100%' : '30%' }"
                    fluid>
         <v-tabs v-model="tab" class="rounded-t-lg" grow>
-          <v-tab>
+          <v-tab class="leftTab">
             <v-icon>mdi-cellphone-message</v-icon>
             <span v-if="!isMobile" class="ml-3">手机号注册</span>
           </v-tab>
-          <v-tab>
+          <v-tab class="rightTab">
             <v-icon>mdi-email-sync</v-icon>
             <span v-if="!isMobile" class="ml-3">邮箱注册</span>
           </v-tab>
@@ -111,7 +111,7 @@
                       <v-btn
                           :disabled="form.phoneNumber.loading"
                           :loading="form.phoneNumber.loading"
-                          class="mt-5"
+                          class="mt-4"
                           color="primary"
                           depressed
                           large
@@ -215,7 +215,7 @@
                       <v-btn
                           :disabled="form.email.loading"
                           :loading="form.email.loading"
-                          class="mt-5"
+                          class="mt-4"
                           color="primary"
                           depressed
                           large
@@ -406,4 +406,15 @@ export default {
 </script>
 
 <style lang="scss">
+.leftTab {
+  &:before {
+    border-radius: 8px 0 0 0;
+  }
+}
+
+.rightTab {
+  &:before {
+    border-radius: 0 8px 0 0;
+  }
+}
 </style>

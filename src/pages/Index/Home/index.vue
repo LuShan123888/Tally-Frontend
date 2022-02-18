@@ -16,14 +16,12 @@
       <v-col
           class="pr-1"
           cols="4"
-          md="2"
-      >
+          md="2">
         <v-menu
             max-width="290px"
             min-width="auto"
             offset-y
-            transition="scale-transition"
-        >
+            transition="scale-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
                 v-model="query.dateGroupString"
@@ -61,11 +59,10 @@
     </v-row>
     <v-card
         class="pa-0 rounded-lg"
-        flat fluid
-    >
+        flat fluid>
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium">总支出</v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
-                    v-text="numFormat(billSummaryData.expenditure)"></v-card-title>
+                    v-text="'¥'+numFormat(billSummaryData.expenditure)"></v-card-title>
       <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
@@ -74,7 +71,7 @@
           </v-col>
           <v-col cols="6">
             <span class="font-weight-medium">结余</span>
-            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.balance)"/>
+            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.amount)"/>
           </v-col>
         </v-row>
       </v-card-subtitle>
@@ -83,7 +80,7 @@
         v-for="(item) in 6"
         :key="'skeleton-loader'+item"
         v-if="loading"
-        class="rounded-lg mt-5"
+        class="rounded-lg mt-4"
         type="list-item-avatar-two-line"
     />
     <v-container v-for="(date, i) in billList" v-if="!loading"
@@ -134,7 +131,7 @@
         transition="dialog-bottom-transition">
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
-            class="mb-4"
+            class="mb-16"
             color="primary"
             dark
             style="border-radius: 0">
@@ -153,7 +150,7 @@
         <v-tabs-items v-model="billPage.tab" :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
           <v-tab-item>
             <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4"
+                         class="mx-auto px-4 py-0"
                          no-gutters>
               <v-form ref="outBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
@@ -282,7 +279,7 @@
           </v-tab-item>
           <v-tab-item>
             <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4"
+                         class="mx-auto px-4 py-0"
                          no-gutters>
               <v-form ref="inBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
@@ -409,7 +406,7 @@
           </v-tab-item>
           <v-tab-item>
             <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4"
+                         class="mx-auto px-4 py-0"
                          no-gutters>
               <v-form ref="transferBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
@@ -557,7 +554,7 @@ export default {
       billSummaryData: {
         expenditure: 0.00,
         income: 0.00,
-        balance: 0.00
+        amount: 0.00
       },
       billPage: {
         isShow: false,
