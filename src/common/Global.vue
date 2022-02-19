@@ -478,6 +478,28 @@ const icons = {
     'help'
   ]
 };
+const colors = [[
+  '#F44336',
+  '#FF9800',
+  '#FFEB3B',
+  '#4CAF50',
+  '#009688',
+  '#00BCD4',
+  '#03A9F4',
+  '#2196F3',
+  '#3F51B5',
+], [
+  '#3F51B5',
+  '#2196F3',
+  '#03A9F4',
+  '#00BCD4',
+  '#009688',
+  '#4CAF50',
+  '#FFEB3B',
+  '#FF9800',
+  '#F44336',
+]
+];
 export default {
   url,
   title,
@@ -485,6 +507,7 @@ export default {
   images,
   rules,
   enums,
-  icons
+  icons,
+  colors
 };
 </script>

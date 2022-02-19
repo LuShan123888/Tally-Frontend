@@ -24,7 +24,7 @@
             transition="scale-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-                v-model="query.dateGroupString"
+                v-model="query.dateQueryString"
                 dense
                 flat
                 label="请选择月份"
@@ -36,7 +36,7 @@
             ></v-text-field>
           </template>
           <v-date-picker
-              v-model="query.dateGroupString"
+              v-model="query.dateQueryString"
               color="primary"
               locale="zh-cn"
               no-title
@@ -93,10 +93,10 @@
           <span class="ml-2" v-text="'¥'+numFormat(date.amount)"/>
         </span>
       </v-row>
-      <v-card class="py-0  px-3 rounded-lg"
+      <v-card class="py-0 rounded-lg"
               flat fluid>
-        <v-container v-for="(item, i) in date.list" :key="i" class="pa-0" fluid>
-          <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
+        <v-container v-for="(item, i) in date.list" :key="i" v-ripple class="pa-0  px-3 " fluid>
+          <v-row align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
               <v-btn
@@ -112,7 +112,7 @@
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
               <div class="text-subtitle-1">
-                <span v-text="(item.flow==='OUT'?'¥-':'¥')+numFormat(item.amountString)"/>
+                <span v-text="(item.flow==='OUT'?'¥-':'¥')+numFormat(item.amount)"/>
               </div>
             </v-col>
             <v-col class="d-flex justify-end" cols="1">
@@ -125,6 +125,7 @@
     </v-container>
     <v-dialog
         eager
+        ref="dialog"
         v-model="billPage.isShow"
         fullscreen
         hide-overlay
@@ -136,7 +137,7 @@
             dark
             style="border-radius: 0">
           <template v-slot:extension>
-            <v-tabs v-model="billPage.tab" grow @change="changeTabs">
+            <v-tabs v-model="billPage.tab" color="white" dark grow @change="changeTabs">
               <v-tab>支出</v-tab>
               <v-tab>收入</v-tab>
               <v-tab>转账</v-tab>
@@ -228,7 +229,7 @@
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amountString"
+                          v-model="billPage.bill.amount"
                           :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
                           clearable
                           label="账单金额"
@@ -355,7 +356,7 @@
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amountString"
+                          v-model="billPage.bill.amount"
                           :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
                           clearable
                           label="账单金额"
@@ -461,7 +462,7 @@
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amountString"
+                          v-model="billPage.bill.amount"
                           :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
                           clearable
                           label="账单金额"
@@ -541,7 +542,7 @@ export default {
       backgroundImagePath: this.GLOBAL.images.noteList,
       loading: true,
       query: {
-        dateGroupString: new Date().Format("yyyy-MM"),
+        dateQueryString: new Date().Format("yyyy-MM"),
         description: null
       },
       billList: [
@@ -566,7 +567,6 @@ export default {
           flow: null,
           amount: null,
           description: null,
-          amountString: null,
           billDate: null,
           billDateString: null,
           billTypeId: null,
@@ -792,6 +792,10 @@ export default {
       }
     },
     numFormat(number) {
+      if (!number) {
+        return '0.00';
+      }
+      number = number.toFixed(2);
       return number.toString().replace(/\d+/, function (n) { // 先提取整数部分
         return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
           return $1 + ",";

@@ -6,10 +6,9 @@
         :style="{ cursor:'pointer'}"
         class="mb-4 pa-3 rounded-lg"
         flat
-        fluid
-        @click.native="userInfoPage.isShow = true"
-    >
-      <v-row v-ripple align="center" no-gutters>
+        v-ripple fluid
+        @click.native="userInfoPage.isShow = true">
+      <v-row align="center" no-gutters>
         <v-col cols="2">
           <avatar :path="userInfoPage.userInfo.avatarPath" class="mx-0" size="50" style="width: 50px"/>
         </v-col>
@@ -50,14 +49,14 @@
                   size="100" style="cursor: pointer;z-index: 10" @click.native="loadUserInfoDialog('修改头像','avatar')"/>
           <v-card
               :style="{ width: '100%' }"
-              class="pt-16 px-4 rounded-lg mb-4"
+              class="pt-16 rounded-lg mb-4"
               flat
               fluid
               style="margin-top: -50px">
-            <v-row v-ripple align="center" no-gutters style="height: 50px"
+            <v-row v-ripple align="center" class="px-3 rounded-0" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
               <v-col cols="4">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="px-3" color="primary" depressed fab x-small>
                   <v-icon>mdi-account</v-icon>
                 </v-btn>
                 <span class="ml-2 grey--text text--darken-1" v-text="'用户名'"/>
@@ -70,7 +69,7 @@
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row v-ripple align="center" no-gutters style="height: 50px"
+            <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
               <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
@@ -86,7 +85,7 @@
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row v-ripple align="center" no-gutters style="height: 50px"
+            <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改手机号','phoneNumber')">
               <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
@@ -102,7 +101,7 @@
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row v-ripple align="center" no-gutters style="height: 50px"
+            <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改邮箱','email')">
               <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
@@ -118,7 +117,7 @@
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row v-ripple align="center" no-gutters style="height: 50px">
+            <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-list-status</v-icon>
@@ -132,7 +131,7 @@
               </v-col>
             </v-row>
             <v-divider/>
-            <v-row v-ripple align="center" no-gutters style="height: 50px">
+            <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="4">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-clipboard-account-outline</v-icon>
@@ -295,10 +294,10 @@
       </v-card>
     </v-dialog>
     <v-card
-        class="mb-4 pa-0 px-3 rounded-lg"
+        class="mb-4 pa-0  rounded-lg"
         flat
         fluid>
-      <v-row v-ripple align="center" no-gutters style="height: 50px">
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
         <v-col cols="1">
           <v-btn color="primary" depressed fab x-small>
             <v-icon>mdi-brightness-4</v-icon>
@@ -316,7 +315,7 @@
         </v-col>
       </v-row>
       <v-divider/>
-      <v-row v-ripple align="center" no-gutters style="height: 50px;cursor: pointer">
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
           <v-btn color="primary" depressed fab x-small>
             <v-icon>mdi-notebook-multiple</v-icon>
@@ -330,7 +329,7 @@
         </v-col>
       </v-row>
       <v-divider/>
-      <v-row v-ripple align="center" no-gutters style="height: 50px;cursor: pointer">
+      <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
           <v-btn color="primary" depressed fab x-small>
             <v-icon>mdi-message-alert</v-icon>

@@ -53,11 +53,10 @@
         </span>
       </v-row>
       <v-card
-          class="py-0  px-3 rounded-lg"
-          flat fluid
-      >
-        <v-container v-for="(item, i) in type.list" :key="i" class="pa-0" fluid>
-          <v-row v-ripple align="center" no-gutters style="height: 60px;cursor: pointer"
+          class="py-0  rounded-lg"
+          flat fluid>
+        <v-container v-for="(item, i) in type.list" :key="i" v-ripple class="pa-0  px-3" fluid>
+          <v-row align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateAccountPage(item)">
             <v-col cols="1">
               <v-btn color="primary" depressed fab x-small>
@@ -147,7 +146,7 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                      v-model="accountPage.account.amountString"
+                      v-model="accountPage.account.amount"
                       :rules="[(value) => !!value || '请输入金额', rules.isFloat]"
                       clearable
                       label="账户金额"
@@ -260,7 +259,7 @@ export default {
         account: {
           accountName: null,
           icon: null,
-          amountString: null,
+          amount: null,
           description: null,
           type: null
         },
@@ -369,6 +368,10 @@ export default {
       }
     },
     numFormat(number) {
+      if (!number) {
+        return '0.00';
+      }
+      number = number.toFixed(2);
       return number.toString().replace(/\d+/, function (n) { // 先提取整数部分
         return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
           return $1 + ",";
