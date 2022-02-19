@@ -13,7 +13,7 @@
              cols="12">
         <v-row align="center" justify="center" no-gutters style="cursor:pointer;" @click="openNewPage">
           <div class="d-inline-flex align-center">
-            <i-image height="20px" src="https://s1.ax1x.com/2020/07/02/NqYHbQ.png" style="height: 20px;width: 20px"
+            <i-image :src="image" height="20px" style="height: 20px;width: 20px"
                      width="20px"/>
             <span class="ml-3 text--darken-1 grey--text text-subtitle-2">赣ICP备2022000564号-2</span>
           </div>
@@ -42,7 +42,9 @@ export default {
     }
   },
   data: function () {
-    return {};
+    return {
+      image: this.GLOBAL.images.police
+    };
   },
   methods: {
     openNewPage() {
