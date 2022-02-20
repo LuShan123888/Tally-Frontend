@@ -1,48 +1,44 @@
 <template>
-  <v-container class="pa-0" fluid>
-    <v-navigation-drawer app expand-on-hover mini-variant-width="70px" permanent
-                         style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);" width="320">
-      <v-list nav style="margin-top:48px">
-        <div v-for="(item, i) in menus.data" :key="i">
-          <v-list-item v-if="item.children == null"
-                       link
-                       :to="item.path"
-                       class="my-3"
-                       color="primary"
-                       @click="menus.isFold=false">
-            <v-list-item-icon>
-              <v-icon v-text="item.icon"/>
-            </v-list-item-icon>
+  <v-navigation-drawer app expand-on-hover mini-variant mini-variant-width="70px" permanent
+                       style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);" width="320">
+    <v-list nav style="margin-top:48px">
+      <div v-for="(item, i) in menus.data" :key="i">
+        <v-list-item v-if="item.children == null"
+                     :to="item.path"
+                     class="my-3"
+                     color="primary"
+                     link
+                     @click="menus.isFold=false">
+          <v-list-item-icon>
+            <v-icon v-text="item.icon"/>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"/>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-group
+            v-if="item.children!=null"
+            v-model="menus.isFold"
+            :prepend-icon="item.icon"
+            no-action>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"/>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+              v-for="(item, i) in item.children"
+              :key="i"
+              :to="item.path"
+              link>
             <v-list-item-content>
               <v-list-item-title v-text="item.title"/>
             </v-list-item-content>
           </v-list-item>
-          <v-list-group
-              v-if="item.children!=null"
-              no-action
-              v-model="menus.isFold"
-              :prepend-icon="item.icon"
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title"/>
-              </v-list-item-content>
-            </template>
-            <v-list-item
-                v-for="(item, i) in item.children"
-                :key="i"
-                :to="item.path"
-                link
-            >
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title"/>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </div>
-      </v-list>
-    </v-navigation-drawer>
-  </v-container>
+        </v-list-group>
+      </div>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>

@@ -185,7 +185,7 @@
         transition="dialog-bottom-transition">
       <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
         <v-toolbar
-            class="mb-4"
+            class="mb-16"
             color="primary"
             dark
             style="border-radius: 0">
@@ -200,11 +200,9 @@
         <v-row :style="{ width: isMobile ? '100%' : '50%' }"
                class="mx-auto px-4"
                no-gutters>
-          <v-subheader class="px-0 text-subtitle-1 font-weight-medium">{{
-              charts.pieChart.tabs === 'OUT' ? '支出' : '收入'
-            }}分类图
-          </v-subheader>
-          <v-card class="pa-4 mb-4 rounded-lg" flat fluid style="width: 100%">
+          <v-subheader class="px-0 text-subtitle-1 font-weight-medium"
+                       v-text="(charts.pieChart.tabs === 'OUT' ? '支出' : '收入')+'分类图'"/>
+          <v-card class="pa-4 rounded-lg" flat fluid style="width: 100%">
             <v-row no-gutters>
               <v-col cols="12">
                 <pie-chart ref="dialogPieChart"
@@ -214,10 +212,8 @@
               </v-col>
             </v-row>
           </v-card>
-          <v-subheader class="px-0 text-subtitle-1 font-weight-medium">{{
-              charts.pieChart.tabs === 'OUT' ? '支出' : '收入'
-            }}分类详细
-          </v-subheader>
+          <v-subheader class="px-0 text-subtitle-1 font-weight-medium"
+                       v-text="(charts.pieChart.tabs === 'OUT' ? '支出' : '收入')+'分类详细'"/>
           <v-card
               class="py-0 rounded-lg"
               flat
@@ -229,8 +225,7 @@
                      style="height: 60px">
                 <v-col cols="1">
                   <v-btn :color="charts.pieChart.tabs==='OUT'?'error':charts.pieChart.tabs==='IN'?'primary':''"
-                         depressed fab
-                         x-small>
+                         depressed fab x-small>
                     <v-icon>mdi-{{ item.icon }}</v-icon>
                   </v-btn>
                 </v-col>
