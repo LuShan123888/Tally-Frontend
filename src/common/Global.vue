@@ -116,15 +116,15 @@ const enums = {
   page: [5, 15, 50, 100]
 };
 const images = {
-  profile: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/profile.svg",
-  pageNotFound: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/pageNotFound.svg",
-  signUp: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/signUp.svg",
-  welcome: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/welcome.svg",
-  forgot: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/forgot.svg",
-  dataReport: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/dataReport.svg",
-  noteList: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/noteList.svg",
-  wallet: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/wallet.svg",
-  police: "https://raw.githubusercontent.com/LuShan123888/Files/main/Pictures/NqYHbQ.png"
+  profile: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/profile.svg",
+  pageNotFound: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/pageNotFound.svg",
+  signUp: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/signUp.svg",
+  welcome: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/welcome.svg",
+  forgot: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/forgot.svg",
+  dataReport: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/dataReport.svg",
+  noteList: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/noteList.svg",
+  wallet: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/wallet.svg",
+  police: "https://cdn.jsdelivr.net/gh/LuShan123888/Files@main/Pictures/NqYHbQ.png"
 };
 const icons = {
   accountType: [
