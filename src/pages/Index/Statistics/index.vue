@@ -45,7 +45,7 @@
         v-if="loading"
         :key="'skeleton-loader'+item"
         class="rounded-lg mt-4"
-        type="table-heading, list-item-three-line"
+        type="list-item-three-line, image"
     />
     <v-card v-if="!loading"
             class="pa-3 mb-4 rounded-lg"
@@ -255,6 +255,20 @@
         </v-row>
       </v-card>
     </v-dialog>
+    <v-card v-show="!loading" class="pa-3 mb-4 rounded-lg" flat>
+      <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium">
+        <v-row justify="space-between" no-gutters>
+          <v-col cols="4">净资产趋势</v-col>
+        </v-row>
+      </v-card-title>
+      <v-row no-gutters>
+        <v-col cols="12">
+          <line-chart :chartData="charts.lineChart.chartData"
+                      :options="charts.lineChart.options"
+                      style="height: 200px"/>
+        </v-col>
+      </v-row>
+    </v-card>
     <v-card
         v-if="!loading && data.billGroupByDateList.length>0"
         class="pa-3 rounded-lg"
@@ -367,7 +381,7 @@ export default {
           income: null,
           amount: null,
         }],
-        billStatTable: {
+        billTableByDate: {
           datetimeStringList: [],
           expenditureList: [],
           incomeList: [],
@@ -402,6 +416,10 @@ export default {
               icon: null,
             }]
           }],
+        },
+        netAssetTrendMap: {
+          datetimeStringList: [],
+          netAssetList: []
         }
       },
       charts: {
@@ -508,6 +526,67 @@ export default {
             legend: {
               display: false
             },
+          },
+        },
+        lineChart: {
+          chartData: {
+            labels: [],
+            datasets: [
+              {
+                label: '净资产',
+                backgroundColor: '#AACFF2',
+                borderColor: this.$vuetify.theme.themes.light.primary,
+                cubicInterpolationMode: 'monotone',
+                tension: 0.4,
+                fill: true,
+                data: [],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+              display: false,
+            },
+            tooltips: {
+              mode: 'nearest',
+              intersect: false,
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) {
+                    label += ' ¥';
+                    label += _this.numFormat(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                  }
+                  return label;
+                }
+              }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: false
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                }
+              }],
+              yAxes: [{
+                display: true,
+                ticks: {
+                  min: 0,
+                },
+                gridLines: {
+                  display: false
+                }
+              }]
+            }
           },
         }
       },
@@ -620,6 +699,7 @@ export default {
             this.data = response.data.data;
             this.renderBarChart();
             this.renderPieChart();
+            this.renderLineChart();
             this.loading = false;
           })
     },
@@ -637,14 +717,14 @@ export default {
     renderBarChart() {
       if (this.charts.barChart.tabs === 'OUT') {
         this.charts.barChart.chartData.datasets[0].label = '支出金额';
-        this.charts.barChart.chartData.datasets[0].data = this.data.billStatTable.expenditureList;
+        this.charts.barChart.chartData.datasets[0].data = this.data.billTableByDate.expenditureList;
         this.charts.barChart.chartData.datasets[0].backgroundColor = this.$vuetify.theme.themes.light.error;
       } else if (this.charts.barChart.tabs === 'IN') {
         this.charts.barChart.chartData.datasets[0].label = '收入金额';
-        this.charts.barChart.chartData.datasets[0].data = this.data.billStatTable.incomeList;
+        this.charts.barChart.chartData.datasets[0].data = this.data.billTableByDate.incomeList;
         this.charts.barChart.chartData.datasets[0].backgroundColor = this.$vuetify.theme.themes.light.primary;
       }
-      this.charts.barChart.chartData.labels = this.data.billStatTable.datetimeStringList;
+      this.charts.barChart.chartData.labels = this.data.billTableByDate.datetimeStringList;
       this.$refs.barChart.renderChart(this.charts.barChart.chartData, this.charts.barChart.options);
     },
     renderPieChart() {
@@ -669,6 +749,10 @@ export default {
         }
       }
       this.$refs.pieChart.renderChart(this.charts.pieChart.chartData, this.charts.pieChart.options);
+    },
+    renderLineChart() {
+      this.charts.lineChart.chartData.labels = this.data.netAssetTrendMap.datetimeStringList;
+      this.charts.lineChart.chartData.datasets[0].data = this.data.netAssetTrendMap.netAssetList;
     },
     loadBillTypePage(item) {
       this.billTypePage.isShow = true;

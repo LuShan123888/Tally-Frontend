@@ -385,11 +385,26 @@ export default {
       } else {
         this.hide.icon = 'eye';
       }
+      let config = this.$store.getters.getConfig;
+      if (config && config.account) {
+        config.account.isHide = this.hide.isHide;
+      } else {
+        config = {
+          account: {
+            isHide: this.hide.isHide
+          }
+        }
+      }
+      this.$store.commit("setConfig", config);
     }
   },
   mounted() {
     this.$emit("changeTitle", this.title);
     this.listUserAccount();
+    let config = this.$store.getters.getConfig;
+    if (config && config.account && config.account.isHide) {
+      this.hide.isHide = config.account.isHide;
+    }
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
-  <v-app-bar app style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);">
+  <v-app-bar
+      :style="{backdropFilter: 'blur(10px)',background:isDark?'rgba(30, 30, 30, 0.7)':'rgba(255, 255, 255, 0.7)'}" app>
     <v-app-bar-nav-icon>
       <v-icon class="pl-3" color="primary" x-large> mdi-notebook-edit</v-icon>
     </v-app-bar-nav-icon>

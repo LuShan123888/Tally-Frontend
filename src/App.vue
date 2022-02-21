@@ -16,6 +16,12 @@ export default {
   data: function () {
     return {};
   },
+  mounted() {
+    let config = this.$store.getters.getConfig;
+    if (config && config.dark) {
+      this.$vuetify.theme.dark = config.dark;
+    }
+  }
 };
 </script>
 

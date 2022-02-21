@@ -7,7 +7,7 @@
         class="mb-4 pa-3 rounded-lg"
         flat
         v-ripple fluid
-        @click.native="userInfoPage.isShow = true">
+        @click.native="userInfoPage.isShow = true;this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.userInfoPage.userInfo));">
       <v-row align="center" no-gutters>
         <v-col cols="2">
           <avatar :path="userInfoPage.userInfo.avatarPath" class="mx-0" size="50" style="width: 50px"/>
@@ -309,8 +309,7 @@
         <v-col class="d-flex justify-end" cols="2">
           <el-switch
               v-model="darkMode"
-              active-color="#13ce66"
-              @change="changeDarkMode">
+              active-color="#13ce66">
           </el-switch>
         </v-col>
       </v-row>
@@ -722,6 +721,20 @@ export default {
       };
     }
   },
+  watch: {
+    darkMode() {
+      this.$vuetify.theme.dark = this.darkMode;
+      let config = this.$store.getters.getConfig;
+      if (config) {
+        config.dark = true;
+      } else {
+        config = {
+          dark: true
+        }
+      }
+      this.$store.commit("setConfig", config);
+    }
+  },
   data: function () {
     return {
       backgroundImagePath: this.GLOBAL.images.profile,
@@ -823,9 +836,6 @@ export default {
     };
   },
   methods: {
-    changeDarkMode(darkMode) {
-      this.$vuetify.theme.dark = darkMode;
-    },
     loadUserInfo() {
       let _this = this;
       this.axios.get("/user/getUserInfo").then((response) => {
@@ -1116,7 +1126,6 @@ export default {
   },
   mounted() {
     this.userInfoPage.userInfo = this.$store.getters.getUserInfo;
-    this.userInfoPage.dialog.userInfo = JSON.parse(JSON.stringify(this.$store.getters.getUserInfo));
     this.$emit("changeTitle", this.title);
     this.loadBillTypeTree();
     this.loadBillTypeList();

@@ -4,7 +4,7 @@
       <v-avatar v-if="path" :class="`elevation-${elevation}`" :size="size">
         <i-image :src="getImageUrl(path)"/>
       </v-avatar>
-      <v-icon v-else :size="size">mdi-account-circle</v-icon>
+      <v-icon v-else :size="size" light>mdi-account-circle</v-icon>
     </v-row>
   </v-container>
 </template>

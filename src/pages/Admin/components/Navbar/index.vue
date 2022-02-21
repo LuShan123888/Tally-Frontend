@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer app expand-on-hover mini-variant mini-variant-width="70px" permanent
-                       style="backdrop-filter: blur(10px);background: rgba(255, 255, 255, .7);" width="320">
+                       :style="{backdropFilter: 'blur(10px)',background:isDark?'rgba(30, 30, 30, 0.7)':'rgba(255, 255, 255, 0.7)'}"
+                       width="320">
     <v-list nav style="margin-top:48px">
       <div v-for="(item, i) in menus.data" :key="i">
         <v-list-item v-if="item.children == null"
@@ -112,13 +113,13 @@ export default {
       {
         icon: "mdi-api",
         path: "/admin/swagger",
-        title: "API文档",
+        title: "API 文档",
         children: null
       },
       {
         icon: "mdi-docker",
         path: "/admin/portainer",
-        title: "Docker 监控",
+        title: "Docker 管理",
         children: null
       }
     ];
