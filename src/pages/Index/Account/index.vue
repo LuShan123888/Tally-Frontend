@@ -17,7 +17,7 @@
         flat fluid>
       <v-card-subtitle class="pa-3 pb-1 font-weight-medium d-flex align-center">
         <span>净资产</span>
-        <v-icon class="ml-1" small @click="changeHide">mdi-{{ hide.icon }}</v-icon>
+        <v-icon class="ml-1" small @click="changeHide">{{ hide.isHide ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
       </v-card-subtitle>
       <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
                     v-text="hide.isHide?'******':'¥'+numFormat(accountStat.netAssets)"></v-card-title>
@@ -380,11 +380,6 @@ export default {
     },
     changeHide() {
       this.hide.isHide = !this.hide.isHide;
-      if (this.hide.icon === 'eye') {
-        this.hide.icon = 'eye-off';
-      } else {
-        this.hide.icon = 'eye';
-      }
       let config = this.$store.getters.getConfig;
       if (config && config.account) {
         config.account.isHide = this.hide.isHide;
