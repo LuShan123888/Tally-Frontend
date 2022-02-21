@@ -258,7 +258,7 @@
     <v-card v-show="!loading" class="pa-3 mb-4 rounded-lg" flat>
       <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium">
         <v-row justify="space-between" no-gutters>
-          <v-col cols="4">净资产趋势</v-col>
+          <v-col cols="4">净资产趋势图</v-col>
         </v-row>
       </v-card-title>
       <v-row no-gutters>
@@ -273,7 +273,10 @@
         v-if="!loading && data.billGroupByDateList.length>0"
         class="pa-3 rounded-lg"
         flat fluid>
-      <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium">账单汇总</v-card-title>
+      <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium">{{
+          tabs === 'MOUTH' ? '月' : '年'
+        }}账单汇总
+      </v-card-title>
       <v-row :style="{backgroundColor: isDark?'#000000':'#EDEDEF'}" class="rounded-t-lg" no-gutters>
         <v-col class="text-center py-2" cols="3">日期</v-col>
         <v-divider vertical/>
