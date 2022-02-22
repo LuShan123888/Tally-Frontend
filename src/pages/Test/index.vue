@@ -1,9 +1,11 @@
 <template>
   <v-row no-gutters>
-    <v-col cols="9">
-      <v-icon color="primary" size="350">mdi-notebook-edit</v-icon>
+    <v-col cols="12">
+      <v-autocomplete v-model="value"></v-autocomplete>
     </v-col>
-    <v-col cols="3"/>
+    <v-col>
+      {{ value }}
+    </v-col>
   </v-row>
 </template>
 
@@ -20,7 +22,9 @@ export default {
     },
   },
   data: function () {
-    return {}
+    return {
+      value: null
+    }
   },
   methods: {
     
