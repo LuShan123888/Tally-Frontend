@@ -64,9 +64,10 @@
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
-            <v-col class="ml-3">
+            <v-col class="ml-3 text-truncate">
               <div class="text-subtitle-1" v-text="item.accountName"/>
-              <div class="text-subtitle-2 text--darken-1 grey--text" v-text="item.description"/>
+              <div class="text-subtitle-2 text--darken-1 grey--text text-truncate" style="max-width: 100%"
+                   v-text="item.description"/>
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
               <div class="text-subtitle-1">

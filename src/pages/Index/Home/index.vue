@@ -106,9 +106,10 @@
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
-            <v-col class="ml-3">
+            <v-col class="ml-3 text-truncate">
               <div class="text-subtitle-1" v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"/>
-              <div class="text-subtitle-2 text--darken-1 grey--text" v-text="item.description"/>
+              <div class="text-subtitle-2 text--darken-1 grey--text text-truncate" style="max-width: 100%"
+                   v-text="item.description"/>
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
               <div class="text-subtitle-1">
@@ -148,7 +149,7 @@
           </v-btn>
           <v-toolbar-title v-text="billPage.title"/>
         </v-toolbar>
-        <v-tabs-items v-model="billPage.tab" :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
+        <v-tabs-items v-model="billPage.tab" :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}" touchless>
           <v-tab-item>
             <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
                          class="mx-auto px-4 py-0"
@@ -184,8 +185,8 @@
                       <v-select
                           v-model="billPage.bill.billTypeVO.id"
                           :items="billPage.billTypeChildren"
-                          chips class="pl-1" deletable-chips
-                          dense
+                          chips class="pl-1"
+                          clearable dense
                           item-text="billTypeName"
                           item-value="id" label="二级账单类别" no-data-text="无对应选项"
                           prepend-inner-icon="mdi-format-list-bulleted-type"/>
@@ -245,11 +246,13 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
                         <template v-slot:message="{ key, message }">
-                          <v-chip v-for="(item,index) in billPage.recentBillDescriptionList"
-                                  v-if="!isMobile || index < 5" :key="item" class="mr-1" small
-                                  @click="billPage.bill.description = item">
-                            {{ item }}
-                          </v-chip>
+                          <div class="overflow-auto" style="white-space: nowrap;">
+                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
+                                    class="mr-1" small
+                                    @click="billPage.bill.description = item">
+                              {{ item }}
+                            </v-chip>
+                          </div>
                         </template>
                       </v-text-field>
                     </v-col>
@@ -320,7 +323,7 @@
                       <v-select
                           v-model="billPage.bill.billTypeVO.id"
                           :items="billPage.billTypeChildren" chips class="pl-1"
-                          deletable-chips dense
+                          clearable dense
                           item-text="billTypeName"
                           item-value="id" label="二级账单类别" no-data-text="无对应选项"
                           prepend-inner-icon="mdi-format-list-bulleted-type"/>
@@ -380,10 +383,13 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
                         <template v-slot:message="{ key, message }">
-                          <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item" class="mr-1" small
-                                  @click="billPage.bill.description = item">
-                            {{ item }}
-                          </v-chip>
+                          <div class="overflow-auto" style="white-space: nowrap;">
+                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
+                                    class="mr-1" small
+                                    @click="billPage.bill.description = item">
+                              {{ item }}
+                            </v-chip>
+                          </div>
                         </template>
                       </v-text-field>
                     </v-col>
@@ -493,10 +499,13 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
                         <template v-slot:message="{ key, message }">
-                          <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item" class="mr-1" small
-                                  @click="billPage.bill.description = item">
-                            {{ item }}
-                          </v-chip>
+                          <div class="overflow-auto" style="white-space: nowrap;">
+                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
+                                    class="mr-1" small
+                                    @click="billPage.bill.description = item">
+                              {{ item }}
+                            </v-chip>
+                          </div>
                         </template>
                       </v-text-field>
                     </v-col>

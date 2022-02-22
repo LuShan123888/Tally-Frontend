@@ -55,13 +55,13 @@
               style="margin-top: -50px">
             <v-row v-ripple align="center" class="px-3 rounded-0" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn class="px-3" color="primary" depressed fab x-small>
                   <v-icon>mdi-account</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'用户名'"/>
+                <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'用户名'"/>
               </v-col>
-              <v-col>
+              <v-col class="pl-1">
                 <span v-text="userInfoPage.userInfo.username"/>
               </v-col>
               <v-col cols="1">
@@ -71,13 +71,13 @@
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-account-key</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'密码'"/>
+                <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'密码'"/>
               </v-col>
-              <v-col>
+              <v-col class="pl-1">
                 <span v-text="'********'"/>
               </v-col>
               <v-col cols="1">
@@ -87,13 +87,13 @@
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改手机号','phoneNumber')">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-cellphone-text</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'手机号'"/>
+                <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'手机号'"/>
               </v-col>
-              <v-col>
+              <v-col class="pl-1">
                 <span v-text="userInfoPage.userInfo.phoneNumber"/>
               </v-col>
               <v-col cols="1">
@@ -103,14 +103,14 @@
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改邮箱','email')">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-email</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'邮箱'"/>
+                <span class="ml-2 text-subtitle-2  grey--text text--darken-1" v-text="'邮箱'"/>
               </v-col>
-              <v-col>
-                <span v-text="userInfoPage.userInfo.email"/>
+              <v-col class="pl-1 text-truncate">
+                <span class="text-truncate" v-text="userInfoPage.userInfo.email"/>
               </v-col>
               <v-col cols="1">
                 <v-icon>mdi-pencil</v-icon>
@@ -118,13 +118,13 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-list-status</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'状态'"/>
+                <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'状态'"/>
               </v-col>
-              <v-col>
+              <v-col class="pl-1">
                 <v-chip :color="userInfoPage.userInfo.status==='NORMAL'?'success':'secondary'" class="mr-1" label small
                         v-text="getStatusText()">
                 </v-chip>
@@ -132,13 +132,13 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-clipboard-account-outline</v-icon>
                 </v-btn>
-                <span class="ml-2 grey--text text--darken-1" v-text="'角色'"/>
+                <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'角色'"/>
               </v-col>
-              <v-col>
+              <v-col class="pl-1">
                 <v-chip v-for="item in userInfoPage.userInfo.roleVOList"
                         :key="item.id" class="mr-1" label small
                         v-text="item.roleName">
