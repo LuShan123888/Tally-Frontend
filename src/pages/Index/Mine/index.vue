@@ -726,10 +726,10 @@ export default {
       this.$vuetify.theme.dark = this.darkMode;
       let config = this.$store.getters.getConfig;
       if (config) {
-        config.dark = true;
+        config.dark = this.darkMode;
       } else {
         config = {
-          dark: true
+          dark: this.darkMode
         }
       }
       this.$store.commit("setConfig", config);
