@@ -307,10 +307,12 @@
           <span>深色模式</span>
         </v-col>
         <v-col class="d-flex justify-end" cols="2">
-          <el-switch
+          <v-switch
               v-model="darkMode"
-              active-color="#13ce66">
-          </el-switch>
+              class="ma-0 pa-0" color="success"
+              dense hide-details="auto"
+              inset
+          ></v-switch>
         </v-col>
       </v-row>
       <v-divider/>

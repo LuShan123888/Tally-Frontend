@@ -15,8 +15,7 @@
                       :rules="[rules.isInteger]"
                       class="mr-2 pt-0 mt-0"
                       clearable
-                      label="用户ID"
-                  >
+                      label="用户ID">
                   </v-text-field>
                 </v-col>
                 <v-col cols="6">
