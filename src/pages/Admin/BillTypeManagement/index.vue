@@ -6,29 +6,26 @@
       </v-col>
       <v-col class="d-flex justify-end" cols="2">
         <v-row justify="end">
-          <v-col class="d-flex" cols="6">
+          <v-col class="d-flex justify-end" cols="6">
             <v-btn
                 color="primary"
                 depressed
                 @click="loadBillTypeSaveDialog"
-                v-text="'新增类别'"
-            />
+                v-text="'新增类别'"/>
           </v-col>
           <v-col cols="6">
             <v-btn
                 color="warning"
                 depressed
                 @click="loadBillTypeOrderDialog(table.data)"
-                v-text="'排序类别'"
-            />
+                v-text="'排序类别'"/>
           </v-col>
           <v-col cols="6">
             <v-btn
                 color="error"
                 depressed
                 @click="allocateDialog.isShow = true"
-                v-text="'分配类别'"
-            />
+                v-text="'分配类别'"/>
           </v-col>
         </v-row>
       </v-col>
@@ -271,8 +268,7 @@
                 depressed
                 text
                 @click="allocateDefaultBillType"
-                v-text="'保存'"
-            />
+                v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
