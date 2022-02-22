@@ -6,20 +6,17 @@
       :max-width="maxWidth"
       :src="src"
       :width="width"
-      contain
-  >
+      contain>
     <template v-slot:placeholder>
       <v-row
           align="center"
           class="fill-height ma-0"
           justify="center"
-          no-gutters
-      >
+          no-gutters>
         <v-progress-circular
             color="primary"
             indeterminate
-            width="2"
-        />
+            width="2"/>
       </v-row>
     </template>
   </v-img>

@@ -242,7 +242,15 @@
                           v-model="billPage.bill.description"
                           clearable
                           label="账单描述"
+                          messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
+                        <template v-slot:message="{ key, message }">
+                          <v-chip v-for="(item,index) in billPage.recentBillDescriptionList"
+                                  v-if="!isMobile || index < 5" :key="item" class="mr-1" small
+                                  @click="billPage.bill.description = item">
+                            {{ item }}
+                          </v-chip>
+                        </template>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -369,7 +377,14 @@
                           v-model="billPage.bill.description"
                           clearable
                           label="账单描述"
+                          messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
+                        <template v-slot:message="{ key, message }">
+                          <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item" class="mr-1" small
+                                  @click="billPage.bill.description = item">
+                            {{ item }}
+                          </v-chip>
+                        </template>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -475,7 +490,14 @@
                           v-model="billPage.bill.description"
                           clearable
                           label="账单描述"
+                          messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings">
+                        <template v-slot:message="{ key, message }">
+                          <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item" class="mr-1" small
+                                  @click="billPage.bill.description = item">
+                            {{ item }}
+                          </v-chip>
+                        </template>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -593,6 +615,7 @@ export default {
         outBillTypeTree: [],
         inBillTypeTree: [],
         billTypeChildren: [],
+        recentBillDescriptionList: []
       },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
@@ -614,6 +637,7 @@ export default {
     },
     'billPage.bill.billTypeVO.parentId': {
       handler(newVal) {
+        this.loadRecentBillDescriptionList(newVal);
         for (let item of this.billPage.billTypeTree) {
           if (item.id === newVal) {
             this.billPage.billTypeChildren = item.children;
@@ -625,6 +649,7 @@ export default {
     },
     'billPage.bill.billTypeVO.id': {
       handler(newVal) {
+        this.loadRecentBillDescriptionList(newVal);
         for (let item of this.billPage.billTypeTree) {
           if (item.id === this.billPage.bill.billTypeVO.parentId && item.children) {
             for (let child of item.children) {
@@ -639,10 +664,13 @@ export default {
   },
   methods: {
     changeTabs() {
-      this.billPage.bill.billTypeVO = {};
+      this.billPage.bill.billTypeVO.parentId = null;
+      this.billPage.bill.billTypeVO.id = null;
+      this.billPage.bill.billTypeVO.icon = null;
       this.$refs.outBillSaveOrUpdateForm.resetValidation();
       this.$refs.inBillSaveOrUpdateForm.resetValidation();
       this.$refs.transferBillSaveOrUpdateForm.resetValidation();
+      this.loadRecentBillDescriptionList(null);
     },
     listBill() {
       this.loading = true;
@@ -701,6 +729,7 @@ export default {
       if (!bill.billTypeVO) {
         bill.billTypeVO = {};
       }
+      this.loadRecentBillDescriptionList(null);
     },
     loadSaveBillPage() {
       let billPage = this.billPage;
@@ -714,6 +743,7 @@ export default {
       }
       billPage.bill.billTypeVO = {};
       billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
+      this.loadRecentBillDescriptionList(null);
     },
     deleteBill(billId) {
       this.billPage.buttons.delete.loading = true;
@@ -790,6 +820,16 @@ export default {
               this.billPage.buttons.saveOrUpdate.loading = false;
             });
       }
+    },
+    loadRecentBillDescriptionList(billTypeId) {
+      let bill = {
+        billTypeId: billTypeId,
+        flow: this.billPage.tab === 0 ? 'OUT' : this.billPage.tab === 1 ? "IN" : "TRANSFER"
+      }
+      this.axios.post("/bill/listRecentBillDescription", JSON.stringify(bill))
+          .then((response) => {
+            this.billPage.recentBillDescriptionList = response.data.data;
+          })
     },
     numFormat(number) {
       if (!number) {
