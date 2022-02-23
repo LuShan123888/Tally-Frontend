@@ -656,7 +656,7 @@
         </v-card>
       </v-dialog>
     </v-form>
-    <v-row v-if="isAdmin"
+    <v-row v-if="isAdmin && !isMobile"
            class="mb-4"
            no-gutters>
       <v-btn
@@ -665,8 +665,7 @@
           large
           block
           depressed
-          to="/admin"
-      >
+          to="/admin">
         <v-icon class="mr-3">mdi-monitor-dashboard</v-icon>
         <span>前往后台</span>
       </v-btn>
