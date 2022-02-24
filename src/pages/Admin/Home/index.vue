@@ -5,16 +5,16 @@
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
       </v-col>
       <v-col cols="10">
-        <v-row justify="center" no-gutters>
-          <v-col cols="2">
+        <v-row justify="space-around" no-gutters>
+          <v-col cols="3">
             <v-hover v-slot="{ hover }">
               <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
                       class="transition-swing rounded">
-                <v-row :style="{height:'100px'}" align="center" no-gutters>
-                  <v-col cols="5">
-                    <v-icon class="ml-5" color="primary" size="50">mdi-account-group</v-icon>
+                <v-row align="center" class="pa-4" no-gutters>
+                  <v-col cols="3">
+                    <v-icon color="primary" size="50">mdi-account-group</v-icon>
                   </v-col>
-                  <v-col class="d-flex flex-column align-end pr-4" cols="7">
+                  <v-col class="d-flex flex-column align-end">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增用户'"/>
                   </v-col>
@@ -22,15 +22,15 @@
               </v-card>
             </v-hover>
           </v-col>
-          <v-col class="mx-16" cols="2">
+          <v-col cols="3">
             <v-hover v-slot="{ hover }">
               <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
                       class="transition-swing rounded">
-                <v-row :style="{height:'100px'}" align="center" no-gutters>
-                  <v-col cols="5">
-                    <v-icon class="ml-5" color="primary" size="50">mdi-login</v-icon>
+                <v-row align="center" class="pa-4" no-gutters>
+                  <v-col cols="3">
+                    <v-icon color="primary" size="50">mdi-login</v-icon>
                   </v-col>
-                  <v-col class="d-flex flex-column align-end pr-4" cols="7">
+                  <v-col class="d-flex flex-column align-end">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
                   </v-col>
@@ -38,16 +38,16 @@
               </v-card>
             </v-hover>
           </v-col>
-          <v-col class="mr-16" cols="2">
+          <v-col cols="3">
             <v-hover v-slot="{ hover }">
               <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
                       class="transition-swing rounded">
-                <v-row :style="{height:'100px'}" align="center"
+                <v-row align="center" class="pa-4"
                        no-gutters>
-                  <v-col cols="5">
-                    <v-icon class="ml-5" color="primary" size="50">mdi-notebook-edit</v-icon>
+                  <v-col cols="3">
+                    <v-icon color="primary" size="50">mdi-notebook-edit</v-icon>
                   </v-col>
-                  <v-col class="d-flex flex-column align-end pr-4" cols="7">
+                  <v-col class="d-flex flex-column align-end">
                     <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.day"/>
                     <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增账单'"/>
                   </v-col>
@@ -228,25 +228,17 @@
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
-                <v-col class="text-h5 font-weight-medium" v-text="'网络流量'"/>
-                <v-col cols="4">
-                  <v-row no-gutters>
-                    <v-col class="d-flex justify-center align-center" cols="2">
-                      <v-icon>mdi-upload-network</v-icon>
-                    </v-col>
-                    <v-col class="d-flex justify-end align-end" cols="10">
-                      <span :style="{color:lightError}" class="text-h5 mx-3" v-text="monitorData.internet.now.TX"/>
-                      <span class="text-subtitle-1">&nbsp;MBits</span>
-                    </v-col>
+                <v-col class="text-h5 font-weight-medium" cols="4" v-text="'网络流量'"/>
+                <v-col>
+                  <v-row align="center" justify="end" no-gutters>
+                    <span :style="{color:lightError}" class="text-h5 " v-text="monitorData.internet.now.TX"/>
+                    <span class="text-subtitle-1 mx-3">&nbsp;MBits</span>
+                    <v-icon>mdi-upload-network</v-icon>
                   </v-row>
-                  <v-row no-gutters>
-                    <v-col class="d-flex justify-center align-center" cols="2">
-                      <v-icon>mdi-download-network</v-icon>
-                    </v-col>
-                    <v-col class="d-flex justify-end align-end" cols="10">
-                      <span :style="{color:lightPrimary}" class="text-h5 mx-3" v-text="monitorData.internet.now.RX"/>
-                      <span class="text-subtitle-1">&nbsp;MBits</span>
-                    </v-col>
+                  <v-row align="center" justify="end" no-gutters>
+                    <span :style="{color:lightPrimary}" class="text-h5 " v-text="monitorData.internet.now.RX"/>
+                    <span class="text-subtitle-1 mx-3">&nbsp;MBits</span>
+                    <v-icon>mdi-download-network</v-icon>
                   </v-row>
                 </v-col>
               </v-row>
@@ -298,25 +290,18 @@
               class="transition-swing">
             <v-card-title>
               <v-row :style="{height: '100px'}" align="center" no-gutters>
-                <v-col class="text-h5 font-weight-medium" v-text="'云盘带宽'"/>
-                <v-col cols="4">
-                  <v-row no-gutters>
-                    <v-col class="d-flex justify-center align-center" cols="2">
-                      <v-icon>mdi-cloud-upload</v-icon>
-                    </v-col>
-                    <v-col class="d-flex justify-end align-end" cols="10">
-                      <span :style="{color:lightError}" class="text-h5 mx-3" v-text="monitorData.BPS.now.Read"/>
-                      <span class="text-subtitle-1">&nbsp;KByte/s</span>
-                    </v-col>
+                <v-col class="text-h5 font-weight-medium" cols="4" v-text="'云盘带宽'"/>
+                <v-col>
+                  <v-row align="center" justify="end" no-gutters>
+                    <span :style="{color:lightError}" class="text-h5 mr-3" v-text="monitorData.BPS.now.Read"/>
+                    <span class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
+                    <v-icon>mdi-cloud-upload</v-icon>
+
                   </v-row>
-                  <v-row no-gutters>
-                    <v-col class="d-flex justify-center align-center" cols="2">
-                      <v-icon>mdi-cloud-download</v-icon>
-                    </v-col>
-                    <v-col class="d-flex justify-end align-end" cols="10">
-                      <span :style="{color:lightPrimary}" class="text-h5 mx-3" v-text="monitorData.BPS.now.Write"/>
-                      <span class="text-subtitle-1">&nbsp;KByte/s</span>
-                    </v-col>
+                  <v-row align="center" justify="end" no-gutters>
+                    <span :style="{color:lightPrimary}" class="text-h5 mr-3" v-text="monitorData.BPS.now.Write"/>
+                    <span class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
+                    <v-icon>mdi-cloud-download</v-icon>
                   </v-row>
                 </v-col>
               </v-row>
