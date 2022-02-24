@@ -86,7 +86,7 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                   @click="loadUserInfoDialog('修改手机号','phoneNumber')">
+                   @click="loadUserInfoDialog('绑定手机号','phoneNumber')">
               <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-cellphone-text</v-icon>
@@ -102,7 +102,7 @@
             </v-row>
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
-                   @click="loadUserInfoDialog('修改邮箱','email')">
+                   @click="loadUserInfoDialog('绑定邮箱','email')">
               <v-col cols="3">
                 <v-btn color="primary" depressed fab x-small>
                   <v-icon>mdi-email</v-icon>

@@ -6,55 +6,49 @@
       </v-col>
       <v-col cols="10">
         <v-row justify="space-around" no-gutters>
-          <v-col cols="3">
-            <v-hover v-slot="{ hover }">
-              <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
-                      class="transition-swing rounded">
-                <v-row align="center" class="pa-4" no-gutters>
-                  <v-col cols="3">
-                    <v-icon color="primary" size="50">mdi-account-group</v-icon>
-                  </v-col>
-                  <v-col class="d-flex flex-column align-end">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.day"/>
-                    <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增用户'"/>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-hover>
-          </v-col>
-          <v-col cols="3">
-            <v-hover v-slot="{ hover }">
-              <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
-                      class="transition-swing rounded">
-                <v-row align="center" class="pa-4" no-gutters>
-                  <v-col cols="3">
-                    <v-icon color="primary" size="50">mdi-login</v-icon>
-                  </v-col>
-                  <v-col class="d-flex flex-column align-end">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.day"/>
-                    <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-hover>
-          </v-col>
-          <v-col cols="3">
-            <v-hover v-slot="{ hover }">
-              <v-card :class="{'elevation-24':hover,'elevation-0':!hover}"
-                      class="transition-swing rounded">
-                <v-row align="center" class="pa-4"
-                       no-gutters>
-                  <v-col cols="3">
-                    <v-icon color="primary" size="50">mdi-notebook-edit</v-icon>
-                  </v-col>
-                  <v-col class="d-flex flex-column align-end">
-                    <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.day"/>
-                    <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增账单'"/>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-hover>
-          </v-col>
+          <v-hover v-slot="{ hover }">
+            <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing rounded"
+                    style="width: 250px">
+              <v-row align="center" class="pa-4" no-gutters>
+                <v-col cols="3">
+                  <v-icon color="primary" size="50">mdi-account-group</v-icon>
+                </v-col>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增用户'"/>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-hover>
+          <v-hover v-slot="{ hover }">
+            <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing rounded"
+                    style="width: 250px">
+              <v-row align="center" class="pa-4" no-gutters>
+                <v-col cols="3">
+                  <v-icon color="primary" size="50">mdi-login</v-icon>
+                </v-col>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增访问'"/>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-hover>
+          <v-hover v-slot="{ hover }">
+            <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing rounded"
+                    style="width: 250px">
+              <v-row align="center" class="pa-4"
+                     no-gutters>
+                <v-col cols="3">
+                  <v-icon color="primary" size="50">mdi-notebook-edit</v-icon>
+                </v-col>
+                <v-col class="d-flex flex-column align-end">
+                  <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.day"/>
+                  <div class="text-subtitle-1 font-weight-bold grey--text text--darken-1" v-text="'今日新增账单'"/>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-hover>
         </v-row>
       </v-col>
     </v-row>
@@ -65,7 +59,7 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'用户统计'"/>
                 <v-col class="d-flex flex-column align-end">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="userMonitorData.total"/>
@@ -99,7 +93,7 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'访问统计'"/>
                 <v-col class="d-flex flex-column align-end">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="userAccessMonitorData.total"/>
@@ -133,7 +127,7 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'账单统计'"/>
                 <v-col class="d-flex flex-column align-end">
                   <div :style="{ color: lightPrimary}" class="text-h3" v-text="billMonitorData.total"/>
@@ -167,12 +161,12 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'CPU 使用率'"/>
                 <v-col class="d-flex justify-end">
                   <v-progress-circular
                       :rotate="90"
-                      :size="100"
+                      :size="80"
                       :value="monitorData.cpu.now"
                       :width="15"
                       color="primary">
@@ -181,7 +175,7 @@
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-card-subtitle :style="{height:'32px'}" class="py-0">
+            <v-card-subtitle class="px-4 pa-0 ma-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-cpu-64-bit</v-icon>
                 <span class="font-weight-bold" v-text="'CPU 核心数'"/>
@@ -227,7 +221,7 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" cols="4" v-text="'网络流量'"/>
                 <v-col>
                   <v-row align="center" justify="end" no-gutters>
@@ -243,7 +237,7 @@
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-card-subtitle :style="{height:'32px'}" class="py-0">
+            <v-card-subtitle class="px-4 pa-0 ma-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-ip</v-icon>
                 <span class="font-weight-bold" v-text="'公网地址'"/>
@@ -289,7 +283,7 @@
               :class="{'elevation-24':hover,'elevation-0':!hover}"
               class="transition-swing">
             <v-card-title>
-              <v-row :style="{height: '100px'}" align="center" no-gutters>
+              <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" cols="4" v-text="'云盘带宽'"/>
                 <v-col>
                   <v-row align="center" justify="end" no-gutters>
@@ -306,7 +300,7 @@
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-card-subtitle :style="{height:'32px'}"/>
+            <v-card-subtitle class="ma-0 px-4 pa-0"/>
             <v-card-text>
               <v-row
                   :style="{height:'200px'}"
