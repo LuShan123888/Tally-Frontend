@@ -6,7 +6,7 @@
       <div v-for="(item, i) in menus.data" :key="i">
         <v-list-item v-if="item.children == null"
                      :to="item.path"
-                     class="my-3"
+                     class="mb-3"
                      color="primary"
                      link
                      @click="menus.isFold=false">
@@ -30,6 +30,7 @@
           <v-list-item
               v-for="(item, i) in item.children"
               :key="i"
+              class="mb-3"
               :to="item.path"
               link>
             <v-list-item-content>

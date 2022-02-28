@@ -4,7 +4,7 @@ const url = {
   // api: "http://127.0.0.1:8080",
   static: "https://static.tally.ltd",
 };
-const title = "一款简约的在线记账平台";
+const title = "云记贝在线记账平台";
 const adminTitle = "云记贝后台管理系统";
 const rules = {
   usernameMaxLength: 20,

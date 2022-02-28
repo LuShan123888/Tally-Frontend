@@ -1,9 +1,9 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-navigation-drawer app width="320">
-      <div class="d-flex align-center mx-auto" style="height: 100%; width: 80%">
+      <div class="d-flex align-center mx-auto px-4" style="height: 100%;">
         <div style="width: 100%">
-          <div class="mb-16">
+          <div class="mb-16 px-4">
             <v-icon class="mr-4" x-large color="primary">
               mdi-notebook-edit
             </v-icon>
@@ -20,7 +20,7 @@
                   <v-icon v-text="item.icon"/>
                 </v-list-item-icon>
                 <v-list-item-title
-                    class="text-subtitle-2 pl-10"
+                    class="text-subtitle-2"
                     v-text="item.text"/>
               </v-list-item>
             </v-list-item-group>
@@ -34,8 +34,7 @@
           :key="i"
           :to="item.path"
           min-width="70px"
-          height="inherit"
-      >
+          height="inherit">
         <v-icon v-text="item.icon"/>
       </v-btn>
     </v-bottom-navigation>
