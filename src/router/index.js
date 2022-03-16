@@ -18,6 +18,7 @@ import PermissionManagement from '@/pages/Admin/PermissionManagement'
 import BillTypeManagement from '@/pages/Admin/BillTypeManagement'
 import FeedbackManagement from '@/pages/Admin/FeedbackManagement'
 import Druid from '@/pages/Admin/Druid'
+import Sentinel from '@/pages/Admin/Sentinel'
 import Portainer from '@/pages/Admin/Portainer'
 import Swagger from '@/pages/Admin/Swagger'
 
@@ -119,6 +120,14 @@ const routes = [
                 path: '/admin/druid',
                 name: 'Druid',
                 component: Druid,
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/admin/sentinel',
+                name: 'Sentinel',
+                component: Sentinel,
                 meta: {
                     requireAuth: true
                 }

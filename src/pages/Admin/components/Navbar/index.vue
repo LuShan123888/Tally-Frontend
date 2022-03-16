@@ -112,6 +112,12 @@ export default {
         children: null
       },
       {
+        icon: "mdi-shield-half-full",
+        path: "/admin/sentinel",
+        title: "Sentinel 监控",
+        children: null
+      },
+      {
         icon: "mdi-api",
         path: "/admin/swagger",
         title: "API 文档",
