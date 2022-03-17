@@ -52,9 +52,10 @@ axios.interceptors.response.use(
                 type: "error",
                 duration: 2000,
             });
+            return Promise.reject(error.response);
         }
         let status = error.response.status;
-        let message = error.response.data.message;
+        let message = error.response.data.message ? error.response.data.message : error.response.data;
         let data = error.response.data.data;
         Element.Notification({
             title: message,
