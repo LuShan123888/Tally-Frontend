@@ -292,11 +292,9 @@
         <v-card-actions>
           <v-spacer/>
           <v-btn
-              class="rounded-lg"
               depressed
               @click="iconDialog.isShow = false"
-              v-text="'取消'"
-          />
+              v-text="'取消'"/>
         </v-card-actions>
       </v-card>
     </v-dialog>
