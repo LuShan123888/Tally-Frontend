@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem("token"),
-        userInfo: sessionStorage.getItem("userInfo"),
-        config: localStorage.getItem("config")
+        userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
+        config: JSON.parse(localStorage.getItem("config"))
     },
     mutations: {
         setToken: (state, token) => {
@@ -16,11 +16,11 @@ export default new Vuex.Store({
         },
         setUserInfo: (state, userInfo) => {
             state.userInfo = userInfo;
-            sessionStorage.setItem("userInfo", userInfo);
+            sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
         },
         setConfig: (state, config) => {
             state.config = config;
-            localStorage.setItem("config", config);
+            localStorage.setItem("config", JSON.stringify(config));
         },
         clean: (state) => {
             state.token = null;
