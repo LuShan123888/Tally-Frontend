@@ -4,7 +4,7 @@
       <v-col cols="3" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'反馈处理'"/>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="7">
         <v-row align="center" no-gutters>
           <v-col cols="5">
             <v-form ref="feedbackQueryForm">
@@ -27,8 +27,7 @@
                       item-value="id"
                       label="处理人"
                       clearable
-                      no-data-text="无对应选项"
-                  >
+                      no-data-text="无对应选项">
                   </v-select>
                 </v-col>
               </v-row>
@@ -40,8 +39,7 @@
                       no-data-text="无对应选项"
                       class="mt-0 pt-0 mr-2"
                       clearable
-                      label="反馈类型"
-                  />
+                      label="反馈类型"/>
                 </v-col>
                 <v-col cols="6">
                   <v-select
@@ -50,8 +48,7 @@
                       no-data-text="无对应选项"
                       class="mt-0 pt-0 mr-2"
                       clearable
-                      label="处理状态"
-                  />
+                      label="处理状态"/>
                 </v-col>
               </v-row>
             </v-form>
@@ -62,12 +59,22 @@
                 color="primary"
                 depressed fab
                 small
-                @click="pageFeedback"
-            >
+                @click="pageFeedback">
               <v-icon>
                 mdi-magnify
               </v-icon>
             </v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col class="d-flex justify-end" cols="2">
+        <v-row justify="end">
+          <v-col cols="6"></v-col>
+          <v-col cols="6">
+            <v-btn :disabled="btn.export.isLoading"
+                   :loading="btn.export.isLoading"
+                   color="warning"
+                   depressed @click="exportFeedback" v-text="'导出反馈'"/>
           </v-col>
         </v-row>
       </v-col>
@@ -352,6 +359,11 @@ export default {
         path: this.GLOBAL.url.api + "/file/upload",
         header: {Authorization: this.$store.getters.getToken}
       },
+      btn: {
+        export: {
+          isLoading: false
+        }
+      },
       adminList: [],
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
@@ -413,6 +425,26 @@ export default {
             });
             this.pageFeedback();
           });
+    },
+    exportFeedback() {
+      if (this.$refs.feedbackQueryForm.validate()) {
+        this.btn.export.isLoading = true;
+        this.axios.post(
+            '/feedback/pageFeedback/' + this.table.query.page.current + '/' + this.table.query.page.size + '/?export=excel',
+            this.table.query.feedback,
+            {responseType: 'blob'})
+            .then(response => {
+              let url = window.URL.createObjectURL(new Blob([response.data]));
+              let link = document.createElement('a');
+              link.style.display = 'none';
+              link.href = url;
+              link.setAttribute('download', 'export.xlsx')
+              document.body.appendChild(link)
+              link.click()
+            }).finally(() => {
+          this.btn.export.isLoading = false;
+        })
+      }
     },
     loadFeedbackUpdateDialog(feedback) {
       this.$refs.feedbackUpdateForm.resetValidation();

@@ -59,7 +59,10 @@
             <v-btn color="primary" depressed @click="loadUserSaveDialog" v-text="'新增用户'"/>
           </v-col>
           <v-col cols="6">
-            <v-btn color="warning" depressed @click="loadUserSaveDialog" v-text="'导出用户'"/>
+            <v-btn :disabled="btn.export.isLoading"
+                   :loading="btn.export.isLoading"
+                   color="warning"
+                   depressed @click="exportUser" v-text="'导出用户'"/>
           </v-col>
         </v-row>
       </v-col>
@@ -347,6 +350,11 @@ export default {
           loading: false
         }
       },
+      btn: {
+        export: {
+          isLoading: false
+        }
+      },
       roleMap: [],
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
@@ -363,7 +371,7 @@ export default {
     pageUser() {
       if (this.$refs.userQueryForm.validate()) {
         this.table.loading = true;
-        this.axios.post("/user/pageUser/" + this.table.query.page.current + "/" + this.table.query.page.size, JSON.stringify(this.table.query.user))
+        this.axios.post("/user/pageUser/" + this.table.query.page.current + "/" + this.table.query.page.size, this.table.query.user)
             .then((response) => {
               this.table.data = response.data.data;
               this.table.query.page.count = response.data.count;
@@ -377,7 +385,7 @@ export default {
       }
       this.dialog.btn.loading = true;
       if (this.dialog.user.id) {
-        this.axios.put("/user/updateUser", JSON.stringify(this.dialog.user))
+        this.axios.put("/user/updateUser", this.dialog.user)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -392,7 +400,7 @@ export default {
               this.dialog.btn.loading = false;
             });
       } else {
-        this.axios.post("/user/saveUser", JSON.stringify(this.dialog.user))
+        this.axios.post("/user/saveUser", this.dialog.user)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -419,6 +427,26 @@ export default {
             });
             this.pageUser();
           });
+    },
+    exportUser() {
+      if (this.$refs.userQueryForm.validate()) {
+        this.btn.export.isLoading = true;
+        this.axios.post(
+            '/user/pageUser/' + this.table.query.page.current + '/' + this.table.query.page.size + '/?export=excel',
+            this.table.query.user,
+            {responseType: 'blob'})
+            .then(response => {
+              let url = window.URL.createObjectURL(new Blob([response.data]));
+              let link = document.createElement('a');
+              link.style.display = 'none';
+              link.href = url;
+              link.setAttribute('download', 'export.xlsx')
+              document.body.appendChild(link)
+              link.click()
+            }).finally(() => {
+          this.btn.export.isLoading = false;
+        })
+      }
     },
     loadUserSaveDialog() {
       this.$refs.userSaveOrUpdateForm.resetValidation();
@@ -458,12 +486,15 @@ export default {
         })
       });
     }
-  },
+  }
+  ,
   mounted() {
     this.pageUser();
     this.loadRoleMap();
-  },
-};
+  }
+  ,
+}
+;
 </script>
 
 <style lang="scss">

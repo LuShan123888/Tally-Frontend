@@ -58,12 +58,19 @@
       </v-col>
       <v-col class="d-flex justify-end" cols="2">
         <v-row justify="end">
+          <v-col cols="6"></v-col>
           <v-col cols="6">
             <v-btn
                 color="primary"
                 depressed
                 @click="loadRoleSaveDialog"
                 v-text="'新增角色'"/>
+          </v-col>
+          <v-col cols="6">
+            <v-btn :disabled="btn.export.isLoading"
+                   :loading="btn.export.isLoading"
+                   color="warning"
+                   depressed @click="exportRole" v-text="'导出角色'"/>
           </v-col>
         </v-row>
       </v-col>
@@ -260,6 +267,11 @@ export default {
         },
         permissionTree: null
       },
+      btn: {
+        export: {
+          isLoading: false
+        }
+      },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums
     };
@@ -331,6 +343,25 @@ export default {
             });
             this.pageRole();
           });
+    },
+    exportRole() {
+      if (this.$refs.roleQueryForm.validate()) {
+        this.axios.post(
+            '/role/pageRole/' + this.table.query.page.current + '/' + this.table.query.page.size + '/?export=excel',
+            this.table.query.role,
+            {responseType: 'blob'})
+            .then(response => {
+              let url = window.URL.createObjectURL(new Blob([response.data]));
+              let link = document.createElement('a');
+              link.style.display = 'none';
+              link.href = url;
+              link.setAttribute('download', 'export.xlsx')
+              document.body.appendChild(link)
+              link.click()
+            }).finally(() => {
+          this.btn.export.isLoading = false;
+        })
+      }
     },
     loadRoleSaveDialog() {
       this.$refs.roleSaveOrUpdateForm.resetValidation()
