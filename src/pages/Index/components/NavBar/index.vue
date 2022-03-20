@@ -4,9 +4,9 @@
       <div class="d-flex align-center mx-auto px-4" style="height: 100%;">
         <div style="width: 100%">
           <div class="mb-16 px-4">
-            <v-icon class="mr-4" x-large color="primary">
-              mdi-notebook-edit
-            </v-icon>
+            <v-btn class="rounded-lg mr-4" color="primary" depressed fab small>
+              <v-icon>mdi-notebook-edit</v-icon>
+            </v-btn>
             <span class="text-subtitle-1" v-text="title"/>
           </div>
           <v-list nav>

@@ -24,7 +24,7 @@
       <v-col class="pl-2" cols="6">
         <v-row justify="space-between" no-gutters style="height: 36px">
           <v-col class="d-flex align-center" cols="2">
-            <v-btn color="primary" depressed fab x-small @click="changeDate('sub')">
+            <v-btn class="rounded-lg" color="primary" depressed fab x-small @click="changeDate('sub')">
               <v-icon>mdi-arrow-left-bold</v-icon>
             </v-btn>
           </v-col>
@@ -33,7 +33,7 @@
             <span class="d-flex align-center font-weight-medium">{{ query.displayDateGroupString }}</span>
           </v-col>
           <v-col class="d-flex align-center justify-end" cols="2">
-            <v-btn color="primary" depressed fab x-small @click="changeDate('add')">
+            <v-btn class="rounded-lg" color="primary" depressed fab x-small @click="changeDate('add')">
               <v-icon>mdi-arrow-right-bold</v-icon>
             </v-btn>
           </v-col>
@@ -146,7 +146,7 @@
                  @click="loadBillTypePage(item)">
             <v-col cols="1">
               <v-btn :color="charts.pieChart.tabs==='OUT'?'error':charts.pieChart.tabs==='IN'?'primary':''" depressed
-                     fab
+                     class="rounded-lg" fab
                      x-small>
                 <v-icon>mdi-{{ item.icon }}</v-icon>
               </v-btn>
@@ -161,12 +161,8 @@
                                  rounded/>
             </v-col>
             <v-col class="d-flex flex-column align-end justify-center" cols="3">
-              <div class="text-subtitle-2">
-                ¥{{ numFormat(item.sum) }}
-              </div>
-              <div class="text-body-2">
-                {{ item.count }}笔
-              </div>
+              <div class="text-subtitle-2" v-text="'¥'+numFormat(item.sum)"/>
+              <div class="text-body-2" v-text="item.count + '笔'"/>
             </v-col>
             <v-col class="d-flex justify-end" cols="1">
               <v-icon>mdi-chevron-right</v-icon>
@@ -190,8 +186,7 @@
             dark
             style="border-radius: 0">
           <v-btn
-              dark
-              icon
+              dark icon
               @click="billTypePage.isShow = false">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
@@ -225,7 +220,7 @@
                      style="height: 60px">
                 <v-col cols="1">
                   <v-btn :color="charts.pieChart.tabs==='OUT'?'error':charts.pieChart.tabs==='IN'?'primary':''"
-                         depressed fab x-small>
+                         class="rounded-lg" depressed fab x-small>
                     <v-icon>mdi-{{ item.icon }}</v-icon>
                   </v-btn>
                 </v-col>
@@ -273,9 +268,8 @@
         v-if="!loading && data.billGroupByDateList.length>0"
         class="pa-3 rounded-lg"
         flat fluid>
-      <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium">{{
-          tabs === 'MOUTH' ? '月' : '年'
-        }}账单汇总
+      <v-card-title class="pa-0 mb-3 text-subtitle-1 font-weight-medium"
+                    v-text="(tabs === 'MOUTH' ? '月' : '年') +'账单汇总'">
       </v-card-title>
       <v-row :style="{backgroundColor: isDark?'#000000':'#EDEDEF'}" class="rounded-t-lg" no-gutters>
         <v-col class="text-center py-2" cols="3">日期</v-col>

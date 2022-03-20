@@ -62,7 +62,7 @@
         <template v-slot="scope">
           <v-btn
               :color="scope.row.flow==='OUT'?'error':scope.row.flow==='IN'?'primary':scope.row.flow==='TRANSFER'?'warning':''"
-              depressed fab
+              class="rounded-lg" depressed fab
               x-small>
             <v-icon v-if="scope.row.icon">mdi-{{ scope.row.icon }}</v-icon>
             <v-icon v-else>mdi-help</v-icon>
@@ -84,22 +84,19 @@
               color="primary"
               text
               @click="loadBillTypeUpdateDialog(scope.row)"
-              v-text="'修改'"
-          />
+              v-text="'修改'"/>
           <el-popconfirm
               v-if="!scope.row.children"
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该账单类别吗？"
-              @confirm="deleteBillType(scope.row.id)"
-          >
+              @confirm="deleteBillType(scope.row.id)">
             <v-btn
                 slot="reference"
                 class="mx-1"
                 color="error"
                 text
-                v-text="'删除'"
-            />
+                v-text="'删除'"/>
           </el-popconfirm>
           <v-btn
               v-else
@@ -107,8 +104,7 @@
               color="warning"
               text
               @click="loadBillTypeOrderDialog(scope.row.children)"
-              v-text="'排序'"
-          />
+              v-text="'排序'"/>
         </template>
       </el-table-column>
     </el-table>
@@ -130,8 +126,7 @@
                       :rules="[(value) => !!value || '请输入类别名称']"
                       clearable
                       label="类别名称"
-                      prepend-inner-icon="mdi-notebook"
-                  />
+                      prepend-inner-icon="mdi-notebook"/>
                 </v-col>
                 <v-col cols="2">
                   <v-row justify="center" no-gutters>
@@ -140,7 +135,7 @@
                   <v-row justify="center" no-gutters>
                     <v-btn
                         :color="dialog.billType.flow === 'OUT'?'error':dialog.billType.flow === 'IN'?'primary':''"
-                        depressed fab x-small
+                        class="rounded-lg" depressed fab x-small
                         @click="iconDialog.isShow=true;">
                       <v-icon v-if="dialog.billType.icon"
                               v-text="'mdi-'+dialog.billType.icon"></v-icon>
@@ -176,16 +171,14 @@
             <v-btn
                 text
                 @click="dialog.isShow = false"
-                v-text="'取消'"
-            />
+                v-text="'取消'"/>
             <v-btn
                 :disabled="dialog.btn.loading"
                 :loading="dialog.btn.loading"
                 color="primary"
                 text
                 @click="saveOrUpdateBillType"
-                v-text="'保存'"
-            />
+                v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -205,7 +198,7 @@
                 <v-col cols="2">
                   <v-btn
                       :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                      depressed fab
+                      class="rounded-lg" depressed fab
                       x-small>
                     <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                     <v-icon v-else>mdi-help</v-icon>
@@ -283,7 +276,7 @@
             <v-col v-for="item in icons.billType" :key="item" class="d-flex justify-center"
                    cols="2"
                    @click="dialog.billType.icon = item; iconDialog.isShow = false;">
-              <v-btn depressed fab x-small>
+              <v-btn class="rounded-lg" depressed fab x-small>
                 <v-icon>mdi-{{ item }}</v-icon>
               </v-btn>
             </v-col>

@@ -51,15 +51,14 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signUp"
                               v-bind="attrs"
-                              v-on="on"
-                          >
+                              v-on="on">
                             <v-icon>
                               mdi-account-multiple-plus
                             </v-icon>
@@ -70,7 +69,7 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="error"
                               depressed
                               fab
@@ -78,8 +77,7 @@
                               to="/forgot"
                               v-bind="attrs"
                               @click="submitForm"
-                              v-on="on"
-                          >
+                              v-on="on">
                             <v-icon>
                               mdi-lock-alert
                             </v-icon>
@@ -92,14 +90,13 @@
                       <v-btn
                           :disabled="form.password.loading"
                           :loading="form.password.loading"
-                          class="mt-4"
+                          class="mt-4 rounded-lg"
                           color="primary"
                           depressed
                           large
                           block
                           @click="submitForm('password')"
-                          v-text="'登录'"
-                      />
+                          v-text="'登录'"/>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -125,8 +122,7 @@
                             depressed
                             small
                             @click="sendVerificationCode"
-                            v-text="'获取验证码'"
-                        />
+                            v-text="'获取验证码'"/>
                       </template>
                     </v-text-field>
                   </v-row>
@@ -136,23 +132,21 @@
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
-                        type="number"
-                    />
+                        type="number"/>
                   </v-row>
                   <v-row justify="space-between" no-gutters>
                     <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signUp"
                               v-bind="attrs"
-                              v-on="on"
-                          >
+                              v-on="on">
                             <v-icon>
                               mdi-account-multiple-plus
                             </v-icon>
@@ -163,18 +157,15 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="error"
                               depressed
                               fab
                               small
                               to="/forgot"
                               v-bind="attrs"
-                              v-on="on"
-                          >
-                            <v-icon>
-                              mdi-lock-alert
-                            </v-icon>
+                              v-on="on">
+                            <v-icon> mdi-lock-alert</v-icon>
                           </v-btn>
                         </template>
                         <span>找回账户</span>
@@ -184,14 +175,13 @@
                       <v-btn
                           :disabled="form.phoneNumber.loading"
                           :loading="form.phoneNumber.loading"
-                          class="mt-4"
+                          class="mt-4 rounded-lg"
                           color="primary"
                           depressed
                           large
                           block
                           @click="submitForm('phoneNumber')"
-                          v-text="'登录'"
-                      />
+                          v-text="'登录'"/>
                     </v-col>
                   </v-row>
                 </v-form>

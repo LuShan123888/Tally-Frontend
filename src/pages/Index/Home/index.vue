@@ -8,8 +8,7 @@
         fixed
         right
         style="bottom: 68px"
-        @click="loadSaveBillPage"
-    >
+        @click="loadSaveBillPage">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-row no-gutters>
@@ -99,9 +98,9 @@
           <v-row align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateBillPage(item)">
             <v-col cols="1">
-              <v-btn
-                  :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                  depressed fab x-small>
+              <v-btn class="rounded-lg"
+                     :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
+                     depressed fab x-small>
                 <v-icon v-if="item.billTypeVO && item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
@@ -174,7 +173,7 @@
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
                       <v-row justify="center" no-gutters>
-                        <v-btn color="primary" depressed fab x-small>
+                        <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                           <v-icon v-if="billPage.bill.billTypeVO.icon"
                                   v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
                           <v-icon v-else>mdi-help</v-icon>
@@ -312,7 +311,7 @@
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
                       <v-row justify="center" no-gutters>
-                        <v-btn color="primary" depressed fab x-small>
+                        <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                           <v-icon v-if="billPage.bill.billTypeVO.icon"
                                   v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
                           <v-icon v-else>mdi-help</v-icon>

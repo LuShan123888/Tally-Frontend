@@ -2,7 +2,9 @@
   <v-app-bar v-model="isShow" app inverted-scroll
              :style="{backdropFilter: 'blur(10px)',background:isDark?'rgba(30, 30, 30, 0.7)':'rgba(255, 255, 255, 0.7)'}">
     <v-app-bar-nav-icon>
-      <v-icon class="pl-3" color="primary" x-large> mdi-notebook-edit</v-icon>
+      <v-btn class="rounded-lg ml-3" color="primary" depressed fab small>
+        <v-icon>mdi-notebook-edit</v-icon>
+      </v-btn>
     </v-app-bar-nav-icon>
     <v-app-bar-title class="subtitle-1 pl-4" v-text="title"/>
   </v-app-bar>

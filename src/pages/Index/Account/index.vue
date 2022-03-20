@@ -8,8 +8,7 @@
         fixed
         right
         style="bottom: 68px"
-        @click="loadSaveAccountPage"
-    >
+        @click="loadSaveAccountPage">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-card
@@ -59,7 +58,7 @@
           <v-row align="center" no-gutters style="height: 60px;cursor: pointer"
                  @click="loadUpdateAccountPage(item)">
             <v-col cols="1">
-              <v-btn color="primary" depressed fab x-small>
+              <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                 <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
@@ -121,7 +120,7 @@
                     <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">账户图标</div>
                   </v-row>
                   <v-row justify="center" no-gutters>
-                    <v-btn color="primary" depressed fab x-small
+                    <v-btn class="rounded-lg" color="primary" depressed fab x-small
                            @click="accountPage.iconDialog.isShow=true;">
                       <v-icon v-if="accountPage.account.icon">mdi-{{ accountPage.account.icon }}</v-icon>
                       <v-icon v-else>mdi-help</v-icon>
@@ -200,7 +199,7 @@
             <v-col v-for="item in icons.accountType" :key="item" class="d-flex justify-center"
                    cols="2"
                    @click="accountPage.account.icon = item;accountPage.iconDialog.isShow=false;">
-              <v-btn color="primary" depressed fab x-small>
+              <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                 <v-icon>mdi-{{ item }}</v-icon>
               </v-btn>
             </v-col>

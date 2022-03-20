@@ -56,7 +56,7 @@
             <v-row v-ripple align="center" class="px-3 rounded-0" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改用户名','username')">
               <v-col cols="3">
-                <v-btn class="px-3" color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-account</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'用户名'"/>
@@ -72,7 +72,7 @@
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
               <v-col cols="3">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-account-key</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'密码'"/>
@@ -88,7 +88,7 @@
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('绑定手机号','phoneNumber')">
               <v-col cols="3">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-cellphone-text</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'手机号'"/>
@@ -104,7 +104,7 @@
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('绑定邮箱','email')">
               <v-col cols="3">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-email</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2  grey--text text--darken-1" v-text="'邮箱'"/>
@@ -119,7 +119,7 @@
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="3">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-list-status</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'状态'"/>
@@ -133,7 +133,7 @@
             <v-divider/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="3">
-                <v-btn color="primary" depressed fab x-small>
+                <v-btn class="rounded-lg" color="primary" depressed fab x-small>
                   <v-icon>mdi-clipboard-account-outline</v-icon>
                 </v-btn>
                 <span class="ml-2 text-subtitle-2 grey--text text--darken-1" v-text="'角色'"/>
@@ -199,8 +199,7 @@
                           :rules="[(value) => value === userInfoPage.dialog.userInfo.password||'两次输入的密码不一致']"
                           clearable
                           label="密码确认"
-                          type="password"
-                      />
+                          type="password"/>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -214,8 +213,7 @@
                           :counter="11"
                           :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
                           clearable
-                          label="新手机号"
-                      >
+                          label="新手机号">
                         <template v-slot:append-outer>
                           <v-btn
                               :disabled="userInfoPage.dialog.verificationCodeBtn.disabled"
@@ -223,8 +221,7 @@
                               depressed
                               small
                               @click="sendVerificationCode('phoneNumber',userInfoPage.dialog.userInfo.phoneNumber)"
-                              v-text="'获取验证码'"
-                          />
+                              v-text="'获取验证码'"/>
                         </template>
                       </v-text-field>
                     </v-col>
@@ -234,8 +231,7 @@
                           :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                           length="6"
                           plain
-                          type="number"
-                      />
+                          type="number"/>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -248,8 +244,7 @@
                           v-model="userInfoPage.dialog.userInfo.email"
                           :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
                           clearable
-                          label="新邮箱"
-                      >
+                          label="新邮箱">
                         <template v-slot:append-outer>
                           <v-btn
                               :disabled="userInfoPage.dialog.verificationCodeBtn.disabled"
@@ -257,8 +252,7 @@
                               depressed
                               small
                               @click="sendVerificationCode('email',userInfoPage.dialog.userInfo.email)"
-                              v-text="'获取验证码'"
-                          />
+                              v-text="'获取验证码'"/>
                         </template>
                       </v-text-field>
                     </v-col>
@@ -268,8 +262,7 @@
                           :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                           length="6"
                           plain
-                          type="number"
-                      />
+                          type="number"/>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -282,11 +275,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer/>
-                <v-btn depressed
+                <v-btn class="rounded-lg" depressed
                        @click="userInfoPage.dialog.isShow = false" v-text="'取消'"/>
-                <v-btn
-                    :disabled="userInfoPage.dialog.loading" :loading="userInfoPage.dialog.loading" color="primary"
-                    depressed @click="updateUserInfo" v-text="'保存'"/>
+                <v-btn :disabled="userInfoPage.dialog.loading"
+                       :loading="userInfoPage.dialog.loading" class="rounded-lg" color="primary"
+                       depressed @click="updateUserInfo" v-text="'保存'"/>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -299,7 +292,7 @@
         fluid>
       <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
         <v-col cols="1">
-          <v-btn color="primary" depressed fab x-small>
+          <v-btn class="rounded-lg" color="primary" depressed fab x-small>
             <v-icon>mdi-brightness-4</v-icon>
           </v-btn>
         </v-col>
@@ -318,7 +311,7 @@
       <v-divider/>
       <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
-          <v-btn color="primary" depressed fab x-small>
+          <v-btn class="rounded-lg" color="primary" depressed fab x-small>
             <v-icon>mdi-notebook-multiple</v-icon>
           </v-btn>
         </v-col>
@@ -332,7 +325,7 @@
       <v-divider/>
       <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
-          <v-btn color="primary" depressed fab x-small>
+          <v-btn class="rounded-lg" color="primary" depressed fab x-small>
             <v-icon>mdi-message-alert</v-icon>
           </v-btn>
         </v-col>
@@ -354,13 +347,11 @@
             class="mb-16"
             color="primary"
             dark
-            style="border-radius: 0"
-        >
+            style="border-radius: 0">
           <v-btn
               dark
               icon
-              @click="billTypePage.isShow = false;"
-          >
+              @click="billTypePage.isShow = false;">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-toolbar-title>账单类别</v-toolbar-title>
@@ -375,12 +366,10 @@
                 <span class="text-h6">账单类别</span>
               </v-row>
               <v-row class="d-flex justify-end" no-gutters>
-                <v-btn class="mr-1" color="info" depressed small
-                       @click="loadBillTypeSaveDialog">新增
-                </v-btn>
-                <v-btn color="warning" depressed small
-                       @click="loadBillTypeOrderDialog(billTypePage.billTypeTree)">排序
-                </v-btn>
+                <v-btn class="mr-1 rounded-lg" color="info" depressed small
+                       @click="loadBillTypeSaveDialog" v-text="'新增'"/>
+                <v-btn class="rounded-lg" color="warning" depressed small
+                       @click="loadBillTypeOrderDialog(billTypePage.billTypeTree)" v-text="'排序'"/>
               </v-row>
             </v-row>
             <v-divider class="my-3"></v-divider>
@@ -392,21 +381,22 @@
                 style="width: 100%" transition>
               <template v-slot:prepend="{ item, open }">
                 <v-btn :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                       class="mr-3" depressed fab
+                       class="mr-3 rounded-lg" depressed fab
                        x-small>
                   <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                   <v-icon v-else>mdi-help</v-icon>
                 </v-btn>
               </template>
               <template v-slot:append="{ item, open }">
-                <v-btn v-if="item.flow !== 'TRANSFER'" class="mr-1" color="primary"
+                <v-btn v-if="item.flow !== 'TRANSFER'" class="mr-1 rounded-lg" color="primary"
                        depressed small
                        v-text="'修改'" @click.stop="loadBillTypeUpdateDialog(item)"/>
-                <v-btn v-if="item.children && item.flow !== 'TRANSFER'" class="mr-1" color="warning" depressed small
+                <v-btn v-if="item.children && item.flow !== 'TRANSFER'" class="mr-1 rounded-lg" color="warning"
+                       depressed small
                        v-text="'排序'"
                        @click.stop="loadBillTypeOrderDialog(item.children)"/>
                 <v-btn v-if="!item.children && item.flow !== 'TRANSFER'"
-                       class="mr-1"
+                       class="mr-1 rounded-lg"
                        color="error"
                        depressed
                        small v-text="'删除'"
@@ -437,6 +427,7 @@
                     </v-row>
                     <v-row justify="center" no-gutters>
                       <v-btn
+                          class="rounded-lg"
                           :color="billTypePage.dialog.billType.flow === 'OUT'?'error':billTypePage.dialog.billType.flow === 'IN'?'primary':''"
                           depressed fab x-small
                           @click="billTypePage.iconDialog.isShow=true;">
@@ -470,11 +461,11 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
-              <v-btn depressed
+              <v-btn class="rounded-lg" depressed
                      @click="billTypePage.dialog.isShow = false" v-text="'取消'"/>
               <v-btn
                   :disabled="billTypePage.dialog.btn.loading" :loading="billTypePage.dialog.btn.loading"
-                  color="primary" depressed
+                  class="rounded-lg" color="primary" depressed
                   @click="saveOrUpdateBillTpe" v-text="'保存'"/>
             </v-card-actions>
           </v-card>
@@ -495,11 +486,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
-            <v-btn depressed
+            <v-btn class="rounded-lg" depressed
                    @click="billTypePage.removeDialog.isShow = false" v-text="'取消'"/>
             <v-btn
                 :disabled="billTypePage.removeDialog.btn.loading" :loading="billTypePage.removeDialog.btn.loading"
-                color="primary" depressed
+                color="primary rounded-lg" depressed
                 @click="removeBillType" v-text="'确定'"/>
           </v-card-actions>
         </v-card>
@@ -514,7 +505,7 @@
               <v-col v-for="item in icons.billType" :key="item" class="d-flex justify-center"
                      cols="2"
                      @click="billTypePage.dialog.billType.icon = item; billTypePage.iconDialog.isShow = false;">
-                <v-btn depressed fab x-small>
+                <v-btn class="rounded-lg" depressed fab x-small>
                   <v-icon>mdi-{{ item }}</v-icon>
                 </v-btn>
               </v-col>
@@ -526,8 +517,7 @@
                 class="rounded-lg"
                 depressed
                 @click="billTypePage.iconDialog.isShow = false"
-                v-text="'取消'"
-            />
+                v-text="'取消'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -546,7 +536,7 @@
                   <v-col cols="2">
                     <v-btn
                         :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                        depressed fab
+                        class="rounded-lg" depressed fab
                         x-small>
                       <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                       <v-icon v-else>mdi-help</v-icon>

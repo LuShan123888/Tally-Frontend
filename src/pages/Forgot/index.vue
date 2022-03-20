@@ -51,8 +51,7 @@
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
-                        type="number"
-                    />
+                        type="number"/>
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-text-field
@@ -63,26 +62,22 @@
                         :type="form.phoneNumber.showPassword ? 'text' : 'password'"
                         label="密码"
                         clearable
-                        @click:append="form.phoneNumber.showPassword = !form.phoneNumber.showPassword"
-                    />
+                        @click:append="form.phoneNumber.showPassword = !form.phoneNumber.showPassword"/>
                   </v-row>
                   <v-row justify="space-between" no-gutters>
                     <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signIn"
                               v-bind="attrs"
-                              v-on="on"
-                          >
-                            <v-icon>
-                              mdi-login
-                            </v-icon>
+                              v-on="on">
+                            <v-icon> mdi-login</v-icon>
                           </v-btn>
                         </template>
                         <span>登录账号</span>
@@ -90,18 +85,15 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signUp"
                               v-bind="attrs"
-                              v-on="on"
-                          >
-                            <v-icon>
-                              mdi-account-multiple-plus
-                            </v-icon>
+                              v-on="on">
+                            <v-icon> mdi-account-multiple-plus</v-icon>
                           </v-btn>
                         </template>
                         <span>注册账号</span>
@@ -111,14 +103,13 @@
                       <v-btn
                           :disabled="form.phoneNumber.loading"
                           :loading="form.phoneNumber.loading"
-                          class="mt-4"
+                          class="mt-4 rounded-lg"
                           color="primary"
                           depressed
                           large
                           block
                           @click="submitForm('phoneNumber')"
-                          v-text="'重设密码'"
-                      />
+                          v-text="'重设密码'"/>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -135,8 +126,7 @@
                         v-model="form.email.email"
                         :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
                         clearable
-                        label="邮箱"
-                    >
+                        label="邮箱">
                       <template v-slot:append-outer>
                         <v-btn
                             :disabled="form.email.verificationCodeBtn.disabled"
@@ -144,8 +134,7 @@
                             depressed
                             small
                             @click="sendVerificationCode('email')"
-                            v-text="'获取验证码'"
-                        />
+                            v-text="'获取验证码'"/>
                       </template>
                     </v-text-field>
                   </v-row>
@@ -155,8 +144,7 @@
                         :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
                         length="6"
                         plain
-                        type="number"
-                    />
+                        type="number"/>
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-text-field
@@ -167,23 +155,21 @@
                         :type="form.email.showPassword ? 'text' : 'password'"
                         label="密码"
                         clearable
-                        @click:append="form.email.showPassword = !form.email.showPassword"
-                    />
+                        @click:append="form.email.showPassword = !form.email.showPassword"/>
                   </v-row>
                   <v-row justify="space-between" no-gutters>
                     <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signIn"
                               v-bind="attrs"
-                              v-on="on"
-                          >
+                              v-on="on">
                             <v-icon>
                               mdi-login
                             </v-icon>
@@ -194,15 +180,14 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1"
+                              class="mx-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
                               small
                               to="/signUp"
                               v-bind="attrs"
-                              v-on="on"
-                          >
+                              v-on="on">
                             <v-icon>
                               mdi-account-multiple-plus
                             </v-icon>
@@ -215,14 +200,13 @@
                       <v-btn
                           :disabled="form.email.loading"
                           :loading="form.email.loading"
-                          class="mt-4"
+                          class="mt-4 rounded-lg"
                           color="primary"
                           depressed
                           large
                           block
                           @click="submitForm('email')"
-                          v-text="'重设密码'"
-                      />
+                          v-text="'重设密码'"/>
                     </v-col>
                   </v-row>
                 </v-form>
