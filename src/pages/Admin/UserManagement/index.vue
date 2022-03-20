@@ -4,7 +4,7 @@
       <v-col cols="3" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'用户管理'"/>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="7">
         <v-row no-gutters align="center">
           <v-col cols="5">
             <v-form ref="userQueryForm">
@@ -52,9 +52,16 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="1">
-        <v-btn color="primary" depressed @click="loadUserSaveDialog" v-text="'新增用户'"
-        />
+      <v-col class="d-flex justify-end" cols="2">
+        <v-row justify="end">
+          <v-col cols="6"></v-col>
+          <v-col cols="6">
+            <v-btn color="primary" depressed @click="loadUserSaveDialog" v-text="'新增用户'"/>
+          </v-col>
+          <v-col cols="6">
+            <v-btn color="warning" depressed @click="loadUserSaveDialog" v-text="'导出用户'"/>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <el-table
@@ -112,21 +119,18 @@
               color="primary"
               class="mx-1"
               @click="loadUserUpdateDialog(scope.row)"
-              v-text="'修改'"
-          />
+              v-text="'修改'"/>
           <el-popconfirm
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该用户吗？"
-              @confirm="deleteUser(scope.row.id)"
-          >
+              @confirm="deleteUser(scope.row.id)">
             <v-btn
                 slot="reference"
                 text
                 color="error"
                 class="mx-1"
-                v-text="'删除'"
-            />
+                v-text="'删除'"/>
           </el-popconfirm>
         </template>
       </el-table-column>

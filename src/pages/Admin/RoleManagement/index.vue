@@ -4,7 +4,7 @@
       <v-col cols="3" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'角色管理'"/>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="7">
         <v-row align="center" no-gutters>
           <v-col cols="7">
             <v-form ref="roleQueryForm">
@@ -56,13 +56,17 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="1">
-        <v-btn
-            depressed
-            color="primary"
-            @click="loadRoleSaveDialog"
-            v-text="'新增角色'"
-        />
+      <v-col class="d-flex justify-end" cols="2">
+        <v-row justify="end">
+          <v-col cols="6">
+            <v-btn
+                color="primary"
+                depressed
+                @click="loadRoleSaveDialog"
+                v-text="'新增角色'"
+            />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <el-table

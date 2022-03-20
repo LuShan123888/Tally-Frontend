@@ -1,16 +1,19 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
-      <v-col cols="11" no-gutters>
+      <v-col cols="10" no-gutters>
         <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'权限管理'"/>
       </v-col>
-      <v-col cols="1">
-        <v-btn
-            color="primary"
-            @click="loadPermissionSaveDialog"
-            v-text="'新增权限'"
-            depressed
-        />
+      <v-col class="d-flex justify-end" cols="2">
+        <v-row justify="end">
+          <v-col cols="6">
+            <v-btn
+                color="primary"
+                depressed
+                @click="loadPermissionSaveDialog"
+                v-text="'新增权限'"/>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <el-table
