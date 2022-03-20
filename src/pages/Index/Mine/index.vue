@@ -907,7 +907,7 @@ export default {
         }
       }
       this.userInfoPage.dialog.loading = true;
-      this.axios.put("/user/updateUserInfo", JSON.stringify(user))
+      this.axios.put("/user/updateUserInfo", user)
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -930,7 +930,7 @@ export default {
     saveFeedback() {
       if (!this.$refs.feedbackForm.validate()) return;
       this.feedbackPage.loading = true;
-      this.axios.post("/feedback/saveFeedback", JSON.stringify(this.feedbackPage.feedback))
+      this.axios.post("/feedback/saveFeedback", this.feedbackPage.feedback)
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -966,7 +966,7 @@ export default {
       }
       if (this.billTypePage.dialog.type === 'update') {
         this.billTypePage.dialog.btn.loading = true;
-        this.axios.put("/billType/updateBillType", JSON.stringify(this.billTypePage.dialog.billType))
+        this.axios.put("/billType/updateBillType", this.billTypePage.dialog.billType)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -984,7 +984,7 @@ export default {
       } else if (this.billTypePage.dialog.type === 'save') {
         this.billTypePage.dialog.loading = true;
         this.billTypePage.dialog.billType.weight = 0;
-        this.axios.post("/billType/saveBillType", JSON.stringify(this.billTypePage.dialog.billType))
+        this.axios.post("/billType/saveBillType", this.billTypePage.dialog.billType)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -1055,7 +1055,7 @@ export default {
         list.push({id: item.id, weight: weight, version: item.version})
         weight = weight + 1;
       }
-      this.axios.put("/billType/orderBillType", JSON.stringify(list))
+      this.axios.put("/billType/orderBillType", list)
           .then(() => {
             this.$notify({
               title: "保存成功",

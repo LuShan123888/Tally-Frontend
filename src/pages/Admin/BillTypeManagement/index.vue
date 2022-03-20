@@ -401,7 +401,7 @@ export default {
       }
       if (this.dialog.type === 'update') {
         this.dialog.btn.loading = true;
-        this.axios.put("/billType/updateDefaultBillType", JSON.stringify(this.dialog.billType))
+        this.axios.put("/billType/updateDefaultBillType", this.dialog.billType)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -419,7 +419,7 @@ export default {
       } else if (this.dialog.type === 'save') {
         this.dialog.loading = true;
         this.dialog.billType.weight = 0;
-        this.axios.post("/billType/saveDefaultBillType", JSON.stringify(this.dialog.billType))
+        this.axios.post("/billType/saveDefaultBillType", this.dialog.billType)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -444,7 +444,7 @@ export default {
         list.push({id: item.id, weight: weight, version: item.version})
         weight = weight + 1;
       }
-      this.axios.put("/billType/orderDefaultBillType", JSON.stringify(list))
+      this.axios.put("/billType/orderDefaultBillType", list)
           .then(() => {
             this.$notify({
               title: "保存成功",

@@ -288,7 +288,7 @@ export default {
       this.dialog.btn.loading = true;
       this.dialog.permission.children = null;
       if (this.dialog.permission.id) {
-        this.axios.put("/permission/updatePermission", JSON.stringify(this.dialog.permission))
+        this.axios.put("/permission/updatePermission", this.dialog.permission)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -304,7 +304,7 @@ export default {
               this.dialog.btn.loading = false;
             });
       } else {
-        this.axios.post("/permission/savePermission", JSON.stringify(this.dialog.permission))
+        this.axios.post("/permission/savePermission", this.dialog.permission)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -329,7 +329,7 @@ export default {
         list.push({id: item.id, weight: weight, version: item.version})
         weight = weight + 1;
       }
-      this.axios.put("/permission/orderPermission", JSON.stringify(list))
+      this.axios.put("/permission/orderPermission", list)
           .then(() => {
             this.$notify({
               title: "保存成功",

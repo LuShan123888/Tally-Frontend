@@ -336,7 +336,7 @@ export default {
       }
       if (this.accountPage.type === 'update') {
         this.accountPage.buttons.saveOrUpdate.loading = true;
-        this.axios.put("/account/updateAccount", JSON.stringify(this.accountPage.account))
+        this.axios.put("/account/updateAccount", this.accountPage.account)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -352,7 +352,7 @@ export default {
             });
       } else if (this.accountPage.type === 'save') {
         this.accountPage.buttons.saveOrUpdate.loading = true;
-        this.axios.post("/account/saveAccount", JSON.stringify(this.accountPage.account))
+        this.axios.post("/account/saveAccount", this.accountPage.account)
             .then(() => {
               this.$notify({
                 title: "保存成功",

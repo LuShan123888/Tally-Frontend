@@ -335,11 +335,11 @@ export default {
         if (!this.$refs.phoneNumberForm.validate()) return;
         let user = {
           phoneNumber: this.form.phoneNumber.phoneNumber,
-          verificationCode: this.form.phoneNum.verificationCode,
-          password: this.form.phoneNum.showPassword
+          verificationCode: this.form.phoneNumber.verificationCode,
+          password: this.form.phoneNumber.showPassword
         };
-        this.form.phoneNum.loading = true;
-        this.axios.put("/user/changePassword", JSON.stringify(user))
+        this.form.phoneNumber.loading = true;
+        this.axios.put("/user/changePassword", user)
             .then(() => {
               this.$notify({
                 title: "修改成功",
@@ -348,8 +348,8 @@ export default {
                 duration: 2000,
               });
               let params = new URLSearchParams();
-              params.append("username", this.form.phoneNum.phoneNum);
-              params.append("password", this.form.phoneNum.verificationCode);
+              params.append("username", this.form.phoneNumber.phoneNumber);
+              params.append("password", this.form.phoneNumber.verificationCode);
               this.axios
                   .post("/user/signIn", params)
                   .then((response) => {
@@ -363,7 +363,7 @@ export default {
                     _this.$router.push({name: "Home"});
                   })
             }).finally(() => {
-          this.form.phoneNum.loading = false;
+          this.form.phoneNumber.loading = false;
         });
       } else if (type === 'email') {
         if (!this.$refs.passwordForm.validate()) return;
@@ -373,7 +373,7 @@ export default {
           password: this.form.email.password,
         };
         this.form.email.loading = true;
-        this.axios.put("/user/changePassword", JSON.stringify(user))
+        this.axios.put("/user/changePassword", user)
             .then(() => {
               this.$notify({
                 title: "修改成功",

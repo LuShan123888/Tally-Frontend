@@ -697,7 +697,7 @@ export default {
       let billType = {
         dateQueryString: this.query.dateQueryString
       };
-      this.axios.post("/bill/getBillStatData", JSON.stringify(billType))
+      this.axios.post("/bill/getBillStatData", billType)
           .then((response) => {
             this.data = response.data.data;
             this.renderBarChart();

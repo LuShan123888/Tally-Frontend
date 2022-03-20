@@ -683,19 +683,20 @@ export default {
     },
     listBill() {
       this.loading = true;
-      this.axios.post("/bill/listUserBill", JSON.stringify(this.query)).then((response) => {
-        this.billList = response.data.data.billList;
-        for (let list of this.billList) {
-          for (let item of list.list) {
-            if (item.billTypeVO && item.billTypeVO.parentId === 0) {
-              item.billTypeVO.parentId = item.billTypeVO.id;
-              item.billTypeVO.id = null;
+      this.axios.post("/bill/listUserBill", this.query)
+          .then((response) => {
+            this.billList = response.data.data.billList;
+            for (let list of this.billList) {
+              for (let item of list.list) {
+                if (item.billTypeVO && item.billTypeVO.parentId === 0) {
+                  item.billTypeVO.parentId = item.billTypeVO.id;
+                  item.billTypeVO.id = null;
+                }
+              }
             }
-          }
-        }
-        this.billSummaryData = response.data.data.billSummaryData;
-        this.loading = false;
-      });
+            this.billSummaryData = response.data.data.billSummaryData;
+            this.loading = false;
+          });
     },
     loadAccountList() {
       this.axios.get("/account/listUserAllAccount")
@@ -798,7 +799,7 @@ export default {
       }
       if (this.billPage.type === 'update') {
         this.billPage.buttons.saveOrUpdate.loading = true;
-        this.axios.put("/bill/updateBill", JSON.stringify(this.billPage.bill))
+        this.axios.put("/bill/updateBill", this.billPage.bill)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -814,7 +815,7 @@ export default {
             });
       } else if (this.billPage.type === 'save') {
         this.billPage.buttons.saveOrUpdate.loading = true;
-        this.axios.post("/bill/saveBill", JSON.stringify(this.billPage.bill))
+        this.axios.post("/bill/saveBill", this.billPage.bill)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -835,7 +836,7 @@ export default {
         billTypeId: billTypeId,
         flow: this.billPage.tab === 0 ? 'OUT' : this.billPage.tab === 1 ? "IN" : "TRANSFER"
       }
-      this.axios.post("/bill/listRecentBillDescription", JSON.stringify(bill))
+      this.axios.post("/bill/listRecentBillDescription", bill)
           .then((response) => {
             this.billPage.recentBillDescriptionList = response.data.data;
           })

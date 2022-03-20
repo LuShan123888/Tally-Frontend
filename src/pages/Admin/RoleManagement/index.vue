@@ -63,8 +63,7 @@
                 color="primary"
                 depressed
                 @click="loadRoleSaveDialog"
-                v-text="'新增角色'"
-            />
+                v-text="'新增角色'"/>
           </v-col>
         </v-row>
       </v-col>
@@ -117,15 +116,13 @@
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该角色吗？"
-              @confirm="deleteRole(scope.row.id)"
-          >
+              @confirm="deleteRole(scope.row.id)">
             <v-btn
                 slot="reference"
                 class="mx-1"
                 color="error"
                 text
-                v-text="'删除'"
-            />
+                v-text="'删除'"/>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -140,8 +137,7 @@
               dense
               label="分页大小"
               lined
-              @input="changePageSize"
-          />
+              @input="changePageSize"/>
         </div>
       </v-col>
       <v-col cols="3">
@@ -151,8 +147,7 @@
             next-icon="mdi-menu-right"
             prev-icon="mdi-menu-left"
             total-visible="5"
-            @input="changePage"
-        />
+            @input="changePage"/>
       </v-col>
     </v-row>
     <v-form ref="roleSaveOrUpdateForm">
@@ -173,15 +168,13 @@
                       :counter="rules.roleNameMaxLength"
                       :rules="[rules.isRoleName]"
                       clearable
-                      label="角色名称"
-                  />
+                      label="角色名称"/>
                 </v-col>
                 <v-col class="pl-1" cols="6">
                   <v-text-field
                       v-model="dialog.role.description"
                       clearable
-                      label="角色描述"
-                  />
+                      label="角色描述"/>
                 </v-col>
                 <v-col cols="12">
                   <span :style="{fontSize: '16px'}" class="mt-3" v-text="'角色权限'"/>
@@ -199,16 +192,14 @@
             <v-btn
                 text
                 @click="dialog.isShow = false"
-                v-text="'取消'"
-            />
+                v-text="'取消'"/>
             <v-btn
                 :disabled="dialog.btn.loading"
                 :loading="dialog.btn.loading"
                 color="primary"
                 text
                 @click="saveOrUpdateRole"
-                v-text="'保存'"
-            />
+                v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -284,7 +275,7 @@ export default {
     pageRole() {
       if (this.$refs.roleQueryForm.validate()) {
         this.table.loading = true;
-        this.axios.post("/role/pageRole/" + this.table.query.page.current + "/" + this.table.query.page.size, JSON.stringify(this.table.query.role))
+        this.axios.post("/role/pageRole/" + this.table.query.page.current + "/" + this.table.query.page.size, this.table.query.role)
             .then((response) => {
               this.table.data = response.data.data;
               this.table.query.page.count = response.data.count;
@@ -298,7 +289,7 @@ export default {
       }
       this.dialog.btn.loading = true;
       if (this.dialog.role.id) {
-        this.axios.put("/role/updateRole", JSON.stringify(this.dialog.role))
+        this.axios.put("/role/updateRole", this.dialog.role)
             .then(() => {
               this.$notify({
                 title: "保存成功",
@@ -313,7 +304,7 @@ export default {
               this.dialog.btn.loading = false;
             });
       } else {
-        this.axios.post("/role/saveRole", JSON.stringify(this.dialog.role))
+        this.axios.post("/role/saveRole", this.dialog.role)
             .then(() => {
               this.$notify({
                 title: "保存成功",

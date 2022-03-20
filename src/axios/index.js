@@ -31,7 +31,7 @@ axios.interceptors.response.use(
         let code = response.data.code;
         let message = response.data.message;
         let data = response.data.data;
-        if (code !== 200) {
+        if (code && code !== 200) {
             Element.Notification({
                 title: message,
                 message: data,

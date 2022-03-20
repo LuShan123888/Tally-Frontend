@@ -368,7 +368,7 @@ export default {
     pageFeedback() {
       if (this.$refs.feedbackQueryForm.validate()) {
         this.table.loading = true;
-        this.axios.post("/feedback/pageFeedback/" + this.table.query.page.current + "/" + this.table.query.page.size, JSON.stringify(this.table.query.feedback))
+        this.axios.post("/feedback/pageFeedback/" + this.table.query.page.current + "/" + this.table.query.page.size, this.table.query.feedback)
             .then((response) => {
               this.table.data = response.data.data;
               this.table.query.page.count = response.data.count;
@@ -387,7 +387,7 @@ export default {
       } else {
         postFeedback.status = this.enums.feedbackStatus[2].value;
       }
-      this.axios.put("/feedback/updateFeedback", JSON.stringify(postFeedback))
+      this.axios.put("/feedback/updateFeedback", postFeedback)
           .then(() => {
             this.$notify({
               title: "保存成功",
@@ -447,7 +447,7 @@ export default {
       let user = {
         roleIdList: [1]
       };
-      this.axios.post("/user/listUser", JSON.stringify(user))
+      this.axios.post("/user/listUser", user)
           .then((response) => {
             this.adminList = response.data.data;
           })
