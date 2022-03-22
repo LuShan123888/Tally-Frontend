@@ -663,6 +663,7 @@ export default {
             for (let child of item.children) {
               if (child.id === newVal) {
                 this.billPage.bill.billTypeVO.icon = child.icon;
+                return;
               }
             }
           }
@@ -750,7 +751,13 @@ export default {
       for (let key in billPage.bill) {
         billPage.bill[key] = null;
       }
-      billPage.bill.billTypeVO = {};
+      billPage.bill.billTypeVO = {
+        id: null,
+        parentId: null,
+        billTypeName: null,
+        billTypeFullName: null,
+        icon: null
+      };
       billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
       this.loadRecentBillDescriptionList(null);
     },
