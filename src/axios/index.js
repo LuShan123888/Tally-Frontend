@@ -55,8 +55,8 @@ axios.interceptors.response.use(
             return Promise.reject(error.response);
         }
         let status = error.response.status;
-        let message = error.response.data.message ? error.response.data.message : error.response.data;
-        let data = error.response.data.data;
+        let message = error.response.data.message;
+        let data = error.response.data.data ? error.response.data.data : error.response.data;
         Element.Notification({
             title: message,
             message: data,

@@ -68,7 +68,7 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-col>
             </v-row>
-            <v-divider/>
+            <v-divider class="mx-3"/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('修改密码','password')">
               <v-col cols="3">
@@ -84,7 +84,7 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-col>
             </v-row>
-            <v-divider/>
+            <v-divider class="mx-3"/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('绑定手机号','phoneNumber')">
               <v-col cols="3">
@@ -100,7 +100,7 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-col>
             </v-row>
-            <v-divider/>
+            <v-divider class="mx-3"/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px"
                    @click="loadUserInfoDialog('绑定邮箱','email')">
               <v-col cols="3">
@@ -116,7 +116,7 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-col>
             </v-row>
-            <v-divider/>
+            <v-divider class="mx-3"/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="3">
                 <v-btn class="rounded-lg" color="primary" depressed fab x-small>
@@ -130,7 +130,7 @@
                 </v-chip>
               </v-col>
             </v-row>
-            <v-divider/>
+            <v-divider class="mx-3"/>
             <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px">
               <v-col cols="3">
                 <v-btn class="rounded-lg" color="primary" depressed fab x-small>
@@ -308,7 +308,7 @@
           ></v-switch>
         </v-col>
       </v-row>
-      <v-divider/>
+      <v-divider class="mx-3"/>
       <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
           <v-btn class="rounded-lg" color="primary" depressed fab x-small>
@@ -322,7 +322,7 @@
           <v-icon>mdi-chevron-right</v-icon>
         </v-col>
       </v-row>
-      <v-divider/>
+      <v-divider class="mx-3"/>
       <v-row v-ripple align="center" class="px-3" no-gutters style="height: 50px;cursor: pointer">
         <v-col cols="1">
           <v-btn class="rounded-lg" color="primary" depressed fab x-small>
