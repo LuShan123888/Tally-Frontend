@@ -51,7 +51,7 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1 rounded-lg"
+                              class="mr-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
@@ -139,7 +139,7 @@
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
-                              class="mx-1 rounded-lg"
+                              class="mr-1 rounded-lg"
                               color="primary"
                               depressed
                               fab
