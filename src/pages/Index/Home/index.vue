@@ -173,7 +173,7 @@
                         <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
                       </v-row>
                       <v-row justify="center" no-gutters>
-                        <v-btn class="rounded-lg" color="primary" depressed fab x-small>
+                        <v-btn class="rounded-lg" color="error" depressed fab x-small>
                           <v-icon v-if="billPage.bill.billTypeVO.icon"
                                   v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
                           <v-icon v-else>mdi-help</v-icon>
