@@ -167,7 +167,7 @@
                     </v-col>
                     <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
-                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
+                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">类别图标</div>
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn class="rounded-lg" color="error" depressed fab x-small>
@@ -305,7 +305,7 @@
                     </v-col>
                     <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
-                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">类别图标</div>
+                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">类别图标</div>
                       </v-row>
                       <v-row justify="center" no-gutters>
                         <v-btn class="rounded-lg" color="primary" depressed fab x-small>

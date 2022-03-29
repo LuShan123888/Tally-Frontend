@@ -117,7 +117,7 @@
                 </v-col>
                 <v-col cols="2">
                   <v-row class="mb-1" justify="center" no-gutters>
-                    <div style="color: rgba(0, 0, 0, 0.6);font-size: 0.5rem">账户图标</div>
+                    <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">账户图标</div>
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-btn class="rounded-lg" color="primary" depressed fab x-small
