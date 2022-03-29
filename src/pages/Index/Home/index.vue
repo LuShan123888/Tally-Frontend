@@ -11,11 +11,8 @@
         @click="loadSaveBillPage">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <v-row no-gutters>
-      <v-col
-          class="pr-1"
-          cols="4"
-          md="2">
+    <v-row class="flex" no-gutters>
+      <div class="pr-1" style="width: 115px">
         <v-menu
             max-width="290px"
             min-width="auto"
@@ -44,8 +41,8 @@
           >
           </v-date-picker>
         </v-menu>
-      </v-col>
-      <v-col class="pl-1">
+      </div>
+      <div class="pl-1 flex-grow-1">
         <v-text-field
             v-model="query.description"
             clearable
@@ -54,7 +51,7 @@
             label="请输入关键字"
             prepend-inner-icon="mdi-magnify"
         ></v-text-field>
-      </v-col>
+      </div>
     </v-row>
     <v-card
         class="pa-0 rounded-lg"
