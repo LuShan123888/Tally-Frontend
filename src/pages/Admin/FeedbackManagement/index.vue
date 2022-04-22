@@ -91,7 +91,7 @@
         <template v-slot="props">
           <v-row align="center" no-gutters>
             <v-col class="px-16" cols="6">
-              <v-row v-if="props.row.processingUserId" v-ripple align="center" no-gutters style="height: 50px">
+              <v-row v-if="props.row.description" v-ripple align="center" no-gutters style="height: 50px">
                 <span class="font-weight-bold" style="color: #909399" v-html="'反馈描述'"/>
                 <span class="ml-3" style="color: #606266" v-text="props.row.description"/>
               </v-row>
@@ -140,8 +140,7 @@
       </el-table-column>
       <el-table-column
           :formatter="feedbackTypeFormatter"
-          label="反馈类型"
-      />
+          label="反馈类型"/>
       <el-table-column
           align="center"
           label="处理状态"
@@ -160,12 +159,10 @@
       </el-table-column>
       <el-table-column
           label="创建时间"
-          property="createdDatetime"
-      />
+          property="createdDatetime"/>
       <el-table-column
           label="处理时间"
-          property="updatedDatetime"
-      />
+          property="updatedDatetime"/>
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
           <v-btn
@@ -179,8 +176,7 @@
               icon="el-icon-info"
               icon-color="red"
               title="确定删除该反馈吗？"
-              @confirm="deleteFeedback(scope.row.id)"
-          >
+              @confirm="deleteFeedback(scope.row.id)">
             <template v-slot:reference>
               <v-btn class="mx-1"
                      color="error" text v-text="'删除'"/>
