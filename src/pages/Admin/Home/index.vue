@@ -970,6 +970,7 @@ export default {
           },
         },
       },
+      timer: null
     };
   },
   methods: {
@@ -1068,13 +1069,18 @@ export default {
     }
   },
   mounted() {
-    this.getInstanceAttribute();
-    this.getInstanceMonitorDataNow();
-    this.getInstanceMonitorDataHour();
-    this.getInstanceMonitorDataDay();
     this.getUserMonitorData();
     this.getBillMonitorData();
     this.getUserAccessMonitorData();
+    this.getInstanceAttribute();
+    this.timer = setInterval(() => {
+      this.getInstanceMonitorDataNow();
+      this.getInstanceMonitorDataHour();
+      this.getInstanceMonitorDataDay();
+    }, 5000);
+    this.$once('hook:beforeDestroy', () => {
+      clearInterval(this.timer);
+    });
   },
 };
 </script>
