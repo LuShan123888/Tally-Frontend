@@ -1073,6 +1073,9 @@ export default {
     this.getBillMonitorData();
     this.getUserAccessMonitorData();
     this.getInstanceAttribute();
+    this.getInstanceMonitorDataNow();
+    this.getInstanceMonitorDataHour();
+    this.getInstanceMonitorDataDay();
     this.timer = setInterval(() => {
       this.getInstanceMonitorDataNow();
       this.getInstanceMonitorDataHour();
