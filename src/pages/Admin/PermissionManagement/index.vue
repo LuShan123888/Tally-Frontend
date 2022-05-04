@@ -54,6 +54,7 @@
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
           <v-btn
+              v-if="scope.row.parentId !== 0"
               class="mx-1"
               color="primary"
               text

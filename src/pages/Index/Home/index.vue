@@ -1,140 +1,205 @@
 <template>
-  <v-container :class="{'ml-10':!isMobile}" :style="{ width: isMobile ? '100%' : '50%'}" class="py-0 px-4" fluid>
-    <title-bar :title="title"/>
-    <background-image :src="backgroundImagePath"/>
+  <v-container
+    :class="{ 'ml-10': !isMobile }"
+    :style="{ width: isMobile ? '100%' : '50%' }"
+    class="py-0 px-4"
+    fluid
+  >
+    <title-bar :title="title" />
+    <background-image :src="backgroundImagePath" />
     <v-btn
-        color="primary"
-        fab
-        fixed
-        right
-        style="bottom: 68px"
-        @click="loadSaveBillPage">
+      color="primary"
+      fab
+      fixed
+      right
+      style="bottom: 68px"
+      @click="loadSaveBillPage"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-row class="flex" no-gutters>
       <div class="pr-1" style="width: 115px">
         <v-menu
-            max-width="290px"
-            min-width="auto"
-            offset-y
-            transition="scale-transition">
+          max-width="290px"
+          min-width="auto"
+          offset-y
+          transition="scale-transition"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-                v-model="query.dateQueryString"
-                dense
-                flat
-                label="请选择月份"
-                solo
-                prepend-inner-icon="mdi-calendar"
-                readonly
-                v-bind="attrs"
-                v-on="on"
+              v-model="query.dateQueryString"
+              dense
+              flat
+              label="请选择月份"
+              solo
+              prepend-inner-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
             ></v-text-field>
           </template>
           <v-date-picker
-              v-model="query.dateQueryString"
-              color="primary"
-              locale="zh-cn"
-              no-title
-              scrollable
-              type="month"
+            v-model="query.dateQueryString"
+            color="primary"
+            locale="zh-cn"
+            no-title
+            scrollable
+            type="month"
           >
           </v-date-picker>
         </v-menu>
       </div>
       <div class="pl-1 flex-grow-1">
         <v-text-field
-            v-model="query.description"
-            clearable
-            dense
-            flat solo
-            label="请输入关键字"
-            prepend-inner-icon="mdi-magnify"
+          v-model="query.description"
+          clearable
+          dense
+          flat
+          solo
+          label="请输入关键字"
+          prepend-inner-icon="mdi-magnify"
         ></v-text-field>
       </div>
     </v-row>
-    <v-card
-        class="pa-0 rounded-lg"
-        flat fluid>
-      <v-card-subtitle class="pa-3 pb-1 font-weight-medium">总支出</v-card-subtitle>
-      <v-card-title :style="{ color: lightPrimary }" class="px-3 py-0 text-h3"
-                    v-text="'¥'+numFormat(billSummaryData.expenditure)"></v-card-title>
+    <v-card class="pa-0 rounded-lg" flat fluid>
+      <v-card-subtitle class="pa-3 pb-1 font-weight-medium"
+        >总支出</v-card-subtitle
+      >
+      <v-card-title
+        :style="{ color: lightPrimary }"
+        class="px-3 py-0 text-h3"
+        v-text="'¥' + numFormat(billSummaryData.expenditure)"
+      ></v-card-title>
       <v-card-subtitle class="pa-3 pt-1 ma-0">
         <v-row no-gutters>
           <v-col cols="6">
             <span class="font-weight-medium">总收入</span>
-            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.income)"/>
+            <span
+              class="ml-3"
+              v-text="'¥' + numFormat(billSummaryData.income)"
+            />
           </v-col>
           <v-col cols="6">
             <span class="font-weight-medium">结余</span>
-            <span class="ml-3" v-text="'¥'+numFormat(billSummaryData.amount)"/>
+            <span
+              class="ml-3"
+              v-text="'¥' + numFormat(billSummaryData.amount)"
+            />
           </v-col>
         </v-row>
       </v-card-subtitle>
     </v-card>
     <v-skeleton-loader
-        v-for="(item) in 6"
-        :key="'skeleton-loader'+item"
-        v-if="loading"
-        class="rounded-lg mt-4"
-        type="list-item-avatar-two-line"
+      v-for="item in 6"
+      :key="'skeleton-loader' + item"
+      v-if="loading"
+      class="rounded-lg mt-4"
+      type="list-item-avatar-two-line"
     />
-    <v-container v-for="(date, i) in billList" v-if="!loading"
-                 :key="i" class="pa-0" fluid>
-      <v-row align="center" class="px-0 py-3 font-weight-medium d-flex justify-space-between" no-gutters
-             style="position: relative">
-        <span class="text-subtitle-2 text--darken-1 grey--text" v-text="date.groupName"/>
+    <v-container
+      v-for="(date, i) in billList"
+      v-if="!loading"
+      :key="i"
+      class="pa-0"
+      fluid
+    >
+      <v-row
+        align="center"
+        class="px-0 py-3 font-weight-medium d-flex justify-space-between"
+        no-gutters
+        style="position: relative"
+      >
+        <span
+          class="text-subtitle-2 text--darken-1 grey--text"
+          v-text="date.groupName"
+        />
         <span class="text-subtitle-2 text--darken-1 grey--text">
           <span>结余</span>
-          <span class="ml-2" v-text="'¥'+numFormat(date.amount)"/>
+          <span class="ml-2" v-text="'¥' + numFormat(date.amount)" />
         </span>
       </v-row>
-      <v-card class="py-0 rounded-lg"
-              flat fluid>
-        <v-container v-for="(item, i) in date.list" :key="i" v-ripple class="pa-0  px-3 " fluid>
-          <v-row align="center" no-gutters style="height: 60px;cursor: pointer"
-                 @click="loadUpdateBillPage(item)">
+      <v-card class="py-0 rounded-lg" flat fluid>
+        <v-container
+          v-for="(item, i) in date.list"
+          :key="i"
+          v-ripple
+          class="pa-0 px-3"
+          fluid
+        >
+          <v-row
+            align="center"
+            no-gutters
+            style="height: 60px; cursor: pointer"
+            @click="loadUpdateBillPage(item)"
+          >
             <v-col cols="1">
-              <v-btn class="rounded-lg"
-                     :color="item.flow==='OUT'?'error':item.flow==='IN'?'primary':item.flow==='TRANSFER'?'warning':''"
-                     depressed fab x-small>
-                <v-icon v-if="item.billTypeVO && item.billTypeVO.icon">mdi-{{ item.billTypeVO.icon }}</v-icon>
+              <v-btn
+                class="rounded-lg"
+                :color="
+                  item.flow === 'OUT'
+                    ? 'error'
+                    : item.flow === 'IN'
+                    ? 'primary'
+                    : item.flow === 'TRANSFER'
+                    ? 'warning'
+                    : ''
+                "
+                depressed
+                fab
+                x-small
+              >
+                <v-icon v-if="item.billTypeVO && item.billTypeVO.icon"
+                  >mdi-{{ item.billTypeVO.icon }}</v-icon
+                >
                 <v-icon v-else>mdi-help</v-icon>
               </v-btn>
             </v-col>
             <v-col class="ml-3 text-truncate">
-              <div class="text-subtitle-1" v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"/>
-              <div class="text-subtitle-2 text--darken-1 grey--text text-truncate" style="max-width: 100%"
-                   v-text="item.description"/>
+              <div
+                class="text-subtitle-1"
+                v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"
+              />
+              <div
+                class="text-subtitle-2 text--darken-1 grey--text text-truncate"
+                style="max-width: 100%"
+                v-text="item.description"
+              />
             </v-col>
             <v-col class="d-flex justify-end" cols="3">
               <div class="text-subtitle-1">
-                <span v-text="(item.flow==='OUT'?'¥-':'¥')+numFormat(item.amount)"/>
+                <span
+                  v-text="
+                    (item.flow === 'OUT' ? '¥-' : '¥') + numFormat(item.amount)
+                  "
+                />
               </div>
             </v-col>
             <v-col class="d-flex justify-end" cols="1">
               <v-icon>mdi-chevron-right</v-icon>
             </v-col>
           </v-row>
-          <v-divider v-if="i!==(date.list.length-1)"/>
+          <v-divider v-if="i !== date.list.length - 1" />
         </v-container>
       </v-card>
     </v-container>
     <v-dialog
-        eager
-        ref="dialog"
-        v-model="billPage.isShow"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition">
-      <v-card :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}">
-        <v-toolbar
-            class="mb-16"
-            color="primary"
-            dark
-            style="border-radius: 0">
+      eager
+      ref="dialog"
+      v-model="billPage.isShow"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card :style="{ backgroundColor: isDark ? '#000000' : '#F1F2F6' }">
+        <v-toolbar class="mb-16" color="primary" dark style="border-radius: 0">
           <template v-slot:extension>
-            <v-tabs v-model="billPage.tab" color="white" dark grow @change="changeTabs">
+            <v-tabs
+              v-model="billPage.tab"
+              color="white"
+              dark
+              grow
+              @change="changeTabs"
+            >
               <v-tab>支出</v-tab>
               <v-tab>收入</v-tab>
               <v-tab>转账</v-tab>
@@ -143,109 +208,154 @@
           <v-btn dark icon @click="billPage.isShow = false">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-toolbar-title v-text="billPage.title"/>
+          <v-toolbar-title v-text="billPage.title" />
         </v-toolbar>
-        <v-tabs-items v-model="billPage.tab" :style="{backgroundColor: isDark?'#000000':'#F1F2F6'}" touchless>
+        <v-tabs-items
+          v-model="billPage.tab"
+          :style="{ backgroundColor: isDark ? '#000000' : '#F1F2F6' }"
+          touchless
+        >
           <v-tab-item>
-            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4 py-0"
-                         no-gutters>
+            <v-container
+              :style="{ width: isMobile ? '100%' : '50%' }"
+              fluid
+              class="mx-auto px-4 py-0"
+              no-gutters
+            >
               <v-form ref="outBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
-                          v-model="billPage.bill.billTypeVO.parentId"
-                          :items="billPage.outBillTypeTree"
-                          :rules="[(value) => !!value || '请选择一级账户类别']"
-                          chips
-                          class="pr-1" dense item-text="billTypeName"
-                          item-value="id"
-                          label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billTypeVO.id = null">
+                        v-model="billPage.bill.billTypeVO.parentId"
+                        :items="billPage.outBillTypeTree"
+                        :rules="[(value) => !!value || '请选择一级账户类别']"
+                        chips
+                        class="pr-1"
+                        dense
+                        item-text="billTypeName"
+                        item-value="id"
+                        label="一级账单类别"
+                        no-data-text="无对应选项"
+                        prepend-inner-icon="mdi-format-list-bulleted-type"
+                        @change="billPage.bill.billTypeVO.id = null"
+                      >
                       </v-select>
                     </v-col>
                     <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
-                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">类别图标</div>
+                        <div style="color: rgba(0, 0, 0, 0.6); font-size: 8px">
+                          类别图标
+                        </div>
                       </v-row>
                       <v-row justify="center" no-gutters>
-                        <v-btn class="rounded-lg" color="error" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billTypeVO.icon"
-                                  v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
+                        <v-btn
+                          class="rounded-lg"
+                          color="error"
+                          depressed
+                          fab
+                          x-small
+                        >
+                          <v-icon
+                            v-if="billPage.bill.billTypeVO.icon"
+                            v-text="'mdi-' + billPage.bill.billTypeVO.icon"
+                          />
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
                     </v-col>
                     <v-col class="pr-1" cols="6">
                       <v-select
-                          v-model="billPage.bill.billTypeVO.id"
-                          :items="billPage.billTypeChildren"
-                          chips class="pl-1"
-                          clearable dense
-                          item-text="billTypeName"
-                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
-                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                        v-model="billPage.bill.billTypeVO.id"
+                        :items="billPage.billTypeChildren"
+                        chips
+                        class="pl-1"
+                        clearable
+                        dense
+                        item-text="billTypeName"
+                        item-value="id"
+                        label="二级账单类别"
+                        no-data-text="无对应选项"
+                        prepend-inner-icon="mdi-format-list-bulleted-type"
+                      />
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-select
-                          v-model="billPage.bill.outAccountId"
-                          :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转出账户']"
-                          chips class="pr-1" dense
-                          no-data-text="无对应选项"
-                          item-text="accountName" item-value="id"
-                          label="转出账户"
-                          prepend-inner-icon="mdi-wallet"/>
+                        v-model="billPage.bill.outAccountId"
+                        :items="billPage.accountList"
+                        :rules="[(value) => !!value || '请选择转出账户']"
+                        chips
+                        class="pr-1"
+                        dense
+                        no-data-text="无对应选项"
+                        item-text="accountName"
+                        item-value="id"
+                        label="转出账户"
+                        prepend-inner-icon="mdi-wallet"
+                      />
                     </v-col>
                     <v-col class="pr-1" cols="6">
                       <v-menu
-                          max-width="290px"
-                          min-width="auto"
-                          offset-y
-                          transition="scale-transition">
+                        max-width="290px"
+                        min-width="auto"
+                        offset-y
+                        transition="scale-transition"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDateString"
-                              label="请选择账单日期"
-                              prepend-inner-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
+                            v-model="billPage.bill.billDateString"
+                            label="请选择账单日期"
+                            prepend-inner-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDateString"
-                            color="primary"
-                            locale="zh-cn"
-                            no-title
-                            scrollable
-                            type="date">
+                          v-model="billPage.bill.billDateString"
+                          color="primary"
+                          locale="zh-cn"
+                          no-title
+                          scrollable
+                          type="date"
+                        >
                         </v-date-picker>
                       </v-menu>
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amount"
-                          :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
-                          clearable
-                          label="账单金额"
-                          prefix="¥"
-                          prepend-inner-icon="mdi-currency-usd">
+                        v-model="billPage.bill.amount"
+                        :rules="[
+                          (value) => !!value || '请输入金额',
+                          rules.isPositive,
+                        ]"
+                        clearable
+                        label="账单金额"
+                        prefix="¥"
+                        prepend-inner-icon="mdi-currency-usd"
+                      >
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                          v-model="billPage.bill.description"
-                          clearable
-                          label="账单描述"
-                          messages=" "
-                          prepend-inner-icon="mdi-card-bulleted-settings">
+                        v-model="billPage.bill.description"
+                        clearable
+                        label="账单描述"
+                        messages=" "
+                        prepend-inner-icon="mdi-card-bulleted-settings"
+                      >
                         <template v-slot:message="{ key, message }">
-                          <div class="overflow-auto" style="white-space: nowrap;">
-                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
-                                    class="mr-1" small
-                                    @click="billPage.bill.description = item">
+                          <div
+                            class="overflow-auto"
+                            style="white-space: nowrap"
+                          >
+                            <v-chip
+                              v-for="item in billPage.recentBillDescriptionList"
+                              :key="item"
+                              class="mr-1"
+                              small
+                              @click="billPage.bill.description = item"
+                            >
                               {{ item }}
                             </v-chip>
                           </div>
@@ -255,28 +365,39 @@
                   </v-row>
                 </v-card>
                 <v-row class="mt-4" no-gutters>
-                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                  <v-col
+                    v-if="billPage.type === 'update'"
+                    class="pr-2"
+                    cols="6"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.delete.loading"
-                        :loading="billPage.buttons.delete.loading"
-                        block class="rounded-lg"
-                        color="error"
-                        depressed
-                        large
-                        @click="deleteBill(billPage.bill.id)">
+                      :disabled="billPage.buttons.delete.loading"
+                      :loading="billPage.buttons.delete.loading"
+                      block
+                      class="rounded-lg"
+                      color="error"
+                      depressed
+                      large
+                      @click="deleteBill(billPage.bill.id)"
+                    >
                       <v-icon class="mr-3">mdi-delete</v-icon>
                       <span>删除</span>
                     </v-btn>
                   </v-col>
-                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                  <v-col
+                    :class="{ 'pl-2': billPage.type === 'update' }"
+                    :cols="billPage.type === 'update' ? 6 : 12"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.saveOrUpdate.loading"
-                        :loading="billPage.buttons.saveOrUpdate.loading"
-                        block class="rounded-lg"
-                        color="primary"
-                        depressed
-                        large
-                        @click="saveOrUpdateBill('OUT')">
+                      :disabled="billPage.buttons.saveOrUpdate.loading"
+                      :loading="billPage.buttons.saveOrUpdate.loading"
+                      block
+                      class="rounded-lg"
+                      color="primary"
+                      depressed
+                      large
+                      @click="saveOrUpdateBill('OUT')"
+                    >
                       <v-icon class="mr-3">mdi-content-save</v-icon>
                       <span>保存</span>
                     </v-btn>
@@ -286,103 +407,145 @@
             </v-container>
           </v-tab-item>
           <v-tab-item>
-            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4 py-0"
-                         no-gutters>
+            <v-container
+              :style="{ width: isMobile ? '100%' : '50%' }"
+              fluid
+              class="mx-auto px-4 py-0"
+              no-gutters
+            >
               <v-form ref="inBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="my-3" cols="6">
                       <v-select
-                          v-model="billPage.bill.billTypeVO.parentId"
-                          :items="billPage.inBillTypeTree"
-                          :rules="[(value) => !!value || '请选择一级账户类别']"
-                          chips
-                          class="pr-1" dense item-text="billTypeName"
-                          item-value="id"
-                          label="一级账单类别" no-data-text="无对应选项" prepend-inner-icon="mdi-format-list-bulleted-type"
-                          @change="billPage.bill.billTypeVO.id = null"/>
+                        v-model="billPage.bill.billTypeVO.parentId"
+                        :items="billPage.inBillTypeTree"
+                        :rules="[(value) => !!value || '请选择一级账户类别']"
+                        chips
+                        class="pr-1"
+                        dense
+                        item-text="billTypeName"
+                        item-value="id"
+                        label="一级账单类别"
+                        no-data-text="无对应选项"
+                        prepend-inner-icon="mdi-format-list-bulleted-type"
+                        @change="billPage.bill.billTypeVO.id = null"
+                      />
                     </v-col>
                     <v-col class="mb-3" cols="6">
                       <v-row class="mb-1" justify="center" no-gutters>
-                        <div style="color: rgba(0, 0, 0, 0.6);font-size: 8px">类别图标</div>
+                        <div style="color: rgba(0, 0, 0, 0.6); font-size: 8px">
+                          类别图标
+                        </div>
                       </v-row>
                       <v-row justify="center" no-gutters>
-                        <v-btn class="rounded-lg" color="primary" depressed fab x-small>
-                          <v-icon v-if="billPage.bill.billTypeVO.icon"
-                                  v-text="'mdi-'+billPage.bill.billTypeVO.icon"/>
+                        <v-btn
+                          class="rounded-lg"
+                          color="primary"
+                          depressed
+                          fab
+                          x-small
+                        >
+                          <v-icon
+                            v-if="billPage.bill.billTypeVO.icon"
+                            v-text="'mdi-' + billPage.bill.billTypeVO.icon"
+                          />
                           <v-icon v-else>mdi-help</v-icon>
                         </v-btn>
                       </v-row>
                     </v-col>
                     <v-col class="pr-1" cols="6">
                       <v-select
-                          v-model="billPage.bill.billTypeVO.id"
-                          :items="billPage.billTypeChildren" chips class="pl-1"
-                          clearable dense
-                          item-text="billTypeName"
-                          item-value="id" label="二级账单类别" no-data-text="无对应选项"
-                          prepend-inner-icon="mdi-format-list-bulleted-type"/>
+                        v-model="billPage.bill.billTypeVO.id"
+                        :items="billPage.billTypeChildren"
+                        chips
+                        class="pl-1"
+                        clearable
+                        dense
+                        item-text="billTypeName"
+                        item-value="id"
+                        label="二级账单类别"
+                        no-data-text="无对应选项"
+                        prepend-inner-icon="mdi-format-list-bulleted-type"
+                      />
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-select
-                          v-model="billPage.bill.inAccountId"
-                          :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转入账户']" chips class="pr-1"
-                          dense item-text="accountName"
-                          no-data-text="无对应选项"
-                          item-value="id"
-                          label="转入账户"
-                          prepend-inner-icon="mdi-wallet"/>
+                        v-model="billPage.bill.inAccountId"
+                        :items="billPage.accountList"
+                        :rules="[(value) => !!value || '请选择转入账户']"
+                        chips
+                        class="pr-1"
+                        dense
+                        item-text="accountName"
+                        no-data-text="无对应选项"
+                        item-value="id"
+                        label="转入账户"
+                        prepend-inner-icon="mdi-wallet"
+                      />
                     </v-col>
                     <v-col class="pr-1" cols="6">
                       <v-menu
-                          max-width="290px"
-                          min-width="auto"
-                          offset-y
-                          transition="scale-transition">
+                        max-width="290px"
+                        min-width="auto"
+                        offset-y
+                        transition="scale-transition"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDateString"
-                              label="请选择账单日期"
-                              prepend-inner-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
+                            v-model="billPage.bill.billDateString"
+                            label="请选择账单日期"
+                            prepend-inner-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDateString"
-                            color="primary"
-                            locale="zh-cn"
-                            no-title
-                            scrollable
-                            type="date">
+                          v-model="billPage.bill.billDateString"
+                          color="primary"
+                          locale="zh-cn"
+                          no-title
+                          scrollable
+                          type="date"
+                        >
                         </v-date-picker>
                       </v-menu>
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amount"
-                          :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
-                          clearable
-                          label="账单金额"
-                          prefix="¥"
-                          prepend-inner-icon="mdi-currency-usd">
+                        v-model="billPage.bill.amount"
+                        :rules="[
+                          (value) => !!value || '请输入金额',
+                          rules.isPositive,
+                        ]"
+                        clearable
+                        label="账单金额"
+                        prefix="¥"
+                        prepend-inner-icon="mdi-currency-usd"
+                      >
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                          v-model="billPage.bill.description"
-                          clearable
-                          label="账单描述"
-                          messages=" "
-                          prepend-inner-icon="mdi-card-bulleted-settings">
+                        v-model="billPage.bill.description"
+                        clearable
+                        label="账单描述"
+                        messages=" "
+                        prepend-inner-icon="mdi-card-bulleted-settings"
+                      >
                         <template v-slot:message="{ key, message }">
-                          <div class="overflow-auto" style="white-space: nowrap;">
-                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
-                                    class="mr-1" small
-                                    @click="billPage.bill.description = item">
+                          <div
+                            class="overflow-auto"
+                            style="white-space: nowrap"
+                          >
+                            <v-chip
+                              v-for="item in billPage.recentBillDescriptionList"
+                              :key="item"
+                              class="mr-1"
+                              small
+                              @click="billPage.bill.description = item"
+                            >
                               {{ item }}
                             </v-chip>
                           </div>
@@ -392,28 +555,39 @@
                   </v-row>
                 </v-card>
                 <v-row class="mt-4" no-gutters>
-                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                  <v-col
+                    v-if="billPage.type === 'update'"
+                    class="pr-2"
+                    cols="6"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.delete.loading"
-                        :loading="billPage.buttons.delete.loading"
-                        block class="rounded-lg"
-                        color="error"
-                        depressed
-                        large
-                        @click="deleteBill(billPage.bill.id)">
+                      :disabled="billPage.buttons.delete.loading"
+                      :loading="billPage.buttons.delete.loading"
+                      block
+                      class="rounded-lg"
+                      color="error"
+                      depressed
+                      large
+                      @click="deleteBill(billPage.bill.id)"
+                    >
                       <v-icon class="mr-3">mdi-delete</v-icon>
                       <span>删除</span>
                     </v-btn>
                   </v-col>
-                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                  <v-col
+                    :class="{ 'pl-2': billPage.type === 'update' }"
+                    :cols="billPage.type === 'update' ? 6 : 12"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.saveOrUpdate.loading"
-                        :loading="billPage.buttons.saveOrUpdate.loading"
-                        block class="rounded-lg"
-                        color="primary"
-                        depressed
-                        large
-                        @click="saveOrUpdateBill('IN')">
+                      :disabled="billPage.buttons.saveOrUpdate.loading"
+                      :loading="billPage.buttons.saveOrUpdate.loading"
+                      block
+                      class="rounded-lg"
+                      color="primary"
+                      depressed
+                      large
+                      @click="saveOrUpdateBill('IN')"
+                    >
                       <v-icon class="mr-3">mdi-content-save</v-icon>
                       <span>保存</span>
                     </v-btn>
@@ -423,82 +597,112 @@
             </v-container>
           </v-tab-item>
           <v-tab-item>
-            <v-container :style="{ width: isMobile ? '100%' : '50%' }" fluid
-                         class="mx-auto px-4 py-0"
-                         no-gutters>
+            <v-container
+              :style="{ width: isMobile ? '100%' : '50%' }"
+              fluid
+              class="mx-auto px-4 py-0"
+              no-gutters
+            >
               <v-form ref="transferBillSaveOrUpdateForm">
                 <v-card class="pa-4 rounded-lg" flat>
                   <v-row no-gutters>
                     <v-col class="mt-3" cols="6">
                       <v-select
-                          v-model="billPage.bill.outAccountId"
-                          :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转出账户']"
-                          chips class="pr-1" dense
-                          item-text="accountName" item-value="id"
-                          label="转出账户"
-                          no-data-text="无对应选项"
-                          prepend-inner-icon="mdi-wallet"/>
+                        v-model="billPage.bill.outAccountId"
+                        :items="billPage.accountList"
+                        :rules="[(value) => !!value || '请选择转出账户']"
+                        chips
+                        class="pr-1"
+                        dense
+                        item-text="accountName"
+                        item-value="id"
+                        label="转出账户"
+                        no-data-text="无对应选项"
+                        prepend-inner-icon="mdi-wallet"
+                      />
                     </v-col>
                     <v-col class="mt-3" cols="6">
                       <v-select
-                          v-model="billPage.bill.inAccountId"
-                          :items="billPage.accountList"
-                          :rules="[(value) => !!value || '请选择转入账户', (value) => value !== billPage.bill.outAccountId || '转入账户不能为转出账户']"
-                          chips class="pr-1"
-                          no-data-text="无对应选项"
-                          dense item-text="accountName"
-                          item-value="id" label="转入账户"
-                          prepend-inner-icon="mdi-wallet"/>
+                        v-model="billPage.bill.inAccountId"
+                        :items="billPage.accountList"
+                        :rules="[
+                          (value) => !!value || '请选择转入账户',
+                          (value) =>
+                            value !== billPage.bill.outAccountId ||
+                            '转入账户不能为转出账户',
+                        ]"
+                        chips
+                        class="pr-1"
+                        no-data-text="无对应选项"
+                        dense
+                        item-text="accountName"
+                        item-value="id"
+                        label="转入账户"
+                        prepend-inner-icon="mdi-wallet"
+                      />
                     </v-col>
                     <v-col class="pr-1" cols="6">
                       <v-menu
-                          max-width="290px"
-                          min-width="auto"
-                          offset-y
-                          transition="scale-transition">
+                        max-width="290px"
+                        min-width="auto"
+                        offset-y
+                        transition="scale-transition"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                              v-model="billPage.bill.billDateString"
-                              label="请选择账单日期"
-                              prepend-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
+                            v-model="billPage.bill.billDateString"
+                            label="请选择账单日期"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="billPage.bill.billDateString"
-                            color="primary"
-                            locale="zh-cn"
-                            no-title
-                            scrollable
-                            type="date">
+                          v-model="billPage.bill.billDateString"
+                          color="primary"
+                          locale="zh-cn"
+                          no-title
+                          scrollable
+                          type="date"
+                        >
                         </v-date-picker>
                       </v-menu>
                     </v-col>
                     <v-col class="pl-1" cols="6">
                       <v-text-field
-                          v-model="billPage.bill.amount"
-                          :rules="[(value) => !!value || '请输入金额',rules.isPositive]"
-                          clearable
-                          label="账单金额"
-                          prefix="¥"
-                          prepend-inner-icon="mdi-currency-usd">
+                        v-model="billPage.bill.amount"
+                        :rules="[
+                          (value) => !!value || '请输入金额',
+                          rules.isPositive,
+                        ]"
+                        clearable
+                        label="账单金额"
+                        prefix="¥"
+                        prepend-inner-icon="mdi-currency-usd"
+                      >
                       </v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                          v-model="billPage.bill.description"
-                          clearable
-                          label="账单描述"
-                          messages=" "
-                          prepend-inner-icon="mdi-card-bulleted-settings">
+                        v-model="billPage.bill.description"
+                        clearable
+                        label="账单描述"
+                        messages=" "
+                        prepend-inner-icon="mdi-card-bulleted-settings"
+                      >
                         <template v-slot:message="{ key, message }">
-                          <div class="overflow-auto" style="white-space: nowrap;">
-                            <v-chip v-for="item in billPage.recentBillDescriptionList" :key="item"
-                                    class="mr-1" small
-                                    @click="billPage.bill.description = item">
+                          <div
+                            class="overflow-auto"
+                            style="white-space: nowrap"
+                          >
+                            <v-chip
+                              v-for="item in billPage.recentBillDescriptionList"
+                              :key="item"
+                              class="mr-1"
+                              small
+                              @click="billPage.bill.description = item"
+                            >
                               {{ item }}
                             </v-chip>
                           </div>
@@ -508,28 +712,39 @@
                   </v-row>
                 </v-card>
                 <v-row class="mt-4" no-gutters>
-                  <v-col v-if="billPage.type==='update'" class="pr-2" cols="6">
+                  <v-col
+                    v-if="billPage.type === 'update'"
+                    class="pr-2"
+                    cols="6"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.delete.loading"
-                        :loading="billPage.buttons.delete.loading"
-                        block
-                        class="rounded-lg"
-                        color="error"
-                        depressed large
-                        @click="deleteBill(billPage.bill.id)">
+                      :disabled="billPage.buttons.delete.loading"
+                      :loading="billPage.buttons.delete.loading"
+                      block
+                      class="rounded-lg"
+                      color="error"
+                      depressed
+                      large
+                      @click="deleteBill(billPage.bill.id)"
+                    >
                       <v-icon class="mr-3">mdi-delete</v-icon>
                       <span>删除</span>
                     </v-btn>
                   </v-col>
-                  <v-col :class="{'pl-2':billPage.type==='update'}" :cols="billPage.type==='update'?6:12">
+                  <v-col
+                    :class="{ 'pl-2': billPage.type === 'update' }"
+                    :cols="billPage.type === 'update' ? 6 : 12"
+                  >
                     <v-btn
-                        :disabled="billPage.buttons.saveOrUpdate.loading"
-                        :loading="billPage.buttons.saveOrUpdate.loading"
-                        block class="rounded-lg"
-                        color="primary"
-                        depressed
-                        large
-                        @click="saveOrUpdateBill('TRANSFER')">
+                      :disabled="billPage.buttons.saveOrUpdate.loading"
+                      :loading="billPage.buttons.saveOrUpdate.loading"
+                      block
+                      class="rounded-lg"
+                      color="primary"
+                      depressed
+                      large
+                      @click="saveOrUpdateBill('TRANSFER')"
+                    >
                       <v-icon class="mr-3">mdi-content-save</v-icon>
                       <span>保存</span>
                     </v-btn>
@@ -541,17 +756,17 @@
         </v-tabs-items>
       </v-card>
     </v-dialog>
-    <v-container class="py-16"/>
+    <v-container class="py-16" />
   </v-container>
 </template>
 
 <script>
-import BackgroundImage from '@/pages/Index/components/BackgroundImage'
+import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import TitleBar from "@/pages/Index/components/TitleBar";
 
 export default {
   name: "Home",
-  components: {BackgroundImage, TitleBar},
+  components: { BackgroundImage, TitleBar },
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -561,28 +776,28 @@ export default {
     },
     lightPrimary: function () {
       return this.$vuetify.theme.themes.light.primary;
-    }
+    },
   },
   data: function () {
     return {
-      title: '账本',
+      title: "账本",
       backgroundImagePath: this.GLOBAL.images.noteList,
       loading: true,
       query: {
         dateQueryString: new Date().Format("yyyy-MM"),
-        description: null
+        description: null,
       },
       billList: [
         {
           amount: null,
           groupName: null,
-          list: []
+          list: [],
         },
       ],
       billSummaryData: {
-        expenditure: 0.00,
-        income: 0.00,
-        amount: 0.00
+        expenditure: 0.0,
+        income: 0.0,
+        amount: 0.0,
       },
       billPage: {
         isShow: false,
@@ -599,31 +814,33 @@ export default {
           billTypeId: null,
           inAccountId: null,
           outAccountId: null,
+          userId: null,
           billTypeVO: {
             id: null,
             parentId: null,
             billTypeName: null,
             billTypeFullName: null,
-            icon: null
-          }
+            icon: null,
+          },
         },
         buttons: {
           delete: {
-            loading: false
+            loading: false,
           },
           saveOrUpdate: {
-            loading: false
-          }
+            loading: false,
+          },
         },
         accountList: [],
         billTypeTree: [],
         outBillTypeTree: [],
         inBillTypeTree: [],
         billTypeChildren: [],
-        recentBillDescriptionList: []
+        recentBillDescriptionList: [],
       },
       rules: this.GLOBAL.rules,
-      enums: this.GLOBAL.enums
+      enums: this.GLOBAL.enums,
+      userInfo: this.$store.getters.getUserInfo,
     };
   },
   watch: {
@@ -631,16 +848,16 @@ export default {
       handler() {
         this.listBill();
       },
-      deep: true
+      deep: true,
     },
-    'billPage.isShow': {
+    "billPage.isShow": {
       handler() {
         this.$refs.outBillSaveOrUpdateForm.resetValidation();
         this.$refs.inBillSaveOrUpdateForm.resetValidation();
         this.$refs.transferBillSaveOrUpdateForm.resetValidation();
       },
     },
-    'billPage.bill.billTypeVO.parentId': {
+    "billPage.bill.billTypeVO.parentId": {
       handler(newVal) {
         this.loadRecentBillDescriptionList(newVal);
         for (let item of this.billPage.billTypeTree) {
@@ -650,13 +867,16 @@ export default {
             return;
           }
         }
-      }
+      },
     },
-    'billPage.bill.billTypeVO.id': {
+    "billPage.bill.billTypeVO.id": {
       handler(newVal) {
         this.loadRecentBillDescriptionList(newVal);
         for (let item of this.billPage.billTypeTree) {
-          if (item.id === this.billPage.bill.billTypeVO.parentId && item.children) {
+          if (
+            item.id === this.billPage.bill.billTypeVO.parentId &&
+            item.children
+          ) {
             for (let child of item.children) {
               if (child.id === newVal) {
                 this.billPage.bill.billTypeVO.icon = child.icon;
@@ -665,8 +885,8 @@ export default {
             }
           }
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     changeTabs() {
@@ -680,58 +900,55 @@ export default {
     },
     listBill() {
       this.loading = true;
-      this.axios.post("/bill/listUserBill", this.query)
-          .then((response) => {
-            this.billList = response.data.data.billList;
-            for (let list of this.billList) {
-              for (let item of list.list) {
-                if (item.billTypeVO && item.billTypeVO.parentId === 0) {
-                  item.billTypeVO.parentId = item.billTypeVO.id;
-                  item.billTypeVO.id = null;
-                }
-              }
+      this.axios.post("/bill/listUserBill", this.query).then((response) => {
+        this.billList = response.data.data.billList;
+        for (let list of this.billList) {
+          for (let item of list.list) {
+            if (item.billTypeVO && item.billTypeVO.parentId === 0) {
+              item.billTypeVO.parentId = item.billTypeVO.id;
+              item.billTypeVO.id = null;
             }
-            this.billSummaryData = response.data.data.billSummaryData;
-            this.loading = false;
-          });
+          }
+        }
+        this.billSummaryData = response.data.data.billSummaryData;
+        this.loading = false;
+      });
     },
     loadAccountList() {
-      this.axios.get("/account/listUserAllAccount")
-          .then((response) => {
-            this.billPage.accountList = response.data.data;
-          });
+      this.axios.get("/account/listUserAllAccount").then((response) => {
+        this.billPage.accountList = response.data.data;
+      });
     },
     loadBillTypeTree() {
-      this.axios.get("/billType/listUserBillTypeTree")
-          .then((response) => {
-            this.billPage.billTypeTree = response.data.data;
-            for (let item of this.billPage.billTypeTree) {
-              if (item.flow === 'OUT') {
-                this.billPage.outBillTypeTree.push(item);
-              } else if (item.flow === 'IN') {
-                this.billPage.inBillTypeTree.push(item);
-              }
-            }
-          });
+      this.axios.get("/billType/listUserBillTypeTree").then((response) => {
+        this.billPage.billTypeTree = response.data.data;
+        for (let item of this.billPage.billTypeTree) {
+          if (item.flow === "OUT") {
+            this.billPage.outBillTypeTree.push(item);
+          } else if (item.flow === "IN") {
+            this.billPage.inBillTypeTree.push(item);
+          }
+        }
+      });
     },
     loadUpdateBillPage(bill) {
       let billPage = this.billPage;
       switch (bill.flow) {
-        case 'OUT':
+        case "OUT":
           billPage.tab = 0;
           break;
-        case 'IN':
+        case "IN":
           billPage.tab = 1;
           break;
-        case 'TRANSFER':
+        case "TRANSFER":
           billPage.tab = 2;
           break;
         default:
           break;
       }
       billPage.isShow = true;
-      billPage.type = 'update';
-      billPage.title = '修改账单';
+      billPage.type = "update";
+      billPage.title = "修改账单";
       billPage.bill = JSON.parse(JSON.stringify(bill));
       if (!bill.billTypeVO) {
         bill.billTypeVO = {};
@@ -742,8 +959,8 @@ export default {
       let billPage = this.billPage;
       billPage.tab = 0;
       billPage.isShow = true;
-      billPage.type = 'save';
-      billPage.title = '新增账单';
+      billPage.type = "save";
+      billPage.title = "新增账单";
       billPage.billTypeChildren = [];
       for (let key in billPage.bill) {
         billPage.bill[key] = null;
@@ -753,40 +970,42 @@ export default {
         parentId: null,
         billTypeName: null,
         billTypeFullName: null,
-        icon: null
+        icon: null,
       };
       billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
       this.loadRecentBillDescriptionList(null);
     },
     deleteBill(billId) {
       this.billPage.buttons.delete.loading = true;
-      this.axios.delete("/bill/removeBill/" + billId)
-          .then(() => {
-            this.$notify({
-              title: "删除成功",
-              message: null,
-              type: "success",
-              duration: 2000,
-            });
-            this.billPage.isShow = false;
-            this.listBill();
-          }).finally(() => {
-        this.billPage.buttons.delete.loading = false;
-      });
+      this.axios
+        .delete("/bill/removeBill/" + billId)
+        .then(() => {
+          this.$notify({
+            title: "删除成功",
+            message: null,
+            type: "success",
+            duration: 2000,
+          });
+          this.billPage.isShow = false;
+          this.listBill();
+        })
+        .finally(() => {
+          this.billPage.buttons.delete.loading = false;
+        });
     },
     saveOrUpdateBill(billFlow) {
       switch (billFlow) {
-        case 'OUT':
+        case "OUT":
           if (!this.$refs.outBillSaveOrUpdateForm.validate()) {
             return;
           }
           break;
-        case 'IN':
+        case "IN":
           if (!this.$refs.inBillSaveOrUpdateForm.validate()) {
             return;
           }
           break;
-        case 'TRANSFER':
+        case "TRANSFER":
           if (!this.$refs.transferBillSaveOrUpdateForm.validate()) {
             return;
           }
@@ -795,73 +1014,83 @@ export default {
           break;
       }
       this.billPage.bill.flow = billFlow;
+      this.billPage.bill.userId = this.userInfo.id;
       if (this.billPage.bill.billTypeVO.id) {
         this.billPage.bill.billTypeId = this.billPage.bill.billTypeVO.id;
       } else {
         this.billPage.bill.billTypeId = this.billPage.bill.billTypeVO.parentId;
       }
-      if (this.billPage.type === 'update') {
+      if (this.billPage.type === "update") {
         this.billPage.buttons.saveOrUpdate.loading = true;
-        this.axios.put("/bill/updateBill", this.billPage.bill)
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.billPage.isShow = false;
-              this.listBill();
-            })
-            .finally(() => {
-              this.billPage.buttons.saveOrUpdate.loading = false;
+        this.axios
+          .put("/bill/updateBill", this.billPage.bill)
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
             });
-      } else if (this.billPage.type === 'save') {
+            this.billPage.isShow = false;
+            this.listBill();
+          })
+          .finally(() => {
+            this.billPage.buttons.saveOrUpdate.loading = false;
+          });
+      } else if (this.billPage.type === "save") {
         this.billPage.buttons.saveOrUpdate.loading = true;
-        this.axios.post("/bill/saveBill", this.billPage.bill)
-            .then(() => {
-              this.$notify({
-                title: "保存成功",
-                message: null,
-                type: "success",
-                duration: 2000,
-              });
-              this.billPage.isShow = false;
-              this.listBill();
-            })
-            .finally(() => {
-              this.billPage.buttons.saveOrUpdate.loading = false;
+        this.axios
+          .post("/bill/saveBill", this.billPage.bill)
+          .then(() => {
+            this.$notify({
+              title: "保存成功",
+              message: null,
+              type: "success",
+              duration: 2000,
             });
+            this.billPage.isShow = false;
+            this.listBill();
+          })
+          .finally(() => {
+            this.billPage.buttons.saveOrUpdate.loading = false;
+          });
       }
     },
     loadRecentBillDescriptionList(billTypeId) {
       let bill = {
         billTypeId: billTypeId,
-        flow: this.billPage.tab === 0 ? 'OUT' : this.billPage.tab === 1 ? "IN" : "TRANSFER"
-      }
-      this.axios.post("/bill/listRecentBillDescription", bill)
-          .then((response) => {
-            this.billPage.recentBillDescriptionList = response.data.data;
-          })
+        flow:
+          this.billPage.tab === 0
+            ? "OUT"
+            : this.billPage.tab === 1
+            ? "IN"
+            : "TRANSFER",
+      };
+      this.axios
+        .post("/bill/listRecentBillDescription", bill)
+        .then((response) => {
+          this.billPage.recentBillDescriptionList = response.data.data;
+        });
     },
     numFormat(number) {
       if (!number) {
-        return '0.00';
+        return "0.00";
       }
       number = number.toFixed(2);
-      return number.toString().replace(/\d+/, function (n) { // 先提取整数部分
+      return number.toString().replace(/\d+/, function (n) {
+        // 先提取整数部分
         return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
           return $1 + ",";
         });
       });
-    }
+    },
   },
   mounted() {
     this.$emit("changeTitle", this.title);
     this.listBill();
     this.loadAccountList();
     this.loadBillTypeTree();
-  }
+  },
 };
 </script>
 

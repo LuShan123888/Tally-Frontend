@@ -106,13 +106,12 @@
                 <span class="ml-3" style="color: #606266" v-html="props.row.processingDescription"/>
               </v-row>
             </v-col>
-            <v-col class="px-16" cols="6">
+            <v-col class="px-16" cols="6" v-if="props.row.imagePath">
               <div class="mb-2">
                 <span class="font-weight-bold" style="color: #909399" v-html="'反馈图片'"/>
               </div>
-              <i-image v-if="props.row.imagePath!=null" id="feedbackImage" :src="getImageUrl(props.row.imagePath)"
+              <i-image id="feedbackImage" :src="getImageUrl(props.row.imagePath)"
                        @click.native="openImageDialog(getImageUrl(props.row.imagePath))"/>
-              <v-icon v-else size="300">mdi-note-alert-outline</v-icon>
             </v-col>
           </v-row>
         </template>
