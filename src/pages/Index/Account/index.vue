@@ -190,7 +190,7 @@
       </v-dialog>
     </v-form>
     <v-dialog v-model="accountPage.iconDialog.isShow" max-width="600px" scrollable>
-      <v-card>
+      <v-card class="rounded-lg">
         <v-card-title>
           <span v-text="'图标库'"/>
         </v-card-title>

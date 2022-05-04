@@ -159,7 +159,7 @@
         </v-row>
         <v-form ref="updateUserInfoForm">
           <v-dialog v-model="userInfoPage.dialog.isShow" max-width="600px" persistent>
-            <v-card>
+            <v-card class="rounded-lg">
               <v-card-title>
                 <span v-text="userInfoPage.dialog.title"/>
               </v-card-title>
@@ -408,7 +408,7 @@
       </v-card>
       <v-form ref="billTypeForm">
         <v-dialog v-model="billTypePage.dialog.isShow" max-width="600px" persistent>
-          <v-card>
+          <v-card class="rounded-lg">
             <v-card-title>
               <span v-text="billTypePage.dialog.title"/>
             </v-card-title>
@@ -496,7 +496,7 @@
         </v-card>
       </v-dialog>
       <v-dialog v-model="billTypePage.iconDialog.isShow" max-width="600px" scrollable>
-        <v-card>
+        <v-card class="rounded-lg">
           <v-card-title>
             <span v-text="'图标库'"/>
           </v-card-title>
@@ -522,7 +522,7 @@
         </v-card>
       </v-dialog>
       <v-dialog v-model="billTypePage.orderDialog.isShow" max-width="600px" scrollable>
-        <v-card>
+        <v-card class="rounded-lg">
           <v-card-title>
             <span v-text="'账单类别排序'"/>
           </v-card-title>
