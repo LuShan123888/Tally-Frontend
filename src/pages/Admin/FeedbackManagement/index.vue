@@ -472,7 +472,7 @@ export default {
     },
     loadAdminList() {
       let user = {
-        roleIdList: [1]
+        roleIdSet: [1]
       };
       this.axios.post("/user/listUser", user)
           .then((response) => {

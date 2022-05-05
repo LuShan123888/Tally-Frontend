@@ -303,7 +303,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="billPage.bill.billDateString"
+                            v-model="billPage.bill.billDate"
                             label="请选择账单日期"
                             prepend-inner-icon="mdi-calendar"
                             readonly
@@ -312,7 +312,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="billPage.bill.billDateString"
+                          v-model="billPage.bill.billDate"
                           color="primary"
                           locale="zh-cn"
                           no-title
@@ -493,7 +493,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="billPage.bill.billDateString"
+                            v-model="billPage.bill.billDate"
                             label="请选择账单日期"
                             prepend-inner-icon="mdi-calendar"
                             readonly
@@ -502,7 +502,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="billPage.bill.billDateString"
+                          v-model="billPage.bill.billDate"
                           color="primary"
                           locale="zh-cn"
                           no-title
@@ -650,7 +650,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="billPage.bill.billDateString"
+                            v-model="billPage.bill.billDate"
                             label="请选择账单日期"
                             prepend-icon="mdi-calendar"
                             readonly
@@ -659,7 +659,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="billPage.bill.billDateString"
+                          v-model="billPage.bill.billDate"
                           color="primary"
                           locale="zh-cn"
                           no-title
@@ -810,7 +810,7 @@ export default {
           amount: null,
           description: null,
           billDate: null,
-          billDateString: null,
+          billDate: null,
           billTypeId: null,
           inAccountId: null,
           outAccountId: null,
@@ -972,7 +972,7 @@ export default {
         billTypeFullName: null,
         icon: null,
       };
-      billPage.bill.billDateString = new Date().Format("yyyy-MM-dd");
+      billPage.bill.billDate = new Date().Format("yyyy-MM-dd");
       this.loadRecentBillDescriptionList(null);
     },
     deleteBill(billId) {

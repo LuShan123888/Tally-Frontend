@@ -1125,7 +1125,7 @@ export default {
           imagePath: null,
           type: null,
           description: null,
-          userId: null
+          userId: null,
         },
       },
       billTypePage: {
@@ -1174,6 +1174,7 @@ export default {
             billTypeName: null,
             icon: null,
             flow: null,
+            userId: null,
           },
           btn: {
             loading: false,
@@ -1322,7 +1323,7 @@ export default {
       if (!this.$refs.billTypeForm.validate()) {
         return;
       }
-      this.billTypePage.dialog.userId = this.userInfo.id;
+      this.billTypePage.dialog.billType.userId = this.userInfo.id;
       if (this.billTypePage.dialog.type === "update") {
         this.billTypePage.dialog.btn.loading = true;
         this.axios
