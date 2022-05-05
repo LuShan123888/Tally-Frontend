@@ -233,9 +233,9 @@
                   <v-text-field
                     v-model="dialog.user.phoneNumber"
                     :rules="[rules.isPhoneNumber]"
-                    counter="11"
                     :disabled="!!dialog.user.id"
                     label="手机号码"
+                    counter
                     clearable
                   />
                 </v-col>
@@ -253,6 +253,7 @@
                     v-if="!dialog.user.id"
                     v-model="dialog.user.password"
                     :rules="[rules.isPassword]"
+                    counter
                     type="password"
                     label="密码"
                     clearable
@@ -260,6 +261,7 @@
                   <v-text-field
                     v-if="!dialog.user.id"
                     type="password"
+                    counter
                     label="密码确认"
                     :rules="[
                       (value) =>

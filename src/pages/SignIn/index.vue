@@ -42,6 +42,7 @@ s                        :rules="[rules.isPassword]"
                         :type="form.password.showPassword ? 'text' : 'password'"
                         clearable
                         label="密码"
+                        counter
                         @click:append="form.password.showPassword = !form.password.showPassword"
                     />
                   </v-row>
@@ -112,6 +113,7 @@ s                        :rules="[rules.isPassword]"
                         v-model="form.phoneNumber.phoneNumber"
                         :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNumber]"
                         clearable
+                        counter
                         label="手机号">
                       <template v-slot:append-outer>
                         <v-btn

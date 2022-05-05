@@ -318,6 +318,7 @@
                         prepend-inner-icon="mdi-account-key"
                         clearable
                         label="新密码"
+                        counter
                         type="password"
                       />
                     </v-col>
@@ -330,6 +331,7 @@
                             '两次输入的密码不一致',
                         ]"
                         clearable
+                        counter
                         label="密码确认"
                         type="password"
                       />
@@ -351,6 +353,7 @@
                           rules.isPhoneNumber,
                         ]"
                         clearable
+                        counter
                         label="新手机号"
                       >
                         <template v-slot:append-outer>

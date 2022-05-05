@@ -229,13 +229,13 @@
                       <v-select
                         v-model="billPage.bill.billTypeVO.parentId"
                         :items="billPage.outBillTypeTree"
-                        :rules="[(value) => !!value || '请选择一级账户类别']"
+                        :rules="[(value) => !!value || '请选择主账户类别']"
                         chips
                         class="pr-1"
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="一级账单类别"
+                        label="主账户类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                         @change="billPage.bill.billTypeVO.id = null"
@@ -274,7 +274,7 @@
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="二级账单类别"
+                        label="子账户类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                       />
@@ -420,13 +420,13 @@
                       <v-select
                         v-model="billPage.bill.billTypeVO.parentId"
                         :items="billPage.inBillTypeTree"
-                        :rules="[(value) => !!value || '请选择一级账户类别']"
+                        :rules="[(value) => !!value || '请选择主账户类别']"
                         chips
                         class="pr-1"
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="一级账单类别"
+                        label="主账户类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                         @change="billPage.bill.billTypeVO.id = null"
@@ -464,7 +464,7 @@
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="二级账单类别"
+                        label="子账户类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                       />
