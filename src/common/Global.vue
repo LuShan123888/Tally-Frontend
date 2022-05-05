@@ -43,6 +43,9 @@ const rules = {
     return true;
   },
   isPhoneNumber: (value) => {
+    if (!value) {
+      return true;
+    }
     if (!/^[1]([3-9])[0-9]{9}$/.test(value)) {
       return "手机号格式不正确";
     }
