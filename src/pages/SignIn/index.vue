@@ -38,8 +38,7 @@
                     <v-text-field
                         v-model="form.password.password"
                         :append-icon="form.password.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :counter="rules.passwordMaxLength"
-                        :rules="[rules.isPassword]"
+s                        :rules="[rules.isPassword]"
                         :type="form.password.showPassword ? 'text' : 'password'"
                         clearable
                         label="密码"
@@ -111,8 +110,7 @@
                     <v-text-field
                         ref="phoneNumberTextField"
                         v-model="form.phoneNumber.phoneNumber"
-                        :counter="11"
-                        :rules="[(value) => !!value || '请输入手机号',rules.isphoneNumber]"
+                        :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNumber]"
                         clearable
                         label="手机号">
                       <template v-slot:append-outer>

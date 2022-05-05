@@ -225,7 +225,6 @@
                     v-model="dialog.user.username"
                     :disabled="!!dialog.user.id"
                     label="用户名"
-                    :counter="rules.usernameMaxLength"
                     :rules="[rules.isUsername]"
                     clearable
                   />
@@ -233,7 +232,7 @@
                 <v-col class="pl-1" cols="6">
                   <v-text-field
                     v-model="dialog.user.phoneNumber"
-                    :rules="[rules.isphoneNumber]"
+                    :rules="[rules.isPhoneNumber]"
                     counter="11"
                     :disabled="!!dialog.user.id"
                     label="手机号码"
@@ -256,7 +255,6 @@
                     :rules="[rules.isPassword]"
                     type="password"
                     label="密码"
-                    :counter="rules.passwordMaxLength"
                     clearable
                   />
                   <v-text-field
@@ -268,7 +266,6 @@
                         value === dialog.user.password ||
                         '两次输入的密码不一致',
                     ]"
-                    :counter="rules.passwordMaxLength"
                     clearable
                   />
                 </v-col>

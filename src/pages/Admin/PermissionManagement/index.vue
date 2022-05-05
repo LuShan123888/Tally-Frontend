@@ -103,8 +103,7 @@
                 <v-col cols="12">
                   <v-text-field
                       v-model="dialog.permission.permissionName"
-                      :counter="rules.permissionNameMaxLength"
-                      :rules="[rules.isPermissionName]"
+                      :rules="[(v) => !!v || '权限名称不能为空']"
                       clearable
                       label="权限名称"
                   />

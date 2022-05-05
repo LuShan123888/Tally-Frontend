@@ -175,8 +175,7 @@
                 <v-col class="pr-1" cols="6">
                   <v-text-field
                     v-model="dialog.role.roleName"
-                    :counter="rules.roleNameMaxLength"
-                    :rules="[rules.isRoleName]"
+                    :rules="[(v) => !!v || '角色名称不能为空']"
                     clearable
                     label="角色名称"
                   />

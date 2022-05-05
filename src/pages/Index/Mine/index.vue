@@ -298,7 +298,6 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="userInfoPage.dialog.userInfo.username"
-                        :counter="rules.usernameMaxLength"
                         :rules="[rules.isUsername]"
                         clearable
                         label="新用户名"
@@ -315,7 +314,6 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="userInfoPage.dialog.userInfo.password"
-                        :counter="rules.passwordMaxLength"
                         :rules="[rules.isPassword]"
                         prepend-inner-icon="mdi-account-key"
                         clearable
@@ -325,7 +323,6 @@
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                        :counter="rules.passwordMaxLength"
                         prepend-inner-icon="mdi-account-key"
                         :rules="[
                           (value) =>
@@ -349,10 +346,9 @@
                         ref="phoneNumberTextField"
                         prepend-inner-icon="mdi-cellphone-text"
                         v-model="userInfoPage.dialog.userInfo.phoneNumber"
-                        :counter="11"
                         :rules="[
                           (value) => !!value || '请输入手机号',
-                          rules.isphoneNumber,
+                          rules.isPhoneNumber,
                         ]"
                         clearable
                         label="新手机号"
