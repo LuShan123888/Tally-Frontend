@@ -1,36 +1,45 @@
 <template>
   <el-upload
-      :action="upload.path"
-      :before-upload="beforeAvatarUpload"
-      :headers="upload.header"
-      :on-error="handleAvatarError"
-      :on-success="handleAvatarSuccess"
-      :show-file-list="false"
-      :style="{height:size+'px',width:size+'px','--border-radius': borderRadius}"
-      class="avatar-uploader"
-      name="uploadFile">
-    <i-image v-if="imagePath" :height="size+'px'"
-             :src="getImageUrl(imagePath)" :width="size+'px'"/>
+    :action="upload.path"
+    :before-upload="beforeAvatarUpload"
+    :headers="upload.header"
+    :on-error="handleAvatarError"
+    :on-success="handleAvatarSuccess"
+    :show-file-list="false"
+    :style="{
+      height: size + 'px',
+      width: size + 'px',
+      '--border-radius': borderRadius,
+    }"
+    class="avatar-uploader"
+    name="uploadFile"
+  >
+    <i-image
+      v-if="imagePath"
+      :height="size + 'px'"
+      :src="getImageUrl(imagePath)"
+      :width="size + 'px'"
+    />
     <v-icon v-else>mdi-upload</v-icon>
   </el-upload>
 </template>
 
 <script>
-import iImage from '@/components/iImage'
+import iImage from "@/components/iImage";
 
 export default {
   name: "ImageUploader",
-  components: {iImage},
+  components: { iImage },
   props: {
     size: {
       type: String,
-      default: '150'
+      default: "150",
     },
     imagePath: String,
     borderRadius: {
       type: String,
-      default: '6px'
-    }
+      default: "6px",
+    },
   },
   computed: {
     isMobile: function () {
@@ -41,13 +50,13 @@ export default {
     },
     lightPrimary: function () {
       return this.$vuetify.theme.themes.light.primary;
-    }
+    },
   },
   data: function () {
     return {
       upload: {
         path: this.GLOBAL.url.api + "/file/upload",
-        header: {Authorization: this.$store.getters.getToken}
+        header: { Authorization: this.$store.getters.getToken },
       },
     };
   },
@@ -59,7 +68,7 @@ export default {
     },
     handleAvatarSuccess(response) {
       this.imagePath = response.data;
-      this.$emit('setImagePath', this.imagePath);
+      this.$emit("setImagePath", this.imagePath);
       this.$notify({
         title: "图片上传成功",
         message: null,
@@ -68,23 +77,39 @@ export default {
       });
     },
     handleAvatarError(error) {
-      console.log(error)
-      this.$message.error("图像上传失败")
+      console.log(error);
+      this.$notify({
+        title: "图像上传失败",
+        message: null,
+        type: "error",
+        duration: 2000,
+      });
     },
     beforeAvatarUpload(file) {
-      let isImage = file.type === 'image/jpeg' || file.type === 'image/png';
+      let isImage = file.type === "image/jpeg" || file.type === "image/png";
       let isLt2M = file.size / 1024 / 1024 < 2;
       if (!isImage) {
-        this.$message.error('上传图片只能是 JPG 或 PNG 格式!');
+        this.$notify({
+          title: "上传图片只能是 JPG 或 PNG 格式,
+          message: null,
+          type: "error",
+          duration: 2000,
+        });
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!');
+        if (!isImage) {
+          this.$notify({
+            title: "上传图片大小不能超过 2MB,
+            message: null,
+            type: "error",
+            duration: 2000,
+          });
+        }
+        return isImage && isLt2M;
       }
-      return isImage && isLt2M;
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 <style lang="scss">
@@ -101,7 +126,7 @@ export default {
     width: 100%;
 
     &:hover {
-      border-color: #3874CB;
+      border-color: #3874cb;
     }
   }
 }

@@ -203,7 +203,14 @@
         }"
         name="image"
       >
-        <v-btn color="primary" fab fixed right style="bottom: 68px" :loading="upload.loading">
+        <v-btn
+          color="primary"
+          fab
+          fixed
+          right
+          style="bottom: 68px"
+          :loading="upload.loading"
+        >
           <v-icon>mdi-camera</v-icon>
         </v-btn>
       </el-upload>
@@ -857,7 +864,7 @@ export default {
       upload: {
         path: this.GLOBAL.url.api + "/bill/generateBillByImage",
         header: { Authorization: this.$store.getters.getToken },
-        loading: false
+        loading: false,
       },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
@@ -1122,18 +1129,33 @@ export default {
     handleAvatarError(error) {
       this.upload.loading = false;
       console.log(error);
-      this.$message.error("图像解析失败");
+      this.$notify({
+        title: "图像解析失败",
+        message: null,
+        type: "error",
+        duration: 2000,
+      });
     },
     beforeAvatarUpload(file) {
       let isImage = file.type === "image/jpeg" || file.type === "image/png";
       let isLt2M = file.size / 1024 / 1024 < 2;
       if (!isImage) {
-        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+        this.$notify({
+          title: "上传图片只能是 JPG 或 PNG 格式,
+          message: null,
+          type: "error",
+          duration: 2000,
+        });
       }
       if (!isLt2M) {
-        this.$message.error("上传图片大小不能超过 2MB!");
+        this.$notify({
+          title: "上传图片大小不能超过 2MB,
+          message: null,
+          type: "error",
+          duration: 2000,
+        });
       }
-      this.upload.loading = true
+      this.upload.loading = true;
       return isImage && isLt2M;
     },
   },
