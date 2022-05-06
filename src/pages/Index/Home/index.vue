@@ -1128,7 +1128,6 @@ export default {
     },
     handleAvatarError(error) {
       this.upload.loading = false;
-      console.log(error);
       this.$notify({
         title: "图像解析失败",
         message: null,

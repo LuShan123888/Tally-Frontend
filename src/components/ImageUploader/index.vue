@@ -77,7 +77,6 @@ export default {
       });
     },
     handleAvatarError(error) {
-      console.log(error);
       this.$notify({
         title: "图像上传失败",
         message: null,
