@@ -99,7 +99,7 @@ export default {
       if (!isLt2M) {
         if (!isImage) {
           this.$notify({
-            title: "上传图片大小不能超过 2MB,
+            title: "上传图片大小不能超过 2MB",
             message: null,
             type: "error",
             duration: 2000,
