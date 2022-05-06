@@ -253,13 +253,13 @@
                       <v-select
                         v-model="billPage.bill.billTypeVO.parentId"
                         :items="billPage.outBillTypeTree"
-                        :rules="[(value) => !!value || '请选择主账户类别']"
+                        :rules="[(value) => !!value || '请选择主账单类别']"
                         chips
                         class="pr-1"
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="主账户类别"
+                        label="主账单类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                         @change="billPage.bill.billTypeVO.id = null"
@@ -298,7 +298,7 @@
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="子账户类别"
+                        label="子账单类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                       />
@@ -444,13 +444,13 @@
                       <v-select
                         v-model="billPage.bill.billTypeVO.parentId"
                         :items="billPage.inBillTypeTree"
-                        :rules="[(value) => !!value || '请选择主账户类别']"
+                        :rules="[(value) => !!value || '请选择主账单类别']"
                         chips
                         class="pr-1"
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="主账户类别"
+                        label="主账单类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                         @change="billPage.bill.billTypeVO.id = null"
@@ -488,7 +488,7 @@
                         dense
                         item-text="billTypeName"
                         item-value="id"
-                        label="子账户类别"
+                        label="子账单类别"
                         no-data-text="无对应选项"
                         prepend-inner-icon="mdi-format-list-bulleted-type"
                       />
@@ -1119,6 +1119,14 @@ export default {
       this.billPage.bill.outAccountId = billVO.outAccountId;
       this.billPage.bill.billDate = billVO.billDate;
       this.billPage.bill.description = billVO.description;
+      if (billVO.billTypeVO) {
+        if (billVO.billTypeVO.parentId !== 0) {
+          this.billPage.bill.billTypeVO.id = billVO.billTypeVO.id;
+          this.billPage.bill.billTypeVO.parentId = billVO.billTypeVO.parentId;
+        }else{
+          this.billPage.bill.billTypeVO.parentId = billVO.billTypeId;
+        }
+      }
       this.$notify({
         title: "图片解析成功",
         message: null,
