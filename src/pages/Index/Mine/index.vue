@@ -468,7 +468,9 @@
                   color="primary"
                   depressed
                   @click="updateUserInfo"
-                  v-text="'保存'"
+                  v-text="
+                    userInfoPage.dialog.type === 'cancelUser' ? '确定' : '保存'
+                  "
                 />
               </v-card-actions>
             </v-card>
