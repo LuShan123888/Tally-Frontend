@@ -203,7 +203,7 @@
         }"
         name="image"
       >
-        <v-btn color="primary" fab fixed right style="bottom: 68px">
+        <v-btn color="primary" fab fixed right style="bottom: 68px" :loading="upload.loading">
           <v-icon>mdi-camera</v-icon>
         </v-btn>
       </el-upload>
@@ -827,7 +827,6 @@ export default {
           amount: null,
           description: null,
           billDate: null,
-          billDate: null,
           billTypeId: null,
           inAccountId: null,
           outAccountId: null,
@@ -858,6 +857,7 @@ export default {
       upload: {
         path: this.GLOBAL.url.api + "/bill/generateBillByImage",
         header: { Authorization: this.$store.getters.getToken },
+        loading: false
       },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
@@ -1106,6 +1106,7 @@ export default {
       });
     },
     handleAvatarSuccess(response) {
+      this.upload.loading = false;
       var billVO = response.data;
       this.billPage.bill.amount = billVO.amount;
       this.billPage.bill.outAccountId = billVO.outAccountId;
@@ -1119,6 +1120,7 @@ export default {
       });
     },
     handleAvatarError(error) {
+      this.upload.loading = false;
       console.log(error);
       this.$message.error("图像解析失败");
     },
@@ -1131,6 +1133,7 @@ export default {
       if (!isLt2M) {
         this.$message.error("上传图片大小不能超过 2MB!");
       }
+      this.upload.loading = true
       return isImage && isLt2M;
     },
   },
