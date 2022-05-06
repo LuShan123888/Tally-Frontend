@@ -190,6 +190,23 @@
       hide-overlay
       transition="dialog-bottom-transition"
     >
+      <el-upload
+        :action="upload.path"
+        :before-upload="beforeAvatarUpload"
+        :headers="upload.header"
+        :on-error="handleAvatarError"
+        :on-success="handleAvatarSuccess"
+        :show-file-list="false"
+        :style="{
+          height: 0 + 'px',
+          width: 0 + 'px',
+        }"
+        name="image"
+      >
+        <v-btn color="primary" fab fixed right style="bottom: 68px">
+          <v-icon>mdi-camera</v-icon>
+        </v-btn>
+      </el-upload>
       <v-card :style="{ backgroundColor: isDark ? '#000000' : '#F1F2F6' }">
         <v-toolbar class="mb-16" color="primary" dark style="border-radius: 0">
           <template v-slot:extension>
@@ -838,6 +855,10 @@ export default {
         billTypeChildren: [],
         recentBillDescriptionList: [],
       },
+      upload: {
+        path: this.GLOBAL.url.api + "/bill/generateBillByImage",
+        header: { Authorization: this.$store.getters.getToken },
+      },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
       userInfo: this.$store.getters.getUserInfo,
@@ -1083,6 +1104,34 @@ export default {
           return $1 + ",";
         });
       });
+    },
+    handleAvatarSuccess(response) {
+      var billVO = response.data;
+      this.billPage.bill.amount = billVO.amount;
+      this.billPage.bill.outAccountId = billVO.outAccountId;
+      this.billPage.bill.billDate = billVO.billDate;
+      this.billPage.bill.description = billVO.description;
+      this.$notify({
+        title: "图片解析成功",
+        message: null,
+        type: "success",
+        duration: 2000,
+      });
+    },
+    handleAvatarError(error) {
+      console.log(error);
+      this.$message.error("图像解析失败");
+    },
+    beforeAvatarUpload(file) {
+      let isImage = file.type === "image/jpeg" || file.type === "image/png";
+      let isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isImage) {
+        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 2MB!");
+      }
+      return isImage && isLt2M;
     },
   },
   mounted() {

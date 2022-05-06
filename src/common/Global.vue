@@ -15,11 +15,11 @@ const rules = {
     "请输入正确格式的数字",
   isPositive: (value) =>
     !value ||
-    /^[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) ||
+    /^[0-9]*(.[0-9]{1,2})?$/.test(value) ||
     "请输入正确格式的正数",
   isNegative: (value) =>
     !value ||
-    /^-[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) ||
+    /^-[0-9]*(.[0-9]{1,2})?$/.test(value) ||
     "请输入正确格式的负数",
   isUsername: (value) => {
     if (!value) {
