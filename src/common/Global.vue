@@ -11,7 +11,7 @@ const rules = {
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
   isFloat: (value) =>
     !value ||
-    /^(-)?[1-9]+[0-9]*(.[0-9]{1,2})?$/.test(value) ||
+    /^(-)?[0-9]*(.[0-9]{1,2})?$/.test(value) ||
     "请输入正确格式的数字",
   isPositive: (value) =>
     !value ||
