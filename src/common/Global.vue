@@ -25,8 +25,8 @@ const rules = {
     if (!value) {
       return "请输入用户名";
     }
-    if (value.length > 30) {
-      return "用户名不能超过30位";
+    if (!/^[a-zA-Z0-9_]{1,30}$/.test(value)) {
+      return "用户名格式有误";
     }
     return true;
   },
@@ -34,11 +34,8 @@ const rules = {
     if (!value) {
       return "请输入密码";
     }
-    if (value.length < 8) {
-      return "密码不能少于8位";
-    }
-    if (value.length > 30) {
-      return "密码不能超过30位";
+    if (value.length < 8 || value.length > 30) {
+      return "密码不能少于8位或大于30位";
     }
     return true;
   },

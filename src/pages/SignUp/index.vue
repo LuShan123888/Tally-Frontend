@@ -142,7 +142,7 @@
                   <v-row no-gutters>
                     <v-text-field
                         v-model="form.email.username"
-                        :rules="[(value) => !!value || '请输入用户名']"
+                        :rules="[rules.isUsername]"
                         clearable
                         label="用户名"/>
                   </v-row>

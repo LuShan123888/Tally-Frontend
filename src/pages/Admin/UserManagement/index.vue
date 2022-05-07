@@ -234,7 +234,7 @@
                     v-model="dialog.user.phoneNumber"
                     :rules="[rules.isPhoneNumber]"
                     :disabled="!!dialog.user.id"
-                    label="手机号码"
+                    label="手机号"
                     counter
                     clearable
                   />
