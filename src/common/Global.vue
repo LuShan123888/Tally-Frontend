@@ -70,7 +70,7 @@ const enums = {
     { text: "处理完成", value: "FINISHED" },
   ],
   feedbackType: [
-    { text: "问题解决", value: "PROBLEM" },
+    { text: "问题反馈", value: "PROBLEM" },
     { text: "网站建议", value: "SUGGESTION" },
   ],
   billFlow: [
