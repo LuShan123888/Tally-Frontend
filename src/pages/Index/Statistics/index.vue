@@ -577,7 +577,6 @@ export default {
               yAxes: [{
                 display: true,
                 ticks: {
-                  min: 0,
                 },
                 gridLines: {
                   display: false
