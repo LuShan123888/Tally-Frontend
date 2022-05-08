@@ -159,22 +159,24 @@
                   />
                 </v-col>
                 <v-col cols="2">
-                  <v-row class="mb-1" justify="center" no-gutters>
-                    <div style="color: rgba(0, 0, 0, 0.6); font-size: 8px">
+                  <v-row class="" justify="center" no-gutters>
+                    <div
+                        :style="{ color:  isDark?'rgba(255, 255, 255, 0.7)':'rgba(0, 0, 0, 0.6)', fontSize: '12px',lineHeight:'15px',marginTop:'4px'}">
                       账户图标
                     </div>
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-btn
-                      class="rounded-lg"
-                      color="primary"
-                      depressed
-                      fab
-                      x-small
-                      @click="accountPage.iconDialog.isShow = true"
+                        class="rounded-lg"
+                        color="primary"
+                        depressed
+                        fab
+                        x-small
+                        @click="accountPage.iconDialog.isShow = true"
                     >
                       <v-icon v-if="accountPage.account.icon"
-                        >mdi-{{ accountPage.account.icon }}</v-icon
+                      >mdi-{{ accountPage.account.icon }}
+                      </v-icon
                       >
                       <v-icon v-else>mdi-help</v-icon>
                     </v-btn>
