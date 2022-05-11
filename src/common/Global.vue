@@ -7,20 +7,20 @@ const url = {
 const title = "云记贝在线记账平台";
 const adminTitle = "云记贝后台管理系统";
 const rules = {
-  isEmail: (value) => !value || /.+@.+\..+/.test(value) || "邮箱格式有误",
+  isEmail: (value) => !value || /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(value) || "邮箱格式有误",
   isInteger: (value) => !value || /^\d+$/.test(value) || "只能输入整数",
   isFloat: (value) =>
-    !value ||
-    /^(-)?[0-9]*(.[0-9]{1,2})?$/.test(value) ||
-    "请输入正确格式的数字",
+      !value ||
+      /^(-)?(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/.test(value) ||
+      "请输入正确格式的数字",
   isPositive: (value) =>
-    !value ||
-    /^[0-9]*(.[0-9]{1,2})?$/.test(value) ||
-    "请输入正确格式的正数",
+      !value ||
+      /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/.test(value) ||
+      "请输入正确格式的正数",
   isNegative: (value) =>
-    !value ||
-    /^-[0-9]*(.[0-9]{1,2})?$/.test(value) ||
-    "请输入正确格式的负数",
+      !value ||
+      /^-(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/.test(value) ||
+      "请输入正确格式的负数",
   isUsername: (value) => {
     if (!value) {
       return "请输入用户名";
