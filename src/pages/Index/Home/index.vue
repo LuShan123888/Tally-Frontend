@@ -90,6 +90,74 @@
         </v-row>
       </v-card-subtitle>
     </v-card>
+    <v-card class="pa-0 rounded-lg mt-3 px-4" flat fluid>
+      <v-row align="center" no-gutters @click="loadBudgetDialog">
+        <v-col cols="6">
+          <div class="font-weight-medium pa-0 flex align-center" style="height: 50px">
+            <div style="line-height: 50px">
+              <span
+                  :style="{fontSize: '14px',color:isDark?'rgba(255, 255, 255, 0.7)':'rgba(0, 0, 0, 0.6)'}">本月预算：</span>
+              <span class="">¥{{ numFormat(budgetBar.budget.amount) }}</span>
+            </div>
+          </div>
+        </v-col>
+        <v-col cols="6">
+          <span class="float-end text-subtitle-2">{{
+              numFormat(billSummaryData.expenditure * 100 / budgetBar.budget.amount)
+            }}%</span>
+          <v-progress-linear :color="(billSummaryData.expenditure*100 / budgetBar.budget.amount)>25?
+                             (billSummaryData.expenditure*100 / budgetBar.budget.amount)>50?(billSummaryData.expenditure*100 / budgetBar.budget.amount)>75?'error':'warning':'primary':'success'"
+                             :value="billSummaryData.expenditure*100 / budgetBar.budget.amount"
+                             rounded/>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-form ref="saveOrUpdateBudgetForm">
+      <v-dialog
+          v-model="budgetBar.dialog.isShow"
+          max-width="600px"
+          persistent
+      >
+        <v-card class="rounded-lg">
+          <v-card-title>
+            <span v-text="budgetBar.dialog.title"/>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-container class="pa-0">
+              <v-row no-gutters>
+                <v-col cols="12">
+                  <v-text-field
+                      v-model="budgetBar.dialog.budget.amount"
+                      :rules="[(value) => !!value || '请输入预算金额',rules.isPositive]"
+                      clearable
+                      label="预算金额"
+                      prepend-inner-icon="mdi-currency-usd"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+                class="rounded-lg"
+                depressed
+                @click="budgetBar.dialog.isShow = false"
+                v-text="'取消'"
+            />
+            <v-btn
+                :disabled="budgetBar.dialog.loading"
+                :loading="budgetBar.dialog.loading"
+                class="rounded-lg"
+                color="primary"
+                depressed
+                @click="saveOrUpdateBudget"
+                v-text="'保存'"
+            />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
     <v-skeleton-loader
         v-for="item in 6"
         v-if="loading"
@@ -865,6 +933,26 @@ export default {
         billTypeChildren: [],
         recentBillDescriptionList: [],
       },
+      budgetBar: {
+        isShow: true,
+        percentage: 0.0,
+        dialog: {
+          isShow: false,
+          loading: false,
+          title: null,
+          budget: {
+            userId: null,
+            amount: 0,
+            dateString: null,
+          }
+        },
+        budget: {
+          id: null,
+          userId: null,
+          amount: 0,
+          dateString: null,
+        }
+      },
       upload: {
         path: this.GLOBAL.url.api + "/bill/generateBillByImage",
         header: {Authorization: this.$store.getters.getToken},
@@ -879,6 +967,7 @@ export default {
     query: {
       handler() {
         this.listBill();
+        this.loadBudget();
       },
       deep: true,
     },
@@ -1169,10 +1258,68 @@ export default {
       this.upload.loading = true;
       return isImage && isLt2M;
     },
+    loadBudget() {
+      this.budgetBar.budget.dateString = this.query.dateQueryString;
+      this.budgetBar.budget.userId = this.userInfo.id;
+      this.axios.post("/budget/listUserBudget", this.budgetBar.budget).then((response) => {
+        const budgetList = response.data.data;
+        if (budgetList.length > 0) {
+          this.budgetBar.budget = budgetList[0];
+        } else {
+          this.budgetBar.budget = {}
+        }
+      });
+    },
+    loadBudgetDialog() {
+      this.budgetBar.dialog.isShow = true;
+      if (this.budgetBar.budget.id) {
+        this.budgetBar.dialog.title = "修改预算";
+        this.budgetBar.dialog.budget = JSON.parse(JSON.stringify(this.budgetBar.budget));
+      } else {
+        this.budgetBar.dialog.title = "新增预算";
+        this.budgetBar.dialog.budget = {};
+      }
+    },
+    saveOrUpdateBudget() {
+      if (!this.$refs.saveOrUpdateBudgetForm.validate()) {
+        return;
+      }
+      this.budgetBar.dialog.loading = true;
+      this.budgetBar.dialog.budget.userId = this.userInfo.id;
+      this.budgetBar.dialog.budget.dateString = this.query.dateQueryString;
+      if (this.budgetBar.dialog.budget.id) {
+        this.axios.put("/budget/updateBudget", this.budgetBar.dialog.budget).then(() => {
+          this.$notify({
+            title: "修改成功",
+            message: null,
+            type: "success",
+            duration: 2000,
+          });
+          this.loadBudget();
+          this.budgetBar.dialog.isShow = false;
+        }).finally(() => {
+          this.budgetBar.dialog.loading = false;
+        });
+      } else {
+        this.axios.post("/budget/saveBudget", this.budgetBar.dialog.budget).then(() => {
+          this.$notify({
+            title: "新增成功",
+            message: null,
+            type: "success",
+            duration: 2000,
+          });
+          this.loadBudget();
+          this.budgetBar.dialog.isShow = false;
+        }).finally(() => {
+          this.budgetBar.dialog.loading = false;
+        });
+      }
+    }
   },
   mounted() {
     this.$emit("changeTitle", this.title);
     this.listBill();
+    this.loadBudget();
     this.loadAccountList();
     this.loadBillTypeTree();
   },
