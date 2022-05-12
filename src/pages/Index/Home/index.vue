@@ -1260,7 +1260,6 @@ export default {
     },
     loadBudget() {
       this.budgetBar.budget.dateString = this.query.dateQueryString;
-      this.budgetBar.budget.userId = this.userInfo.id;
       this.axios.post("/budget/listUserBudget", this.budgetBar.budget).then((response) => {
         const budgetList = response.data.data;
         if (budgetList.length > 0) {
