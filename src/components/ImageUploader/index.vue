@@ -1,24 +1,24 @@
 <template>
   <el-upload
-    :action="upload.path"
-    :before-upload="beforeAvatarUpload"
-    :headers="upload.header"
-    :on-error="handleAvatarError"
-    :on-success="handleAvatarSuccess"
-    :show-file-list="false"
-    :style="{
+      :action="upload.path"
+      :before-upload="beforeAvatarUpload"
+      :headers="upload.header"
+      :on-error="handleAvatarError"
+      :on-success="handleAvatarSuccess"
+      :show-file-list="false"
+      :style="{
       height: size + 'px',
       width: size + 'px',
       '--border-radius': borderRadius,
     }"
-    class="avatar-uploader"
-    name="uploadFile"
+      class="avatar-uploader"
+      name="uploadFile"
   >
     <i-image
-      v-if="imagePath"
-      :height="size + 'px'"
-      :src="getImageUrl(imagePath)"
-      :width="size + 'px'"
+        v-if="imagePath"
+        :height="size + 'px'"
+        :src="getImageUrl(imagePath)"
+        :width="size + 'px'"
     />
     <v-icon v-else>mdi-upload</v-icon>
   </el-upload>
@@ -29,7 +29,7 @@ import iImage from "@/components/iImage";
 
 export default {
   name: "ImageUploader",
-  components: { iImage },
+  components: {iImage},
   props: {
     size: {
       type: String,
@@ -56,7 +56,7 @@ export default {
     return {
       upload: {
         path: this.GLOBAL.url.api + "/file/upload",
-        header: { Authorization: this.$store.getters.getToken },
+        header: {Authorization: this.$store.getters.getToken},
       },
     };
   },
@@ -76,7 +76,7 @@ export default {
         duration: 2000,
       });
     },
-    handleAvatarError(error) {
+    handleAvatarError() {
       this.$notify({
         title: "图像上传失败",
         message: null,
@@ -108,7 +108,8 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+  },
 };
 </script>
 <style lang="scss">

@@ -51,59 +51,59 @@ const rules = {
 };
 const enums = {
   requestMethod: [
-    { text: "*", value: "*" },
-    { text: "GET", value: "GET" },
-    { text: "POST", value: "POST" },
-    { text: "PUT", value: "PUT" },
-    { text: "DELETE", value: "DELETE" },
+    {text: "*", value: "*"},
+    {text: "GET", value: "GET"},
+    {text: "POST", value: "POST"},
+    {text: "PUT", value: "PUT"},
+    {text: "DELETE", value: "DELETE"},
   ],
   userStatus: [
-    { text: "正常", value: "NORMAL" },
-    { text: "禁用", value: "PROHIBIT" },
+    {text: "正常", value: "NORMAL"},
+    {text: "禁用", value: "PROHIBIT"},
   ],
   feedbackStatus: [
-    { text: "已创建", value: "CREATED" },
-    { text: "处理中", value: "PROCESSING" },
-    { text: "处理完成", value: "FINISHED" },
+    {text: "已创建", value: "CREATED"},
+    {text: "处理中", value: "PROCESSING"},
+    {text: "处理完成", value: "FINISHED"},
   ],
   feedbackType: [
-    { text: "问题反馈", value: "PROBLEM" },
-    { text: "网站建议", value: "SUGGESTION" },
+    {text: "问题反馈", value: "PROBLEM"},
+    {text: "网站建议", value: "SUGGESTION"},
   ],
   billFlow: [
-    { text: "收入", value: "IN" },
-    { text: "支出", value: "OUT" },
-    { text: "转账", value: "TRANSFER" },
+    {text: "收入", value: "IN"},
+    {text: "支出", value: "OUT"},
+    {text: "转账", value: "TRANSFER"},
   ],
   accountType: [
-    { text: "资金账户", value: "CAPITAL" },
-    { text: "信用账户", value: "CREDIT" },
-    { text: "充值账户", value: "RECHARGE" },
-    { text: "理财账户", value: "FINANCIAL" },
-    { text: "应收账户", value: "RECEIVABLE" },
-    { text: "应付账户", value: "PAYABLE" },
+    {text: "资金账户", value: "CAPITAL"},
+    {text: "信用账户", value: "CREDIT"},
+    {text: "充值账户", value: "RECHARGE"},
+    {text: "理财账户", value: "FINANCIAL"},
+    {text: "应收账户", value: "RECEIVABLE"},
+    {text: "应付账户", value: "PAYABLE"},
   ],
   page: [5, 15, 50, 100],
 };
 const images = {
   profile:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/profile.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/profile.svg",
   pageNotFound:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/pageNotFound.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/pageNotFound.svg",
   signUp:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/signUp.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/signUp.svg",
   welcome:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/welcome.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/welcome.svg",
   forgot:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/forgot.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/forgot.svg",
   dataReport:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/dataReport.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/dataReport.svg",
   noteList:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/noteList.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/noteList.svg",
   wallet:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/wallet.svg",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/images/wallet.svg",
   police:
-    "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/icons/police.png",
+      "https://cdn.jsdelivr.net/gh/LuShan123888/Tally-Frontend@gh-pages/static/icons/police.png",
 };
 const icons = {
   accountType: [

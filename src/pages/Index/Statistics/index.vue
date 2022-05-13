@@ -40,13 +40,15 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-skeleton-loader
-        v-for="(item) in 6"
-        v-if="loading"
-        :key="'skeleton-loader'+item"
-        class="rounded-lg mt-4"
-        type="list-item-three-line, image"
-    />
+    <div v-if="loading">
+      <v-skeleton-loader
+          v-for="(item) in 6"
+
+          :key="'skeleton-loader'+item"
+          class="rounded-lg mt-4"
+          type="list-item-three-line, image"
+      />
+    </div>
     <v-card v-if="!loading"
             class="pa-3 mb-4 rounded-lg"
             flat fluid>
@@ -282,13 +284,15 @@
       </v-row>
       <v-row :style="{backgroundColor: isDark?'#2C2B2E':'#FAFAFB'}" no-gutters>
         <v-col cols="12">
-          <v-row v-for="(item, i) in data.billGroupByDateList" v-if="item.expenditure!==0 || item.income!==0" :key="i"
-                 no-gutters>
-            <v-col class="text-center py-2 text-subtitle-2" cols="3">{{ item.groupName }}</v-col>
-            <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.expenditure) }}</v-col>
-            <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.income) }}</v-col>
-            <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.amount) }}</v-col>
-          </v-row>
+          <div v-if="item.expenditure!==0 || item.income!==0">
+            <v-row v-for="(item, i) in data.billGroupByDateList" :key="i" no-gutters>
+              <v-col class="text-center py-2 text-subtitle-2" cols="3">{{ item.groupName }}</v-col>
+              <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.expenditure) }}</v-col>
+              <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.income) }}</v-col>
+              <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.amount) }}</v-col>
+            </v-row>
+          </div>
+
         </v-col>
         <v-col cols="12">
           <v-row no-gutters>
@@ -576,8 +580,7 @@ export default {
               }],
               yAxes: [{
                 display: true,
-                ticks: {
-                },
+                ticks: {},
                 gridLines: {
                   display: false
                 }

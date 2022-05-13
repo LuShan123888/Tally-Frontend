@@ -3,9 +3,9 @@
     <v-row align="center" no-gutters style="height: 150px">
       <v-col cols="3" no-gutters>
         <span
-          :style="{ color: lightPrimary }"
-          class="text-h2 pl-10"
-          v-text="'角色管理'"
+            :style="{ color: lightPrimary }"
+            class="text-h2 pl-10"
+            v-text="'角色管理'"
         />
       </v-col>
       <v-col cols="7">
@@ -15,29 +15,29 @@
               <v-row align="center" no-gutters>
                 <v-col cols="4">
                   <v-text-field
-                    v-model="table.query.role.id"
-                    :rules="[rules.isInteger]"
-                    class="mr-2 pt-0 mt-0"
-                    clearable
-                    label="角色ID"
+                      v-model="table.query.role.id"
+                      :rules="[rules.isInteger]"
+                      class="mr-2 pt-0 mt-0"
+                      clearable
+                      label="角色ID"
                   >
                   </v-text-field>
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                    v-model="table.query.role.roleName"
-                    class="mr-2 pt-0 mt-0"
-                    clearable
-                    label="角色名称"
+                      v-model="table.query.role.roleName"
+                      class="mr-2 pt-0 mt-0"
+                      clearable
+                      label="角色名称"
                   >
                   </v-text-field>
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                    v-model="table.query.role.description"
-                    class="mr-2 pt-0 mt-0"
-                    clearable
-                    label="角色描述"
+                      v-model="table.query.role.description"
+                      class="mr-2 pt-0 mt-0"
+                      clearable
+                      label="角色描述"
                   >
                   </v-text-field>
                 </v-col>
@@ -46,14 +46,14 @@
           </v-col>
           <v-col cols="1">
             <v-btn
-              depressed
-              class="ml-2"
-              color="primary"
-              fab
-              small
-              @click="pageRole"
+                class="ml-2"
+                color="primary"
+                depressed
+                fab
+                small
+                @click="pageRole"
             >
-              <v-icon> mdi-magnify </v-icon>
+              <v-icon> mdi-magnify</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -63,51 +63,51 @@
           <v-col cols="6"></v-col>
           <v-col cols="6">
             <v-btn
-              color="primary"
-              depressed
-              @click="loadRoleSaveDialog"
-              v-text="'新增角色'"
+                color="primary"
+                depressed
+                @click="loadRoleSaveDialog"
+                v-text="'新增角色'"
             />
           </v-col>
           <v-col cols="6">
             <v-btn
-              :disabled="btn.export.isLoading"
-              :loading="btn.export.isLoading"
-              color="warning"
-              depressed
-              @click="exportRole"
-              v-text="'导出角色'"
+                :disabled="btn.export.isLoading"
+                :loading="btn.export.isLoading"
+                color="warning"
+                depressed
+                @click="exportRole"
+                v-text="'导出角色'"
             />
           </v-col>
         </v-row>
       </v-col>
     </v-row>
     <el-table
-      id="table"
-      v-loading="table.loading"
-      :data="table.data"
-      height="68vh"
-      highlight-current-row
-      stripe
-      style="width: 100%"
+        id="table"
+        v-loading="table.loading"
+        :data="table.data"
+        height="68vh"
+        highlight-current-row
+        stripe
+        style="width: 100%"
     >
       <el-table-column
-        :index="(index) => index + 1"
-        align="center"
-        label="编号"
-        type="index"
-        width="70px"
+          :index="(index) => index + 1"
+          align="center"
+          label="编号"
+          type="index"
+          width="70px"
       >
       </el-table-column>
       <el-table-column
-        align="center"
-        label="角色ID"
-        property="id"
-        sortable
-        width="90px"
+          align="center"
+          label="角色ID"
+          property="id"
+          sortable
+          width="90px"
       >
       </el-table-column>
-      <el-table-column label="角色名称" property="roleName"> </el-table-column>
+      <el-table-column label="角色名称" property="roleName"></el-table-column>
       <el-table-column label="角色描述" property="description">
       </el-table-column>
       <el-table-column label="创建时间" property="createdDatetime">
@@ -115,24 +115,24 @@
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
           <v-btn
-            class="mx-1"
-            color="primary"
-            text
-            @click="loadRoleUpdateDialog(scope.row)"
-            v-text="'修改'"
+              class="mx-1"
+              color="primary"
+              text
+              @click="loadRoleUpdateDialog(scope.row)"
+              v-text="'修改'"
           />
           <el-popconfirm
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除该角色吗？"
-            @confirm="deleteRole(scope.row.id)"
+              icon="el-icon-info"
+              icon-color="red"
+              title="确定删除该角色吗？"
+              @confirm="deleteRole(scope.row.id)"
           >
             <v-btn
-              slot="reference"
-              class="mx-1"
-              color="error"
-              text
-              v-text="'删除'"
+                slot="reference"
+                class="mx-1"
+                color="error"
+                text
+                v-text="'删除'"
             />
           </el-popconfirm>
         </template>
@@ -142,24 +142,24 @@
       <v-col class="d-flex justify-end" cols="9">
         <div style="width: 90px">
           <v-select
-            v-model="table.query.page.size"
-            :items="enums.page"
-            no-data-text="无对应选项"
-            dense
-            label="分页大小"
-            lined
-            @input="changePageSize"
+              v-model="table.query.page.size"
+              :items="enums.page"
+              dense
+              label="分页大小"
+              lined
+              no-data-text="无对应选项"
+              @input="changePageSize"
           />
         </div>
       </v-col>
       <v-col cols="3">
         <v-pagination
-          v-model="table.query.page.current"
-          :length="table.query.page.count"
-          next-icon="mdi-menu-right"
-          prev-icon="mdi-menu-left"
-          total-visible="5"
-          @input="changePage"
+            v-model="table.query.page.current"
+            :length="table.query.page.count"
+            next-icon="mdi-menu-right"
+            prev-icon="mdi-menu-left"
+            total-visible="5"
+            @input="changePage"
         />
       </v-col>
     </v-row>
@@ -167,59 +167,59 @@
       <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
         <v-card>
           <v-card-title>
-            <span class="text-h5" v-text="dialog.title" />
+            <span class="text-h5" v-text="dialog.title"/>
           </v-card-title>
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col class="pr-1" cols="6">
                   <v-text-field
-                    v-model="dialog.role.roleName"
-                    :rules="[(v) => !!v || '角色名称不能为空']"
-                    clearable
-                    label="角色名称"
+                      v-model="dialog.role.roleName"
+                      :rules="[(v) => !!v || '角色名称不能为空']"
+                      clearable
+                      label="角色名称"
                   />
                 </v-col>
                 <v-col class="pl-1" cols="6">
                   <v-text-field
-                    v-model="dialog.role.description"
-                    clearable
-                    label="角色描述"
+                      v-model="dialog.role.description"
+                      clearable
+                      label="角色描述"
                   />
                 </v-col>
                 <v-col cols="12">
                   <span
-                    :style="{ fontSize: '16px' }"
-                    class="mt-3"
-                    v-text="'角色权限'"
+                      :style="{ fontSize: '16px' }"
+                      class="mt-3"
+                      v-text="'角色权限'"
                   />
                   <v-treeview
-                    v-model="dialog.role.permissionIdSet"
-                    :items="dialog.permissionTree"
-                    dense
-                    open-on-click
-                    selectable
-                    hoverable
-                    item-children="children"
-                    item-key="id"
-                    item-text="permissionName"
-                    selected-color="primary"
-                    transition
+                      v-model="dialog.role.permissionIdSet"
+                      :items="dialog.permissionTree"
+                      dense
+                      hoverable
+                      item-children="children"
+                      item-key="id"
+                      item-text="permissionName"
+                      open-on-click
+                      selectable
+                      selected-color="primary"
+                      transition
                   />
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
           <v-card-actions>
-            <v-spacer />
-            <v-btn text @click="dialog.isShow = false" v-text="'取消'" />
+            <v-spacer/>
+            <v-btn text @click="dialog.isShow = false" v-text="'取消'"/>
             <v-btn
-              :disabled="dialog.btn.loading"
-              :loading="dialog.btn.loading"
-              color="primary"
-              text
-              @click="saveOrUpdateRole"
-              v-text="'保存'"
+                :disabled="dialog.btn.loading"
+                :loading="dialog.btn.loading"
+                color="primary"
+                text
+                @click="saveOrUpdateRole"
+                v-text="'保存'"
             />
           </v-card-actions>
         </v-card>
@@ -244,7 +244,8 @@ export default {
     },
   },
   watch: {},
-  created() {},
+  created() {
+  },
   data: function () {
     return {
       table: {
@@ -301,18 +302,18 @@ export default {
       if (this.$refs.roleQueryForm.validate()) {
         this.table.loading = true;
         this.axios
-          .post(
-            "/role/pageRole/" +
-              this.table.query.page.current +
-              "/" +
-              this.table.query.page.size,
-            this.table.query.role
-          )
-          .then((response) => {
-            this.table.data = response.data.data;
-            this.table.query.page.count = response.data.count;
-            this.table.loading = false;
-          });
+            .post(
+                "/role/pageRole/" +
+                this.table.query.page.current +
+                "/" +
+                this.table.query.page.size,
+                this.table.query.role
+            )
+            .then((response) => {
+              this.table.data = response.data.data;
+              this.table.query.page.count = response.data.count;
+              this.table.loading = false;
+            });
       }
     },
     saveOrUpdateRole() {
@@ -325,36 +326,36 @@ export default {
       this.dialog.btn.loading = true;
       if (this.dialog.role.id) {
         this.axios
-          .put("/role/updateRole", this.dialog.role)
-          .then(() => {
-            this.$notify({
-              title: "保存成功",
-              message: null,
-              type: "success",
-              duration: 2000,
+            .put("/role/updateRole", this.dialog.role)
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.pageRole();
+            })
+            .finally(() => {
+              this.dialog.btn.loading = false;
             });
-            this.dialog.isShow = false;
-            this.pageRole();
-          })
-          .finally(() => {
-            this.dialog.btn.loading = false;
-          });
       } else {
         this.axios
-          .post("/role/saveRole", this.dialog.role)
-          .then(() => {
-            this.$notify({
-              title: "保存成功",
-              message: null,
-              type: "success",
-              duration: 2000,
+            .post("/role/saveRole", this.dialog.role)
+            .then(() => {
+              this.$notify({
+                title: "保存成功",
+                message: null,
+                type: "success",
+                duration: 2000,
+              });
+              this.dialog.isShow = false;
+              this.pageRole();
+            })
+            .finally(() => {
+              this.dialog.btn.loading = false;
             });
-            this.dialog.isShow = false;
-            this.pageRole();
-          })
-          .finally(() => {
-            this.dialog.btn.loading = false;
-          });
       }
     },
     deleteRole(roleId) {
@@ -371,27 +372,27 @@ export default {
     exportRole() {
       if (this.$refs.roleQueryForm.validate()) {
         this.axios
-          .post(
-            "/role/pageRole/" +
-              this.table.query.page.current +
-              "/" +
-              this.table.query.page.size +
-              "/?export=excel",
-            this.table.query.role,
-            { responseType: "blob" }
-          )
-          .then((response) => {
-            let url = window.URL.createObjectURL(new Blob([response.data]));
-            let link = document.createElement("a");
-            link.style.display = "none";
-            link.href = url;
-            link.setAttribute("download", "export.xlsx");
-            document.body.appendChild(link);
-            link.click();
-          })
-          .finally(() => {
-            this.btn.export.isLoading = false;
-          });
+            .post(
+                "/role/pageRole/" +
+                this.table.query.page.current +
+                "/" +
+                this.table.query.page.size +
+                "/?export=excel",
+                this.table.query.role,
+                {responseType: "blob"}
+            )
+            .then((response) => {
+              let url = window.URL.createObjectURL(new Blob([response.data]));
+              let link = document.createElement("a");
+              link.style.display = "none";
+              link.href = url;
+              link.setAttribute("download", "export.xlsx");
+              document.body.appendChild(link);
+              link.click();
+            })
+            .finally(() => {
+              this.btn.export.isLoading = false;
+            });
       }
     },
     loadRoleSaveDialog() {

@@ -3,8 +3,7 @@
       :class="{ 'ml-10': !isMobile }"
       :style="{ width: isMobile ? '100%' : '50%' }"
       class="py-0 px-4"
-      fluid
-  >
+      fluid>
     <title-bar :title="title"/>
     <background-image :src="backgroundImagePath"/>
     <v-btn
@@ -158,52 +157,54 @@
         </v-card>
       </v-dialog>
     </v-form>
-    <v-skeleton-loader
-        v-for="item in 6"
-        v-if="loading"
-        :key="'skeleton-loader' + item"
-        class="rounded-lg mt-4"
-        type="list-item-avatar-two-line"
-    />
-    <v-container
-        v-for="(date, i) in billList"
-        v-if="!loading"
-        :key="i"
-        class="pa-0"
-        fluid
-    >
-      <v-row
-          align="center"
-          class="px-0 py-3 font-weight-medium d-flex justify-space-between"
-          no-gutters
-          style="position: relative"
+    <div v-if="loading">
+      <v-skeleton-loader
+          v-for="item in 6"
+          :key="'skeleton-loader' + item"
+          class="rounded-lg mt-4"
+          type="list-item-avatar-two-line"
+      />
+    </div>
+    <div v-if="!loading">
+      <v-container
+          v-for="(date, i) in billList"
+
+          :key="i"
+          class="pa-0"
+          fluid
       >
+        <v-row
+            align="center"
+            class="px-0 py-3 font-weight-medium d-flex justify-space-between"
+            no-gutters
+            style="position: relative"
+        >
         <span
             class="text-subtitle-2 text--darken-1 grey--text"
             v-text="date.groupName"
         />
-        <span class="text-subtitle-2 text--darken-1 grey--text">
+          <span class="text-subtitle-2 text--darken-1 grey--text">
           <span>结余</span>
           <span class="ml-2" v-text="'¥' + numFormat(date.amount)"/>
         </span>
-      </v-row>
-      <v-card class="py-0 rounded-lg" flat fluid>
-        <v-container
-            v-for="(item, i) in date.list"
-            :key="i"
-            v-ripple
-            class="pa-0 px-3"
-            fluid
-        >
-          <v-row
-              align="center"
-              no-gutters
-              style="height: 60px; cursor: pointer"
-              @click="loadUpdateBillPage(item)"
+        </v-row>
+        <v-card class="py-0 rounded-lg" flat fluid>
+          <v-container
+              v-for="(item, i) in date.list"
+              :key="i"
+              v-ripple
+              class="pa-0 px-3"
+              fluid
           >
-            <v-col cols="1">
-              <v-btn
-                  :color="
+            <v-row
+                align="center"
+                no-gutters
+                style="height: 60px; cursor: pointer"
+                @click="loadUpdateBillPage(item)"
+            >
+              <v-col cols="1">
+                <v-btn
+                    :color="
                   item.flow === 'OUT'
                     ? 'error'
                     : item.flow === 'IN'
@@ -212,46 +213,47 @@
                     ? 'warning'
                     : ''
                 "
-                  class="rounded-lg"
-                  depressed
-                  fab
-                  x-small
-              >
-                <v-icon v-if="item.billTypeVO && item.billTypeVO.icon"
-                >mdi-{{ item.billTypeVO.icon }}
-                </v-icon
+                    class="rounded-lg"
+                    depressed
+                    fab
+                    x-small
                 >
-                <v-icon v-else>mdi-help</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col class="ml-3 text-truncate">
-              <div
-                  class="text-subtitle-1"
-                  v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"
-              />
-              <div
-                  class="text-subtitle-2 text--darken-1 grey--text text-truncate"
-                  style="max-width: 100%"
-                  v-text="item.description"
-              />
-            </v-col>
-            <v-col class="d-flex justify-end" cols="3">
-              <div class="text-subtitle-1">
+                  <v-icon v-if="item.billTypeVO && item.billTypeVO.icon"
+                  >mdi-{{ item.billTypeVO.icon }}
+                  </v-icon
+                  >
+                  <v-icon v-else>mdi-help</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col class="ml-3 text-truncate">
+                <div
+                    class="text-subtitle-1"
+                    v-text="item.billTypeVO && item.billTypeVO.billTypeFullName"
+                />
+                <div
+                    class="text-subtitle-2 text--darken-1 grey--text text-truncate"
+                    style="max-width: 100%"
+                    v-text="item.description"
+                />
+              </v-col>
+              <v-col class="d-flex justify-end" cols="3">
+                <div class="text-subtitle-1">
                 <span
                     v-text="
                     (item.flow === 'OUT' ? '¥-' : '¥') + numFormat(item.amount)
                   "
                 />
-              </div>
-            </v-col>
-            <v-col class="d-flex justify-end" cols="1">
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-col>
-          </v-row>
-          <v-divider v-if="i !== date.list.length - 1"/>
-        </v-container>
-      </v-card>
-    </v-container>
+                </div>
+              </v-col>
+              <v-col class="d-flex justify-end" cols="1">
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-col>
+            </v-row>
+            <v-divider v-if="i !== date.list.length - 1"/>
+          </v-container>
+        </v-card>
+      </v-container>
+    </div>
     <v-dialog
         ref="dialog"
         v-model="billPage.isShow"
@@ -439,7 +441,7 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings"
                       >
-                        <template v-slot:message="{ key, message }">
+                        <template v-slot:message="{  }">
                           <div
                               class="overflow-auto"
                               style="white-space: nowrap"
@@ -630,7 +632,7 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings"
                       >
-                        <template v-slot:message="{ key, message }">
+                        <template v-slot:message="{  }">
                           <div
                               class="overflow-auto"
                               style="white-space: nowrap"
@@ -787,7 +789,7 @@
                           messages=" "
                           prepend-inner-icon="mdi-card-bulleted-settings"
                       >
-                        <template v-slot:message="{ key, message }">
+                        <template v-slot:message="{  }">
                           <div
                               class="overflow-auto"
                               style="white-space: nowrap"
@@ -960,7 +962,7 @@ export default {
       },
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
-      userInfo: this.$store.getters.getUserInfo,
+      userInfo: null,
     };
   },
   watch: {
@@ -1313,9 +1315,15 @@ export default {
           this.budgetBar.dialog.loading = false;
         });
       }
+    },
+    getUserInfo() {
+      this.axios.get("/user/getUserInfo").then((response) => {
+        this.userInfo = response.data.data;
+      });
     }
   },
   mounted() {
+    this.getUserInfo();
     this.$emit("changeTitle", this.title);
     this.listBill();
     this.loadBudget();
