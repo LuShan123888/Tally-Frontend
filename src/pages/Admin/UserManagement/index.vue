@@ -1,77 +1,36 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row style="height: 150px" no-gutters align="center">
-      <v-col cols="3" no-gutters>
-        <span
-            :style="{ color: lightPrimary }"
-            class="text-h2 pl-10"
-            v-text="'用户管理'"
-        />
-      </v-col>
+      <v-col cols="3" no-gutters><span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'用户管理'"/></v-col>
       <v-col cols="7">
         <v-row no-gutters align="center">
           <v-col cols="5">
             <v-form ref="userQueryForm">
               <v-row no-gutters align="center">
                 <v-col cols="6">
-                  <v-text-field
-                      v-model="table.query.user.id"
-                      :rules="[rules.isInteger]"
-                      class="mr-2 pt-0 mt-0"
-                      clearable
-                      label="用户ID"
-                  >
-                  </v-text-field>
+                  <v-text-field v-model="table.query.user.id" :rules="[rules.isInteger]" class="mr-2 pt-0 mt-0"
+                                clearable label="用户ID"></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field
-                      v-model="table.query.user.username"
-                      class="mr-2 pt-0 mt-0"
-                      clearable
-                      label="用户名"
-                  >
-                  </v-text-field>
+                  <v-text-field v-model="table.query.user.username" class="mr-2 pt-0 mt-0" clearable
+                                label="用户名"></v-text-field>
                 </v-col>
               </v-row>
               <v-row no-gutters align="center">
                 <v-col cols="6">
-                  <v-select
-                      v-model="table.query.user.status"
-                      :items="enums.userStatus"
-                      class="mt-0 pt-0 mr-2"
-                      clearable
-                      label="状态"
-                      no-data-text="无对应选项"
-                  />
+                  <v-select v-model="table.query.user.status" :items="enums.userStatus" class="mt-0 pt-0 mr-2" clearable
+                            label="状态" no-data-text="无对应选项"/>
                 </v-col>
                 <v-col cols="6">
-                  <v-select
-                      v-model="table.query.user.roleIdSet"
-                      :items="roleMap"
-                      chips
-                      class="mt-0 pt-0 mr-2"
-                      clearable
-                      deletable-chips
-                      item-text="roleName"
-                      item-value="id"
-                      label="角色"
-                      multiple
-                      no-data-text="无对应选项"
-                      small-chips
-                  />
+                  <v-select v-model="table.query.user.roleIdSet" :items="roleMap" chips class="mt-0 pt-0 mr-2" clearable
+                            deletable-chips item-text="roleName" item-value="id" label="角色" multiple
+                            no-data-text="无对应选项" small-chips/>
                 </v-col>
               </v-row>
             </v-form>
           </v-col>
           <v-col cols="1">
-            <v-btn
-                class="ml-2"
-                color="primary"
-                depressed
-                fab
-                small
-                @click="pageUser"
-            >
+            <v-btn class="ml-2" color="primary" depressed fab small @click="pageUser">
               <v-icon> mdi-magnify</v-icon>
             </v-btn>
           </v-col>
@@ -81,55 +40,22 @@
         <v-row justify="end">
           <v-col cols="6"></v-col>
           <v-col cols="6">
-            <v-btn
-                color="primary"
-                depressed
-                @click="loadUserSaveDialog"
-                v-text="'新增用户'"
-            />
+            <v-btn color="primary" depressed @click="loadUserSaveDialog" v-text="'新增用户'"/>
           </v-col>
           <v-col cols="6">
-            <v-btn
-                :disabled="btn.export.isLoading"
-                :loading="btn.export.isLoading"
-                color="warning"
-                depressed
-                @click="exportUser"
-                v-text="'导出用户'"
-            />
+            <v-btn :disabled="btn.export.isLoading" :loading="btn.export.isLoading" color="warning" depressed
+                   @click="exportUser" v-text="'导出用户'"/>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
-    <el-table
-        id="table"
-        v-loading="table.loading"
-        :data="table.data"
-        height="68vh"
-        highlight-current-row
-        stripe
-        style="width: 100%"
-    >
-      <el-table-column
-          :index="(index) => index + 1"
-          align="center"
-          label="编号"
-          type="index"
-          width="70px"
-      >
-      </el-table-column>
-      <el-table-column
-          align="center"
-          label="用户ID"
-          property="id"
-          sortable
-          width="90px"
-      >
-      </el-table-column>
-      <el-table-column label="用户名" property="username"></el-table-column>
-      <el-table-column label="邮箱" property="email"></el-table-column>
-      <el-table-column label="手机号" property="phoneNumber" width="180">
-      </el-table-column>
+    <el-table id="table" v-loading="table.loading" :data="table.data" height="68vh" highlight-current-row stripe
+              style="width: 100%">
+      <el-table-column :index="(index) => index + 1" align="center" label="编号" type="index" width="70px"/>
+      <el-table-column align="center" label="用户ID" property="id" sortable width="90px"/>
+      <el-table-column label="用户名" property="username"/>
+      <el-table-column label="邮箱" property="email"/>
+      <el-table-column label="手机号" property="phoneNumber" width="180"/>
       <el-table-column label="头像" align="center">
         <template v-slot="scope">
           <avatar :path="scope.row.avatarPath" size="40"/>
@@ -137,51 +63,21 @@
       </el-table-column>
       <el-table-column align="center" label="角色" width="200">
         <template v-slot="scope">
-          <v-chip
-              v-for="item in scope.row.roleIdSet"
-              :key="item"
-              class="mx-1"
-              label
-              small
-              v-text="roleNameFormatter(item)"
-          >
-          </v-chip>
+          <v-chip v-for="item in scope.row.roleIdSet" :key="item" class="mx-1" label small
+                  v-text="roleNameFormatter(item)"></v-chip>
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态">
         <template v-slot="scope">
-          <v-chip
-              :color="scope.row.status === 'NORMAL' ? 'success' : 'secondary'"
-              class="mx-1"
-              label
-              small
-              v-text="userStatusFormatter(scope.row)"
-          >
-          </v-chip>
+          <v-chip :color="scope.row.status === 'NORMAL' ? 'success' : 'secondary'" class="mx-1" label small
+                  v-text="userStatusFormatter(scope.row)"></v-chip>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="250px">
         <template v-slot="scope">
-          <v-btn
-              class="mx-1"
-              color="primary"
-              text
-              @click="loadUserUpdateDialog(scope.row)"
-              v-text="'修改'"
-          />
-          <el-popconfirm
-              icon="el-icon-info"
-              icon-color="red"
-              title="确定删除该用户吗？"
-              @confirm="deleteUser(scope.row.id)"
-          >
-            <v-btn
-                slot="reference"
-                class="mx-1"
-                color="error"
-                text
-                v-text="'删除'"
-            />
+          <v-btn class="mx-1" color="primary" text @click="loadUserUpdateDialog(scope.row)" v-text="'修改'"/>
+          <el-popconfirm icon="el-icon-info" icon-color="red" title="确定删除该用户吗？" @confirm="deleteUser(scope.row.id)">
+            <v-btn slot="reference" class="mx-1" color="error" text v-text="'删除'"/>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -189,160 +85,63 @@
     <v-row class="mt-7" no-gutters>
       <v-col cols="9" class="d-flex justify-end">
         <div style="width: 90px">
-          <v-select
-              v-model="table.query.page.size"
-              :items="enums.page"
-              dense
-              label="分页大小"
-              lined
-              no-data-text="无对应选项"
-              @input="changePageSize"
-          />
+          <v-select v-model="table.query.page.size" :items="enums.page" dense label="分页大小" lined no-data-text="无对应选项"
+                    @input="changePageSize"/>
         </div>
       </v-col>
       <v-col cols="3">
-        <v-pagination
-            v-model="table.query.page.current"
-            :length="table.query.page.count"
-            next-icon="mdi-menu-right"
-            prev-icon="mdi-menu-left"
-            total-visible="5"
-            @input="changePage"
-        />
+        <v-pagination v-model="table.query.page.current" :length="table.query.page.count" next-icon="mdi-menu-right"
+                      prev-icon="mdi-menu-left" total-visible="5" @input="changePage"/>
       </v-col>
     </v-row>
     <v-form ref="userSaveOrUpdateForm">
       <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
         <v-card>
-          <v-card-title>
-            <span class="text-h5" v-text="dialog.title"/>
-          </v-card-title>
+          <v-card-title><span class="text-h5" v-text="dialog.title"/></v-card-title>
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col class="pr-1" cols="6">
-                  <v-text-field
-                      v-model="dialog.user.username"
-                      :disabled="!!dialog.user.id"
-                      :rules="[rules.isUsername]"
-                      clearable
-                      label="用户名"
-                  />
+                  <v-text-field v-model="dialog.user.username" :disabled="!!dialog.user.id" :rules="[rules.isUsername]"
+                                clearable label="用户名"/>
                 </v-col>
                 <v-col class="pl-1" cols="6">
-                  <v-text-field
-                      v-model="dialog.user.phoneNumber"
-                      :disabled="!!dialog.user.id"
-                      :rules="[rules.isPhoneNumber]"
-                      clearable
-                      counter
-                      label="手机号"
-                  />
+                  <v-text-field v-model="dialog.user.phoneNumber" :disabled="!!dialog.user.id"
+                                :rules="[rules.isPhoneNumber]" clearable counter label="手机号"/>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field
-                      v-model="dialog.user.email"
-                      :disabled="!!dialog.user.id"
-                      :rules="[rules.isEmail]"
-                      clearable
-                      label="邮箱"
-                  />
+                  <v-text-field v-model="dialog.user.email" :disabled="!!dialog.user.id" :rules="[rules.isEmail]"
+                                clearable label="邮箱"/>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field
-                      v-if="!dialog.user.id"
-                      v-model="dialog.user.password"
-                      :rules="[rules.isPassword]"
-                      clearable
-                      counter
-                      label="密码"
-                      type="password"
-                  />
-                  <v-text-field
-                      v-if="!dialog.user.id"
-                      :rules="[
-                      (value) =>
-                        value === dialog.user.password ||
-                        '两次输入的密码不一致',
-                    ]"
-                      clearable
-                      counter
-                      label="密码确认"
-                      type="password"
-                  />
+                  <v-text-field v-if="!dialog.user.id" v-model="dialog.user.password" :rules="[rules.isPassword]"
+                                clearable counter label="密码" type="password"/>
+                  <v-text-field v-if="!dialog.user.id"
+                                :rules="[ (value) => value === dialog.user.password || '两次输入的密码不一致', ]" clearable
+                                counter label="密码确认" type="password"/>
                 </v-col>
                 <v-col cols="4">
-                  <v-row align="center" class="mb-3" no-gutters>
-                    <span
-                        :style="{ color: dialog.user.id ? '#9E9E9D' : 'inherit' }"
-                        class="text-subtitle-1"
-                        v-text="'头像'"
-                    />
-                    <v-btn
-                        v-if="dialog.user.avatarPath != null && !dialog.user.id"
-                        class="error"
-                        depressed
-                        style="margin-left: 72px"
-                        x-small
-                        @click="dialog.user.avatarPath = null"
-                        v-text="'删除'"
-                    />
+                  <v-row align="center" class="mb-3" no-gutters><span
+                      :style="{ color: dialog.user.id ? '#9E9E9D' : 'inherit' }" class="text-subtitle-1" v-text="'头像'"/>
+                    <v-btn v-if="dialog.user.avatarPath != null && !dialog.user.id" class="error" depressed
+                           style="margin-left: 72px" x-small @click="dialog.user.avatarPath = null" v-text="'删除'"/>
                   </v-row>
-                  <image-uploader
-                      v-if="!dialog.user.id"
-                      :image-path="dialog.user.avatarPath"
-                      border-radius="50%"
-                      @setImagePath="
-                      (imagePath) => {
-                        dialog.user.avatarPath = imagePath;
-                      }
-                    "
-                  />
+                  <image-uploader v-if="!dialog.user.id" :image-path="dialog.user.avatarPath" border-radius="50%"
+                                  @setImagePath="(imagePath) => {dialog.user.avatarPath = imagePath;}"/>
                   <div v-else>
-                    <i-image
-                        v-if="dialog.user.avatarPath"
-                        :src="getImageUrl(dialog.user.avatarPath)"
-                        style="
-                        height: 150px;
-                        width: 150px;
-                        border: 2px dashed #9e9e9d;
-                        border-radius: 50%;
-                      "
-                    />
-                    <v-icon
-                        v-else
-                        size="150px"
-                        style="
-                        height: 150px;
-                        width: 150px;
-                        border: 2px dashed #9e9e9d;
-                        border-radius: 50%;
-                      "
-                    >
+                    <i-image v-if="dialog.user.avatarPath" :src="getImageUrl(dialog.user.avatarPath)"
+                             style=" height: 150px; width: 150px; border: 2px dashed #9e9e9d; border-radius: 50%;"/>
+                    <v-icon v-else size="150px"
+                            style=" height: 150px; width: 150px; border: 2px dashed #9e9e9d; border-radius: 50%;">
                       mdi-account-circle
                     </v-icon>
                   </div>
                 </v-col>
                 <v-col align-self="center">
-                  <v-select
-                      v-model="dialog.user.status"
-                      :items="enums.userStatus"
-                      :rules="[(value) => value != null || '请选择状态']"
-                      label="状态"
-                      no-data-text="无对应选项"
-                  />
-                  <v-select
-                      v-model="dialog.user.roleIdSet"
-                      :items="roleMap"
-                      chips
-                      deletable-chips
-                      item-text="roleName"
-                      item-value="id"
-                      label="角色"
-                      multiple
-                      no-data-text="无对应选项"
-                      small-chips
-                  />
+                  <v-select v-model="dialog.user.status" :items="enums.userStatus"
+                            :rules="[(value) => value != null || '请选择状态']" label="状态" no-data-text="无对应选项"/>
+                  <v-select v-model="dialog.user.roleIdSet" :items="roleMap" chips deletable-chips item-text="roleName"
+                            item-value="id" label="角色" multiple no-data-text="无对应选项" small-chips/>
                 </v-col>
               </v-row>
             </v-container>
@@ -350,14 +149,8 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn text @click="dialog.isShow = false" v-text="'取消'"/>
-            <v-btn
-                :disabled="dialog.btn.loading"
-                :loading="dialog.btn.loading"
-                color="primary"
-                text
-                @click="saveOrUpdateUser"
-                v-text="'保存'"
-            />
+            <v-btn :disabled="dialog.btn.loading" :loading="dialog.btn.loading" color="primary" text
+                   @click="saveOrUpdateUser" v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>

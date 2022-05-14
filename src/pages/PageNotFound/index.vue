@@ -4,13 +4,7 @@
       <i-image :src="imageUrl" max-width="1000px" width="100%"/>
     </v-row>
     <v-row justify="center">
-      <v-btn
-          class="mt-6"
-          color="primary"
-          to="/home"
-          x-large
-          v-text="'返回主页'">
-      </v-btn>
+      <v-btn class="mt-6" color="primary" to="/home" x-large v-text="'返回主页'"/>
     </v-row>
   </v-container>
 </template>

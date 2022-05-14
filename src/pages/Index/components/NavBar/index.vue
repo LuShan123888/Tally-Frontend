@@ -7,21 +7,14 @@
             <v-btn class="rounded-lg mr-4" color="primary" depressed fab small>
               <v-icon>mdi-notebook-edit</v-icon>
             </v-btn>
-            <span class="text-subtitle-1" v-text="title"/>
-          </div>
+            <span class="text-subtitle-1" v-text="title"/></div>
           <v-list nav>
             <v-list-item-group v-model="selectedItem" color="primary">
-              <v-list-item
-                  v-for="(item, i) in menus"
-                  :key="i"
-                  :to="item.path"
-                  class="listItem rounded-lg">
+              <v-list-item v-for="(item, i) in menus" :key="i" :to="item.path" class="listItem rounded-lg">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"/>
                 </v-list-item-icon>
-                <v-list-item-title
-                    class="text-subtitle-2"
-                    v-text="item.text"/>
+                <v-list-item-title class="text-subtitle-2" v-text="item.text"/>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -29,12 +22,7 @@
       </div>
     </v-navigation-drawer>
     <v-bottom-navigation color="primary" fixed app grow v-show="isMobile">
-      <v-btn
-          v-for="(item, i) in menus"
-          :key="i"
-          :to="item.path"
-          min-width="70px"
-          height="inherit">
+      <v-btn v-for="(item, i) in menus" :key="i" :to="item.path" height="inherit" min-width="70px">
         <v-icon v-text="item.icon"/>
       </v-btn>
     </v-bottom-navigation>

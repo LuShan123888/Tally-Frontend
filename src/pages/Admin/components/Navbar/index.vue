@@ -4,11 +4,7 @@
                        width="320">
     <v-list nav style="margin-top:48px">
       <div v-for="(item, i) in menus.data" :key="i">
-        <v-list-item v-if="item.children == null"
-                     :to="item.path"
-                     class="mb-3"
-                     color="primary"
-                     link
+        <v-list-item v-if="item.children == null" :to="item.path" class="mb-3" color="primary" link
                      @click="menus.isFold=false">
           <v-list-item-icon>
             <v-icon v-text="item.icon"/>
@@ -17,22 +13,13 @@
             <v-list-item-title v-text="item.title"/>
           </v-list-item-content>
         </v-list-item>
-        <v-list-group
-            v-if="item.children!=null"
-            v-model="menus.isFold"
-            :prepend-icon="item.icon"
-            no-action>
+        <v-list-group v-if="item.children!=null" v-model="menus.isFold" :prepend-icon="item.icon" no-action>
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title v-text="item.title"/>
             </v-list-item-content>
           </template>
-          <v-list-item
-              v-for="(item, i) in item.children"
-              :key="i"
-              class="mb-3"
-              :to="item.path"
-              link>
+          <v-list-item v-for="(item, i) in item.children" :key="i" :to="item.path" class="mb-3" link>
             <v-list-item-content>
               <v-list-item-title v-text="item.title"/>
             </v-list-item-content>

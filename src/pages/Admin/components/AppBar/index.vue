@@ -6,46 +6,21 @@
     </v-app-bar-nav-icon>
     <v-app-bar-title class="subtitle-1 pl-4" v-text="title"/>
     <v-spacer/>
-    <v-menu
-        close-delay="300ms"
-        bottom
-        offset-y
-        nudge-bottom="5px"
-        nudge-left="25px"
-        open-on-hover
-        transition="slide-y-transition"
-    >
+    <v-menu bottom close-delay="300ms" nudge-bottom="5px" nudge-left="25px" offset-y open-on-hover
+            transition="slide-y-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-            class="mr-16">
+        <v-btn class="mr-16" icon v-bind="attrs" v-on="on">
           <avatar :path="userInfo.avatarPath" size="50"/>
         </v-btn>
       </template>
       <v-container :style="{backgroundColor: isDark?'#000000':'#FFFFFF'}" class="pa-3" fluid>
-        <v-row v-if="userInfo" align="center" class="mb-1 d-flex justify-center" no-gutters style="height: 36px">
-          <span v-text="userInfo.username"/>
-        </v-row>
+        <v-row v-if="userInfo" align="center" class="mb-1 d-flex justify-center" no-gutters style="height: 36px"><span
+            v-text="userInfo.username"/></v-row>
         <v-row class="mb-1" no-gutters>
-          <v-btn
-              color="primary"
-              block depressed
-              small
-              to="/home">
-            <span>前往前台</span>
-          </v-btn>
+          <v-btn block color="primary" depressed small to="/home"><span>前往前台</span></v-btn>
         </v-row>
         <v-row no-gutters>
-          <v-btn
-              color="error"
-              block
-              depressed
-              small
-              @click="signOut">
-            <span>安全退出</span>
-          </v-btn>
+          <v-btn block color="error" depressed small @click="signOut"><span>安全退出</span></v-btn>
         </v-row>
       </v-container>
     </v-menu>

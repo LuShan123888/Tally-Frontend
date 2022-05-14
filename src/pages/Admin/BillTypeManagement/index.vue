@@ -1,83 +1,33 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height: 150px">
-      <v-col cols="10" no-gutters>
-        <span
-            :style="{ color: lightPrimary }"
-            class="text-h2 pl-10"
-            v-text="'账单类别管理'"
-        />
+      <v-col cols="10" no-gutters><span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'账单类别管理'"/>
       </v-col>
       <v-col class="d-flex justify-end" cols="2">
         <v-row justify="end">
           <v-col class="d-flex justify-end" cols="6">
-            <v-btn
-                color="primary"
-                depressed
-                @click="loadBillTypeSaveDialog"
-                v-text="'新增类别'"
-            />
+            <v-btn color="primary" depressed @click="loadBillTypeSaveDialog" v-text="'新增类别'"/>
           </v-col>
           <v-col cols="6">
-            <v-btn
-                color="warning"
-                depressed
-                @click="loadBillTypeOrderDialog(table.data)"
-                v-text="'排序类别'"
-            />
+            <v-btn color="warning" depressed @click="loadBillTypeOrderDialog(table.data)" v-text="'排序类别'"/>
           </v-col>
           <v-col cols="6">
-            <v-btn
-                color="error"
-                depressed
-                @click="allocateDialog.isShow = true"
-                v-text="'分配类别'"
-            />
+            <v-btn color="error" depressed @click="allocateDialog.isShow = true" v-text="'分配类别'"/>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
-    <el-table
-        id="table"
-        v-loading="table.loading"
-        :data="table.data"
-        :expand-row-keys="['1']"
-        :tree-props="{ children: 'children' }"
-        height="68vh"
-        highlight-current-row
-        row-key="id"
-        stripe
-        style="width: 100%"
-    >
-      <el-table-column
-          :index="(index) => index + 1"
-          align="center"
-          label="编号"
-          type="index"
-          width="70px"
-      >
-      </el-table-column>
-      <el-table-column label="账单类别ID" property="id" width="200px">
-      </el-table-column>
-      <el-table-column label="账单类别名称" property="billTypeName">
-      </el-table-column>
+    <el-table id="table" v-loading="table.loading" :data="table.data" :expand-row-keys="['1']"
+              :tree-props="{ children: 'children' }" height="68vh" highlight-current-row row-key="id" stripe
+              style="width: 100%">
+      <el-table-column :index="(index) => index + 1" align="center" label="编号" type="index" width="70px"/>
+      <el-table-column label="账单类别ID" property="id" width="200px"/>
+      <el-table-column label="账单类别名称" property="billTypeName"/>
       <el-table-column label="账单类别图标">
         <template v-slot="scope">
           <v-btn
-              :color="
-              scope.row.flow === 'OUT'
-                ? 'error'
-                : scope.row.flow === 'IN'
-                ? 'primary'
-                : scope.row.flow === 'TRANSFER'
-                ? 'warning'
-                : ''
-            "
-              class="rounded-lg"
-              depressed
-              fab
-              x-small
-          >
+              :color=" scope.row.flow === 'OUT' ? 'error' : scope.row.flow === 'IN' ? 'primary' : scope.row.flow === 'TRANSFER' ? 'warning' : ''"
+              class="rounded-lg" depressed fab x-small>
             <v-icon v-if="scope.row.icon">mdi-{{ scope.row.icon }}</v-icon>
             <v-icon v-else>mdi-help</v-icon>
           </v-btn>
@@ -85,80 +35,33 @@
       </el-table-column>
       <el-table-column label="账单类别类型">
         <template v-slot="scope">
-          <v-chip v-if="scope.row.flow === 'OUT'" color="error" label small
-          >支出
-          </v-chip
-          >
-          <v-chip
-              v-else-if="scope.row.flow === 'IN'"
-              color="primary"
-              label
-              small
-          >收入
-          </v-chip
-          >
-          <v-chip
-              v-else-if="scope.row.flow === 'TRANSFER'"
-              color="warning"
-              label
-              small
-          >转账
-          </v-chip
-          >
+          <v-chip v-if="scope.row.flow === 'OUT'" color="error" label small>支出</v-chip>
+          <v-chip v-else-if="scope.row.flow === 'IN'" color="primary" label small>收入</v-chip>
+          <v-chip v-else-if="scope.row.flow === 'TRANSFER'" color="warning" label small>转账</v-chip>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="250px">
         <template v-slot="scope">
-          <v-btn
-              class="mx-1"
-              color="primary"
-              text
-              @click="loadBillTypeUpdateDialog(scope.row)"
-              v-text="'修改'"
-          />
-          <el-popconfirm
-              v-if="!scope.row.children"
-              icon="el-icon-info"
-              icon-color="red"
-              title="确定删除该账单类别吗？"
-              @confirm="deleteBillType(scope.row.id)"
-          >
-            <v-btn
-                slot="reference"
-                class="mx-1"
-                color="error"
-                text
-                v-text="'删除'"
-            />
+          <v-btn class="mx-1" color="primary" text @click="loadBillTypeUpdateDialog(scope.row)" v-text="'修改'"/>
+          <el-popconfirm v-if="!scope.row.children" icon="el-icon-info" icon-color="red" title="确定删除该账单类别吗？"
+                         @confirm="deleteBillType(scope.row.id)">
+            <v-btn slot="reference" class="mx-1" color="error" text v-text="'删除'"/>
           </el-popconfirm>
-          <v-btn
-              v-else
-              class="mx-1"
-              color="warning"
-              text
-              @click="loadBillTypeOrderDialog(scope.row.children)"
-              v-text="'排序'"
-          />
+          <v-btn v-else class="mx-1" color="warning" text @click="loadBillTypeOrderDialog(scope.row.children)"
+                 v-text="'排序'"/>
         </template>
       </el-table-column>
     </el-table>
     <v-form ref="billTypeForm">
       <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
         <v-card>
-          <v-card-title>
-            <span class="text-h5" v-text="dialog.title"/>
-          </v-card-title>
+          <v-card-title><span class="text-h5" v-text="dialog.title"/></v-card-title>
           <v-card-text class="pb-0">
             <v-container class="pa-0">
               <v-row no-gutters>
                 <v-col cols="10">
-                  <v-text-field
-                      v-model="dialog.billType.billTypeName"
-                      :rules="[(value) => !!value || '请输入类别名称']"
-                      clearable
-                      label="类别名称"
-                      prepend-inner-icon="mdi-notebook"
-                  />
+                  <v-text-field v-model="dialog.billType.billTypeName" :rules="[(value) => !!value || '请输入类别名称']"
+                                clearable label="类别名称" prepend-inner-icon="mdi-notebook"/>
                 </v-col>
                 <v-col cols="2">
                   <v-row justify="center" no-gutters>
@@ -169,60 +72,26 @@
                   </v-row>
                   <v-row justify="center" no-gutters>
                     <v-btn
-                        :color="
-                        dialog.billType.flow === 'OUT'
-                          ? 'error'
-                          : dialog.billType.flow === 'IN'
-                          ? 'primary'
-                          : ''
-                      "
-                        class="rounded-lg"
-                        depressed
-                        fab
-                        x-small
-                        @click="iconDialog.isShow = true"
-                    >
-                      <v-icon
-                          v-if="dialog.billType.icon"
-                          v-text="'mdi-' + dialog.billType.icon"
-                      ></v-icon>
+                        :color=" dialog.billType.flow === 'OUT' ? 'error' : dialog.billType.flow === 'IN' ? 'primary' : ''"
+                        class="rounded-lg" depressed fab x-small @click="iconDialog.isShow = true">
+                      <v-icon v-if="dialog.billType.icon" v-text="'mdi-' + dialog.billType.icon"></v-icon>
                       <v-icon v-else>mdi-help</v-icon>
                     </v-btn>
                   </v-row>
                 </v-col>
                 <v-col class="pr-1" cols="6">
-                  <v-select
-                      v-model="dialog.billType.flow"
-                      :items="[
-                      { text: '支出', value: 'OUT' },
-                      { text: '收入', value: 'IN' },
-                    ]"
-                      :rules="[(value) => !!value || '请选择类别类型']"
-                      label="类型"
-                      no-data-text="无对应选项"
-                      prepend-inner-icon="mdi-format-list-bulleted-type"
-                      @change="dialog.billType.parentId = null"
-                  />
+                  <v-select v-model="dialog.billType.flow"
+                            :items="[ { text: '支出', value: 'OUT' }, { text: '收入', value: 'IN' }, ]"
+                            :rules="[(value) => !!value || '请选择类别类型']" label="类型" no-data-text="无对应选项"
+                            prepend-inner-icon="mdi-format-list-bulleted-type"
+                            @change="dialog.billType.parentId = null"/>
                 </v-col>
                 <v-col class="pl-1" cols="6">
-                  <v-select
-                      v-model="dialog.billType.parentId"
-                      :items="
-                      dialog.billType.flow === 'OUT'
-                        ? outBillTypeList
-                        : dialog.billType.flow === 'IN'
-                        ? inBillTypeList
-                        : []
-                    "
-                      :rules="[
-                      (value) => value === 0 || !!value || '请选择父账单类别',
-                    ]"
-                      item-text="billTypeName"
-                      item-value="id"
-                      label="父账单类别"
-                      no-data-text="请先选择类别类型"
-                      prepend-inner-icon="mdi-account-arrow-up"
-                  />
+                  <v-select v-model="dialog.billType.parentId"
+                            :items=" dialog.billType.flow === 'OUT' ? outBillTypeList : dialog.billType.flow === 'IN' ? inBillTypeList : []"
+                            :rules="[ (value) => value === 0 || !!value || '请选择父账单类别', ]" item-text="billTypeName"
+                            item-value="id" label="父账单类别" no-data-text="请先选择类别类型"
+                            prepend-inner-icon="mdi-account-arrow-up"/>
                 </v-col>
               </v-row>
             </v-container>
@@ -230,61 +99,29 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn text @click="dialog.isShow = false" v-text="'取消'"/>
-            <v-btn
-                :disabled="dialog.btn.loading"
-                :loading="dialog.btn.loading"
-                color="primary"
-                text
-                @click="saveOrUpdateBillType"
-                v-text="'保存'"
-            />
+            <v-btn :disabled="dialog.btn.loading" :loading="dialog.btn.loading" color="primary" text
+                   @click="saveOrUpdateBillType" v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-form>
     <v-dialog v-model="orderDialog.isShow" max-width="600px" scrollable>
       <v-card>
-        <v-card-title>
-          <span v-text="'账单类别排序'"/>
-        </v-card-title>
+        <v-card-title><span v-text="'账单类别排序'"/></v-card-title>
         <v-card-text class="pb-0">
-          <draggable
-              :list="orderDialog.billTypeList"
-              handle="#handle"
-              tag="div"
-              v-bind="dragOptions"
-          >
+          <draggable :list="orderDialog.billTypeList" handle="#handle" tag="div" v-bind="dragOptions">
             <transition-group type="transition">
-              <v-row
-                  v-for="item in orderDialog.billTypeList"
-                  :key="item.id"
-                  align="center"
-                  class="rounded-lg mb-1 px-2 py-1"
-                  no-gutters
-              >
+              <v-row v-for="item in orderDialog.billTypeList" :key="item.id" align="center"
+                     class="rounded-lg mb-1 px-2 py-1" no-gutters>
                 <v-col cols="2">
                   <v-btn
-                      :color="
-                      item.flow === 'OUT'
-                        ? 'error'
-                        : item.flow === 'IN'
-                        ? 'primary'
-                        : item.flow === 'TRANSFER'
-                        ? 'warning'
-                        : ''
-                    "
-                      class="rounded-lg"
-                      depressed
-                      fab
-                      x-small
-                  >
+                      :color=" item.flow === 'OUT' ? 'error' : item.flow === 'IN' ? 'primary' : item.flow === 'TRANSFER' ? 'warning' : ''"
+                      class="rounded-lg" depressed fab x-small>
                     <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
                     <v-icon v-else>mdi-help</v-icon>
                   </v-btn>
                 </v-col>
-                <v-col>
-                  <span class="text-subtitle-2">{{ item.billTypeName }}</span>
-                </v-col>
+                <v-col><span class="text-subtitle-2">{{ item.billTypeName }}</span></v-col>
                 <v-col class="d-flex justify-end" cols="2">
                   <v-icon id="handle">mdi-format-list-bulleted</v-icon>
                 </v-col>
@@ -294,81 +131,40 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
-          <v-btn
-              depressed
-              text
-              @click="orderDialog.isShow = false"
-              v-text="'取消'"
-          />
-          <v-btn
-              :disabled="orderDialog.btn.loading"
-              :loading="orderDialog.btn.loading"
-              color="primary"
-              depressed
-              text
-              @click="updateBillTypeOrder"
-              v-text="'保存'"
-          />
+          <v-btn depressed text @click="orderDialog.isShow = false" v-text="'取消'"/>
+          <v-btn :disabled="orderDialog.btn.loading" :loading="orderDialog.btn.loading" color="primary" depressed text
+                 @click="updateBillTypeOrder" v-text="'保存'"/>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-form ref="allocateForm">
       <v-dialog v-model="allocateDialog.isShow" max-width="600px" scrollable>
         <v-card>
-          <v-card-title>
-            <span v-text="'分配默认账单类别'"/>
-          </v-card-title>
+          <v-card-title><span v-text="'分配默认账单类别'"/></v-card-title>
           <v-card-text class="pb-0">
             <v-row align="center" no-gutters>
               <v-col cols="12">
-                <v-text-field
-                    v-model="allocateDialog.userId"
-                    :rules="[rules.isInteger]"
-                    clearable
-                    label="用户ID"
-                >
-                </v-text-field>
+                <v-text-field v-model="allocateDialog.userId" :rules="[rules.isInteger]" clearable
+                              label="用户ID"></v-text-field>
               </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
-            <v-btn
-                depressed
-                text
-                @click="allocateDialog.isShow = false"
-                v-text="'取消'"
-            />
-            <v-btn
-                :disabled="allocateDialog.btn.loading"
-                :loading="allocateDialog.btn.loading"
-                color="primary"
-                depressed
-                text
-                @click="allocateDefaultBillType"
-                v-text="'保存'"
-            />
+            <v-btn depressed text @click="allocateDialog.isShow = false" v-text="'取消'"/>
+            <v-btn :disabled="allocateDialog.btn.loading" :loading="allocateDialog.btn.loading" color="primary"
+                   depressed text @click="allocateDefaultBillType" v-text="'保存'"/>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-form>
     <v-dialog v-model="iconDialog.isShow" max-width="600px" scrollable>
       <v-card>
-        <v-card-title>
-          <span v-text="'图标库'"/>
-        </v-card-title>
+        <v-card-title><span v-text="'图标库'"/></v-card-title>
         <v-card-text>
           <v-row>
-            <v-col
-                v-for="item in icons.billType"
-                :key="item"
-                class="d-flex justify-center"
-                cols="2"
-                @click="
-                dialog.billType.icon = item;
-                iconDialog.isShow = false;
-              "
-            >
+            <v-col v-for="item in icons.billType" :key="item" class="d-flex justify-center" cols="2"
+                   @click=" dialog.billType.icon = item; iconDialog.isShow = false;">
               <v-btn class="rounded-lg" depressed fab x-small>
                 <v-icon>mdi-{{ item }}</v-icon>
               </v-btn>

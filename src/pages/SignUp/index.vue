@@ -7,19 +7,15 @@
     </v-row>
     <background-image :src="backgroundImagePath"/>
     <v-hover v-slot="{ hover }">
-      <v-container :class="{'elevation-24':hover,'elevation-0':!hover}"
-                   class="mx-auto transition-swing pa-0 rounded-lg"
-                   :style="{ width: isMobile ? '100%' : '30%' }"
-                   fluid>
+      <v-container :class="{'elevation-24':hover,'elevation-0':!hover}" :style="{ width: isMobile ? '100%' : '30%' }"
+                   class="mx-auto transition-swing pa-0 rounded-lg" fluid>
         <v-tabs v-model="tab" class="rounded-t-lg" grow>
           <v-tab class="leftTab">
             <v-icon>mdi-cellphone-message</v-icon>
-            <span v-if="!isMobile" class="ml-3">手机号注册</span>
-          </v-tab>
+            <span v-if="!isMobile" class="ml-3">手机号注册</span></v-tab>
           <v-tab class="rightTab">
             <v-icon>mdi-email-plus-outline</v-icon>
-            <span v-if="!isMobile" class="ml-3">邮箱注册</span>
-          </v-tab>
+            <span v-if="!isMobile" class="ml-3">邮箱注册</span></v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab" class="rounded-b-lg">
           <v-tab-item>
@@ -27,82 +23,44 @@
               <v-col cols="12">
                 <v-form ref="phoneNumberForm">
                   <v-row no-gutters>
-                    <v-text-field
-                        ref="phoneNumberTextField"
-                        v-model="form.phoneNumber.phoneNumber"
-                        :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNumber]"
-                        clearable
-                        counter
-                        label="手机号">
+                    <v-text-field ref="phoneNumberTextField" v-model="form.phoneNumber.phoneNumber"
+                                  :rules="[(value) => !!value || '请输入手机号',rules.isPhoneNumber]" clearable counter
+                                  label="手机号">
                       <template v-slot:append-outer>
-                        <v-btn
-                            :disabled="form.phoneNumber.verificationCodeBtn.disabled"
-                            :loading="form.phoneNumber.verificationCodeBtn.loading"
-                            depressed
-                            small
-                            @click="sendVerificationCode('phoneNumber')"
-                            v-text="'获取验证码'"/>
+                        <v-btn :disabled="form.phoneNumber.verificationCodeBtn.disabled"
+                               :loading="form.phoneNumber.verificationCodeBtn.loading" depressed small
+                               @click="sendVerificationCode('phoneNumber')" v-text="'获取验证码'"/>
                       </template>
                     </v-text-field>
                   </v-row>
                   <v-row no-gutters>
-                    <v-otp-input
-                        v-model="form.phoneNumber.verificationCode"
-                        :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
-                        length="6"
-                        plain
-                        type="number"/>
+                    <v-otp-input v-model="form.phoneNumber.verificationCode"
+                                 :rules="[(value) => !!value || '请输入验证码', rules.isInteger]" length="6" plain
+                                 type="number"/>
                   </v-row>
                   <v-row justify="space-between" no-gutters>
                     <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                              class="mr-1 rounded-lg"
-                              color="primary"
-                              depressed
-                              fab
-                              small
-                              to="/signIn"
-                              v-bind="attrs"
-                              v-on="on">
-                            <v-icon>
-                              mdi-login
-                            </v-icon>
+                          <v-btn class="mr-1 rounded-lg" color="primary" depressed fab small to="/signIn" v-bind="attrs"
+                                 v-on="on">
+                            <v-icon>mdi-login</v-icon>
                           </v-btn>
                         </template>
-                        <span>登录账号</span>
-                      </v-tooltip>
+                        <span>登录账号</span></v-tooltip>
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                              class="mx-1 rounded-lg"
-                              color="error"
-                              depressed
-                              fab
-                              small
-                              to="/forgot"
-                              v-bind="attrs"
-                              v-on="on">
-                            <v-icon>
-                              mdi-lock-alert
-                            </v-icon>
+                          <v-btn class="mx-1 rounded-lg" color="error" depressed fab small to="/forgot" v-bind="attrs"
+                                 v-on="on">
+                            <v-icon>mdi-lock-alert</v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账户</span>
-                      </v-tooltip>
+                        <span>找回账户</span></v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
-                      <v-btn
-                          :disabled="form.phoneNumber.loading"
-                          :loading="form.phoneNumber.loading"
-                          class="mt-4 rounded-lg"
-                          color="primary"
-                          depressed
-                          large
-                          block
-                          @click="submitForm('phoneNumber')"
-                          v-text="'注册'"/>
+                      <v-btn :disabled="form.phoneNumber.loading" :loading="form.phoneNumber.loading"
+                             block class="mt-4 rounded-lg" color="primary" depressed large
+                             @click="submitForm('phoneNumber')" v-text="'注册'"/>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -114,98 +72,53 @@
               <v-col cols="12">
                 <v-form ref="passwordForm">
                   <v-row no-gutters>
-                    <v-text-field
-                        ref="emailTextField"
-                        v-model="form.email.email"
-                        :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]"
-                        clearable
-                        label="邮箱">
+                    <v-text-field ref="emailTextField" v-model="form.email.email"
+                                  :rules="[(value) => !!value || '请输入邮箱',rules.isEmail]" clearable label="邮箱">
                       <template v-slot:append-outer>
-                        <v-btn
-                            :disabled="form.email.verificationCodeBtn.disabled"
-                            :loading="form.email.verificationCodeBtn.loading"
-                            depressed
-                            small
-                            @click="sendVerificationCode('email')"
-                            v-text="'获取验证码'"/>
+                        <v-btn :disabled="form.email.verificationCodeBtn.disabled"
+                               :loading="form.email.verificationCodeBtn.loading" depressed small
+                               @click="sendVerificationCode('email')" v-text="'获取验证码'"/>
                       </template>
                     </v-text-field>
                   </v-row>
                   <v-row no-gutters>
-                    <v-otp-input
-                        v-model="form.email.verificationCode"
-                        :rules="[(value) => !!value || '请输入验证码', rules.isInteger]"
-                        length="6"
-                        plain
-                        type="number"/>
+                    <v-otp-input v-model="form.email.verificationCode"
+                                 :rules="[(value) => !!value || '请输入验证码', rules.isInteger]" length="6" plain
+                                 type="number"/>
                   </v-row>
                   <v-row no-gutters>
-                    <v-text-field
-                        v-model="form.email.username"
-                        :rules="[rules.isUsername]"
-                        clearable
-                        label="用户名"/>
+                    <v-text-field v-model="form.email.username" :rules="[rules.isUsername]" clearable label="用户名"/>
                   </v-row>
                   <v-row justify="center" no-gutters>
-                    <v-text-field
-                        v-model="form.email.password"
-                        :append-icon="form.email.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="[rules.isPassword]"
-                        :type="form.email.showPassword ? 'text' : 'password'"
-                        label="密码"
-                        counter
-                        clearable
-                        @click:append="form.email.showPassword = !form.email.showPassword"/>
+                    <v-text-field v-model="form.email.password"
+                                  :append-icon="form.email.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                  :rules="[rules.isPassword]" :type="form.email.showPassword ? 'text' : 'password'"
+                                  clearable counter label="密码"
+                                  @click:append="form.email.showPassword = !form.email.showPassword"/>
                   </v-row>
                   <v-row justify="space-between" no-gutters>
                     <v-col class="d-flex align-end" cols="4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                              class="mr-1 rounded-lg"
-                              color="primary"
-                              depressed
-                              fab
-                              small
-                              to="/signIn"
-                              v-bind="attrs"
-                              v-on="on">
-                            <v-icon>
-                              mdi-login
-                            </v-icon>
+                          <v-btn class="mr-1 rounded-lg" color="primary" depressed fab small to="/signIn" v-bind="attrs"
+                                 v-on="on">
+                            <v-icon>mdi-login</v-icon>
                           </v-btn>
                         </template>
-                        <span>登录账号</span>
-                      </v-tooltip>
+                        <span>登录账号</span></v-tooltip>
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                              class="mx-1 rounded-lg"
-                              color="error"
-                              depressed
-                              fab
-                              small
-                              to="/forgot"
-                              v-bind="attrs"
-                              v-on="on">
-                            <v-icon>
-                              mdi-lock-alert
-                            </v-icon>
+                          <v-btn class="mx-1 rounded-lg" color="error" depressed fab small to="/forgot" v-bind="attrs"
+                                 v-on="on">
+                            <v-icon>mdi-lock-alert</v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账户</span>
-                      </v-tooltip>
+                        <span>找回账户</span></v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
-                      <v-btn
-                          :disabled="form.email.loading"
-                          :loading="form.email.loading"
-                          class="mt-4 rounded-lg"
-                          color="primary"
-                          depressed
-                          block large
-                          @click="submitForm('password')"
-                          v-text="'注册'"/>
+                      <v-btn :disabled="form.email.loading" :loading="form.email.loading" block
+                             class="mt-4 rounded-lg" color="primary" depressed large @click="submitForm('password')"
+                             v-text="'注册'"/>
                     </v-col>
                   </v-row>
                 </v-form>

@@ -1,9 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-row align="center" no-gutters style="height:150px">
-      <v-col cols="2" no-gutters>
-        <span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/>
-      </v-col>
+      <v-col cols="2" no-gutters><span :style="{ color: lightPrimary }" class="text-h2 pl-10" v-text="'总览'"/></v-col>
       <v-col cols="10">
         <v-row justify="space-around" no-gutters>
           <v-hover v-slot="{ hover }">
@@ -37,8 +35,7 @@
           <v-hover v-slot="{ hover }">
             <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing rounded"
                     style="width: 250px">
-              <v-row align="center" class="pa-4"
-                     no-gutters>
+              <v-row align="center" class="pa-4" no-gutters>
                 <v-col cols="3">
                   <v-icon color="primary" size="50">mdi-notebook-edit</v-icon>
                 </v-col>
@@ -55,9 +52,7 @@
     <v-row no-gutters>
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'用户统计'"/>
@@ -68,30 +63,20 @@
               </v-row>
             </v-card-title>
             <v-card-text>
-              <v-row
-                  v-if="userMonitorData.week.loading"
-                  :style="{height:'200px'}"
-                  align="center"
-                  no-gutters
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="userMonitorData.week.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0"
+                     justify="center" no-gutters>
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!userMonitorData.week.loading" :chartData="userMonitorData.week.chartData"
-                          :options="userMonitorData.week.options"
-                          style="height: 200px"/>
+                          :options="userMonitorData.week.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'访问统计'"/>
@@ -102,30 +87,19 @@
               </v-row>
             </v-card-title>
             <v-card-text>
-              <v-row
-                  v-if="userAccessMonitorData.week.loading"
-                  :style="{height:'200px'}"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center"
-                  no-gutters>
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="userAccessMonitorData.week.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center" no-gutters>
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!userAccessMonitorData.week.loading" :chartData="userAccessMonitorData.week.chartData"
-                          :options="userAccessMonitorData.week.options"
-                          style="height: 200px"/>
+                          :options="userAccessMonitorData.week.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
       <v-col class="px-12 mt-10" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'账单统计'"/>
@@ -136,102 +110,67 @@
               </v-row>
             </v-card-title>
             <v-card-text>
-              <v-row
-                  v-if="billMonitorData.week.loading"
-                  :style="{height:'200px'}"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center"
-                  no-gutters>
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="billMonitorData.week.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center" no-gutters>
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!billMonitorData.week.loading" :chartData="billMonitorData.week.chartData"
-                          :options="billMonitorData.week.options"
-                          style="height: 200px"/>
+                          :options="billMonitorData.week.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" v-text="'CPU 使用率'"/>
                 <v-col class="d-flex justify-end">
-                  <v-progress-circular
-                      :rotate="90"
-                      :size="80"
-                      :value="monitorData.cpu.now"
-                      :width="15"
-                      color="primary">
-                    <span v-text="monitorData.cpu.now+'%'"/>
-                  </v-progress-circular>
+                  <v-progress-circular :rotate="90" :size="80" :value="monitorData.cpu.now" :width="15" color="primary">
+                    <span v-text="monitorData.cpu.now+'%'"/></v-progress-circular>
                 </v-col>
               </v-row>
             </v-card-title>
             <v-card-subtitle class="px-4 pa-0 ma-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-cpu-64-bit</v-icon>
-                <span class="font-weight-bold" v-text="'CPU 核心数'"/>
-                <span :style="{color:lightPrimary}" class="ml-3 text-subtitle-1" v-text="instanceAttribute.cpu"/>
-              </v-row>
+                <span class="font-weight-bold" v-text="'CPU 核心数'"/><span :style="{color:lightPrimary}"
+                                                                         class="ml-3 text-subtitle-1"
+                                                                         v-text="instanceAttribute.cpu"/></v-row>
             </v-card-subtitle>
             <v-card-text>
-              <v-row
-                  :style="{height:'200px'}"
-                  v-if="monitorData.cpu.hour.loading"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="monitorData.cpu.hour.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.cpu.hour.loading" :chartData="monitorData.cpu.hour.chartData"
-                          :options="monitorData.cpu.hour.options"
-                          style="height: 200px"/>
-              <v-row
-                  :style="{height:'200px'}"
-                  v-if="monitorData.cpu.day.loading"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+                          :options="monitorData.cpu.hour.options" style="height: 200px"/>
+              <v-row v-if="monitorData.cpu.day.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.cpu.day.loading" :chartData="monitorData.cpu.day.chartData"
-                          :options="monitorData.cpu.day.options"
-                          style="height: 200px"/>
+                          :options="monitorData.cpu.day.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" cols="4" v-text="'网络流量'"/>
                 <v-col>
-                  <v-row align="center" justify="end" no-gutters>
-                    <span :style="{color:lightError}" class="text-h5 " v-text="monitorData.internet.now.TX"/>
-                    <span class="text-subtitle-1 mx-3">&nbsp;MBits</span>
+                  <v-row align="center" justify="end" no-gutters><span :style="{color:lightError}" class="text-h5 "
+                                                                       v-text="monitorData.internet.now.TX"/><span
+                      class="text-subtitle-1 mx-3">&nbsp;MBits</span>
                     <v-icon>mdi-upload-network</v-icon>
                   </v-row>
-                  <v-row align="center" justify="end" no-gutters>
-                    <span :style="{color:lightPrimary}" class="text-h5 " v-text="monitorData.internet.now.RX"/>
-                    <span class="text-subtitle-1 mx-3">&nbsp;MBits</span>
+                  <v-row align="center" justify="end" no-gutters><span :style="{color:lightPrimary}" class="text-h5 "
+                                                                       v-text="monitorData.internet.now.RX"/><span
+                      class="text-subtitle-1 mx-3">&nbsp;MBits</span>
                     <v-icon>mdi-download-network</v-icon>
                   </v-row>
                 </v-col>
@@ -240,61 +179,43 @@
             <v-card-subtitle class="px-4 pa-0 ma-0">
               <v-row align="center" no-gutters>
                 <v-icon>mdi-ip</v-icon>
-                <span class="font-weight-bold" v-text="'公网地址'"/>
-                <span :style="{color:lightPrimary}" class="ml-3 text-subtitle-1" v-text="instanceAttribute.ipAddress"/>
-              </v-row>
+                <span class="font-weight-bold" v-text="'公网地址'"/><span :style="{color:lightPrimary}"
+                                                                      class="ml-3 text-subtitle-1"
+                                                                      v-text="instanceAttribute.ipAddress"/></v-row>
             </v-card-subtitle>
             <v-card-text>
-              <v-row
-                  v-if="monitorData.internet.hour.loading"
-                  :style="{height:'200px'}"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="monitorData.internet.hour.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.internet.hour.loading" :chartData="monitorData.internet.hour.chartData"
-                          :options="monitorData.internet.hour.options"
-                          style="height: 200px"/>
-              <v-row
-                  v-if="monitorData.internet.day.loading"
-                  :style="{height:'200px'}"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+                          :options="monitorData.internet.hour.options" style="height: 200px"/>
+              <v-row v-if="monitorData.internet.day.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.internet.day.loading" :chartData="monitorData.internet.day.chartData"
-                          :options="monitorData.internet.day.options"
-                          style="height: 200px"/>
+                          :options="monitorData.internet.day.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
       <v-col class="px-12 my-16" cols="4">
         <v-hover v-slot="{ hover }">
-          <v-card
-              :class="{'elevation-24':hover,'elevation-0':!hover}"
-              class="transition-swing">
+          <v-card :class="{'elevation-24':hover,'elevation-0':!hover}" class="transition-swing">
             <v-card-title>
               <v-row align="center" no-gutters>
                 <v-col class="text-h5 font-weight-medium" cols="4" v-text="'云盘带宽'"/>
                 <v-col>
-                  <v-row align="center" justify="end" no-gutters>
-                    <span :style="{color:lightError}" class="text-h5 mr-3" v-text="monitorData.BPS.now.Read"/>
-                    <span class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
+                  <v-row align="center" justify="end" no-gutters><span :style="{color:lightError}" class="text-h5 mr-3"
+                                                                       v-text="monitorData.BPS.now.Read"/><span
+                      class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
                     <v-icon>mdi-cloud-upload</v-icon>
-
                   </v-row>
-                  <v-row align="center" justify="end" no-gutters>
-                    <span :style="{color:lightPrimary}" class="text-h5 mr-3" v-text="monitorData.BPS.now.Write"/>
-                    <span class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
+                  <v-row align="center" justify="end" no-gutters><span :style="{color:lightPrimary}"
+                                                                       class="text-h5 mr-3"
+                                                                       v-text="monitorData.BPS.now.Write"/><span
+                      class="text-subtitle-1 mr-3">&nbsp;KByte/s</span>
                     <v-icon>mdi-cloud-download</v-icon>
                   </v-row>
                 </v-col>
@@ -302,34 +223,18 @@
             </v-card-title>
             <v-card-subtitle class="ma-0 px-4 pa-0"/>
             <v-card-text>
-              <v-row
-                  :style="{height:'200px'}"
-                  v-if="monitorData.BPS.hour.loading"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+              <v-row v-if="monitorData.BPS.hour.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.BPS.hour.loading" :chartData="monitorData.BPS.hour.chartData"
-                          :options="monitorData.BPS.hour.options"
-                          style="height: 200px"/>
-              <v-row
-                  :style="{height:'200px'}"
-                  v-if="monitorData.BPS.day.loading"
-                  align="center"
-                  class="fill-height ma-0"
-                  justify="center">
-                <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    width="2"/>
+                          :options="monitorData.BPS.hour.options" style="height: 200px"/>
+              <v-row v-if="monitorData.BPS.day.loading" :style="{height:'200px'}" align="center"
+                     class="fill-height ma-0" justify="center">
+                <v-progress-circular color="primary" indeterminate width="2"/>
               </v-row>
               <line-chart v-if="!monitorData.BPS.day.loading" :chartData="monitorData.BPS.day.chartData"
-                          :options="monitorData.BPS.day.options"
-                          style="height: 200px"/>
+                          :options="monitorData.BPS.day.options" style="height: 200px"/>
             </v-card-text>
           </v-card>
         </v-hover>
