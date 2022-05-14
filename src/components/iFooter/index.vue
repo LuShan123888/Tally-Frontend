@@ -43,7 +43,7 @@ export default {
   },
   data: function () {
     return {
-      image: this.GLOBAL.images.police
+      image: this.GLOBAL.images.police.toString()
     };
   },
   methods: {

@@ -284,14 +284,14 @@
       </v-row>
       <v-row :style="{backgroundColor: isDark?'#2C2B2E':'#FAFAFB'}" no-gutters>
         <v-col cols="12">
-          <div v-if="item.expenditure!==0 || item.income!==0">
-            <v-row v-for="(item, i) in data.billGroupByDateList" :key="i" no-gutters>
+          <v-row v-for="(item, i) in data.billGroupByDateList" :key="i" no-gutters>
+            <div v-if="item.expenditure!==0 || item.income!==0">
               <v-col class="text-center py-2 text-subtitle-2" cols="3">{{ item.groupName }}</v-col>
               <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.expenditure) }}</v-col>
               <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.income) }}</v-col>
               <v-col class="text-center py-2 text-subtitle-2" cols="3">¥{{ numFormat(item.amount) }}</v-col>
-            </v-row>
-          </div>
+            </div>
+          </v-row>
 
         </v-col>
         <v-col cols="12">
@@ -643,7 +643,7 @@ export default {
           },
         }
       },
-      backgroundImagePath: this.GLOBAL.images.dataReport,
+      backgroundImagePath: this.GLOBAL.images.dataReport.toString(),
       colors: this.GLOBAL.colors
     };
   },

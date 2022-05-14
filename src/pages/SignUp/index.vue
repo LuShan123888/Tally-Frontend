@@ -275,7 +275,7 @@ export default {
           "z-index": 100,
         },
       },
-      backgroundImagePath: this.GLOBAL.images.signUp,
+      backgroundImagePath: this.GLOBAL.images.signUp.toString(),
       title: '注册'
     };
   },

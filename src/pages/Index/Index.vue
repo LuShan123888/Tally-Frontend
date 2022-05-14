@@ -10,14 +10,13 @@
 </template>
 
 <script>
-import DarkButton from "@/components/DarkButton";
 import Navbar from "@/pages/Index/components/NavBar";
 import AppBar from "@/pages/Index/components/AppBar";
 import IFooter from "@/components/iFooter";
 
 export default {
   name: "Index",
-  components: {IFooter, DarkButton, Navbar, AppBar},
+  components: {IFooter, Navbar, AppBar},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;

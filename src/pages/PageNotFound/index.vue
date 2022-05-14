@@ -15,13 +15,12 @@
   </v-container>
 </template>
 <script>
-import AppBar from "@/pages/Admin/components/AppBar";
 import iImage from "@/components/iImage";
 
 export default {
   name: "PageNotFound",
   components: {
-    AppBar, iImage
+    iImage
   },
   computed: {
     isMobile: function () {
@@ -36,7 +35,7 @@ export default {
   },
   data: function () {
     return {
-      imageUrl: this.GLOBAL.images.pageNotFound
+      imageUrl: this.GLOBAL.images.pageNotFound.toString()
     };
   },
   mounted() {

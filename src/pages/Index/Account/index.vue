@@ -355,7 +355,7 @@ export default {
           isShow: false,
         },
       },
-      backgroundImagePath: this.GLOBAL.images.wallet,
+      backgroundImagePath: this.GLOBAL.images.wallet.toString(),
       rules: this.GLOBAL.rules,
       enums: this.GLOBAL.enums,
       icons: this.GLOBAL.icons,

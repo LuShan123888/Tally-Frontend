@@ -277,7 +277,7 @@ export default {
           "z-index": 100,
         },
       },
-      backgroundImagePath: this.GLOBAL.images.forgot,
+      backgroundImagePath: this.GLOBAL.images.forgot.toString(),
       title: '找回账户'
     };
   },

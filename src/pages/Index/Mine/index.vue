@@ -1088,7 +1088,7 @@ export default {
   },
   data: function () {
     return {
-      backgroundImagePath: this.GLOBAL.images.profile,
+      backgroundImagePath: this.GLOBAL.images.profile.toString(),
       title: "我的",
       userInfoPage: {
         isShow: false,

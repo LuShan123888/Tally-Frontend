@@ -879,7 +879,7 @@ export default {
   data: function () {
     return {
       title: "账本",
-      backgroundImagePath: this.GLOBAL.images.noteList,
+      backgroundImagePath: this.GLOBAL.images.noteList.toString(),
       loading: true,
       query: {
         dateQueryString: new Date().Format("yyyy-MM"),
@@ -1209,7 +1209,7 @@ export default {
     },
     handleAvatarSuccess(response) {
       this.upload.loading = false;
-      var billVO = response.data;
+      const billVO = response.data;
       this.billPage.bill.amount = billVO.amount;
       this.billPage.bill.outAccountId = billVO.outAccountId;
       this.billPage.bill.billDate = billVO.billDate;

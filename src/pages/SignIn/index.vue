@@ -200,12 +200,11 @@ import AppBar from "@/components/AppBar";
 import TitleBar from "@/pages/Index/components/TitleBar";
 import BackgroundImage from "@/pages/Index/components/BackgroundImage";
 import DarkButton from "@/components/DarkButton";
-import iImage from "@/components/iImage";
 import iFooter from "@/components/iFooter";
 
 export default {
   name: "SignIn",
-  components: {iImage, iFooter, AppBar, TitleBar, BackgroundImage, DarkButton},
+  components: {iFooter, AppBar, TitleBar, BackgroundImage, DarkButton},
   computed: {
     isMobile: function () {
       return this.$vuetify.breakpoint.mobile;
@@ -246,7 +245,7 @@ export default {
           "z-index": 100,
         },
       },
-      backgroundImagePath: this.GLOBAL.images.welcome,
+      backgroundImagePath: this.GLOBAL.images.welcome.toString(),
       title: '登录'
     };
   },
