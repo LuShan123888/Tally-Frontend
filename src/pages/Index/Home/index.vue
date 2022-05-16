@@ -40,17 +40,19 @@
       <v-row align="center" no-gutters @click="loadBudgetDialog">
         <v-col cols="6">
           <div class="font-weight-medium pa-0 flex align-center" style="height: 50px">
-            <div style="line-height: 50px"><span
-                :style="{fontSize: '14px',color:isDark?'rgba(255, 255, 255, 0.7)':'rgba(0, 0, 0, 0.6)'}">本月预算：</span><span
-                class="">¥{{ numFormat(budgetBar.budget.amount) }}</span></div>
+            <div style="line-height: 50px">
+              <span
+                  :style="{fontSize: '14px',color:isDark?'rgba(255, 255, 255, 0.7)':'rgba(0, 0, 0, 0.6)'}">本月预算：</span>
+              <span class="">¥{{ numFormat(budgetBar.budget.amount) }}</span>
+            </div>
           </div>
         </v-col>
         <v-col cols="6"><span class="float-end text-subtitle-2">{{
             numFormat(billSummaryData.expenditure * 100 / budgetBar.budget.amount)
           }}%</span>
           <v-progress-linear
-              :color="(billSummaryData.expenditure*100 / budgetBar.budget.amount)>25? (billSummaryData.expenditure*100 / budgetBar.budget.amount)>50?(billSummaryData.expenditure*100 / budgetBar.budget.amount)>75?'error':'warning':'primary':'success'"
-              :value="billSummaryData.expenditure*100 / budgetBar.budget.amount" rounded/>
+              :color="(billSummaryData.expenditure * 100 / budgetBar.budget.amount)>25? (billSummaryData.expenditure * 100 / budgetBar.budget.amount)>50?(billSummaryData.expenditure * 100 / budgetBar.budget.amount)>75?'error':'warning':'primary':'success'"
+              :value="billSummaryData.expenditure * 100 / budgetBar.budget.amount" rounded/>
         </v-col>
       </v-row>
     </v-card>
