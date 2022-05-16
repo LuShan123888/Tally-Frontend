@@ -195,7 +195,7 @@ export default {
         },
       },
       backgroundImagePath: this.GLOBAL.images.forgot.toString(),
-      title: '找回账户'
+      title: '找回账号'
     };
   },
   methods: {

@@ -52,7 +52,7 @@
                             <v-icon>mdi-lock-alert</v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账户</span>
+                        <span>找回账号</span>
                       </v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
@@ -102,7 +102,7 @@
                             <v-icon> mdi-lock-alert</v-icon>
                           </v-btn>
                         </template>
-                        <span>找回账户</span></v-tooltip>
+                        <span>找回账号</span></v-tooltip>
                     </v-col>
                     <v-col class="d-flex justify-end" cols="5">
                       <v-btn :disabled="form.phoneNumber.loading" :loading="form.phoneNumber.loading"
