@@ -448,7 +448,7 @@
             <v-row class="mt-4" no-gutters>
               <v-btn :disabled="feedbackPage.loading" :loading="feedbackPage.loading" block class="rounded-lg"
                      color="primary" depressed large @click="saveFeedback">
-                <v-icon class="mr-3">mdi-logout</v-icon>
+                <v-icon class="mr-3">mdi-content-save</v-icon>
                 <span>提交反馈</span></v-btn>
             </v-row>
           </v-container>
