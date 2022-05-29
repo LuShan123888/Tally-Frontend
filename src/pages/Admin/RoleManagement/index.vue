@@ -71,7 +71,7 @@
       </v-col>
     </v-row>
     <v-form ref="roleSaveOrUpdateForm">
-      <v-dialog v-model="dialog.isShow" max-width="600px" persistent>
+      <v-dialog v-model="dialog.isShow" max-width="600px" persistent scrollable>
         <v-card>
           <v-card-title><span class="text-h5" v-text="dialog.title"/></v-card-title>
           <v-card-text class="pb-0">
