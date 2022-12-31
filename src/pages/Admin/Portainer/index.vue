@@ -17,7 +17,7 @@ export default {
   },
   data: function () {
     return {
-      iframeSrc: 'https://portainer.tally.ltd',
+      iframeSrc: this.GLOBAL.url.https + ':9443',
       height: document.documentElement.clientHeight - 64 + "px"
     };
   },

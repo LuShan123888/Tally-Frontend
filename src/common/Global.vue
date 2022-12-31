@@ -1,8 +1,9 @@
 <script>
 const url = {
-  api: "https://api.tally.ltd",
-  // api: "http://127.0.0.1:8080",
+  api: "http://127.0.0.1:8080",
   static: "https://static.tally.ltd",
+  http: "http://127.0.0.1",
+  https: "https://127.0.0.1",
 };
 const title = "云记贝在线记账平台";
 const adminTitle = "云记贝后台管理系统";

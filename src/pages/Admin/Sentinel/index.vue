@@ -17,7 +17,7 @@ export default {
   },
   data: function () {
     return {
-      iframeSrc: 'https://sentinel.tally.ltd',
+      iframeSrc: this.GLOBAL.url.http + ':9100',
       height: document.documentElement.clientHeight - 64 + "px"
     };
   },
